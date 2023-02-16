@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using CadastroDigital.App.Model;
+using CadastroDigital.DataLayer.Context;
 
 namespace CadastroDigital.Api.Controllers
 {
@@ -13,44 +14,23 @@ namespace CadastroDigital.Api.Controllers
     [Route("api/[controller]")]
     public class PessoaController : ControllerBase
     {
-        public PessoaController()
+        private readonly CadastroDigitalContext _context;
+
+        public PessoaController(CadastroDigitalContext context)
         {
-
+            _context = context;
         }
-
-        public IEnumerable<Pessoa> _pessoa = new Pessoa[]{
-            new Pessoa(){
-                Id = 1,
-                Nome = "Alexandre",
-                TipoPessoa = "F",
-                DataCadastro = new DateTime(2023, 01, 25),
-                PessoaFisica = new PessoaFisica(){
-                    Cpf = "25682737806"
-                },
-                PessoaJuridica = null
-            },
-            new Pessoa(){
-                Id = 2,
-                Nome = "Elaine",
-                TipoPessoa = "F",
-                DataCadastro = DateTime.Now,
-                PessoaFisica = new PessoaFisica(){
-                    Cpf = "25682737806"
-                },
-                PessoaJuridica = null
-            },
-        };
  
         [HttpGet]
-        public IEnumerable<Pessoa> Get()
+        public IEnumerable<PessoaFisica> Get()
         {
-            return _pessoa;
+            return _context.PessoaFisica;
         }
 
         [HttpGet("{id}")]
-        public IEnumerable<Pessoa> Get(int id)
+        public IEnumerable<PessoaFisica> Get(int id)
         {
-            return _pessoa.Where(pessoa => pessoa.Id == id);
+            return _context.PessoaFisica.Where(pessoaFisica => pessoaFisica.Id == id);
         }
 
 
