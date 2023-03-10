@@ -1,11 +1,33 @@
-<p>
+<nav></nav>
+<h2>
   Pessoa Component
-</p>
+</h2>
+<hr>
+<form action="" class="form-inline">
+  <div class="input-group">
+    <input type="text" class="form-control mr-2" placeholder="buscar" size="25%">
+    <!--<input type="text" class="form-control mr-2" placeholder="buscar">-->
+    <button class="btn btn-outline-success">Buscar</button>
+  </div>
+</form>
+<hr>
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Data</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>teste</td>
+      <td>09080808978</td>
+      <td>25/06/2023</td>
+    </tr>
+  </tbody>
+</table>
 
-
-<div *ngFor="let pessoa of pessoas">
-  <p>{{pessoa.nome}}</p>
-
-
-</div>
 
