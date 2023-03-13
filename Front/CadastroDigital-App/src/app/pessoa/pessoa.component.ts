@@ -8,8 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PessoaComponent implements OnInit {
 
-  public pessoas: any;
-
+  public pessoas: any = [];
 
   constructor(private http: HttpClient) { }
 

@@ -20,14 +20,21 @@
       <th>Data</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>teste</td>
-      <td>09080808978</td>
-      <td>25/06/2023</td>
+  <tbody *ngIf="pessoas && pessoas.length">
+    <tr *ngFor="let pessoaFisica of pessoas">
+      <td>{{pessoaFisica.id}}</td>
+      <td>{{pessoaFisica.nome}}</td>
+      <td>{{pessoaFisica.cpf}}</td>
+      <td>{{pessoaFisica.pessoa.dataCadastro}}</td>
     </tr>
   </tbody>
+  <tfoot *ngIf="!pessoas.length">
+    <tr>
+      <td colspan="8" class="text-center">
+        <h4>Nenhum registro encontrado!</h4>
+      </td>
+    </tr>
+  </tfoot>
 </table>
 
 

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 
 using CadastroDigital.App.Model;
 using CadastroDigital.DataLayer.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace CadastroDigital.Api.Controllers
 {
@@ -24,7 +25,14 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet]
         public IEnumerable<PessoaFisica> Get()
         {
-            return _context.PessoaFisica;
+            /* var result = from pf in _context.PessoaFisica
+                         join p in _context.Pessoa
+                         on pf.PessoaId equals p.Id
+                         select new {pf, p};
+            return result; */
+
+            return _context.PessoaFisica.Include(p => p.Pessoa);
+            //return _context.Pessoa.Join(_context.PessoaFisica);
         }
 
         [HttpGet("{id}")]
