@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CadastroDigital.DataLayer.Entidades
+namespace CadastroDigital.DataLayer.Entities
 {
     public class TipoPessoa
     {

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-using CadastroDigital.App.Model;
-using CadastroDigital.DataLayer.Context;
+using CadastroDigital.App.Models;
+using CadastroDigital.DataLayer.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace CadastroDigital.Api.Controllers
@@ -25,20 +25,16 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet]
         public IEnumerable<PessoaFisica> Get()
         {
-            /* var result = from pf in _context.PessoaFisica
-                         join p in _context.Pessoa
-                         on pf.PessoaId equals p.Id
-                         select new {pf, p};
-            return result; */
-
-            return _context.PessoaFisica.Include(p => p.Pessoa);
+             //return _context.PessoaFisica.Include(p => p.Pessoa);
             //return _context.Pessoa.Join(_context.PessoaFisica);
+            return null;
         }
 
         [HttpGet("{id}")]
         public IEnumerable<PessoaFisica> Get(int id)
         {
-            return _context.PessoaFisica.Where(pessoaFisica => pessoaFisica.Id == id);
+            //return _context.PessoaFisica.Where(pessoaFisica => pessoaFisica.Id == id);
+            return null;
         }
 
 

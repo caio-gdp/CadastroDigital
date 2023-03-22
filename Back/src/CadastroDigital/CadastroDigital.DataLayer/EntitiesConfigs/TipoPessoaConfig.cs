@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CadastroDigital.DataLayer.Entidades;
+using CadastroDigital.DataLayer.Entities;
 
-namespace CadastroDigital.DataLayer.EntityConfig
+namespace CadastroDigital.DataLayer.EntitiesConfigs
 {
     public class TipoPessoaConfig : IEntityTypeConfiguration<TipoPessoa>
     {
@@ -13,7 +13,6 @@ namespace CadastroDigital.DataLayer.EntityConfig
             
             //Primary Key
             builder.HasKey(p => p.Id);
-            
             
             //Atributos
             builder.Property(f => f.Id)
@@ -28,7 +27,7 @@ namespace CadastroDigital.DataLayer.EntityConfig
 
             builder.Property(f => f.Descricao)
             .HasColumnName("Descricao")
-            .ValueGeneratedNever()
+            .HasMaxLength(8)
             .IsRequired();
         }
 
@@ -40,6 +39,11 @@ namespace CadastroDigital.DataLayer.EntityConfig
                     Id = 1,
                     Sigla = "F",
                     Descricao = "Física"
+                },
+                new TipoPessoa(){
+                    Id = 2,
+                    Sigla = "J",
+                    Descricao = "Jurídica"
                 }
             };
         }

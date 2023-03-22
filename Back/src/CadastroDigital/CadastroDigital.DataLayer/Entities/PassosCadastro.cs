@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CadastroDigital.DataLayer.Enum;
+using CadastroDigital.DataLayer.Enums;
 
-namespace CadastroDigital.DataLayer.Entidades
+namespace CadastroDigital.DataLayer.Entities
 {
     public class PassosCadastro
     {

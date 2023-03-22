@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace CadastroDigital.DataLayer.Enum
+namespace CadastroDigital.DataLayer.Enums
 {
     public enum TipoPessoaEnum
     {

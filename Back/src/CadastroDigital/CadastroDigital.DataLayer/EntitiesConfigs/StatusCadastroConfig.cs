@@ -1,9 +1,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CadastroDigital.DataLayer.Entidades;
+using CadastroDigital.DataLayer.Entities;
 
-namespace CadastroDigital.DataLayer.EntityConfig
+namespace CadastroDigital.DataLayer.EntitiesConfigs
 {
     public class StatusCadastroConfig  : IEntityTypeConfiguration<StatusCadastro>
     {
@@ -23,7 +23,7 @@ namespace CadastroDigital.DataLayer.EntityConfig
 
             builder.Property(f => f.Descricao)
             .HasColumnName("Descricao")
-            .ValueGeneratedNever()
+            .HasMaxLength(9)
             .IsRequired();
         }
 

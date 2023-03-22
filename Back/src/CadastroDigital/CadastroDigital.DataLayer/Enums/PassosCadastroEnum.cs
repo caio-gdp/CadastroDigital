@@ -1,10 +1,10 @@
 using System.ComponentModel;
 
-namespace CadastroDigital.DataLayer.Enum
+namespace CadastroDigital.DataLayer.Enums
 {
     public enum PassosCadastroEnum
     {
-        [Description("Primeiros")]
+        [Description("Pré-Cadastro")]
         PrimeirosPassos = 1,
         [Description("Documentos")]
         Documentos = 2,
@@ -13,7 +13,9 @@ namespace CadastroDigital.DataLayer.Enum
         [Description("Dados Residenciais")]
         DadosResidenciais = 4,
         [Description("Dados Financeiros")]
-        DadosFinanceiros = 5,
+        DadosProfissionais = 5,
+        [Description("Dados Profissionais")]
+        DadosFinanceiros = 6,
         [Description("Concluído")]
         Concluido = 6,
     }
