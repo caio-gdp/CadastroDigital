@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 using CadastroDigital.App.Models;
-using CadastroDigital.DataLayer.Contexts;
-using Microsoft.EntityFrameworkCore;
+using CadastroDigital.App.Services;
+using CadastroDigital.App.Interfaces;
 
 namespace CadastroDigital.Api.Controllers
 {
@@ -15,45 +11,77 @@ namespace CadastroDigital.Api.Controllers
     [Route("api/[controller]")]
     public class PessoaController : ControllerBase
     {
-        private readonly CadastroDigitalContext _context;
-
-        public PessoaController(CadastroDigitalContext context)
+        private readonly IServicePessoa _servicePessoa;
+   
+        public PessoaController(IServicePessoa servicePessoa)
         {
-            _context = context;
+            _servicePessoa = servicePessoa;
         }
  
         [HttpGet]
-        public IEnumerable<PessoaFisica> Get()
+        public async Task<IActionResult> Get()
         {
-             //return _context.PessoaFisica.Include(p => p.Pessoa);
-            //return _context.Pessoa.Join(_context.PessoaFisica);
-            return null;
+            var pessoas = await _servicePessoa.GetAllPessoasAsync();
+
+            if (pessoas == null)
+                return NotFound("Nemhum registro encontrado.");
+
+            return Ok(pessoas);
         }
 
         [HttpGet("{id}")]
-        public IEnumerable<PessoaFisica> Get(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            //return _context.PessoaFisica.Where(pessoaFisica => pessoaFisica.Id == id);
-            return null;
+            var pessoa = await _servicePessoa.GetPessoaByIdAsync(id);
+
+            if (pessoa.Equals(null))
+                return NotFound("Nemhum registro encontrado.");
+
+            return Ok(pessoa);
         }
 
+        [HttpGet("cpf/{cpf}")]
+        public async Task<IActionResult> GetByCpf(string cpf)
+        {
+            var pessoa = await _servicePessoa.GetPessoaByCpfAsync(cpf);
+
+            if (pessoa.Equals(null))
+                return NotFound("Nemhum registro encontrado.");
+
+            return Ok(pessoa);
+        }
 
         [HttpPost]
-        public string Post()
+        public async Task<IActionResult> Post(Pessoa model)
         {
-            return "post";
+            var ret = await _servicePessoa.AddPessoa(model);
+            
+            if (!ret)
+                return BadRequest("Erro ao tentar incluir registro.");
+
+            return Ok("Registro incluído com sucesso.");
         }
 
         [HttpPut("{id}")]
-        public string Put(int id)
+        public async Task<IActionResult> Put(int id, Pessoa model)
         {
-            return $"put = {id}";
+            var ret = await _servicePessoa.UpdatePessoa(id, model);
+            
+            if (!ret)
+                return BadRequest("Erro ao tentar atualizar registro.");
+
+            return Ok("Registro atualizado com sucesso.");
         }
 
         [HttpDelete("{id}")]
-        public string Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return $"delete = {id}";
+           var ret = await _servicePessoa.DeletePessoa(id);
+            
+            if (!ret)
+                return BadRequest("Erro ao tentar excluir registro.");
+
+            return Ok("Registro excluído com sucesso.");
         }
     }
 }

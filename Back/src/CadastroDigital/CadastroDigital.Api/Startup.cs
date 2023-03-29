@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CadastroDigital.DataLayer.Contexts;
+using CadastroDigital.App.Interfaces;
+using CadastroDigital.App.Services;
+using CadastroDigital.Infrastructure.Contexts;
+using CadastroDigital.Infrastructure.Interfaces;
+using CadastroDigital.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +36,8 @@ namespace CadastroDigital.Api
                     context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
             );
             services.AddControllers();
+            services.AddScoped<IServicePessoa, ServicePessoa>();
+            services.AddScoped<IRepositoryBaseCadastroDigital, RepositoryBaseCadastroDigital>();
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
