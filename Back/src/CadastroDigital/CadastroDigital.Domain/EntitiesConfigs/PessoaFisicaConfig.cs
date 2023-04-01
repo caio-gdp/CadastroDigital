@@ -71,13 +71,11 @@ namespace CadastroDigital.Domain.EntitiesConfigs
 
             builder.Property(f => f.SexoId)
             .HasColumnName("SexoId")
-            .ValueGeneratedNever()
-            .IsRequired();
+            .ValueGeneratedNever();
 
             builder.Property(f => f.EstadoCivilId)
             .HasColumnName("EstadoCivilId")
-            .ValueGeneratedNever()
-            .IsRequired();
+            .ValueGeneratedNever();
         }
     }
 }

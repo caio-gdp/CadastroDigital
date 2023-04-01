@@ -32,7 +32,7 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             builder.HasOne(f => f.TipoTelefone)
             .WithOne(f => f.Telefone)
             .HasForeignKey<Telefone>(f => f.TipoTelefoneId)
-            .HasConstraintName("fk_email_tipotelefone");
+            .HasConstraintName("fk_telefone_tipotelefone");
 
             //Atributos
             builder.Property(f => f.Id)

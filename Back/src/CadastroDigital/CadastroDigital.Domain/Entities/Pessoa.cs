@@ -19,6 +19,5 @@ namespace CadastroDigital.Domain.Entities
         public StatusCadastro StatusCadastro { get; set; }
         public ICollection<PassosCadastro> PassosCadastro { get; set; }
         public PessoaFisica PessoaFisica { get; set; }
-
     }
 }

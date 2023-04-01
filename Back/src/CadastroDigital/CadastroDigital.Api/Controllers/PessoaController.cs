@@ -24,7 +24,7 @@ namespace CadastroDigital.Api.Controllers
             var pessoas = await _servicePessoa.GetAllPessoasAsync();
 
             if (pessoas == null)
-                return NotFound("Nemhum registro encontrado.");
+                return NotFound("Nenhum registro encontrado.");
 
             return Ok(pessoas);
         }

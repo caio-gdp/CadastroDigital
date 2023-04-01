@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Pessoa } from '../models/Pessoa';
+import { PessoaService } from '../services/pessoa.service';
 
 @Component({
   selector: 'app-pessoa',
@@ -8,23 +9,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PessoaComponent implements OnInit {
 
-  public pessoas: any = [];
+  public pessoas: Pessoa[] = [];
+  exibirImagem : boolean = true;
+  larguraImagem : number = 50;
+  margemImagem : number = 3;
 
-  constructor(private http: HttpClient) { }
+  constructor(private pessoaService: PessoaService) { }
 
   ngOnInit() {
-    this.getPessoa();
+    this.getPessoas();
   }
 
-  public getPessoa() : void{
-
-    this.http.get('https://localhost:5001/api/Pessoa').subscribe(
-      response => this.pessoas = response,
+  public getPessoas() : void{
+    this.pessoaService.getPessoas().subscribe(
+      (_pessoas : Pessoa[]) => {
+          this.pessoas = _pessoas;
+      },
       error => console.log(error)
-
     )
+  }
+
+  public getPessoaId() : void{
 
 
   }
 
+  alterarImagem(){
+    this.exibirImagem = !this.exibirImagem;
+  }
 }
