@@ -11,15 +11,19 @@ export class PessoaService {
 
 constructor(private http: HttpClient) { }
 
-  getPessoas() : Observable<Pessoa[]>{
+  public getPessoas() : Observable<Pessoa[]>{
     return this.http.get<Pessoa[]>(this.baseUrl);
   }
 
-  getPessoaById(id : number) : Observable<Pessoa>{
+  public getPessoaById(id : number) : Observable<Pessoa>{
     return this.http.get<Pessoa>(`${this.baseUrl}/${id}}`);
   }
 
-  getPessoaByCpf(cpf : string) : Observable<PessoaFisica>{
+  public getPessoaByCpf(cpf : string) : Observable<PessoaFisica>{
     return this.http.get<PessoaFisica>(`${this.baseUrl}/${cpf}/cpf}`);
+  }
+
+  public getPessoaByNome(nome : string) : Observable<PessoaFisica>{
+    return this.http.get<PessoaFisica>(`${this.baseUrl}/${nome}/nome}`);
   }
 }

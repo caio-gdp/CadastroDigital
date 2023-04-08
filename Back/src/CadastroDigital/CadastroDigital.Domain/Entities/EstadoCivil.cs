@@ -1,10 +1,8 @@
 namespace CadastroDigital.Domain.Entities
 {
-    public class EstadoCivil
+    public class EstadoCivil : Base
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
-
         public PessoaFisica PessoaFisica { get; set; }
     }
 }

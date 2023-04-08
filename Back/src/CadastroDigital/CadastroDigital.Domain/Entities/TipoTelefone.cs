@@ -1,11 +1,9 @@
 
 namespace CadastroDigital.Domain.Entities
 {
-    public class TipoTelefone
+    public class TipoTelefone : Base
     {
-        public int Id { get; set; }
         public string Descricao { get; set; }
-
         public Telefone Telefone { get; set; }
     }
 }

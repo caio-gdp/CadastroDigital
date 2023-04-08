@@ -6,10 +6,8 @@ using CadastroDigital.Domain.Enums;
 
 namespace CadastroDigital.Domain.Entities
 {
-    public class PassosCadastro
+    public class PassosCadastro : Base
     {
-        public int Id { get; set; }
-
         public int PessoaId { get; set; }
 
         public PassosCadastroEnum Passo { get; set; }

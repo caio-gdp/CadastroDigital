@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace CadastroDigital.Domain.Entities
 {
-    public class Pessoa
+    public class Pessoa : Base
     {
-        public int Id { get; set; }
         public int TipoPessoaId { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime DataAtualizacao { get; set; }

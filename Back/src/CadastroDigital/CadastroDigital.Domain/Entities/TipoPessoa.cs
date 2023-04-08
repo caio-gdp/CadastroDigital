@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace CadastroDigital.Domain.Entities
 {
-    public class TipoPessoa
+    public class TipoPessoa : Base
     {
-        public int Id { get; set; }
         public string Sigla { get; set; }
         public string Descricao { get; set; }
 

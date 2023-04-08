@@ -1,11 +1,8 @@
-<nav></nav>
-<h2>
-  Pessoa Component
-</h2>
+<app-titulo [titulo]="'Pessoa'"></app-titulo>
 <hr>
 <form action="" class="form-inline">
   <div class="input-group">
-    <input type="text" class="form-control mr-2" placeholder="buscar" size="25%" onclick="getPessoaId()">
+    <input type="text" class="form-control mr-2" placeholder="buscar" size="25%">
     <!--<input type="text" class="form-control mr-2" placeholder="buscar">-->
     <button class="btn btn-outline-success">Buscar</button>
   </div>
@@ -24,25 +21,27 @@
       <th>Nome</th>
       <th>CPF</th>
       <th>Data</th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody *ngIf="pessoas && pessoas.length">
     <tr *ngFor="let pessoa of pessoas">
       <td>{{pessoa.id}}</td>
       <td>
-        <img [collapse]="!exibirImagem" [isAnimated]="true" src="/assets/{{pessoa.pessoaFisica.imagem}}"
+        <img [collapse]="!exibirImagem" [isAnimated]="true" src="../assets/{{pessoa.pessoaFisica.imagem}}"
         [style.width.px]="larguraImagem"
         [style.margin.px]="margemImagem"></td>
       <td>{{pessoa.pessoaFisica.nome}}</td>
       <td>{{pessoa.pessoaFisica.cpf}}</td>
-      <td>{{pessoa.dataCadastro}}</td>
+      <td>{{pessoa.dataCadastro | dateTimeFormat}}</td>
       <td>
-        <button type="button" class="btn btn-primary btn-sm mr-2">
+        <button type="button" class="btn btn-primary btn-sm mr-2" data-bs-toogle="tooltip" title="Editar" data-bs-placement="auto">
           <i class="fa fa-edit"></i>
         </button>
       </td>
       <td>
-        <button type="button" class="btn btn-danger btn-sm">
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toogle="tooltip" title="Excluir" data-bs-placement="auto" (click)="openModal(template)">
           <i class="fa fa-trash"></i>
         </button>
       </td>
@@ -56,5 +55,13 @@
     </tr>
   </tfoot>
 </table>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Você confirma a exclusão desta pessoa?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
 
 

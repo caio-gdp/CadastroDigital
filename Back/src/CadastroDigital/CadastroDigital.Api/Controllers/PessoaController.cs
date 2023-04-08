@@ -51,6 +51,17 @@ namespace CadastroDigital.Api.Controllers
             return Ok(pessoa);
         }
 
+        [HttpGet("cpf/{cpf}")]
+        public async Task<IActionResult> GetByName(string nome)
+        {
+            var pessoa = await _servicePessoa.GetPessoaByNameAsync(nome);
+
+            if (pessoa.Equals(null))
+                return NotFound("Nemhum registro encontrado.");
+
+            return Ok(pessoa);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(Pessoa model)
         {

@@ -71,6 +71,15 @@ namespace CadastroDigital.Infrastructure.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
+        public async Task<Pessoa> GetPessoaByNameAsync(string nome){
+
+            IQueryable<Pessoa> query = _context.Pessoa
+                .Include(p => p.PessoaFisica)
+                .Where(p => p.PessoaFisica.Cpf.Equals(nome)).AsNoTracking();
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         
     }
 }
