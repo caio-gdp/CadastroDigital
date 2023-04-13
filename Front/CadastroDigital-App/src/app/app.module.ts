@@ -6,7 +6,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { PessoaComponent } from './components/pessoa/pessoa.component';
+import { PessoaListaComponent } from './components/pessoa/pessoa-lista/pessoa-lista.component';
+import { PessoaDetalheComponent } from './components/pessoa/pessoa-detalhe/pessoa-detalhe.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './shared/nav/nav.component';
@@ -19,18 +22,26 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { TituloComponent } from './shared/titulo/titulo.component';
 import { ContatoComponent } from './components/contato/contato.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PerfilComponent } from './components/perfil/perfil.component';
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegistrationComponent } from './components/user/registration/registration.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
       PessoaComponent,
+      PessoaListaComponent,
+      PessoaDetalheComponent,
       NavComponent,
       DateTimeFormatPipe,
       ContatoComponent,
       DashboardComponent,
-      PerfilComponent,
-      TituloComponent
+      TituloComponent,
+      UserComponent,
+      LoginComponent,
+      RegistrationComponent,
+      ProfileComponent
    ],
   imports: [
     BrowserModule,

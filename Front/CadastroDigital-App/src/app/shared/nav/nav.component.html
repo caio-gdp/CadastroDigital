@@ -1,22 +1,23 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" *ngIf="showMenu()">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="dashboard">SINDEST</a>
+    <i class="fa fa-users mb-2"></i>
     <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav" [collapse]="isCollapsed" [isAnimated]="true">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link" routerLink="dashboard" aria-current="page" routerLinkActive="active">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="pessoa" href="#">Pessoa</a>
+          <a class="nav-link" routerLink="pessoa/lista" routerLinkActive="active">Pessoa</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="Processos">Processos</a>
+          <a class="nav-link" routerLink="Processos" routerLinkActive="active">Processos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="Atendimento">Atendimento</a>
+          <a class="nav-link" routerLink="Atendimento" routerLinkActive="active">Atendimento</a>
         </li>
        </ul>
        <ul class="navbar-nav">
@@ -26,11 +27,11 @@
             Alexandre
           </a>
           <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" routerLink="perfil">
+            <a class="dropdown-item" routerLink="user/profile">
               Perfil
             </a>
             <div role="separator" class="divider"></div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" routerLink="user/login">
               Sair
             </a>
           </div>

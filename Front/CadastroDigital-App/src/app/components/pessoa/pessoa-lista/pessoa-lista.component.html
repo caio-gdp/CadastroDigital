@@ -1,0 +1,78 @@
+
+<div class="card rounded shadow-sm p-3">
+  <div class="d-flex">
+    <div class="flex-fill pr-3">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Filtro:</div>
+        </div>
+        <input type="text" class="form-control" placeholder="Filtrar por Nome ou CPF">
+      </div>
+    </div>
+    <div>
+      <a class="d-flex btn btn-outline-primary" (click)="detalhePessoa(0)">
+        <i class="fa fa-plus-circle my-1"></i>
+        <b class="ml-1 d-none d-sm-block">Novo</b>
+      </a>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th class="d-none d-sm-block">
+        <button type="button" class="btn btn-outline-light btn-sm" (click)="alterarImagem()">
+          <i class="{{!exibirImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
+          {{!exibirImagem ? 'exibir' : 'ocultar'}}
+        </button>
+      </th>
+      <th class="d-none d-md-table-cell">#</th>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Data</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody *ngIf="pessoas && pessoas.length">
+    <tr *ngFor="let pessoa of pessoas">
+      <td class="d-none d-md-table-cell">{{pessoa.id}}</td>
+      <td class="d-none d-md-table-cell">
+        <img [collapse]="!exibirImagem" [isAnimated]="true" src="../assets/{{pessoa.pessoaFisica.imagem}}"
+        [style.width.px]="larguraImagem"
+        [style.margin.px]="margemImagem">
+      </td>
+      <td>{{pessoa.pessoaFisica.nome}}</td>
+      <td>{{pessoa.pessoaFisica.cpf}}</td>
+      <td>{{pessoa.dataCadastro | dateTimeFormat}}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm mr-2" data-bs-toogle="tooltip" title="Editar" data-bs-placement="auto" (click)="detalhePessoa(pessoa.id)">
+          <i class="fa fa-edit"></i>
+        </button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toogle="tooltip" title="Excluir" data-bs-placement="auto" (click)="openModal(template)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!pessoas.length">
+    <tr>
+      <td colspan="8" class="text-center">
+        <h4>Nenhum registro encontrado!</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Você confirma a exclusão desta pessoa?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
+
+
