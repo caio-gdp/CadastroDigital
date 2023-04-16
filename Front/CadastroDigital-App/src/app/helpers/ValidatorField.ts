@@ -9,13 +9,13 @@ export class ValidatorField {
       const matchingControl = formGroup.controls[matchingControlName];
 
       if (matchingControl.errors && !matchingControl.errors.mustMatch){
-        return null;
+        return;
       }
 
-      if (control.value != matchingControlName.value){
-        matchingControlName.setErrors({mustMatch : true});
+      if (control.value != matchingControl.value){
+        matchingControl.setErrors({mustMatch : true});
       }else{
-        matchingControlName.setErrors(null);
+        matchingControl.setErrors(null);
       }
 
       return null;
