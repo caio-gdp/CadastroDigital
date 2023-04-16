@@ -1,45 +1,87 @@
 <div class="card rounded shadow-sm">
-  <form>
+  <form [formGroup]="form">
     <div class="p-3">
+      <!--testar validação de formulario
+      <p>Form value : {{form.value | json}}</p>
+      <p>Form valid : {{form.status | json}}</p>-->
       <div class="form-row">
         <div class="form-group col-md-12">
-          <label>Tema</label>
-          <input type="text" class="form-control" placeholder="Insira o Tema">
+          <label>CPF</label>
+          <input type="number" class="form-control is-invalid" [ngClass]="{'is-invalid':f.cpf.errors && f.cpf.touched}"
+            formControlName="cpf" placeholder="Insira o CPF">
+          <div class="invalid-feedback" *ngIf="f.cpf.errors?.required">
+            CPF é obrigatório.
+          </div>
+          <div class="invalid-feedback" *ngIf="f.cpf.errors?.minlength">
+            CPF deve ter no minimo 11 caracteres.
+          </div>
+          <div class="invalid-feedback" *ngIf="f.cpf.errors?.maxlength">
+            CPF deve ter no máxino 11 caracteres.
+          </div>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-8">
-          <label>Local</label>
-          <input type="text" class="form-control" placeholder="">
+          <label>Nome</label>
+          <input type="text" class="form-control is-invalid" [ngClass]="{'is-invalid':f.nome.errors && f.nome.touched}" formControlName="nome" placeholder="">
+          <div class="invalid-feedback" *ngIf="f.nome.errors?.required">
+            Nome é obrigatório.
+          </div>
+          <div class="invalid-feedback" *ngIf="f.nome.errors?.minlength">
+            Nome deve ter no minimo 3 caracteres.
+          </div>
+          <div class="invalid-feedback" *ngIf="f.nome.errors?.maxlength">
+            Nome deve ter no máxino 150 caracteres.
+          </div>
         </div>
         <div class="form-group col-md-4">
-          <label>Data e Hora</label>
-          <input type="datetime" class="form-control" placeholder="">
+          <label>Data Nascimento</label>
+          <input type="datetime" class="form-control is-invalid" [ngClass]="{'is-invalid':f.dataNascimento.errors && f.dataNascimento.touched}" formControlName="dataNascimento" placeholder="DD/MM/YYYY">
+          <div class="invalid-feedback" *ngIf="f.dataNascimento.errors?.required">
+            Data de Nascimento é obrigatório.
+          </div>
+          <div class="invalid-feedback" *ngIf="f.dataNascimento.errors?.minlength">
+            Data de Nascimento deve ter no minimo 10 caracteres.
+          </div>
+          <div class="invalid-feedback" *ngIf="f.dataNascimento.errors?.maxlength">
+            Data de Nascimento deve ter no máxino 10 caracteres.
+          </div>
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group col-md-2">
-          <label>Qtd Pessoas</label>
-          <input type="text" class="form-control" placeholder="">
-        </div>
         <div class="form-group col-md-4">
-          <label>Telefone</label>
-          <input type="text" class="form-control" placeholder="(000) 90000-0000">
+          <label>Celular</label>
+          <input type="number" class="form-control is-invalid" [ngClass]="{'is-invalid':f.telefone.errors && f.telefone.touched}" formControlName="telefone" placeholder="(000) 90000-0000">
+          <div class="invalid-feedback" *ngIf="f.telefone.errors?.required">
+            Celular é obrigatório.
+          </div>
+          <div class="invalid-feedback" *ngIf="f.telefone.errors?.minlength">
+            Celular deve ter no minimo 16 caracteres.
+          </div>
+          <div class="invalid-feedback" *ngIf="f.telefone.errors?.maxlength">
+            Celular deve ter no máxino 16 caracteres.
+          </div>
         </div>
         <div class="form-group col-md-6">
           <label>Email</label>
-          <input type="text" class="form-control" placeholder="e-mail">
+          <input type="text" class="form-control is-invalid" [ngClass]="{'is-invalid':f.email.errors && f.email.touched}" formControlName="email" placeholder="e-mail">
+          <div class="invalid-feedback" *ngIf="f.email.errors?.required">
+            Email é obrigatório.
+          </div>
+          <div class="invalid-feedback" *ngIf="f.email.errors?.email">
+            Deve ser um endereço de email válido.
+          </div>
         </div>
       </div>
     </div>
     <div class="card-footer">
       <div class="d-flex">
-        <button class="btn btn-outline-secondary mr-auto border">
-          Cancelar Alteração
+        <button class="btn btn-outline-secondary mr-auto border" (click)="resetForm()">
+          Cancelar
         </button>
-        <button class="btn btn-success">
+        <button class="btn btn-success" [disabled]="!form.valid">
           <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
-          Salvar Evento
+          Salvar
         </button>
       </div>
     </div>

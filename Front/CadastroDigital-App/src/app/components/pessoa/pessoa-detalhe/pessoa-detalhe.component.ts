@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-pessoa-detalhe',
@@ -7,9 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PessoaDetalheComponent implements OnInit {
 
-  constructor() { }
+  form: FormGroup;
 
-  ngOnInit() {
+  get f() : any{
+    return this.form.controls;
   }
 
+  constructor(private fb : FormBuilder) { }
+
+  ngOnInit() {
+    this.validation();
+  }
+
+  public validation() : void{
+    this.form = this.fb.group({
+      cpf : ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
+      dataNascimento : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      nome : ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+      telefone : ['', [Validators.required]],
+      email :['', [Validators.required, Validators.email]],
+    })
+  }
+
+  public resetForm() : void{
+    this.form.reset();
+  }
 }

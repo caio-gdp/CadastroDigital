@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { Pessoa } from 'src/app/models/Pessoa';
-import { PessoaService } from 'src/app/services/pessoa.service';
+import { Pessoa } from '@app/models/Pessoa';
+import { PessoaService } from '@app/services/pessoa.service';
 
 @Component({
   selector: 'app-pessoa-lista',

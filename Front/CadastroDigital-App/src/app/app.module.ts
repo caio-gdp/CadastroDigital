@@ -26,6 +26,7 @@ import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,8 @@ import { ProfileComponent } from './components/user/profile/profile.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
     TooltipModule.forRoot(),
