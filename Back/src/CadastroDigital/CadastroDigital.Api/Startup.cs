@@ -40,7 +40,7 @@ namespace CadastroDigital.Api
             services.AddControllers()
                     .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = 
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            services.AddScoped<IServicePessoa, ServicePessoa>();
+            services.AddScoped<IPessoaService, PessoaService>();
             services.AddScoped<IRepositoryBaseCadastroDigital, RepositoryBaseCadastroDigital>();
             services.AddCors();
             services.AddSwaggerGen(c =>

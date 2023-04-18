@@ -11,17 +11,17 @@ namespace CadastroDigital.Api.Controllers
     [Route("api/[controller]")]
     public class PessoaController : ControllerBase
     {
-        private readonly IServicePessoa _servicePessoa;
+        private readonly IPessoaService _pessoaService;
    
-        public PessoaController(IServicePessoa servicePessoa)
+        public PessoaController(IPessoaService pessoaService)
         {
-            _servicePessoa = servicePessoa;
+            _pessoaService = pessoaService;
         }
  
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var pessoas = await _servicePessoa.GetAllPessoasAsync();
+            var pessoas = await _pessoaService.GetAllPessoasAsync();
 
             if (pessoas == null)
                 return NotFound("Nenhum registro encontrado.");
@@ -32,10 +32,10 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var pessoa = await _servicePessoa.GetPessoaByIdAsync(id);
+            var pessoa = await _pessoaService.GetPessoaByIdAsync(id);
 
             if (pessoa.Equals(null))
-                return NotFound("Nemhum registro encontrado.");
+                return NoContent();
 
             return Ok(pessoa);
         }
@@ -43,10 +43,10 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet("cpf/{cpf}")]
         public async Task<IActionResult> GetByCpf(string cpf)
         {
-            var pessoas = await _servicePessoa.GetPessoaByCpfAsync(cpf);
+            var pessoas = await _pessoaService.GetPessoaByCpfAsync(cpf);
 
             if (pessoas.Equals(null))
-                return NotFound("Nenhum registro encontrado.");
+                return NoContent();
 
             return Ok(pessoas);
         }
@@ -54,10 +54,10 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet("nome/{nome}")]
         public async Task<IActionResult> GetByName(string nome)
         {
-            var pessoas = await _servicePessoa.GetPessoaByNameAsync(nome);
+            var pessoas = await _pessoaService.GetPessoaByNameAsync(nome);
 
             if (pessoas == null)
-                return NotFound("Nenhum registro encontrado.");
+                return NoContent();
 
             return Ok(pessoas);
         }
@@ -65,7 +65,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(PessoaDto dto)
         {
-            var ret = await _servicePessoa.AddPessoa(dto);
+            var ret = await _pessoaService.AddPessoa(dto);
             
             if (ret == null)
                 return BadRequest("Erro ao tentar incluir registro.");
@@ -76,7 +76,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, PessoaDto dto)
         {
-            var ret = await _servicePessoa.UpdatePessoa(id, dto);
+            var ret = await _pessoaService.UpdatePessoa(id, dto);
             
             if (ret == null)
                 return BadRequest("Erro ao tentar atualizar registro.");
@@ -87,7 +87,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-           var ret = await _servicePessoa.DeletePessoa(id);
+           var ret = await _pessoaService.DeletePessoa(id);
             
             if (!ret)
                 return BadRequest("Erro ao tentar excluir registro.");
