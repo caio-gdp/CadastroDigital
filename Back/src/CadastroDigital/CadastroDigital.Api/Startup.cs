@@ -7,6 +7,7 @@ using CadastroDigital.App.Services;
 using CadastroDigital.Infrastructure.Contexts;
 using CadastroDigital.Infrastructure.Interfaces;
 using CadastroDigital.Infrastructure.Repositories;
+using CadastroDigital.App.AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
 
 namespace CadastroDigital.Api
 {
@@ -35,7 +37,9 @@ namespace CadastroDigital.Api
             services.AddDbContext<CadastroDigitalContext>(
                     context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
             );
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = 
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped<IServicePessoa, ServicePessoa>();
             services.AddScoped<IRepositoryBaseCadastroDigital, RepositoryBaseCadastroDigital>();
             services.AddCors();
@@ -43,6 +47,8 @@ namespace CadastroDigital.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CadastroDigital.Api", Version = "v1" });
             });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

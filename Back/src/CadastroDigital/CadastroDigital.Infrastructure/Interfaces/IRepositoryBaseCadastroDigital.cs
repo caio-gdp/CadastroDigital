@@ -14,7 +14,7 @@ namespace CadastroDigital.Infrastructure.Interfaces
         
         Task<Pessoa[]> GetAllPessoasAsync();
         Task<Pessoa> GetPessoaByIdAsync(int id);
-        Task<Pessoa> GetPessoaByCpfAsync(string cpf);
-        Task<Pessoa> GetPessoaByNameAsync(string nome);
+        Task<Pessoa[]> GetPessoaByCpfAsync(string cpf);
+        Task<Pessoa[]> GetPessoaByNameAsync(string nome);
     }
 }

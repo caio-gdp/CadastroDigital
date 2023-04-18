@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-using CadastroDigital.App.Models;
+using CadastroDigital.App.Dtos;
 using CadastroDigital.App.Services;
 using CadastroDigital.App.Interfaces;
 
@@ -43,42 +43,42 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet("cpf/{cpf}")]
         public async Task<IActionResult> GetByCpf(string cpf)
         {
-            var pessoa = await _servicePessoa.GetPessoaByCpfAsync(cpf);
+            var pessoas = await _servicePessoa.GetPessoaByCpfAsync(cpf);
 
-            if (pessoa.Equals(null))
-                return NotFound("Nemhum registro encontrado.");
+            if (pessoas.Equals(null))
+                return NotFound("Nenhum registro encontrado.");
 
-            return Ok(pessoa);
+            return Ok(pessoas);
         }
 
-        [HttpGet("cpf/{cpf}")]
+        [HttpGet("nome/{nome}")]
         public async Task<IActionResult> GetByName(string nome)
         {
-            var pessoa = await _servicePessoa.GetPessoaByNameAsync(nome);
+            var pessoas = await _servicePessoa.GetPessoaByNameAsync(nome);
 
-            if (pessoa.Equals(null))
-                return NotFound("Nemhum registro encontrado.");
+            if (pessoas == null)
+                return NotFound("Nenhum registro encontrado.");
 
-            return Ok(pessoa);
+            return Ok(pessoas);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Pessoa model)
+        public async Task<IActionResult> Post(PessoaDto dto)
         {
-            var ret = await _servicePessoa.AddPessoa(model);
+            var ret = await _servicePessoa.AddPessoa(dto);
             
-            if (!ret)
+            if (ret == null)
                 return BadRequest("Erro ao tentar incluir registro.");
 
             return Ok("Registro incluído com sucesso.");
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Pessoa model)
+        public async Task<IActionResult> Put(int id, PessoaDto dto)
         {
-            var ret = await _servicePessoa.UpdatePessoa(id, model);
+            var ret = await _servicePessoa.UpdatePessoa(id, dto);
             
-            if (!ret)
+            if (ret == null)
                 return BadRequest("Erro ao tentar atualizar registro.");
 
             return Ok("Registro atualizado com sucesso.");

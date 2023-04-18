@@ -62,22 +62,26 @@ namespace CadastroDigital.Infrastructure.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Pessoa> GetPessoaByCpfAsync(string cpf){
+        public async Task<Pessoa[]> GetPessoaByCpfAsync(string cpf){
 
             IQueryable<Pessoa> query = _context.Pessoa
                 .Include(p => p.PessoaFisica)
-                .Where(p => p.PessoaFisica.Cpf.Equals(cpf)).AsNoTracking();
+                .Where(p => p.PessoaFisica.Cpf.Contains(cpf)).AsNoTracking();
 
-            return await query.FirstOrDefaultAsync();
+            query = query.OrderBy(e => e.PessoaFisica.Cpf);    
+
+            return await query.ToArrayAsync();
         }
 
-        public async Task<Pessoa> GetPessoaByNameAsync(string nome){
+        public async Task<Pessoa[]> GetPessoaByNameAsync(string nome){
 
             IQueryable<Pessoa> query = _context.Pessoa
                 .Include(p => p.PessoaFisica)
-                .Where(p => p.PessoaFisica.Cpf.Equals(nome)).AsNoTracking();
+                .Where(p => p.PessoaFisica.Nome.Contains(nome)).AsNoTracking();
 
-            return await query.FirstOrDefaultAsync();
+            query = query.OrderBy(e => e.PessoaFisica.Nome);        
+
+            return await query.ToArrayAsync();
         }
 
         
