@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+
+import { Pessoa } from '@app/models/Pessoa';
+import { PessoaService } from '@app/services/pessoa.service';
+
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-pessoa-detalhe',
@@ -8,15 +16,37 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class PessoaDetalheComponent implements OnInit {
 
+  pessoa: Pessoa;
   form: FormGroup;
+  stateForm = 'post';
 
   get f() : any{
     return this.form.controls;
   }
 
-  constructor(private fb : FormBuilder) { }
+  bsConfig() : any{
+    return {
+      dateInputFormat: 'DD/MM/YYYY',
+      adaptivePosition: true,
+      isAnimated: true,
+      containerClass: 'theme-default',
+      location: 'pt-br'
+    };
+  }
+
+  constructor(private fb : FormBuilder,
+              private localeService: BsLocaleService,
+              private activeRouter: ActivatedRoute,
+              private pessoaService : PessoaService,
+              private toastr: ToastrService,
+              private spinner: NgxSpinnerService)
+  {
+
+          this.localeService.use('pt-br');
+  }
 
   ngOnInit() {
+    // this.loadPessoa();
     this.validation();
   }
 
@@ -40,5 +70,57 @@ export class PessoaDetalheComponent implements OnInit {
   public resetForm(event : any) : void{
     event.preventDefault();
     this.form.reset();
+  }
+
+  public cssValidator(filedForm : FormControl) : any {
+    return {'is-invalid':this.f.cpf.errors && this.f.cpf.touched}
+  }
+
+  public loadPessoa() : void {
+
+    const pessoaId = this.activeRouter.snapshot.paramMap.get('id');
+
+    if (pessoaId != null){
+
+      this.spinner.show();
+      this.stateForm = 'put';
+
+      this.pessoaService.getPessoaById(+pessoaId).subscribe({
+        next : (pessoa : Pessoa) => {
+          this.pessoa = {...pessoa};
+          this.form.setValue(this.pessoa);
+        },
+        error : (error : any) =>
+        {
+          this.toastr.error('Erro ao carregar o registro.', "Erro!")
+        },
+      }).add(() => this.spinner.hide());
+    }
+  }
+
+  public saveChange() : void{
+
+    this.spinner.show();
+
+    if (this.form.valid){
+
+      this.pessoa = (this.stateForm == 'post') ? {...this.form.value} : {id: this.pessoa.id, ...this.form.value};
+
+      // this.pessoaService[this.stateForm](this.pessoa).subscribe({
+      //   next: () => this.toastr.success('Registro salvo com sucesso.', 'Sucesso'),
+      //   error: (error: any) => {
+      //     console.error(error);
+      //     this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
+      //   },
+      // }).add(() => this.spinner.hide());
+
+      this.pessoaService.post(this.pessoa).subscribe({
+        next: () => this.toastr.success('Registro salvo com sucesso.', 'Sucesso'),
+        error: (error: any) => {
+          console.error(error);
+          this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
+        },
+      }).add(() => this.spinner.hide());
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -22,9 +22,12 @@ export class PessoaListaComponent implements OnInit {
   constructor(private pessoaService: PessoaService,
     private modalService: BsModalService,
     private modalRef : BsModalRef,
-    private toastrService: ToastrService,
+    private toastr: ToastrService,
     private spinner: NgxSpinnerService,
-    private router: Router) { }
+    private router: Router,
+    private activeRouter : ActivatedRoute) { }
+
+    pessoaId : number;
 
   ngOnInit() {
     this.getPessoas();
@@ -56,7 +59,7 @@ export class PessoaListaComponent implements OnInit {
       error : (error : any) =>
       {
         this.spinner.hide(),
-        this.toastrService.error('Erro ao carregar os registros.', "Erro!")
+        this.toastr.error('Erro ao carregar os registros.', "Erro!")
       },
       complete : () => this.spinner.hide()
     };
@@ -70,13 +73,30 @@ export class PessoaListaComponent implements OnInit {
     this.exibirImagem = !this.exibirImagem;
   }
 
-  openModal(template: TemplateRef<any>) : void {
+  openModal(template: TemplateRef<any>, id : number) : void {
+    this.pessoaId = id;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
   confirm(): void {
+
     this.modalRef?.hide();
-    this.toastrService.success('Registro excluído com sucesso.', "Excluído");
+    this.spinner.show();
+
+    if (this.pessoaId != 0){
+      this.pessoaService.delete(this.pessoaId).subscribe({
+        next: (result : boolean) => {
+          if (result){
+            this.toastr.success('Registro excluído com sucesso.', "Excluído");
+            this.getPessoas();
+          }
+        },
+        error: (error : any) => {
+          this.toastr.error('Erro ao tentar excluir o registro.', "Erro!");
+          console.error(error);
+        },
+      }).add(() => this.spinner.hide());
+    }
   }
 
   decline(): void {

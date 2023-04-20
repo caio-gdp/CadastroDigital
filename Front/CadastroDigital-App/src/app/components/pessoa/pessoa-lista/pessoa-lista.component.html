@@ -43,16 +43,16 @@
         [style.width.px]="larguraImagem"
         [style.margin.px]="margemImagem">
       </td>
-      <td>{{pessoa.pessoaFisica.nome}}</td>
-      <td>{{pessoa.pessoaFisica.cpf}}</td>
-      <td>{{pessoa.dataCadastro | dateTimeFormat}}</td>
+      <td class="d-none d-md-table-cell">{{pessoa.pessoaFisica.nome}}</td>
+      <td class="d-none d-md-table-cell">{{pessoa.pessoaFisica.cpf}}</td>
+      <td class="d-none d-md-table-cell">{{pessoa.dataCadastro | dateTimeFormat}}</td>
       <td>
         <button type="button" class="btn btn-primary btn-sm mr-2" data-bs-toogle="tooltip" title="Editar" data-bs-placement="auto" (click)="detalhePessoa(pessoa.id)">
           <i class="fa fa-edit"></i>
         </button>
       </td>
       <td>
-        <button type="button" class="btn btn-danger btn-sm" data-bs-toogle="tooltip" title="Excluir" data-bs-placement="auto" (click)="openModal(template)">
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toogle="tooltip" title="Excluir" data-bs-placement="auto" (click)="openModal(template, pessoa.id)">
           <i class="fa fa-trash"></i>
         </button>
       </td>
@@ -69,7 +69,7 @@
 
 <ng-template #template>
   <div class="modal-body text-center">
-    <p>Você confirma a exclusão desta pessoa?</p>
+    <p>Você confirma a exclusão da pessoa de código {{this.pessoaId}}?</p>
     <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
     <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
   </div>

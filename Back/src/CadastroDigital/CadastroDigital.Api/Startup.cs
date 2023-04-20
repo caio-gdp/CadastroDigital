@@ -75,7 +75,6 @@ namespace CadastroDigital.Api
             {
                 endpoints.MapControllers();
             });
-            
         }
     }
 }

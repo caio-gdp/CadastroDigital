@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +31,7 @@ import { RegistrationComponent } from './components/user/registration/registrati
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+defineLocale('pt-br', ptBrLocale);
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +65,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       preventDuplicates: true,
       progressBar : true
     }),
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [PessoaService],
   bootstrap: [AppComponent],
