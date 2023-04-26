@@ -1,30 +1,34 @@
+
 <div class="card rounded shadow-sm">
+
   <form [formGroup]="form">
-    <div class="p-3">
+     <div class="p-3">
       <!--testar validação de formulario
       <p>Form value : {{form.value | json}}</p>
       <p>Form valid : {{form.status | json}}</p>-->
       <div class="form-row">
-        <div class="form-group col-md-12">
-          <label>CPF</label>
-          <input type="number" class="form-control is-invalid" [ngClass]="cssValidator(f.cpf)"
-            formControlName="cpf" placeholder="Insira o CPF">
-          <div class="invalid-feedback" *ngIf="f.cpf.errors?.required">
-            CPF é obrigatório.
-          </div>
-          <div class="invalid-feedback" *ngIf="f.cpf.errors?.minlength">
-            CPF deve ter no minimo 11 caracteres.
-          </div>
-          <div class="invalid-feedback" *ngIf="f.cpf.errors?.maxlength">
-            CPF deve ter no máxino 11 caracteres.
-          </div>
+
+        <div class="form-group col-md-4">
+        <label>CPF</label>
+        <input formControlName="cpf" type="number" class="form-control is-invalid" [ngClass]="cssValidator(f.cpf)"
+          placeholder="Insira o CPF">
+        <div class="invalid-feedback" *ngIf="f.cpf.errors?.required">
+          CPF é obrigatório.
         </div>
+        <div class="invalid-feedback" *ngIf="f.cpf.errors?.minlength">
+          CPF deve ter no minimo 11 caracteres.
+        </div>
+        <div class="invalid-feedback" *ngIf="f.cpf.errors?.maxlength">
+          CPF deve ter no máxino 11 caracteres.
+        </div>
+        </div>
+
       </div>
       <div class="form-row">
         <div class="form-group col-md-8">
           <label>Nome</label>
-          <input type="text" class="form-control is-invalid" [ngClass]="cssValidator(f.nome)"
-            formControlName="nome" placeholder="Nome completo">
+          <input formControlName="nome" type="text" class="form-control is-invalid" [ngClass]="cssValidator(f.nome)"
+            placeholder="Nome completo">
           <div class="invalid-feedback" *ngIf="f.nome.errors?.required">
             Nome é obrigatório.
           </div>
@@ -37,9 +41,9 @@
         </div>
         <div class="form-group col-md-4">
           <label>Data Nascimento</label>
-          <input type="datetime" class="form-control" [ngClass]="cssValidator(f.dataNascimento)"
-            formControlName="dataNascimento" placeholder="DD/MM/YYYY" bsDatepicker
-            [bsConfig]="bsConfig()" value="{ | dateTimeFormat}">
+          <input formControlName="dataNascimento" type="text" class="form-control" [ngClass]="cssValidator(f.dataNascimento)"
+            placeholder="DD/MM/YYYY" bsDatepicker
+            [bsConfig]="bsConfig()" value="{{this.pessoaFisica != null ? this.pessoaFisica.dataNascimento : ''}}">
           <div class="invalid-feedback" *ngIf="f.dataNascimento.errors?.required">
             Data de Nascimento é obrigatório.
           </div>
@@ -54,7 +58,7 @@
       <div class="form-row">
         <div class="form-group col-md-4">
           <label>Celular</label>
-          <input type="number" class="form-control is-invalid" [ngClass]="cssValidator(f.telefone)" formControlName="telefone" placeholder="(000) 90000-0000">
+          <input formControlName="telefone" type="number" class="form-control is-invalid" [ngClass]="cssValidator(f.telefone)" placeholder="(000) 90000-0000">
           <div class="invalid-feedback" *ngIf="f.telefone.errors?.required">
             Celular é obrigatório.
           </div>
@@ -67,7 +71,7 @@
         </div>
         <div class="form-group col-md-6">
           <label>Email</label>
-          <input type="text" class="form-control is-invalid" [ngClass]="cssValidator(f.email)" formControlName="email" placeholder="e-mail">
+          <input formControlName="email" type="text" class="form-control is-invalid" [ngClass]="cssValidator(f.email)" placeholder="e-mail">
           <div class="invalid-feedback" *ngIf="f.email.errors?.required">
             Email é obrigatório.
           </div>
@@ -88,5 +92,76 @@
         </button>
       </div>
     </div>
+
+    <div class="card rounded shadow-sm mt-4">
+      <div class="p-3">
+        <div class="d-flex border-bottom">
+          <h2 class="mr-auto">
+            Contato
+          </h2>
+          <h2>
+            <i class="fas fa-money-bill-wave"></i>
+          </h2>
+        </div>
+        <p>Clique em Lote para adicionar e preencher novos Lotes</p>
+        <div class="form-row p-1">
+          <div class="col">
+            <div>
+              <fieldset class="form-group">
+                <legend class="d-flex justify-content-between capitalize">
+                  <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
+                    tooltip="Excluir Lote"
+                    [adaptivePosition]="false"
+                    [delay]="500"
+                    placement="left">
+                  <i class="fa fa-window-close my-1"></i>
+                  <b class="ml-1 d-none d-sm-block">Excluir</b>
+                </button>
+              </legend>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label>Nome</label>
+                  <input type="text" class="form-control" formControlName="nome" placeholder="Lote">
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Quantidade</label>
+                  <input type="text" class="form-control" formControlName="quantidade" placeholder="000">
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Preço</label>
+                  <input type="text" currencyMask class="form-control" formControlName="preco" placeholder="R$ 0,00">
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Data Início</label>
+                  <input type="text" class="form-control" formControlName="dataInicio" placeholder="01/01/2019">
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Data Fim</label>
+                  <input type="text" class="form-control" formControlName="dataFim" placeholder="01/01/2019">
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <button class="d-flex btn btn-outline-primary">
+        <i class="fa fa-plus-circle my-1"></i>
+        <b class="ml-1">Lote</b>
+      </button>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex">
+        <button class="btn btn-outline-secondary mr-auto border">
+          Cancelar Alteração
+        </button>
+        <button class="btn btn-success">
+          Salvar Lotes
+        </button>
+      </div>
+    </div>
+    </div>
   </form>
 </div>
+
+
+

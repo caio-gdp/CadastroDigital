@@ -4,12 +4,12 @@ using CadastroDigital.Domain.Entities;
 
 namespace CadastroDigital.Domain.EntitiesConfigs
 {
-    public class SexoConfig : IEntityTypeConfiguration<Sexo>
+    public class PaisConfig : IEntityTypeConfiguration<Pais>
     {
-        public void Configure(EntityTypeBuilder<Sexo>builder){
+        public void Configure(EntityTypeBuilder<Pais>builder){
 
             //Tabela
-            builder.ToTable("Sexo");
+            builder.ToTable("Pais");
             
             //Primary Key
             builder.HasKey(p => p.Id);
@@ -22,25 +22,17 @@ namespace CadastroDigital.Domain.EntitiesConfigs
 
             builder.Property(f => f.Nome)
             .HasColumnName("Nome")
-            .HasMaxLength(20)
+            .HasMaxLength(30)
             .IsRequired();
         }
 
-        public static Sexo[] HasData(){
+        public static Pais[] HasData(){
 
-            return new Sexo[]{
+            return new Pais[]{
 
-                new Sexo(){
-                    Id = 1,
-                    Nome = "Masculino"
-                },
-                new Sexo(){
-                    Id = 2,
-                    Nome = "Feminino"
-                },
-                new Sexo(){
-                    Id = 3,
-                    Nome = "Não informar"
+                new Pais(){
+                    Id = 55,
+                    Nome = "Brasil"
                 }
             };
         }

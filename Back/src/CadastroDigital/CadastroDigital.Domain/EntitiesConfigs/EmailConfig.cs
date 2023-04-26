@@ -15,19 +15,19 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             builder.HasKey(p => p.Id);
             
             //Index
-            builder.HasIndex(i => i.PessoaFisicaId)
+            builder.HasIndex(i => i.PessoaId)
             .IsUnique(false)
-            .HasDatabaseName("idx_email_pessoafisica");
+            .HasDatabaseName("idx_email_pessoa");
 
             builder.HasIndex(i => i.TipoEmailId)
             .IsUnique(false)
             .HasDatabaseName("idx_email_tipoemail");
 
             //Foreign Key
-            builder.HasOne(f => f.PessoaFisica)
+            builder.HasOne(f => f.Pessoa)
             .WithOne(f => f.Email)
-            .HasForeignKey<Email>(f => f.PessoaFisicaId)
-            .HasConstraintName("fk_email_pessoafisica");
+            .HasForeignKey<Email>(f => f.PessoaId)
+            .HasConstraintName("fk_email_pessoa");
 
             builder.HasOne(f => f.TipoEmail)
             .WithOne(f => f.Email)
@@ -40,8 +40,8 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .ValueGeneratedOnAdd()
             .IsRequired();
 
-            builder.Property(f => f.PessoaFisicaId)
-            .HasColumnName("PessoaFisicaId")
+            builder.Property(f => f.PessoaId)
+            .HasColumnName("PessoaId")
             .ValueGeneratedNever()
             .IsRequired();
 

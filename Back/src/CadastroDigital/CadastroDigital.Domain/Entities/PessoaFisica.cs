@@ -19,7 +19,6 @@ namespace CadastroDigital.Domain.Entities
         public Pessoa Pessoa { get; set; }
         public Sexo Sexo { get; set; }
         public EstadoCivil EstadoCivil { get; set; }
-        public Telefone Telefone { get; set; }
-        public Email Email { get; set; }
+  
     }
 }

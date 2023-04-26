@@ -18,7 +18,7 @@ export class RegistrationComponent {
   constructor(public fb : FormBuilder){}
 
   ngOnInit() : void {
-    this.validation();
+    // this.validation();
   }
 
   private validation() : void{

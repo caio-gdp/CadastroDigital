@@ -5,7 +5,7 @@ import { Telefone } from "./Telefone";
 export interface PessoaFisica {
   id : number;
   cpf : string;
-  dataNascimento : Date;
+  dataNascimento : string;
   nome : string;
   imagem : string;
   pessoaId : number;

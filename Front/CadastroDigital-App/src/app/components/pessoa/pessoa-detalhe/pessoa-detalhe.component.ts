@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { Pessoa } from '@app/models/Pessoa';
+import { PessoaFisica } from '@app/models/PessoaFisica';
 import { PessoaService } from '@app/services/pessoa.service';
 
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
@@ -17,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 export class PessoaDetalheComponent implements OnInit {
 
   pessoa: Pessoa;
+  pessoaFisica: PessoaFisica;
   form: FormGroup;
   stateForm = 'post';
 
@@ -41,12 +43,11 @@ export class PessoaDetalheComponent implements OnInit {
               private toastr: ToastrService,
               private spinner: NgxSpinnerService)
   {
-
-          this.localeService.use('pt-br');
+    this.localeService.use('pt-br');
   }
 
   ngOnInit() {
-    // this.loadPessoa();
+    //this.loadPessoa();
     this.validation();
   }
 
@@ -80,7 +81,7 @@ export class PessoaDetalheComponent implements OnInit {
 
     const pessoaId = this.activeRouter.snapshot.paramMap.get('id');
 
-    if (pessoaId != null){
+    if (pessoaId != null && pessoaId != '0'){
 
       this.spinner.show();
       this.stateForm = 'put';
@@ -88,7 +89,16 @@ export class PessoaDetalheComponent implements OnInit {
       this.pessoaService.getPessoaById(+pessoaId).subscribe({
         next : (pessoa : Pessoa) => {
           this.pessoa = {...pessoa};
-          this.form.setValue(this.pessoa);
+          this.pessoaFisica = {...pessoa.pessoaFisica};
+
+          var d = this.pessoaFisica.dataNascimento.substring(8,10);
+          var m = this.pessoaFisica.dataNascimento.substring(5,7);
+          var a = this.pessoaFisica.dataNascimento.substring(0,4);
+
+          this.pessoaFisica.dataNascimento = String(d) + '/' + String(m) + '/' + String(a);
+
+          this.form.patchValue(this.pessoa);
+          this.form.patchValue(this.pessoaFisica);
         },
         error : (error : any) =>
         {
@@ -123,4 +133,5 @@ export class PessoaDetalheComponent implements OnInit {
       }).add(() => this.spinner.hide());
     }
   }
+
 }
