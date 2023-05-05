@@ -42,7 +42,10 @@ namespace CadastroDigital.Api
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped<IPessoaService, PessoaService>();
             services.AddScoped<IRepositoryBaseCadastroDigital, RepositoryBaseCadastroDigital>();
-            services.AddCors();
+            services.AddCors(c =>  
+                            {  
+                                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());  
+                            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CadastroDigital.Api", Version = "v1" });

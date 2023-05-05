@@ -21,7 +21,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var pessoas = await _pessoaService.GetAllPessoasAsync();
+            var pessoas = await _pessoaService.GetAllAsync();
 
             if (pessoas == null)
                 return NotFound("Nenhum registro encontrado.");

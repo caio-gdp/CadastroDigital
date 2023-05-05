@@ -27,7 +27,7 @@ export class PessoaListaComponent implements OnInit {
     private router: Router,
     private activeRouter : ActivatedRoute) { }
 
-    pessoaId : number;
+  pessoaId : number;
 
   ngOnInit() {
     this.getPessoas();

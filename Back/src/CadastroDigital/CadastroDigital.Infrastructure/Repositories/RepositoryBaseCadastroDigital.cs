@@ -43,6 +43,17 @@ namespace CadastroDigital.Infrastructure.Repositories
             return (await _context.SaveChangesAsync()) > 0;
         }
 
+        public async Task<T[]> GetAllAsync<T>(T entity, string[] includes) where T : class{
+
+            IQueryable<T> query = _context.Set<T>().AsNoTracking();
+
+            foreach (var include in includes)
+                query = query.Include(include).AsNoTracking();
+
+            return await query.ToArrayAsync();
+        }
+
+
         public async Task<Pessoa[]> GetAllPessoasAsync(){
 
             IQueryable<Pessoa> query = _context.Pessoa

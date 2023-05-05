@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './shared/nav/nav.component';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { PessoaService } from './services/pessoa.service';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { ToastrModule } from 'ngx-toastr';
@@ -30,6 +31,7 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MenuComponent } from './components/user/menu/menu.component';
 
 defineLocale('pt-br', ptBrLocale);
 @NgModule({
@@ -46,7 +48,8 @@ defineLocale('pt-br', ptBrLocale);
       UserComponent,
       LoginComponent,
       RegistrationComponent,
-      ProfileComponent
+      ProfileComponent,
+      MenuComponent,
    ],
   imports: [
     BrowserModule,
@@ -66,7 +69,8 @@ defineLocale('pt-br', ptBrLocale);
       progressBar : true
     }),
     NgxSpinnerModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    CarouselModule.forRoot()
   ],
   providers: [PessoaService],
   bootstrap: [AppComponent],

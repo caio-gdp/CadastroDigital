@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { Pessoa } from '@app/models/Pessoa';
@@ -73,8 +73,8 @@ export class PessoaDetalheComponent implements OnInit {
     this.form.reset();
   }
 
-  public cssValidator(filedForm : FormControl) : any {
-    return {'is-invalid':this.f.cpf.errors && this.f.cpf.touched}
+  public cssValidator(filedForm : FormControl | AbstractControl) : any {
+    return {'is-invalid': filedForm.errors && filedForm.touched}
   }
 
   public loadPessoa() : void {

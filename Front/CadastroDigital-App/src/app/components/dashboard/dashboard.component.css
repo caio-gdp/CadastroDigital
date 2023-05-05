@@ -1,0 +1,10 @@
+.carrossel {
+  display: "block";
+  width: 640px;
+  height: 360px;
+}
+
+.carrossel > .slide > img{
+  width: 640px;
+  height: 360px;
+}

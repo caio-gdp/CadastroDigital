@@ -1,7 +1,3 @@
-import { Email } from "./Email";
-import { Pessoa } from "./Pessoa";
-import { Telefone } from "./Telefone";
-
 export interface PessoaFisica {
   id : number;
   cpf : string;
@@ -11,7 +7,4 @@ export interface PessoaFisica {
   pessoaId : number;
   sexoId : number;
   estadoCivilId : number;
-  pessoa : Pessoa;
-  telefone : Telefone;
-  email : Email;
 }

@@ -1,16 +1,20 @@
 import { PessoaFisica } from "./PessoaFisica";
+import { Email } from "./Email";
+import { Telefone } from "./Telefone";
 
 export interface Pessoa {
    id : number;
    tipoPessoaId : number;
-   dataCadastro : Date;
-   dataAtualizacao : Date;
+   dataCadastro : string;
+   dataAtualizacao : string;
    codigoValidacao : number;
-   dataHoraCodigoValidacao : Date;
+   dataHoraCodigoValidacao : string;
    senha : string;
    confirmaSenha : string;
    statusCadastroId : number;
    notificacao : boolean;
-
    pessoaFisica : PessoaFisica
+   telefone : Telefone;
+   email : Email;
+
 }

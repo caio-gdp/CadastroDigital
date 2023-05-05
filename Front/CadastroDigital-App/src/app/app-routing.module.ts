@@ -9,6 +9,7 @@ import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
+import { NavComponent } from './shared/nav/nav.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
   { path : 'user/profile', component: ProfileComponent  },
   { path : 'pessoa', redirectTo: 'pessoa/lista' },
   {
-      path : 'pessoa', component: PessoaComponent,
+    path : 'pessoa', component: PessoaComponent,
     children : [
       {  path : 'detalhe/:id', component: PessoaDetalheComponent  },
       {  path : 'pessoa', component: PessoaComponent  },
@@ -32,6 +33,7 @@ const routes: Routes = [
   {  path : 'contato', component: ContatoComponent  },
   {  path : '', redirectTo : 'dashboard', pathMatch : 'full'  },
   {  path : '**', redirectTo : 'dashboard', pathMatch : 'full'  },
+  {  path : 'nav', component: NavComponent  },
 ];
 
 @NgModule({

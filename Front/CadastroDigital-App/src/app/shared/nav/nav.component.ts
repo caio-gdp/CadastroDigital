@@ -15,8 +15,21 @@ export class NavComponent implements OnInit {
   ngOnInit() : void {
   }
 
-  showMenu() : boolean{
-    return this.router.url != '/user/login';
+  showMenuLoggedOut() : boolean{
+    return this.router.url == '/dashboard';
+  }
+
+  showMenuLoggedIn() : boolean{
+    var ret : boolean = false;
+
+    if (this.router.url != '/user/login' && this.router.url != '/dashboard')
+      ret = true;
+
+      return ret;
+  }
+
+  registration() : void{
+    this.router.navigate([`user/registration/`]);
   }
 
 }
