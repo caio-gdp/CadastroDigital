@@ -16,7 +16,7 @@ namespace CadastroDigital.Infrastructure.Contexts
         public DbSet<Estado> Estado { get; set; }
         public DbSet<EstadoCivil> EstadoCivil { get; set; }
         public DbSet<Pais> Pais { get; set; }
-        public DbSet<PassosCadastro> PassosCadastro { get; set; }
+        public DbSet<PassoCadastro> PassosCadastro { get; set; }
         public DbSet<Pessoa> Pessoa { get; set; }
         public DbSet<PessoaFisica> PessoaFisica { get; set; }
         public DbSet<Sexo> Sexo { get; set; }
@@ -26,6 +26,13 @@ namespace CadastroDigital.Infrastructure.Contexts
         public DbSet<TipoEndereco> TipoEndereco { get; set; }
         public DbSet<TipoPessoa> TipoPessoa { get; set; }
         public DbSet<TipoTelefone> TipoTelefone { get; set; }
+        public DbSet<Agregado> Agregado { get; set; }
+        public DbSet<Banco> Banco { get; set; }
+        public DbSet<Dependente> Dependente { get; set; }
+        public DbSet<Beneficio> Beneficio { get; set; }
+        public DbSet<Convenio> Convenio { get; set; }
+        public DbSet<TipoBeneficio> TipoBeneficio { get; set; }
+        public DbSet<TipoConvenio> TipoConvenio { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
 
@@ -36,7 +43,7 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new EstadoConfig());
             modelBuilder.ApplyConfiguration(new EstadoCivilConfig());
             modelBuilder.ApplyConfiguration(new PaisConfig());
-            modelBuilder.ApplyConfiguration(new PassosCadastroConfig());
+            modelBuilder.ApplyConfiguration(new PassoCadastroConfig());
             modelBuilder.ApplyConfiguration(new PessoaConfig());
             modelBuilder.ApplyConfiguration(new PessoaFisicaConfig());
             modelBuilder.ApplyConfiguration(new SexoConfig());
@@ -46,6 +53,13 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new TipoEnderecoConfig());
             modelBuilder.ApplyConfiguration(new TipoPessoaConfig());
             modelBuilder.ApplyConfiguration(new TipoTelefoneConfig());
+            modelBuilder.ApplyConfiguration(new AgregadoConfig());
+            modelBuilder.ApplyConfiguration(new BancoConfig());
+            modelBuilder.ApplyConfiguration(new DependenteConfig());
+            modelBuilder.ApplyConfiguration(new BeneficioConfig());
+            modelBuilder.ApplyConfiguration(new ConvenioConfig());
+            modelBuilder.ApplyConfiguration(new TipoBeneficioConfig());
+            modelBuilder.ApplyConfiguration(new TipoConvenioConfig());
 
             //HasData
             modelBuilder.Entity<Pais>().HasData(PaisConfig.HasData());
@@ -58,6 +72,8 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.Entity<TipoEndereco>().HasData(TipoEnderecoConfig.HasData());
             modelBuilder.Entity<TipoPessoa>().HasData(TipoPessoaConfig.HasData());
             modelBuilder.Entity<TipoTelefone>().HasData(TipoTelefoneConfig.HasData());
+            modelBuilder.Entity<Banco>().HasData(BancoConfig.HasData());
+            modelBuilder.Entity<PassoCadastro>().HasData(PassoCadastroConfig.HasData());
 
             base.OnModelCreating(modelBuilder);
         }

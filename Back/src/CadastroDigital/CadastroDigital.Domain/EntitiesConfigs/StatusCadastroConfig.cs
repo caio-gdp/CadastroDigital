@@ -38,6 +38,10 @@ namespace CadastroDigital.Domain.EntitiesConfigs
                 new StatusCadastro(){
                     Id = 2,
                     Descricao = "Concluído"
+                },
+                new StatusCadastro(){
+                    Id = 3,
+                    Descricao = "Incompleto"
                 }
             };
         }

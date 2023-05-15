@@ -2,10 +2,10 @@ using System.ComponentModel;
 
 namespace CadastroDigital.Domain.Enums
 {
-    public enum PassosCadastroEnum
+    public enum PassoCadastroEnum
     {
         [Description("Pré-Cadastro")]
-        PrimeirosPassos = 1,
+        PreCadastro = 1,
         [Description("Documentos")]
         Documentos = 2,
         [Description("Dados Pessoais")]

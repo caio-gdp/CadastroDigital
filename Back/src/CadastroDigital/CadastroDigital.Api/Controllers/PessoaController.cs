@@ -1,9 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 
 using CadastroDigital.App.Dtos;
 using CadastroDigital.App.Services;
 using CadastroDigital.App.Interfaces;
+using System.IO;
+using System.Linq;
+using System;
 
 namespace CadastroDigital.Api.Controllers
 {
@@ -12,10 +16,12 @@ namespace CadastroDigital.Api.Controllers
     public class PessoaController : ControllerBase
     {
         private readonly IPessoaService _pessoaService;
-   
-        public PessoaController(IPessoaService pessoaService)
+        private readonly IWebHostEnvironment _hostEnviroment;
+
+        public PessoaController(IPessoaService pessoaService, IWebHostEnvironment hostEnviroment)
         {
             _pessoaService = pessoaService;
+            _hostEnviroment = hostEnviroment;
         }
  
         [HttpGet]
@@ -93,6 +99,55 @@ namespace CadastroDigital.Api.Controllers
                 return BadRequest("Erro ao tentar excluir registro.");
 
             return Ok("Registro excluído com sucesso.");
+        }
+
+        [HttpPost("upload-image/{pessoaId}")]
+        public async Task<IActionResult> Post(int pessoaId)
+        {
+            var pessoa = await _pessoaService.GetPessoaByIdAsync(pessoaId);
+
+            if (pessoa == null)
+                return NoContent();
+
+            var file = Request.Form.Files[0];
+
+            if (file.Length > 0)
+            {
+                DeleteImage(pessoa.PessoaFisica.Imagem);
+                pessoa.PessoaFisica.Imagem = await SaveImage(file);
+            }
+
+            var ret = await _pessoaService.UpdatePessoa(pessoaId, pessoa);
+
+            return Ok(ret);
+        }
+
+        [NonAction]
+        public async Task<string> SaveImage(Microsoft.AspNetCore.Http.IFormFile imageFile){
+
+            string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName)
+                                                 .Take(10)
+                                                 .ToArray())
+                                                 .Replace(' ','-');
+
+            imageName = $"{imageName}{DateTime.UtcNow.ToString("yymmssfff")}{Path.GetExtension(imageFile.FileName)}";
+
+            var imagePath = Path.Combine(_hostEnviroment.ContentRootPath, @"Resources/Images");
+
+            using (var fileStream = new FileStream(imagePath, FileMode.Create)){
+                await imageFile.CopyToAsync(fileStream);
+            }
+            
+            return imageName;
+        }
+
+        [NonAction]
+        public void DeleteImage(string imageName){
+
+            var imagePath = Path.Combine(_hostEnviroment.ContentRootPath, @"Resources/Images", imageName);
+            
+            if (System.IO.File.Exists(imagePath))
+                System.IO.File.Delete(imagePath);
         }
     }
 }

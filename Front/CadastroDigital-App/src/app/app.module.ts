@@ -32,6 +32,7 @@ import { RegistrationComponent } from './components/user/registration/registrati
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './components/user/menu/menu.component';
+import { AddressComponent } from './components/user/address/address.component';
 
 defineLocale('pt-br', ptBrLocale);
 @NgModule({
@@ -50,6 +51,7 @@ defineLocale('pt-br', ptBrLocale);
       RegistrationComponent,
       ProfileComponent,
       MenuComponent,
+      AddressComponent
    ],
   imports: [
     BrowserModule,

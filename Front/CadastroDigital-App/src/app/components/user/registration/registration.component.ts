@@ -29,6 +29,16 @@ export class RegistrationComponent {
      this.validation();
   }
 
+  bsConfig() : any{
+    return {
+      dateInputFormat: 'DD/MM/YYYY',
+      adaptivePosition: true,
+      isAnimated: true,
+      containerClass: 'theme-default',
+      location: 'pt-br'
+    };
+  }
+
   public cssValidation(filedForm: FormControl | AbstractControl): any {
     return {'is-invalid': filedForm.errors && filedForm.touched};
   }
@@ -96,9 +106,6 @@ export class RegistrationComponent {
           valido: true
         }
       }
-
-
-      console.log(this.pessoa);
 
       this.pessoaService.post(this.pessoa).subscribe({
         next: (pessoa: Pessoa) => {

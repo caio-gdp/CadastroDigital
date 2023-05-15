@@ -1,5 +1,7 @@
 <div class="row">
-
+<!-- testar validação de formulario e reativo
+      <p>Form value : {{form.value | json}}</p>
+      <p>Form valid : {{form.status | json}}</p> -->
   <div class="col-sm-6"><app-menu></app-menu></div>
   <div class="col-sm-6">
     <div class="container">
@@ -20,7 +22,8 @@
           <span class="focus-border"></span>
         </div>
         <div class="col-2 input-effect">
-          <input class="effect" type="datetime" placeholder="" [ngClass]="cssValidation(f.dataNascimento)" formControlName="dataNascimento">
+          <input class="effect" type="datetime" placeholder="" [ngClass]="cssValidation(f.dataNascimento)"
+          formControlName="dataNascimento" bsDatepicker [bsConfig]="bsConfig()">
           <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.required">
             Data de Nascimento é obrigatório.
           </div>
@@ -103,7 +106,7 @@
         </div>
         <div class="form-row">
           <div class="form-group col-2">
-            <button class="btn btn-lg btn-success btn-block px-5" (click)="saveChange()">
+            <button class="btn btn-lg btn-success btn-block px-5" (click)="saveChange()" [disabled]="!form.valid">
               Registar
             </button>
           </div>

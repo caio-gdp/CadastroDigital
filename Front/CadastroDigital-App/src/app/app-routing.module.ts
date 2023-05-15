@@ -10,13 +10,15 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { NavComponent } from './shared/nav/nav.component';
+import { AddressComponent } from './components/user/address/address.component';
 
 const routes: Routes = [
   {
     path : 'user', component: UserComponent,
     children : [
       {  path : 'login', component: LoginComponent  },
-      {  path : 'registration', component: RegistrationComponent  }
+      {  path : 'registration', component: RegistrationComponent  },
+      {  path : 'address', component: AddressComponent  }
     ]
   },
   { path : 'user/profile', component: ProfileComponent  },
