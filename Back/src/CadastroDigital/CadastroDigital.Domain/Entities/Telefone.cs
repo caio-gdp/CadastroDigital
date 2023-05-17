@@ -11,8 +11,10 @@ namespace CadastroDigital.Domain.Entities
         public int TipoTelefoneId { get; set; }
         public int Ddd { get; set; }
         public int Numero { get; set; }
-        public bool Principal { get; set; }
-        public bool Valido { get; set; }
+        public DateTime DataInclusao { get; set; }  
+        public string UsuarioInclusao { get; set; }
+        public DateTime? DataExclusao { get; set; }
+        public string UsuarioExclusao { get; set; }
 
         public Pessoa Pessoa { get; set; }
         public TipoTelefone TipoTelefone { get; set; }

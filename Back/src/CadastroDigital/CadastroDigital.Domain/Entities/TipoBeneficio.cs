@@ -10,7 +10,7 @@ namespace CadastroDigital.Domain.Entities
         public string Nome { get; set; }
         public decimal Valor { get; set; }
         public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }
+        public DateTime? DataFim { get; set; }
 
         public Beneficio Beneficio { get; set; }
     }

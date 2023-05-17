@@ -8,9 +8,7 @@ namespace CadastroDigital.Domain.Entities
 {
     public class PassoCadastro : Base
     {
-        public int PessoaId { get; set; }
-
-        public string  Descricao { get; set; }
+        public string Descricao { get; set; }
 
         public Pessoa Pessoa { get; set; }
     }

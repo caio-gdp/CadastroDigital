@@ -12,7 +12,9 @@ namespace CadastroDigital.Domain.Entities
         public DateTime DataNascimento { get; set; }
         public int TipoParenteId { get; set; }
         public DateTime DataInclusao { get; set; }
-        public DateTime DataExclusao { get; set; }
+        public string UsuarioInclusao { get; set; }
+        public DateTime? DataExclusao { get; set; }
+        public string UsuarioExclusao { get; set; }
         
         public Socio Socio { get; set; }
         public TipoParente TipoParente { get; set; }

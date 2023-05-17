@@ -33,6 +33,16 @@ namespace CadastroDigital.Infrastructure.Contexts
         public DbSet<Convenio> Convenio { get; set; }
         public DbSet<TipoBeneficio> TipoBeneficio { get; set; }
         public DbSet<TipoConvenio> TipoConvenio { get; set; }
+        public DbSet<Categoria> Categoria { get; set; }
+        public DbSet<Diretor> Diretor { get; set; }
+        public DbSet<RedeSocial> RedeSocial { get; set; }
+        public DbSet<Socio> Socio { get; set; }
+        public DbSet<TipoDocumento> TipoDocumento { get; set; }
+        public DbSet<TipoRedeSocial> TipoRedeSocial { get; set; }
+        public DbSet<TipoParente> TipoParente { get; set; }
+        public DbSet<TipoBeneficiario> TipoBeneficiario { get; set; }
+        public DbSet<OrgaoExpedidor> OrgaoExpedidor { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
 
@@ -60,6 +70,15 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new ConvenioConfig());
             modelBuilder.ApplyConfiguration(new TipoBeneficioConfig());
             modelBuilder.ApplyConfiguration(new TipoConvenioConfig());
+            modelBuilder.ApplyConfiguration(new CategoriaConfig());
+            modelBuilder.ApplyConfiguration(new DiretorConfig());
+            modelBuilder.ApplyConfiguration(new RedeSocialConfig());
+            modelBuilder.ApplyConfiguration(new SocioConfig());
+            modelBuilder.ApplyConfiguration(new TipoDocumentoConfig());
+            modelBuilder.ApplyConfiguration(new TipoRedeSocialConfig());
+            modelBuilder.ApplyConfiguration(new TipoParenteConfig());
+            modelBuilder.ApplyConfiguration(new TipoBeneficiarioConfig());
+            modelBuilder.ApplyConfiguration(new OrgaoExpedidorConfig());
 
             //HasData
             modelBuilder.Entity<Pais>().HasData(PaisConfig.HasData());
@@ -74,6 +93,11 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.Entity<TipoTelefone>().HasData(TipoTelefoneConfig.HasData());
             modelBuilder.Entity<Banco>().HasData(BancoConfig.HasData());
             modelBuilder.Entity<PassoCadastro>().HasData(PassoCadastroConfig.HasData());
+            modelBuilder.Entity<TipoDocumento>().HasData(TipoDocumentoConfig.HasData());
+            modelBuilder.Entity<TipoRedeSocial>().HasData(TipoRedeSocialConfig.HasData());
+            modelBuilder.Entity<TipoParente>().HasData(TipoParenteConfig.HasData());
+            modelBuilder.Entity<TipoBeneficiario>().HasData(TipoBeneficiarioConfig.HasData());
+            modelBuilder.Entity<OrgaoExpedidor>().HasData(OrgaoExpedidorConfig.HasData());
 
             base.OnModelCreating(modelBuilder);
         }

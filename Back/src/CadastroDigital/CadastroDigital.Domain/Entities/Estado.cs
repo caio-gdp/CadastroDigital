@@ -13,5 +13,6 @@ namespace CadastroDigital.Domain.Entities
 
         public Pais Pais { get; set; }
         public Cidade Cidade { get; set; }
+        public PessoaFisica PessoaFisica { get; set; }
     }
 }

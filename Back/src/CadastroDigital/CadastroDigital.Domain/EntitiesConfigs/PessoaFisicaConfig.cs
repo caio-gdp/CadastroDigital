@@ -34,6 +34,16 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasForeignKey<PessoaFisica>(f => f.PessoaId)
             .HasConstraintName("fk_pessoafisica_pessoa");
 
+            builder.HasOne(f => f.OrgaoExpedidor)
+            .WithOne(f => f.PessoaFisica)
+            .HasForeignKey<PessoaFisica>(f => f.OrgaoExpedidorId)
+            .HasConstraintName("fk_pessoafisica_orgaoexpedidor");
+
+            builder.HasOne(f => f.Estado)
+            .WithOne(f => f.PessoaFisica)
+            .HasForeignKey<PessoaFisica>(f => f.UfId)
+            .HasConstraintName("fk_pessoafisica_uf");
+
             builder.HasOne(f => f.Sexo)
             .WithOne(f => f.PessoaFisica)
             .HasForeignKey<PessoaFisica>(f => f.SexoId)
@@ -63,6 +73,25 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             builder.Property(f => f.DataNascimento)
             .HasColumnName("DataNascimento")
             .IsRequired();
+
+            builder.Property(f => f.Rg)
+            .HasColumnName("Rg")
+            .HasMaxLength(15)
+            .IsRequired(false);
+
+            builder.Property(f => f.DataEmissao)
+            .HasColumnName("DataEmissao")
+            .IsRequired(false);
+
+            builder.Property(f => f.OrgaoExpedidorId)
+            .HasColumnName("OrgaoExpedidorId")
+            .ValueGeneratedNever()
+            .IsRequired(false);
+
+            builder.Property(f => f.UfId)
+            .HasColumnName("UfId")
+            .ValueGeneratedNever()
+            .IsRequired(false);
 
             builder.Property(f => f.Imagem)
             .HasColumnName("Imagem")

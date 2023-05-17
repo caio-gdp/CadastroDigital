@@ -25,8 +25,8 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasMaxLength(50)
             .IsRequired();
 
-            builder.Property(f => f.Valor)
-            .HasColumnName("Valor")
+            builder.Property(f => f.Desconto)
+            .HasColumnName("Desconto")
             .IsRequired();
 
             builder.Property(f => f.DataInicio)

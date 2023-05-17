@@ -8,9 +8,9 @@ namespace CadastroDigital.Domain.Entities
     public class TipoConvenio : Base
     {
         public string Nome { get; set; }
-        public decimal Valor { get; set; }
+        public int Desconto { get; set; }
         public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }
+        public DateTime? DataFim { get; set; }
 
         public Convenio Convenio { get; set; }
     }

@@ -23,25 +23,25 @@ namespace CadastroDigital.Domain.EntitiesConfigs
 
             builder.Property(f => f.Descricao)
             .HasColumnName("Descricao")
-            .HasMaxLength(9)
+            .HasMaxLength(10)
             .IsRequired();
         }
 
         public static StatusCadastro[] HasData(){
 
             return new StatusCadastro[]{
-
+                
                 new StatusCadastro(){
                     Id = 1,
-                    Descricao = "Pendente"
+                    Descricao = "Incompleto"
                 },
                 new StatusCadastro(){
                     Id = 2,
-                    Descricao = "Concluído"
+                    Descricao = "Pendente"
                 },
                 new StatusCadastro(){
                     Id = 3,
-                    Descricao = "Incompleto"
+                    Descricao = "Concluído"
                 }
             };
         }

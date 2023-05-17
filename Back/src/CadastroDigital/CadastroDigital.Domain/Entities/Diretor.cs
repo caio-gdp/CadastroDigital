@@ -8,5 +8,7 @@ namespace CadastroDigital.Domain.Entities
     public class Diretor : Base
     {
         public string Nome { get; set; }
+
+        public Socio Socio { get; set; }
     }
 }

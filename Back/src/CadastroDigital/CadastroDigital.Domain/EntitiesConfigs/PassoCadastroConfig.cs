@@ -22,9 +22,8 @@ namespace CadastroDigital.Domain.EntitiesConfigs
 
             builder.Property(f => f.Descricao)
             .HasColumnName("Descricao")
-            .HasMaxLength(20)
+            .HasMaxLength(30)
             .IsRequired();
-
         }
 
         public static PassoCadastro[] HasData(){
@@ -37,15 +36,15 @@ namespace CadastroDigital.Domain.EntitiesConfigs
                 },
                 new PassoCadastro(){
                     Id = 2,
-                    Descricao = "Documentos"
-                },
-                new PassoCadastro(){
-                    Id = 3,
                     Descricao = "Dados Pessoais"
                 },
                 new PassoCadastro(){
-                    Id = 4,
+                    Id = 3,
                     Descricao = "Dados Residenciais"
+                },
+                new PassoCadastro(){
+                    Id = 4,
+                    Descricao = "Dados Profissionais"
                 },
                 new PassoCadastro(){
                     Id = 5,
@@ -53,12 +52,13 @@ namespace CadastroDigital.Domain.EntitiesConfigs
                 },
                 new PassoCadastro(){
                     Id = 6,
-                    Descricao = "Dados Profissionais"
-                },
+                    Descricao = "Dependentes e Agregados"
+                },                                
                 new PassoCadastro(){
                     Id = 7,
-                    Descricao = "Dados Residenciais"
+                    Descricao = "Documentos"
                 }
+                
             };
         }
     }

@@ -15,8 +15,10 @@ namespace CadastroDigital.Domain.Entities
         public string Bairro { get; set; }
         public int Cep { get; set; }
         public int CidadeId { get; set; }
-        public bool Principal { get; set; }
-        public bool Valido { get; set; }
+        public DateTime DataInclusao { get; set; }
+        public string UsuarioInclusao { get; set; }
+        public DateTime? DataExclusao { get; set; }
+        public string UsuarioExclusao { get; set; }
 
         public Pessoa Pessoa { get; set; }
         public TipoEndereco TipoEndereco { get; set; }

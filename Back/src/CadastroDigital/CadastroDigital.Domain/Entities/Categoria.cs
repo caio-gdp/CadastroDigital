@@ -4,5 +4,7 @@ namespace CadastroDigital.Domain.Entities
     {
         public string Descricao { get; set; }
 
+        public Socio Socio { get; set; }
+
     }
 }

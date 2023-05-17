@@ -10,7 +10,9 @@ namespace CadastroDigital.Domain.Entities
         public int SocioId { get; set; }
         public int TipoConvenioId { get; set; }
         public DateTime DataInclusao { get; set; }
-        public DateTime DataExclusao { get; set; }
+        public string UsuarioInclusao { get; set; }
+        public DateTime? DataExclusao { get; set; }
+        public string UsuarioExclusao { get; set; }
         
         public Socio Socio { get; set; }
         public TipoConvenio TipoConvenio { get; set; }

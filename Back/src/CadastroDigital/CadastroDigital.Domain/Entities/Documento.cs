@@ -9,7 +9,7 @@ namespace CadastroDigital.Domain.Entities
     {
         public int TipoDocumentoId { get; set; }
         public int PessoaId { get; set; }
-        public string Imagem { get; set; }
+        public string ImagemUrl { get; set; }
  
      
         public Pessoa Pessoa { get; set; }

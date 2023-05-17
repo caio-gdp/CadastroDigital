@@ -58,6 +58,22 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .ValueGeneratedNever()
             .IsRequired();
 
+            builder.Property(f => f.DataInclusao)
+            .HasColumnName("DataInclusao")
+            .IsRequired();
+
+            builder.Property(f => f.UsuarioInclusao)
+            .HasColumnName("UsuarioInclusao")
+            .IsRequired();
+
+            builder.Property(f => f.DataExclusao)
+            .HasColumnName("DataExclusao")
+            .IsRequired(false);
+
+            builder.Property(f => f.UsuarioExclusao)
+            .HasColumnName("UsuarioExclusao")
+            .IsRequired(false);
+
         }
     }
 }

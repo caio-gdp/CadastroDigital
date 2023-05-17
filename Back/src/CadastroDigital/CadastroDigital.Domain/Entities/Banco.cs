@@ -9,5 +9,7 @@ namespace CadastroDigital.Domain.Entities
     {
         public string Codigo { get; set; }
         public string Nome { get; set; }
+
+        public InformacaoBancaria InformacaoBancaria { get; set; }
     }
 }

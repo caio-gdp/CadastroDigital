@@ -7,7 +7,7 @@ namespace CadastroDigital.Domain.Entities
     {
         public int TipoPessoaId { get; set; }
         public DateTime DataCadastro { get; set; }
-        public DateTime DataAtualizacao { get; set; }
+        public DateTime? DataAtualizacao { get; set; }
         public int CodigoValidacao { get; set; }
         public DateTime DataHoraCodigoValidacao { get; set; }
         public string Senha { get; set; }
@@ -23,5 +23,8 @@ namespace CadastroDigital.Domain.Entities
         public Telefone Telefone { get; set; }
         public Endereco Endereco { get; set; }
         public PassoCadastro PassoCadastro { get; set; }
+        public Documento Documento { get; set; }
+        public RedeSocial RedeSocial { get; set; }
+        public Socio Socio { get; set; }
     }
 }

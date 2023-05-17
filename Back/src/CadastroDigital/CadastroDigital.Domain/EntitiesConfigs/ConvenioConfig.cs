@@ -52,13 +52,19 @@ namespace CadastroDigital.Domain.EntitiesConfigs
 
             builder.Property(f => f.DataInclusao)
             .HasColumnName("DataInclusao")
-            .ValueGeneratedNever()
+            .IsRequired();
+
+            builder.Property(f => f.UsuarioInclusao)
+            .HasColumnName("UsuarioInclusao")
             .IsRequired();
 
             builder.Property(f => f.DataExclusao)
             .HasColumnName("DataExclusao")
-            .ValueGeneratedNever()
-            .IsRequired();
+            .IsRequired(false);
+
+            builder.Property(f => f.UsuarioExclusao)
+            .HasColumnName("UsuarioExclusao")
+            .IsRequired(false);
         }
     }
 }
