@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CadastroDigital.Domain.Entities;
+using Administrativo.Domain.Entities;
 
-namespace Administrativo.Domain.EntitiesConfigs
+namespace CadastroDigital.Domain.EntitiesConfigs
 {
-    public class ProcessoConfig : IEntityTypeConfiguration<Processo>
+    public class ProcessoJuridicoConfig : IEntityTypeConfiguration<ProcessoJuridico>
     {
-        public void Configure(EntityTypeBuilder<Processo>builder){
+        public void Configure(EntityTypeBuilder<ProcessoJuridico>builder){
 
             //Tabela
-            builder.ToTable("Processo");
+            builder.ToTable("ProcessoJuridico");
             
             //Primary Key
             builder.HasKey(p => p.Id);
@@ -23,10 +23,6 @@ namespace Administrativo.Domain.EntitiesConfigs
             .IsUnique(false)
             .HasDatabaseName("idx_processo_status");
 
-            builder.HasIndex(i => i.TipoProcessoId)
-            .IsUnique(false)
-            .HasDatabaseName("idx_processo_tipo");
-
             //Foreign Key
             builder.HasOne(f => f.Socio)
             .WithOne(f => f.Processo)
@@ -38,12 +34,7 @@ namespace Administrativo.Domain.EntitiesConfigs
             .HasForeignKey<Processo>(f => f.StatusProcessoId)
             .HasConstraintName("fk_processo_statusprocesso");
 
-            builder.HasOne(f => f.TipoProcesso)
-            .WithOne(f => f.Processo)
-            .HasForeignKey<Processo>(f => f.TipoProcessoId)
-            .HasConstraintName("fk_processo_tipoprocesso");
-
-            //Atributos
+             //Atributos
             builder.Property(f => f.Id)
             .HasColumnName("Id")
             .ValueGeneratedOnAdd()
@@ -72,11 +63,7 @@ namespace Administrativo.Domain.EntitiesConfigs
             .ValueGeneratedNever()
             .IsRequired();
 
-            builder.Property(f => f.TipoProcessoId)
-            .HasColumnName("TipoProcessoId")
-            .ValueGeneratedNever()
-            .IsRequired();
-
+ 
             builder.Property(f => f.DataInicio)
             .HasColumnName("DataInicio")
             .IsRequired();

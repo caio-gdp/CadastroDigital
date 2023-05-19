@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace Administrativo.Domain.Entities
 {
-    public class StatusProcesso : Base
+    public class StatusProcessoAdministrativo : Base
     {
         public string Descricao { get; set; }
-        public Socio Socio { get; set; }
-        public Processo Processo { get; set; }
+        public ProcessoAdministrativo ProcessoAdministrativo { get; set; }
     }
 }

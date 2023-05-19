@@ -1,20 +1,19 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CadastroDigital.Domain.Entities;
+using Administrativo.Domain.Entities;
 
 namespace Administrativo.Domain.EntitiesConfigs
 {
-    public class TipoProcessoConfig  : IEntityTypeConfiguration<TipoProcesso>
+    public class TipoEnderecoConfig : IEntityTypeConfiguration<TipoEndereco>
     {
-        public void Configure(EntityTypeBuilder<TipoProcesso>builder){
+        public void Configure(EntityTypeBuilder<TipoEndereco>builder){
 
             //Tabela
-            builder.ToTable("TipoProcesso");
+            builder.ToTable("TipoEndereco");
             
             //Primary Key
             builder.HasKey(p => p.Id);
-                       
+            
             //Atributos
             builder.Property(f => f.Id)
             .HasColumnName("Id")
@@ -27,17 +26,17 @@ namespace Administrativo.Domain.EntitiesConfigs
             .IsRequired();
         }
 
-        public static StatusProcesso[] HasData(){
+        public static TipoEndereco[] HasData(){
 
-            return new StatusProcesso[]{
+            return new TipoEndereco[]{
 
-                new StatusProcesso(){
+                new TipoEndereco(){
                     Id = 1,
-                    Descricao = "Administrativo"
+                    Descricao = "Matriz"
                 },
-                new StatusProcesso(){
+                new TipoEndereco(){
                     Id = 2,
-                    Descricao = "Jurídico"
+                    Descricao = "Filial"
                 }
             };
         }

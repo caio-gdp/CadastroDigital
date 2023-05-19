@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CadastroDigital.Domain.Entities;
+using Administrativo.Domain.Entities;
 
 namespace Administrativo.Domain.EntitiesConfigs
 {

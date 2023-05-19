@@ -4,12 +4,12 @@ using CadastroDigital.Domain.Entities;
 
 namespace CadastroDigital.Domain.EntitiesConfigs
 {
-    public class TipoConvenioConfig : IEntityTypeConfiguration<TipoConvenio>
+    public class EmpresaConvenioConfig : IEntityTypeConfiguration<EmpresaConvenio>
     {
-        public void Configure(EntityTypeBuilder<TipoConvenio>builder){
+        public void Configure(EntityTypeBuilder<EmpresaConvenio>builder){
 
             //Tabela
-            builder.ToTable("TipoConvenio");
+            builder.ToTable("EmpresaConvenio");
             
             //Primary Key
             builder.HasKey(p => p.Id);

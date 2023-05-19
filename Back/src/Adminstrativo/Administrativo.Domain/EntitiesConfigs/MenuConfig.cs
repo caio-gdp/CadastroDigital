@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CadastroDigital.Domain.Entities;
+using Administrativo.Domain.Entities;
 
 namespace Administrativo.Domain.EntitiesConfigs
 {
@@ -61,31 +61,6 @@ namespace Administrativo.Domain.EntitiesConfigs
                     Id = 3,
                     Descricao = "Tesouraria",
                     PerfilId = 3
-                },
-                new Funcionalidade(){
-                    Id = 4,
-                    Descricao = "Cargo",
-                    PerfilId = 5
-                },
-                new Funcionalidade(){
-                    Id = 5,
-                    Descricao = "Parcerias",
-                    PerfilId = 5
-                },
-                new Funcionalidade(){
-                    Id = 6,
-                    Descricao = "Segmento",
-                    PerfilId = 5
-                },
-                new Funcionalidade(){
-                    Id = 7,
-                    Descricao = "Marca",
-                    PerfilId = 5
-                },
-                new Funcionalidade(){
-                    Id = 6,
-                    Descricao = "Segmento",
-                    PerfilId = 5
                 }
             };
         }

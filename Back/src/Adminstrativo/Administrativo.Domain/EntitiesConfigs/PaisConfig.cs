@@ -1,39 +1,38 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Administrativo.Domain.Entities;
 
 namespace Administrativo.Domain.EntitiesConfigs
 {
-    public class TipoBoletoConfig  : IEntityTypeConfiguration<TipoBoleto>
+    public class PaisConfig : IEntityTypeConfiguration<Pais>
     {
-        public void Configure(EntityTypeBuilder<TipoBoleto>builder){
+        public void Configure(EntityTypeBuilder<Pais>builder){
 
             //Tabela
-            builder.ToTable("TipoBoleto");
+            builder.ToTable("Pais");
             
             //Primary Key
             builder.HasKey(p => p.Id);
-                       
+            
             //Atributos
             builder.Property(f => f.Id)
             .HasColumnName("Id")
             .ValueGeneratedOnAdd()
             .IsRequired();
 
-            builder.Property(f => f.Descricao)
-            .HasColumnName("Descricao")
-            .HasMaxLength(20)
+            builder.Property(f => f.Nome)
+            .HasColumnName("Nome")
+            .HasMaxLength(30)
             .IsRequired();
         }
 
-        public static TipoBoleto[] HasData(){
+        public static Pais[] HasData(){
 
-            return new TipoBoleto[]{
+            return new Pais[]{
 
-                new TipoBoleto(){
-                    Id = 1,
-                    Descricao = "Sócio Usuário"
+                new Pais(){
+                    Id = 55,
+                    Nome = "Brasil"
                 }
             };
         }

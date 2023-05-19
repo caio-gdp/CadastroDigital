@@ -1,16 +1,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CadastroDigital.Domain.Entities;
+using Administrativo.Domain.Entities;
 
 namespace Administrativo.Domain.EntitiesConfigs
 {
-    public class StatusProcessoConfig  : IEntityTypeConfiguration<StatusProcesso>
+    public class StatusProcessoAdministrativoConfig  : IEntityTypeConfiguration<StatusProcessoAdministrativo>
     {
-        public void Configure(EntityTypeBuilder<StatusProcesso>builder){
+        public void Configure(EntityTypeBuilder<StatusProcessoAdministrativo>builder){
 
             //Tabela
-            builder.ToTable("StatusProcesso");
+            builder.ToTable("StatusProcessoAdministrativo");
             
             //Primary Key
             builder.HasKey(p => p.Id);
@@ -27,23 +27,23 @@ namespace Administrativo.Domain.EntitiesConfigs
             .IsRequired();
         }
 
-        public static StatusProcesso[] HasData(){
+        public static StatusProcessoAdministrativo[] HasData(){
 
-            return new StatusProcesso[]{
+            return new StatusProcessoAdministrativo[]{
 
-                new StatusProcesso(){
+                new StatusProcessoAdministrativo(){
                     Id = 1,
                     Descricao = "Em andamento"
                 },
-                new StatusProcesso(){
+                new StatusProcessoAdministrativo(){
                     Id = 2,
                     Descricao = "Pendente"
                 },
-                new StatusProcesso(){
+                new StatusProcessoAdministrativo(){
                     Id = 3,
                     Descricao = "Arquivado"
                 },
-                new StatusProcesso(){
+                new StatusProcessoAdministrativo(){
                     Id = 4,
                     Descricao = "Finalizado"
                 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Administrativo.Domain.Entities
 {
-    public class StatusProcesso : Base
+    public class StatusDepesaAdministrativa : Base
     {
         public string Descricao { get; set; }
         

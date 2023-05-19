@@ -17,8 +17,8 @@ namespace Administrativo.Domain.Entities
         public DateTime? DataExclusao { get; set; }
         public string UsuarioExclusao { get; set; }
 
-        public Socio Socio { get; set; }
         public Banco Banco { get; set; }
+        public TipoConta TipoConta { get; set; }
 
     }
 }

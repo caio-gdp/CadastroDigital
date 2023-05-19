@@ -5,12 +5,12 @@ using Administrativo.Domain.Entities;
 
 namespace Administrativo.Domain.EntitiesConfigs
 {
-    public class PerfilConfig  : IEntityTypeConfiguration<Perfil>
+    public class SetorConfig  : IEntityTypeConfiguration<Setor>
     {
-        public void Configure(EntityTypeBuilder<Perfil>builder){
+        public void Configure(EntityTypeBuilder<Setor>builder){
 
             //Tabela
-            builder.ToTable("Perfil");
+            builder.ToTable("Setora");
             
             //Primary Key
             builder.HasKey(p => p.Id);

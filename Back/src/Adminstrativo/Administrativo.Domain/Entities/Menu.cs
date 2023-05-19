@@ -11,5 +11,6 @@ namespace Administrativo.Domain.Entities
         public int PerfilId { get; set; }
 
         public Perfil Perfil { get; set; }
+        public Funcionalidade Funcionalidade { get; set; }
     }
 }

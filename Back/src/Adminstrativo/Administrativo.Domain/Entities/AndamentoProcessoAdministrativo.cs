@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Administrativo.Domain.Entities
 {
-    public class AndamentoProcesso : Base
+    public class AndamentoProcessoAdministrativo : Base
     {
         public int ProcessoId { get; set; }
         public string Descricao { get; set; }
@@ -14,7 +14,6 @@ namespace Administrativo.Domain.Entities
         public DateTime DataInclusao { get; set; }
         public string UsuarioInclusao { get; set; }
          
-        public Processo Processo { get; set; }
-        public StatusProcesso StatusProcesso { get; set; }  
+        public ProcessoAdministrativo ProcessoAdministrativo { get; set; }
     }
 }

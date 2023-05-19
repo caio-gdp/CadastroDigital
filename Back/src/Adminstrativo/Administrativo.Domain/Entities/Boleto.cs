@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Administrativo.Domain.Entities
 {
-    public class Banco : Base
+    public class Boleto : Base
     {
         public string TipoBoletoId { get; set; }
         public int InformacaoBancariaId { get; set; }

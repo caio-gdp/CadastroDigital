@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Administrativo.Domain.Entities
 {
-    public class Perfil : Base
+    public class Funcionalidade : Base
     {
         public string Descricao { get; set; }
         public int MenuId { get; set; }

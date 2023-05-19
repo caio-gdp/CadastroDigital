@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CadastroDigital.Domain.Entities
 {
-    public class TipoConvenio : Base
+    public class EmpresaConvenio : Base
     {
         public string Nome { get; set; }
         public int Desconto { get; set; }

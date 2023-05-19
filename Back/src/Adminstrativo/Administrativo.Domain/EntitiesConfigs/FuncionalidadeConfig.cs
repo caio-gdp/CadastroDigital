@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CadastroDigital.Domain.Entities;
+using Administrativo.Domain.Entities;
 
 namespace Administrativo.Domain.EntitiesConfigs
 {
@@ -18,13 +18,13 @@ namespace Administrativo.Domain.EntitiesConfigs
             //Index
             builder.HasIndex(i => i.MenuId)
             .IsUnique(false)
-            .HasDatabaseName("idx_menu_perfil");
+            .HasDatabaseName("idx_funcionalidade_menu");
 
             //Foreign Key
             builder.HasOne(f => f.Menu)
             .WithOne(f => f.Funcionalidade)
             .HasForeignKey<Funcionalidade>(f => f.MenuId)
-            .HasConstraintName("fk_menu_perfil");
+            .HasConstraintName("fk_funcionalidade_menu");
                        
             //Atributos
             builder.Property(f => f.Id)
