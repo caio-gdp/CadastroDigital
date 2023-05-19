@@ -31,8 +31,10 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .IsRequired();
 
             builder.Property(f => f.Descricao)
-            .HasColumnName("Descricao").Column.TypeName("ntext")
+            .HasColumnName("Descricao")
+            .HasColumnType("ntext")
             .IsRequired();
+
             builder.Property(f => f.ImagemUrl)
             .HasColumnName("ImagemUrl")
             .IsRequired();

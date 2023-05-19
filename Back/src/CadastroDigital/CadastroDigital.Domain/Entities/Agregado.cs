@@ -18,6 +18,6 @@ namespace CadastroDigital.Domain.Entities
         
         public Socio Socio { get; set; }
         public TipoParente TipoParente { get; set; }
-        public Beneficio Beneficio { get; set; }
+        public BeneficioAgregado BeneficioAgregado { get; set; }
     }
 }

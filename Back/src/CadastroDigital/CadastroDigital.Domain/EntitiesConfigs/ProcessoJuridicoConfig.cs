@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Administrativo.Domain.Entities;
+using CadastroDigital.Domain.Entities;
 
 namespace CadastroDigital.Domain.EntitiesConfigs
 {
@@ -17,22 +17,22 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             //Index
             builder.HasIndex(i => i.SocioId)
             .IsUnique(false)
-            .HasDatabaseName("idx_processo_socio");
+            .HasDatabaseName("idx_processojuridico_socio");
 
             builder.HasIndex(i => i.StatusProcessoId)
             .IsUnique(false)
-            .HasDatabaseName("idx_processo_status");
+            .HasDatabaseName("idx_processojuridico_status");
 
             //Foreign Key
             builder.HasOne(f => f.Socio)
-            .WithOne(f => f.Processo)
-            .HasForeignKey<Processo>(f => f.SocioId)
-            .HasConstraintName("fk_processo_socio");
+            .WithOne(f => f.ProcessoJuridico)
+            .HasForeignKey<ProcessoJuridico>(f => f.SocioId)
+            .HasConstraintName("fk_processojuridico_socio");
 
-            builder.HasOne(f => f.StatusProcesso)
-            .WithOne(f => f.Processo)
-            .HasForeignKey<Processo>(f => f.StatusProcessoId)
-            .HasConstraintName("fk_processo_statusprocesso");
+            builder.HasOne(f => f.StatusProcessoJuridico)
+            .WithOne(f => f.ProcessoJuridico)
+            .HasForeignKey<ProcessoJuridico>(f => f.StatusProcessoId)
+            .HasConstraintName("fk_processojuridico_statusprocesso");
 
              //Atributos
             builder.Property(f => f.Id)
@@ -56,6 +56,7 @@ namespace CadastroDigital.Domain.EntitiesConfigs
 
             builder.Property(f => f.Descricao)
             .HasColumnName("Descricao")
+            .HasColumnType("ntext")
             .IsRequired();
 
             builder.Property(f => f.StatusProcessoId)
@@ -63,7 +64,6 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .ValueGeneratedNever()
             .IsRequired();
 
- 
             builder.Property(f => f.DataInicio)
             .HasColumnName("DataInicio")
             .IsRequired();
@@ -72,12 +72,28 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasColumnName("UsuarioInclusao")
             .IsRequired();
 
+            builder.Property(f => f.DataAlteracao)
+            .HasColumnName("DataAlteracao")
+            .IsRequired(false);
+
+            builder.Property(f => f.UsuarioAlteracao)
+            .HasColumnName("UsuarioAlteracao")
+            .IsRequired(false);
+
+            builder.Property(f => f.MotivoAlteracao)
+            .HasColumnName("MotivoAlteracao")
+            .IsRequired(false);
+
             builder.Property(f => f.DataFim)
-            .HasColumnName("DataExclusao")
+            .HasColumnName("DataFim")
             .IsRequired(false);
 
             builder.Property(f => f.UsuarioFinalizacao)
-            .HasColumnName("UsuarioExclusao")
+            .HasColumnName("UsuarioFinalizacao")
+            .IsRequired(false);
+
+            builder.Property(f => f.MotivoFinalizacao)
+            .HasColumnName("MotivoFinalizacao")
             .IsRequired(false);
         }
     }

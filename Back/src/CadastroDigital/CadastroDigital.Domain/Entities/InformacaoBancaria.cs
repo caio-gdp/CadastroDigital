@@ -20,6 +20,7 @@ namespace CadastroDigital.Domain.Entities
 
         public Socio Socio { get; set; }
         public Banco Banco { get; set; }
+        public TipoConta TipoConta { get; set; }
 
     }
 }

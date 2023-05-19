@@ -14,40 +14,10 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             //Primary Key
             builder.HasKey(p => p.Id);
 
-            //Index
-            builder.HasIndex(i => i.SocioId)
-            .IsUnique(false)
-            .HasDatabaseName("idx_convenio_socio");
-
-            builder.HasIndex(i => i.TipoConvenioId)
-            .IsUnique(false)
-            .HasDatabaseName("idx_convenio_tipoconvenio");
-
-            //Foreign Key
-            builder.HasOne(f => f.Socio)
-            .WithOne(f => f.Convenio)
-            .HasForeignKey<Convenio>(f => f.SocioId)
-            .HasConstraintName("fk_convenio_socio");
-
-            builder.HasOne(f => f.TipoConvenio)
-            .WithOne(f => f.Convenio)
-            .HasForeignKey<Convenio>(f => f.TipoConvenioId)
-            .HasConstraintName("fk_convenio_tipoconvenio");
-            
             //Atributos
             builder.Property(f => f.Id)
             .HasColumnName("Id")
             .ValueGeneratedOnAdd()
-            .IsRequired();
-
-            builder.Property(f => f.SocioId)
-            .HasColumnName("SocioId")
-            .ValueGeneratedNever()
-            .IsRequired();
-
-            builder.Property(f => f.TipoConvenioId)
-            .HasColumnName("TipoConvenioId")
-            .ValueGeneratedNever()
             .IsRequired();
 
             builder.Property(f => f.DataInclusao)
@@ -58,12 +28,30 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasColumnName("UsuarioInclusao")
             .IsRequired();
 
+            builder.Property(f => f.DataAlteracao)
+            .HasColumnName("DataAlteracao")
+            .IsRequired(false);
+
+            builder.Property(f => f.UsuarioAlteracao)
+            .HasColumnName("UsuarioAlteracao")
+            .IsRequired(false);
+
+            builder.Property(f => f.MotivoAlteracao)
+            .HasColumnName("MotivoAlteracao")
+            .HasMaxLength(100)
+            .IsRequired(false);
+
             builder.Property(f => f.DataExclusao)
             .HasColumnName("DataExclusao")
             .IsRequired(false);
 
             builder.Property(f => f.UsuarioExclusao)
             .HasColumnName("UsuarioExclusao")
+            .IsRequired(false);
+
+            builder.Property(f => f.MotivoExclusao)
+            .HasColumnName("MotivoExclusao")
+            .HasMaxLength(100)
             .IsRequired(false);
         }
     }

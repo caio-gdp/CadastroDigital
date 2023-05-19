@@ -31,6 +31,7 @@ namespace CadastroDigital.Domain.Entities
         public Convenio Convenio { get; set; }
         public Dependente Dependente { get; set; }
         public InformacaoBancaria InformacaoBancaria { get; set; }
+        public ProcessoJuridico ProcessoJuridico { get; set; }
   
     }
 }
