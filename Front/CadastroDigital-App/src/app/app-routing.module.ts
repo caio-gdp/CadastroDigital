@@ -11,6 +11,11 @@ import { RegistrationComponent } from './components/user/registration/registrati
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { AddressComponent } from './components/user/address/address.component';
+import { SobreComponent } from './components/sobre/sobre.component';
+import { NoticiaComponent } from './components/noticia/noticia.component';
+import { BeneficioComponent } from './components/beneficio/beneficio.component';
+import { ConvenioComponent } from './components/convenio/convenio.component';
+import { ServicoComponent } from './components/servico/servico.component';
 
 const routes: Routes = [
   {
@@ -32,6 +37,11 @@ const routes: Routes = [
     ]
   },
   {  path : 'dashboard', component: DashboardComponent  },
+  {  path : 'sobre', component: SobreComponent  },
+  {  path : 'noticia', component: NoticiaComponent  },
+  {  path : 'beneficio', component: BeneficioComponent  },
+  {  path : 'convenio', component: ConvenioComponent  },
+  {  path : 'servico', component: ServicoComponent  },
   {  path : 'contato', component: ContatoComponent  },
   {  path : '', redirectTo : 'dashboard', pathMatch : 'full'  },
   {  path : '**', redirectTo : 'dashboard', pathMatch : 'full'  },

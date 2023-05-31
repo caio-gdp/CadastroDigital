@@ -4,7 +4,7 @@
         <img id="logo" src="../assets/logo_sindest.png" alt=""/>
       </a>
     </div>
-    <app-login></app-login>
+    <app-login *ngIf="showMenuLoggedIn()"></app-login>
   </nav>
 
 <!--<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" *ngIf="showMenuLoggedOut()">
@@ -129,21 +129,21 @@
   <div class="fs-6 bg-secondary">
     <div class="container">
       <!--Navbar-->
-      <nav class="navbar navbar-expand-lg navbar-dark px-0 py-0">
+      <nav class="navbar navbar-expand-lg navbar-dark px-0 py-0" *ngIf="showMenuLoggedIn()">
         <!-- Time -->
         <div class="date-area d-none d-lg-block">
-          <time class="navbar-text me-4" datetime="2019-10-28">Segunda-Feira, 28 de outubro de 2019</time>
+          <time class="navbar-text me-4"  datetime="{{dataAtual}">{{dataAtual | date : 'EEEE, d, MMMM, y' : '' : 'pt-BR'}}</time>
         </div>
         <!--Top left menu-->
         <div>
           <ul class="navbar">
             <li class="nav-item"><a class="nav-link" href="dashboard">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Notícias</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Benefícios</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Convênios</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Serviços</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
+            <li class="nav-item"><a class="nav-link" href="sobre">Sobre</a></li>
+            <li class="nav-item"><a class="nav-link" href="noticia">Notícias</a></li>
+            <li class="nav-item"><a class="nav-link" href="beneficio">Benefícios</a></li>
+            <li class="nav-item"><a class="nav-link" href="convenio">Convênios</a></li>
+            <li class="nav-item"><a class="nav-link" href="servico">Serviços</a></li>
+            <li class="nav-item"><a class="nav-link" href="contato">Contato</a></li>
             <li class="nav-item"><a class="nav-link" href="user/registration">Cadastre-se</a></li>
             <!--<li class="nav-item"><a class="nav-link" href="#" target="_blank">Processos</a></li>-->
           </ul>
@@ -253,10 +253,5 @@
 </header>
 <!--End header-->
 
-
-
-<!-- sidebar mobile menu -->
-
-<!-- end sidebar mobile menu -->
 
 

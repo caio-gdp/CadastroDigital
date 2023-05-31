@@ -9,7 +9,7 @@ import { PessoaService } from '@app/services/pessoa.service';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss']
+  styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent {
 
@@ -35,9 +35,15 @@ export class RegistrationComponent {
       adaptivePosition: true,
       isAnimated: true,
       containerClass: 'theme-default',
-      location: 'pt-br'
+      location: 'pt-BR'
     };
   }
+
+  // public mask = {
+  //   guide: true,
+  //   showMask : true,
+  //   mask: [/\d/, /\d/, '/', /\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]
+  // };
 
   public cssValidation(filedForm: FormControl | AbstractControl): any {
     return {'is-invalid': filedForm.errors && filedForm.touched};
@@ -119,5 +125,24 @@ export class RegistrationComponent {
     else{
       this.toastr.error('Preencha os campos obrigatórios.', 'Atenção!')
     }
+  }
+
+
+  public ajusteCssValor(campo: FormControl) : void{
+    // if (campo.value != "")
+        // alert(campo.value);
+
+
+  }
+
+  public readonlyDatePicker(e : any) : Boolean{
+     if (e.keyCode > 0) return false;
+
+     return true;
+  }
+
+  public dataMask() : void{
+
+    alert()
   }
 }

@@ -33,8 +33,12 @@ import { ProfileComponent } from './components/user/profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './components/user/menu/menu.component';
 import { AddressComponent } from './components/user/address/address.component';
+import { registerLocaleData } from '@angular/common';
+import localePT from '@angular/common/locales/pt';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
-defineLocale('pt-br', ptBrLocale);
+defineLocale('pt-BR', ptBrLocale);
+registerLocaleData(localePT);
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,9 +76,11 @@ defineLocale('pt-br', ptBrLocale);
     }),
     NgxSpinnerModule,
     BsDatepickerModule.forRoot(),
-    CarouselModule.forRoot()
+    CarouselModule.forRoot(),
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
-  providers: [PessoaService],
+  providers: [PessoaService, provideNgxMask()],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

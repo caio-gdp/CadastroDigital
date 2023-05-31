@@ -141,8 +141,6 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
-
-
 }
 
 
@@ -206,17 +204,16 @@ body {
 //   box-sizing: border-box;
 //   letter-spacing: 1px;}
 
-  input[type="number"],
-  input[type="text"],
-  input[type="password"],
-  input[type="datetime"]{
-    font: 15px/24px "Lato", Arial, sans-serif;
-    color: #333;
-    width: 100%;
-    box-sizing: border-box;
-    letter-spacing: 1px;}
-
-
+input[type="number"],
+input[type="text"],
+input[type="password"],
+input[type="datetime"]{
+  font: 15px/24px "Lato", Arial, sans-serif;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
 
 // .effect-1,
 // .effect-2,
@@ -336,7 +333,8 @@ body {
     background-color: transparent;
   }
 
-.effect ~ .focus-border{
+.effect ~
+.focus-border{
     position: absolute;
     bottom: 0;
     left: 0;
@@ -345,6 +343,7 @@ body {
     background-color: #3399FF;
     transition: 0.4s;
   }
+
 .effect:focus ~
 .focus-border,
 .has-content.effect ~
@@ -354,7 +353,8 @@ body {
 }
 
 .effect ~
-label{
+label
+{
   position: absolute;
   left: 0;
   width: 100%;
@@ -364,6 +364,7 @@ label{
   z-index: -1;
   letter-spacing: 0.5px;
 }
+
 .effect:focus ~
 label,
 .has-content.effect ~

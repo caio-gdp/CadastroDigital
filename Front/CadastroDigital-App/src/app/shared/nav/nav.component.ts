@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
 
   isCollapsed = true;
+  dataAtual = new Date();
 
   constructor(private router: Router) { }
 
@@ -22,7 +23,8 @@ export class NavComponent implements OnInit {
   showMenuLoggedIn() : boolean{
     var ret : boolean = false;
 
-    if (this.router.url != '/user/login' && this.router.url != '/dashboard')
+    // if (this.router.url != '/user/login' && this.router.url != '/dashboard')
+    if (this.router.url == '/dashboard')
       ret = true;
 
       return ret;
