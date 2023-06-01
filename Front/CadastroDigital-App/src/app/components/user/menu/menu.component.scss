@@ -1,14 +1,21 @@
-a {
-  border-bottom: 3px solid gray;
-  border-right: 3px solid gray;
+a:link{
+  width: 55%;
+  color: #d4d4d4;
 }
 
-a:default {
-  border-bottom: 3px solid #27ae60;
-  border-right: 3px solid #27ae60;
+i {
+  color: #d4d4d4;
 }
 
-a:hover{
-  border-bottom: 3px solid #27ae60;
-  border-right: 3px solid #27ae60;
+a:hover,
+a:active{
+  border-left: 3px solid #fd0404;
+  background-color: #ebeaea;
+  color: #000000;
+  i{
+    color: #fd0404;
+  }
 }
+
+
+
