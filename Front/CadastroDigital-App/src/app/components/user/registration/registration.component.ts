@@ -60,7 +60,7 @@ export class RegistrationComponent {
       nome : ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       telefone : ['', [Validators.required]],
       email : ['', [Validators.required, Validators.email]],
-      senha : ['', [Validators.required, Validators.minLength(6)]],
+      senha : ['', [Validators.required, Validators.minLength(6),Validators.maxLength(15)]],
       confirmaSenha : ['', [Validators.required]],
     }, formOptions);
   }
@@ -127,22 +127,87 @@ export class RegistrationComponent {
     }
   }
 
-
-  public ajusteCssValor(campo: FormControl) : void{
-    // if (campo.value != "")
-        // alert(campo.value);
-
-
-  }
-
-  public readonlyDatePicker(e : any) : Boolean{
+   public readonlyDatePicker(e : any) : Boolean{
      if (e.keyCode > 0) return false;
 
      return true;
   }
 
-  public dataMask() : void{
+  public validaSenha(){
+     const campo = <HTMLElement>document.getElementById('spansenha');
+     const senha = <HTMLElement>document.getElementById('senha');
+     campo.className = "fa fa-check";
+  }
 
-    alert()
+  public viewPassword(campo1 : string, campo2 : string, i : any)
+  {
+    const input = <HTMLInputElement>document.getElementById(campo1);
+    const span = <HTMLElement>document.getElementById(campo2);
+
+    if (input.type == 'text'){
+      input.type = 'password';
+      if (i == 1)
+        span.className = "fa fa-eye eye-pwd";
+      else
+        span.className = "fa fa-eye eye-pwd-confirm";
+    }
+    else{
+      input.type = 'text';
+      if (i == 1)
+        span.className = "fa fa-eye-slash eye-pwd";
+      else
+        span.className = "fa fa-eye-slash eye-pwd-confirm";
+    }
+  }
+
+  public confereSenha(e : any){
+
+    const input = <HTMLInputElement>document.getElementById("senha");
+    const spansenhaminlen = <HTMLElement>document.getElementById('spansenhaminlen');
+    const spansenhaupcase = <HTMLElement>document.getElementById('spansenhaupcase');
+    const spansenhanum = <HTMLElement>document.getElementById('spansenhanum');
+    var charmaiusculo = false;
+    var charnumerico = false;
+
+
+    if (input.value.length > 5)
+      spansenhaminlen.className = "fa fa-check";
+    else
+      spansenhaminlen.className = "fa fa-times";
+
+    for (var i = 0; i < input.value.length; i++)
+    {
+      var valorAscii = input.value.charCodeAt(i);
+
+      if (valorAscii >= 65 && valorAscii <= 90)
+        charmaiusculo = true;
+
+      if (valorAscii >= 48 && valorAscii <= 57)
+        charnumerico = true;
+
+    }
+
+    if (charmaiusculo)
+      spansenhaupcase.className = "fa fa-check";
+    else
+      spansenhaupcase.className = "fa fa-times";
+
+    if (charnumerico)
+      spansenhanum.className = "fa fa-check";
+    else
+      spansenhanum.className = "fa fa-times";
+
+
+      // 48 a 57
+
+
+
+
+
+
+
+
+
+
   }
 }
