@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatorField } from '@app/helpers/ValidatorField';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Pessoa } from '@app/models/Pessoa';
 import { PessoaService } from '@app/services/pessoa.service';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-registration',
@@ -15,6 +16,8 @@ export class RegistrationComponent {
 
   pessoa: Pessoa;
   form!: FormGroup;
+  tokenVisible: boolean = false;
+  reCAPTCHAToken: string = '';
 
   get f() : any{
     return this.form.controls;
@@ -23,7 +26,10 @@ export class RegistrationComponent {
   constructor(public fb : FormBuilder,
     private pessoaService : PessoaService,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService){}
+    private spinner: NgxSpinnerService,
+    private recaptchaV3Service: ReCaptchaV3Service,
+    private ngZone: NgZone
+    ){}
 
   ngOnInit() : void {
      this.validation();
@@ -38,12 +44,6 @@ export class RegistrationComponent {
       location: 'pt-BR'
     };
   }
-
-  // public mask = {
-  //   guide: true,
-  //   showMask : true,
-  //   mask: [/\d/, /\d/, '/', /\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]
-  // };
 
   public cssValidation(filedForm: FormControl | AbstractControl): any {
     return {'is-invalid': filedForm.errors && filedForm.touched};
@@ -61,7 +61,7 @@ export class RegistrationComponent {
       telefone : ['', [Validators.required]],
       email : ['', [Validators.required, Validators.email]],
       senha : ['', [Validators.required, Validators.minLength(6),Validators.maxLength(15)]],
-      confirmaSenha : ['', [Validators.required]],
+      confirmaSenha : ['', [Validators.required]]
     }, formOptions);
   }
 
@@ -196,18 +196,24 @@ export class RegistrationComponent {
       spansenhanum.className = "fa fa-check";
     else
       spansenhanum.className = "fa fa-times";
-
-
-      // 48 a 57
-
-
-
-
-
-
-
-
-
-
   }
+
+   public send(): void {
+     this.recaptchaV3Service.execute('importantAction')
+     .subscribe((token: string) => {
+      this.tokenVisible = true;
+       this.reCAPTCHAToken = `Token [${token}] generated`;
+      //  console.debug(`Token [${token}] generated`);
+     });
+   }
+
+  // errored(e: any){
+  //   console.log('erro reCAPTCHA não encontrado');
+  // }
+
+  // resolved(e: any){
+  //   // this.http;
+  // }
+
+
 }

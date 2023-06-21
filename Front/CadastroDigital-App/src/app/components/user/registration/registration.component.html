@@ -1,6 +1,3 @@
-<head>
-  <meta charset="utf-8">
-</head>
 <div class="row">
 <!-- testar validação de formulario e reativo
       <p>Form value : {{form.value | json}}</p>
@@ -62,7 +59,7 @@
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-3">
-                    <input class="effect" type="datetime" placeholder="" [ngClass]="cssValidation(f.dataNascimento)" placeholder="Data de Nascimento*"
+                    <input class="effect" type="datetime" [ngClass]="cssValidation(f.dataNascimento)" placeholder="Data de Nascimento*"
                     formControlName="dataNascimento" bsDatepicker [bsConfig]="bsConfig()" maxlength="10" (keypress)="readonlyDatePicker($event)">
                     <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.required">
                       Data de Nascimento é obrigatório.
@@ -164,6 +161,7 @@
                     </div>
                   </div>
 
+
                   <div class="row">
                     <div class="col div-btn-custom">
                       <button class="btn btn-danger btn-custom" routerLink="dashboard">
@@ -175,6 +173,10 @@
                         Avançar
                       </button>
                     </div>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-primary" (click)="send()">Send</button>
+                  <div *ngIf="tokenVisible"> reCAPTCHA Token <br />
+                    <p style="color:red">{{reCAPTCHAToken}}</p>
                   </div>
                 </form>
               </div>

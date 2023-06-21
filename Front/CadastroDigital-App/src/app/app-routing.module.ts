@@ -16,6 +16,7 @@ import { NoticiaComponent } from './components/noticia/noticia.component';
 import { BeneficioComponent } from './components/beneficio/beneficio.component';
 import { ConvenioComponent } from './components/convenio/convenio.component';
 import { ServicoComponent } from './components/servico/servico.component';
+import { PersonalDataComponent } from './components/user/personalData/personalData.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     children : [
       {  path : 'login', component: LoginComponent  },
       {  path : 'registration', component: RegistrationComponent  },
+      {  path : 'personalData', component: PersonalDataComponent  },
       {  path : 'address', component: AddressComponent  }
     ]
   },
