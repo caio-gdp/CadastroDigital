@@ -24,10 +24,10 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasDatabaseName("idx_redesocial_tiporedesocial");
 
             //Foreign Key
-            builder.HasOne(f => f.Pessoa)
-            .WithOne(f => f.RedeSocial)
-            .HasForeignKey<RedeSocial>(f => f.PessoaId)
-            .HasConstraintName("fk_redesocial_pessoa");
+            // builder.HasOne(f => f.Pessoa)
+            // .WithOne(f => f.RedeSocial)
+            // .HasForeignKey<RedeSocial>(f => f.PessoaId)
+            // .HasConstraintName("fk_redesocial_pessoa");
 
             builder.HasOne(f => f.TipoRedeSocial)
             .WithOne(f => f.RedeSocial)

@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatorField } from '@app/helpers/ValidatorField';
+import { RedeSocial } from '@app/models/RedeSocial';
+import { OrgaoExpedidor } from '@app/models/OrgaoExpedidor';
+import { OrgaoExpedidorService } from '@app/services/orgaoexpedidor.service';
+import { Estado } from '@app/models/Estado';
+import { EstadoService } from '@app/services/estado.service';
+import { CidadeService } from '@app/services/cidade.service';
+import { Cidade } from '@app/models/Cidade';
+import { Pais } from '@app/models/Pais';
+import { PaisService } from '@app/services/Pais.service';
 
 @Component({
   selector: 'app-personalData',
@@ -9,16 +18,31 @@ import { ValidatorField } from '@app/helpers/ValidatorField';
 })
 export class PersonalDataComponent implements OnInit {
 
+  public orgaosExpedidores: OrgaoExpedidor[] = [];
+  public estados: Estado[] = [];
+  public cidades: Cidade[] = [];
+  public pais : Pais;
+
   form!: FormGroup;
 
   get f() : any{
     return this.form.controls;
   }
 
-  constructor(public fb : FormBuilder) { }
+  get redesSociais(): FormArray{
+    return this.form.get('redesSociais') as FormArray;
+  }
+
+  constructor(public fb : FormBuilder,
+    private orgaoExpedidorService: OrgaoExpedidorService,
+    private estadoService: EstadoService,
+    private cidadeService: CidadeService,
+    private paisService: PaisService) { }
 
   ngOnInit() {
     this.validation();
+    this.getOrgaoExpedidor();
+    this.getEstado();
   }
 
   public cssValidation(filedForm: FormControl | AbstractControl): any {
@@ -30,11 +54,26 @@ export class PersonalDataComponent implements OnInit {
       rg : ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
       dataEmissao : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       orgaoExpedidor : ['', [Validators.required]],
-      telefone : ['', [Validators.required]],
-      email : ['', [Validators.required, Validators.email]],
-      senha : ['', [Validators.required, Validators.minLength(6),Validators.maxLength(15)]],
-      confirmaSenha : ['', [Validators.required]]
+      ufExpedidor : ['', [Validators.required]],
+      naturalidade : ['', [Validators.required]],
+      nacionalidade : ['', [Validators.required]],
+      estadoCivil : ['', [Validators.required]],
+      sexo : ['', [Validators.required]],
+      redesSociais: this.fb.array([])
     });
+  }
+
+  addRedeSocial() : void{
+    this.redesSociais.push(this.criarLote({id: 0} as RedeSocial));
+  }
+
+  criarLote(redeSocial : RedeSocial): FormGroup {
+    return this.fb.group({
+      id: [redeSocial.id],
+      pessoaId: [redeSocial.pessoaId],
+      tipoRedeSocialId: [redeSocial.tipoRedeSocialId],
+      endereco: [redeSocial.endereco]
+    })
   }
 
   bsConfig() : any{
@@ -52,6 +91,75 @@ export class PersonalDataComponent implements OnInit {
 
     return true;
  }
+
+ public getOrgaoExpedidor() : void{
+  const observer = {
+    next : (_orgaosExpedidores : OrgaoExpedidor[]) => {
+        this.orgaosExpedidores = _orgaosExpedidores;
+    },
+    error : (error : any) =>
+    {
+      // this.spinner.hide(),
+      // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+    },
+    // complete : () => this.spinner.hide()
+  };
+  this.orgaoExpedidorService.get().subscribe(observer);
+}
+
+public getEstado() : void{
+  const observer = {
+    next : (_estados : Estado[]) => {
+        this.estados = _estados;
+
+        this.getPais(this.estados[0].paisId);
+    },
+    error : (error : any) =>
+    {
+      // this.spinner.hide(),
+      // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+    },
+    // complete : () => this.spinner.hide()
+  };
+  this.estadoService.get().subscribe(observer);
+}
+
+public getCidade() : void{
+
+  var obj = (<HTMLSelectElement>document.getElementById("ufExpedidor"));
+  var estado : number = +(<HTMLOptionElement>obj[obj.options.selectedIndex]).value.replace(":","");
+
+   const observer = {
+     next : (_cidades : Cidade[]) => {
+         this.cidades = _cidades;
+     },
+     error : (error : any) =>
+     {
+       // this.spinner.hide(),
+       // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+     },
+     // complete : () => this.spinner.hide()
+   };
+  this.cidadeService.get(estado).subscribe(observer);
+
+}
+
+public getPais(id : number) : void{
+
+   const observer = {
+     next : (_pais : Pais) => {
+         this.pais = _pais;
+         alert(this.pais.id)
+     },
+     error : (error : any) =>
+     {
+       // this.spinner.hide(),
+       // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+     },
+     // complete : () => this.spinner.hide()
+   };
+  this.paisService.getById(id).subscribe(observer);
+}
 
  public saveChange() : void{
 

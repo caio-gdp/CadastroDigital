@@ -38,6 +38,10 @@ import localePT from '@angular/common/locales/pt';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service, RecaptchaV3Module } from 'ng-recaptcha';
 import { PersonalDataComponent } from './components/user/personalData/personalData.component';
+import { OrgaoExpedidorService } from './services/orgaoexpedidor.service';
+import { EstadoService } from './services/estado.service';
+import { CidadeService } from './services/cidade.service';
+import { PaisService } from './services/Pais.service';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(localePT);
@@ -86,7 +90,12 @@ registerLocaleData(localePT);
   // providers: [{provide: PessoaService, useClass: PessoaService},
   //             {provide: provideNgxMask, useValue: provideNgxMask()},
   //             {provide: ReCaptchaV3Service , useValue: '6LfIjJ8mAAAAAP0yk5n375Dhu6BUnem_vQOeHqh-'}],
-  providers: [PessoaService, ReCaptchaV3Service,
+  providers: [PessoaService,
+              OrgaoExpedidorService,
+              EstadoService,
+              CidadeService,
+              PaisService,
+              ReCaptchaV3Service,
               provideNgxMask(),
               {provide: RECAPTCHA_V3_SITE_KEY, useValue: '6LemiK8mAAAAADxKrc0KtYeWBNkzQsSXi4ujzh-E'}],
   bootstrap: [AppComponent],

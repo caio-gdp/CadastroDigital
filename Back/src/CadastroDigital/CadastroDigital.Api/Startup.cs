@@ -44,7 +44,14 @@ namespace CadastroDigital.Api
                     .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = 
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddScoped<IPessoaService, PessoaService>();
-            services.AddScoped<IRepositoryBaseCadastroDigital, RepositoryBaseCadastroDigital>();
+            services.AddScoped<ICidadeService, CidadeService>();
+            services.AddScoped<IEstadoService, EstadoService>();
+            services.AddScoped<IPaisService, PaisService>();
+            services.AddScoped<IEstadoCivilService, EstadoCivilService>();
+            services.AddScoped<IOrgaoExpedidorService, OrgaoExpedidorService>();
+            services.AddScoped<ISexoService, SexoService>();
+            services.AddScoped<ITipoRedeSocialService, TipoRedeSocialService>();
+            services.AddScoped(typeof(IRepositoryBaseCadastroDigital<>), typeof(RepositoryBaseCadastroDigital<>));
             services.AddCors(c =>  
                             {  
                                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());  

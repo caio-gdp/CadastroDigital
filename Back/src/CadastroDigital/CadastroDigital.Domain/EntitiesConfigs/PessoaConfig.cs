@@ -38,10 +38,10 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasForeignKey<Pessoa>(f => f.StatusCadastroId)
             .HasConstraintName("fk_pessoa_statuscadastro");
 
-            builder.HasOne(f => f.PassoCadastro)
-            .WithOne(f => f.Pessoa)
-            .HasForeignKey<Pessoa>(f => f.PassoCadastroId)
-            .HasConstraintName("fk_pessoa_passocadastro");
+            // builder.HasOne(f => f.PassoCadastro)
+            // .WithOne(f => f.Pessoa)
+            // .HasForeignKey<Pessoa>(f => f.PassoCadastroId)
+            // .HasConstraintName("fk_pessoa_passocadastro");
 
             //Atributos
             builder.Property(f => f.Id)

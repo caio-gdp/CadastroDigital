@@ -19,7 +19,6 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .IsUnique(false)
             .HasDatabaseName("idx_pessoafisica_pessoa");
 
-            //Index
             builder.HasIndex(i => i.SexoId)
             .IsUnique(false)
             .HasDatabaseName("idx_pessoafisica_sexo");

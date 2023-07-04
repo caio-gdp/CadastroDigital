@@ -27,7 +27,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var pessoas = await _pessoaService.GetAllAsync();
+            var pessoas = await _pessoaService.Get();
 
             if (pessoas == null)
                 return NotFound("Nenhum registro encontrado.");
@@ -38,7 +38,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var pessoa = await _pessoaService.GetPessoaByIdAsync(id);
+            var pessoa = await _pessoaService.GetPessoaById(id);
 
             if (pessoa.Equals(null))
                 return NoContent();
@@ -47,9 +47,9 @@ namespace CadastroDigital.Api.Controllers
         }
 
         [HttpGet("cpf/{cpf}")]
-        public async Task<IActionResult> GetByCpf(string cpf)
+        public async Task<IActionResult> GetPessoaByCpf(string cpf)
         {
-            var pessoas = await _pessoaService.GetPessoaByCpfAsync(cpf);
+            var pessoas = await _pessoaService.GetPessoaByCpf(cpf);
 
             if (pessoas.Equals(null))
                 return NoContent();
@@ -60,7 +60,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet("nome/{nome}")]
         public async Task<IActionResult> GetByName(string nome)
         {
-            var pessoas = await _pessoaService.GetPessoaByNameAsync(nome);
+            var pessoas = await _pessoaService.GetPessoaByName(nome);
 
             if (pessoas == null)
                 return NoContent();
@@ -104,7 +104,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpPost("upload-image/{pessoaId}")]
         public async Task<IActionResult> Post(int pessoaId)
         {
-            var pessoa = await _pessoaService.GetPessoaByIdAsync(pessoaId);
+            var pessoa = await _pessoaService.GetPessoaById(pessoaId);
 
             if (pessoa == null)
                 return NoContent();

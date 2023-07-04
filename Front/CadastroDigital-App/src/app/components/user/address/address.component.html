@@ -2,88 +2,119 @@
   <!-- testar validação de formulario e reativo
         <p>Form value : {{form.value | json}}</p>
         <p>Form valid : {{form.status | json}}</p> -->
-    <div class="col-sm-6"><app-menu></app-menu></div>
-    <div class="col-sm-6">
+    <div class="col-sm-20">
       <div class="container">
-        <form [formGroup]="form">
-          <!-- <h2>Input with Label Effects</h2> -->
-          <div class="form-group col-2 input-effect">
-            <input formControlName="cep" class="effect is-invalid" type="number" placeholder="" [ngClass]="cssValidation(f.cep)" >
-            <div class="invalid-tooltip" *ngIf="f.cep.errors?.required">
-              CEP é obrigatório.
+        <div class="col-lg-60 mt-4">
+          <div class="card">
+            <div class="card-header">
+              <h5><b>Cadastro Digital</b></h5>
             </div>
-            <div class="invalid-tooltip" *ngIf="f.cep.errors?.minlength">
-              CEP deve ter no minimo 8 caracteres.
-            </div>
-            <div class="invalid-tooltip" *ngIf="f.cep.errors?.maxlength">
-              CEP deve ter no máxino 8 caracteres.
-            </div>
-            <label>CEP*</label>
-            <span class="focus-border"></span>
-          </div>
 
-          <div class="col-1 input-effect">
-            <input class="effect" type="text" placeholder="" [ngClass]="cssValidation(f.endereco)" formControlName="endereco">
-            <div class="invalid-tooltip" *ngIf="f.endereco.errors?.required">
-              Endereço é obrigatório.
+            <div class="card-body">
+              <div class="row">
+                <div class="col col-md-4"><app-menu></app-menu></div>
+                <div class="col">
+                <div class="card">
+                  <div class="card-header">
+                    <h6><b>Dados Residenciais</b></h6>
+                  </div>
+                  <div class="p-4">
+                    <div class="card card-informacao">
+                      <div class="card-body">
+                        <h5 class="card-title"><b>Informação</b></h5>
+                        <p class="card-text">Todos os itens com (*) são obrigatórios.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <form [formGroup]="form">
+                    <div class="col-3">
+                      <input formControlName="cep" class="effect is-invalid" type="number" placeholder="CEP*" [ngClass]="cssValidation(f.cep)" >
+                      <div class="invalid-tooltip" *ngIf="f.cep.errors?.required">
+                        CEP é obrigatório.
+                      </div>
+                      <div class="invalid-tooltip" *ngIf="f.cep.errors?.minlength">
+                        CEP deve ter no minimo 8 caracteres.
+                      </div>
+                      <div class="invalid-tooltip" *ngIf="f.cep.errors?.maxlength">
+                        CEP deve ter no máxino 8 caracteres.
+                      </div>
+                      <span class="focus-border"></span>
+                    </div>
+                    <div class="col-1 input-effect">
+                      <input class="effect" type="text" placeholder="Endereço*" [ngClass]="cssValidation(f.endereco)" formControlName="endereco">
+                      <div class="invalid-tooltip" *ngIf="f.endereco.errors?.required">
+                        Endereço é obrigatório.
+                      </div>
+                      <div class="invalid-tooltip" *ngIf="f.endereco.errors?.minlength">
+                        Endereço deve ter no minimo 3 caracteres.
+                      </div>
+                      <div class="invalid-tooltip" *ngIf="f.endereco.errors?.maxlength">
+                        Endereço deve ter no máxino 150 caracteres.
+                      </div>
+                      <span class="focus-border"></span>
+                    </div>
+                    <div class="col-3">
+                      <input class="effect" type="number" placeholder="Número*" [ngClass]="cssValidation(f.numero)" formControlName="numero">
+                      <div class="invalid-tooltip" *ngIf="f.numero.errors?.required">
+                        Número do endereço é obrigatório.
+                      </div>
+                      <span class="focus-border"></span>
+                    </div>
+                    <div class="col-3">
+                      <input class="effect" type="text" placeholder="Complemento" formControlName="complemento">
+                      <span class="focus-border"></span>
+                    </div>
+                    <div class="col-3">
+                      <input class="effect" type="select" placeholder="Bairro*" [ngClass]="cssValidation(f.cidade)"
+                      formControlName="bairro">
+                      <div class="invalid-tooltip" *ngIf="f.bairro.errors?.required">
+                        Bairro é obrigatório.
+                      </div>
+                      <span class="focus-border"></span>
+                    </div>
+                    <div class="col-2 input-effect">
+                      <input class="effect" type="select" placeholder="Cidade*" [ngClass]="cssValidation(f.cidade)"
+                      formControlName="cidade">
+                      <div class="invalid-tooltip" *ngIf="f.cidade.errors?.required">
+                        Cidade é obrigatório.
+                      </div>
+                      <span class="focus-border"></span>
+                    </div>
+                    <div class="col-2 input-effect">
+                      <input class="effect" type="select" placeholder="Estado*" [ngClass]="cssValidation(f.cidade)"
+                      formControlName="estado">
+                      <div class="invalid-tooltip" *ngIf="f.estado.errors?.required">
+                        Estado é obrigatório.
+                      </div>
+                      <span class="focus-border"></span>
+                    </div>
+                    <div class="col-1">
+                      <div class="form-group col">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col div-btn-custom">
+                        <button class="btn btn-danger btn-custom" routerLink="dashboard">
+                          Cancelar
+                        </button>
+                      </div>
+                      <div class="col div-btn-custom">
+                        <button class="btn btn-success btn-custom" (click)="saveChange()" [disabled]="!form.valid">
+                          Avançar
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                </div>
+              </div>
             </div>
-            <div class="invalid-tooltip" *ngIf="f.endereco.errors?.minlength">
-              Endereço deve ter no minimo 3 caracteres.
-            </div>
-            <div class="invalid-tooltip" *ngIf="f.endereco.errors?.maxlength">
-              Endereço deve ter no máxino 150 caracteres.
-            </div>
-            <label>Endereco*</label>
-            <span class="focus-border"></span>
           </div>
-          <div class="col-2 input-effect">
-            <input class="effect" type="number" placeholder="" [ngClass]="cssValidation(f.numero)" formControlName="numero">
-            <div class="invalid-tooltip" *ngIf="f.numero.errors?.required">
-              Número do endereço é obrigatório.
-            </div>
-            <label>Número*</label>
-            <span class="focus-border"></span>
-          </div>
-          <div class="col-2 input-effect">
-            <input class="effect" type="text" placeholder="" formControlName="complemento">
-            <label>Complemento*</label>
-            <span class="focus-border"></span>
-          </div>
-          <div class="col-2 input-effect">
-            <input class="effect" type="select" placeholder="" [ngClass]="cssValidation(f.cidade)"
-            formControlName="cidade">
-            <div class="invalid-tooltip" *ngIf="f.cidade.errors?.required">
-              Cidade é obrigatório.
-            </div>
-            <label>Cidade*</label>
-            <span class="focus-border"></span>
-          </div>
-          <div class="col-2 input-effect">
-            <input class="effect" type="select" placeholder="" [ngClass]="cssValidation(f.cidade)"
-            formControlName="estado">
-            <div class="invalid-tooltip" *ngIf="f.estado.errors?.required">
-              Estado é obrigatório.
-            </div>
-            <label>Estado*</label>
-            <span class="focus-border"></span>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-2">
-              <button class="btn btn-lg btn-danger btn-block px-5" routerLink="dashboard">
-                Cancelar
-              </button>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-2">
-              <button class="btn btn-lg btn-success btn-block px-5" (click)="saveChange()" [disabled]="!form.valid">
-                Registar
-              </button>
-            </div>
-          </div>
-        </form>
-
-      <!-- </div> -->
+        </div>
     </div>
     </div>
   </div>
+
+
+
+

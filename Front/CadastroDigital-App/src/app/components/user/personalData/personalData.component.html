@@ -1,12 +1,3 @@
-<!-- CEP
-Endereco
-cidade
-estado
-pais
-sexo
-naturalidade
-nacionalidada -->
-
 <div class="row">
   <!-- testar validação de formulario e reativo
         <p>Form value : {{form.value | json}}</p>
@@ -25,6 +16,14 @@ nacionalidada -->
                 <div class="card">
                   <div class="card-header">
                     <h6><b>Dados Pessoais</b></h6>
+                  </div>
+                  <div class="p-4">
+                    <div class="card card-informacao">
+                      <div class="card-body">
+                        <h5 class="card-title"><b>Informação</b></h5>
+                        <p class="card-text">Todos os itens com (*) são obrigatórios.</p>
+                      </div>
+                    </div>
                   </div>
                   <form [formGroup]="form">
                     <div class="col-3">
@@ -55,10 +54,11 @@ nacionalidada -->
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
-                      <select class="effect" type="select" [ngClass]="cssValidation(f.nome)" formControlName="orgaoExpedidor"
+                      <select class="effect" type="select" [ngClass]="cssValidation(f.orgaoExpedidor)" formControlName="orgaoExpedidor"
                       placeholder="Orgao Expedidor*">
-                        <option disabled selected hidden>Orgão Expedidor*</option>
-                        <option>SSP</option>
+                        <!-- <option disabled selected hidden>Orgão Expedidor*</option> -->
+                        <option>Orgão Expedidor*</option>
+                        <option *ngFor="let orgaoExpedidor of orgaosExpedidores" id="{{orgaoExpedidor.id}}">{{orgaoExpedidor.sigla}}</option>
                       <div class="invalid-tooltip" *ngIf="f.orgaoExpedidor.errors?.required">
                         Orgão Expedidor é obrigatório.
                       </div>
@@ -66,9 +66,9 @@ nacionalidada -->
                       </select>
                     </div>
                     <div class="col-3">
-                      <select class="effect" type="select" placeholder="" [ngClass]="cssValidation(f.nome)" formControlName="ufExpedidor">
-                        <option disabled selected hidden>Estado Expedidor*</option>
-                        <option>SP</option>
+                      <select class="effect" id="ufExpedidor" [ngClass]="cssValidation(f.ufExpedidor)" formControlName="ufExpedidor" (ngModelChange)="getCidade()">
+                        <option value="0">Estado Expedidor*</option>
+                        <option *ngFor="let estado of estados" ngValue="{{estado.id}}">{{estado.sigla}}</option>
                       <div class="invalid-tooltip" *ngIf="f.ufExpedidor.errors?.required">
                         Estado Expedidor é obrigatório.
                       </div>
@@ -76,7 +76,27 @@ nacionalidada -->
                       </select>
                     </div>
                     <div class="col-3">
-                      <select class="effect" type="select" placeholder="" [ngClass]="cssValidation(f.nome)" formControlName="estadoCivil">
+                      <select class="effect" type="select" placeholder="" [ngClass]="cssValidation(f.naturalidade)" formControlName="naturalidade">
+                        <option>Naturalidade*</option>
+                        <option *ngFor="let cidade of cidades" ngValue="{{cidade.id}}">{{cidade.nome}}</option>
+                      <div class="invalid-tooltip" *ngIf="f.naturalidade.errors?.required">
+                        Naturalidade é obrigatório.
+                      </div>
+                      <span class="focus-border"></span>
+                      </select>
+                    </div>
+                    <div class="col-3">
+                      <select class="effect" id="nacionalidade" type="select" placeholder="" [ngClass]="cssValidation(f.nacionalidade)" formControlName="nacionalidade">
+                        <option>Nacionalidade*</option>
+                        <option ngValue="{{pais.id}}">{{pais.nome}}</option>
+                      <div class="invalid-tooltip" *ngIf="f.nacionalidade.errors?.required">
+                        Nacionalidade é obrigatório.
+                      </div>
+                      <span class="focus-border"></span>
+                      </select>
+                    </div>
+                    <div class="col-3">
+                      <select class="effect" type="select" placeholder="" [ngClass]="cssValidation(f.estadoCivil)" formControlName="estadoCivil">
                         <option disabled selected hidden>Estado Civil*</option>
                         <option>Casado</option>
                       <div class="invalid-tooltip" *ngIf="f.estadoCivil.errors?.required">
@@ -86,7 +106,7 @@ nacionalidada -->
                       </select>
                     </div>
                     <div class="col-3">
-                      <select class="effect" type="select" placeholder="" [ngClass]="cssValidation(f.nome)" formControlName="sexo">
+                      <select class="effect" type="select" placeholder="" [ngClass]="cssValidation(f.sexo)" formControlName="sexo">
                         <option disabled selected hidden>Sexo*</option>
                         <option>Masculino</option>
                       <div class="invalid-tooltip" *ngIf="f.sexo.errors?.required">
@@ -95,10 +115,109 @@ nacionalidada -->
                       <span class="focus-border"></span>
                       </select>
                     </div>
+
                     <div class="col-1">
-                      <div class="form-group col">
+                      <div class="card card-informacao">
+                        <div class="card-body">
+                          <h5 class="card-title"><b>Informação</b></h5>
+                          <p class="card-text">Clique em Rede Social para adicionar e preencher novas redes sociais.</p>
+                        </div>
                       </div>
                     </div>
+                    <div class="col-3">
+                      <input formControlName="tipoRedeSocialId"class="effect" type="text" placeholder="Rede Social" [ngClass]="cssValidation(f.rg)" maxlength="12">
+                    </div>
+                    <div class="col-3">
+                      <input formControlName="endereco" class="effect" type="text" placeholder="Endereço Rede Social" [ngClass]="cssValidation(f.rg)" maxlength="12">
+                    </div>
+                    <div class="col-3">
+                      <button class="p-2 btn btn-sm btn-outline-primary mb-1" (click)="addRedeSocial()">
+                        <i class="fa fa-plus-circle my-1"></i>
+                        <b class="ml-1">Adicionar Rede Social</b>
+                      </button>
+                    </div>
+                    <div formArrayName="redesSociais" *ngFor="let redeSocial of redesSociais.controls; let i=index">
+                      <div class="col-3">
+                        <input formControlName="tipoRedeSocialId"class="effect" type="text" placeholder="Rede Social" [ngClass]="cssValidation(f.rg)" maxlength="12">
+                      </div>
+                      <div class="col-3">
+                        <input formControlName="endereco" class="effect" type="text" placeholder="Endereço Rede Social" [ngClass]="cssValidation(f.rg)" maxlength="12">
+                      </div>
+                      <div class="col-3">
+                        <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex">
+                          <i class="fa fa-window-close my-1"></i>
+                          <b class="ml-1 d-none d-sm-block">Excluir</b>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- <div class="card rounded shadow-sm mt-4">
+                      <div class="p-3">
+                        <div class="d-flex border-bottom">
+                          <h2 class="mr-auto">
+                            Lotes do Evento
+                          </h2>
+                          <h2>
+                            <i class="fas fa-money-bill-wave"></i>
+                          </h2>
+                        </div>
+                        <p>Clique em Lote para adicionar e preencher novos Lotes</p>
+                        <div class="form-row p-1">
+                          <div class="col">
+                            <div>
+                              <fieldset class="form-group">
+                                <legend class="d-flex justify-content-between capitalize">
+                                  <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
+                                    tooltip="Excluir Lote"
+                                    [adaptivePosition]="false"
+                                    [delay]="500"
+                                    placement="left">
+                                  <i class="fa fa-window-close my-1"></i>
+                                  <b class="ml-1 d-none d-sm-block">Excluir</b>
+                                </button>
+                              </legend>
+                              <div class="row">
+                                <div class="form-group col-md-4">
+                                  <label>Nome</label>
+                                  <input type="text" class="form-control is-invalid" formControlName="nome" placeholder="Lote">
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label>Quantidade</label>
+                                  <input type="text" class="form-control" formControlName="quantidade" placeholder="000">
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label>Preço</label>
+                                  <input type="text" currencyMask class="form-control" formControlName="preco" placeholder="R$ 0,00">
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label>Data Início</label>
+                                  <input type="text" class="form-control" formControlName="dataInicio" placeholder="01/01/2019">
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label>Data Fim</label>
+                                  <input type="text" class="form-control" formControlName="dataFim" placeholder="01/01/2019">
+                                </div>
+                              </div>
+                            </fieldset>
+                          </div>
+                        </div>
+                      </div>
+                      <button class="d-flex btn btn-outline-primary">
+                        <i class="fa fa-plus-circle my-1"></i>
+                        <b class="ml-1">Lote</b>
+                      </button>
+                    </div>
+                    <div class="card-footer">
+                      <div class="d-flex">
+                        <button class="btn btn-outline-secondary mr-auto border">
+                          Cancelar Alteração
+                        </button>
+                        <button class="btn btn-success">
+                          Salvar Lotes
+                        </button>
+                      </div>
+                    </div>
+                  </div> -->
                     <div class="row">
                       <div class="col div-btn-custom">
                         <button class="btn btn-danger btn-custom" routerLink="dashboard">

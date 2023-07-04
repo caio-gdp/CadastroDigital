@@ -21,10 +21,10 @@ namespace CadastroDigital.Domain.Entities
         public PessoaFisica PessoaFisica { get; set; }
         public Email Email { get; set; }
         public Telefone Telefone { get; set; }
-        public Endereco Endereco { get; set; }
-        public PassoCadastro PassoCadastro { get; set; }
-        public Documento Documento { get; set; }
-        public RedeSocial RedeSocial { get; set; }
-        public Socio Socio { get; set; }
+        //public Endereco Endereco { get; set; }
+        //public PassoCadastro PassoCadastro { get; set; }
+        //public Documento Documento { get; set; }
+        //public RedeSocial RedeSocial { get; set; }
+        //public Socio Socio { get; set; }
     }
 }

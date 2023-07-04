@@ -7,7 +7,7 @@ namespace CadastroDigital.Domain.Entities
 {
     public class StatusProcessoJuridico : Base
     {
-        public string Descricao { get; set; }
-        public ProcessoJuridico ProcessoJuridico { get; set; }
+        // public string Descricao { get; set; }
+        // public ProcessoJuridico ProcessoJuridico { get; set; }
     }
 }
