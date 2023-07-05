@@ -32,7 +32,7 @@ import { RegistrationComponent } from './components/user/registration/registrati
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './components/user/menu/menu.component';
-import { AddressComponent } from './components/user/address/address.component';
+import { AddressDataComponent } from './components/user/addressData/addressData.component';
 import { registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
@@ -42,6 +42,11 @@ import { OrgaoExpedidorService } from './services/orgaoexpedidor.service';
 import { EstadoService } from './services/estado.service';
 import { CidadeService } from './services/cidade.service';
 import { PaisService } from './services/Pais.service';
+import { EstadoCivilService } from './services/estadocivil.service';
+import { SexoService } from './services/sexo.service';
+import { TipoRedeSocialService } from './services/tiporedesocial.service';
+import { EnderecoService } from './services/endereco.service';
+import { ProfissionalDataComponent } from './components/user/profissionalData/profissionalData.component';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(localePT);
@@ -62,7 +67,8 @@ registerLocaleData(localePT);
       PersonalDataComponent,
       ProfileComponent,
       MenuComponent,
-      AddressComponent
+      AddressDataComponent,
+      ProfissionalDataComponent
    ],
   imports: [
     BrowserModule,
@@ -95,6 +101,10 @@ registerLocaleData(localePT);
               EstadoService,
               CidadeService,
               PaisService,
+              EstadoCivilService,
+              SexoService,
+              TipoRedeSocialService,
+              EnderecoService,
               ReCaptchaV3Service,
               provideNgxMask(),
               {provide: RECAPTCHA_V3_SITE_KEY, useValue: '6LemiK8mAAAAADxKrc0KtYeWBNkzQsSXi4ujzh-E'}],

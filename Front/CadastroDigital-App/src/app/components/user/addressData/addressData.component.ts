@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatorField } from '@app/helpers/ValidatorField';
+import { Endereco } from '@app/models/Endereco';
+import { EnderecoService } from '@app/services/endereco.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-address',
-  templateUrl: './address.component.html',
-  styleUrls: ['./address.component.scss']
+  selector: 'app-addressData',
+  templateUrl: './addressData.component.html',
+  styleUrls: ['./addressData.component.scss']
 })
-export class AddressComponent implements OnInit {
+export class AddressDataComponent implements OnInit {
+
+  public endereco: Endereco;
 
   form!: FormGroup;
 
@@ -17,7 +21,8 @@ export class AddressComponent implements OnInit {
   }
 
   constructor(public fb : FormBuilder,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService,
+    private enderecoService : EnderecoService) { }
 
   ngOnInit() : void {
     this.validation();
@@ -29,16 +34,40 @@ export class AddressComponent implements OnInit {
 
   private validation() : void{
     const formOptions : AbstractControlOptions = {
-      validators : ValidatorField.MustMatch('senha','confirmaSenha')
+
     };
 
     this.form = this.fb.group({
-      cep : ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+      cep : ['', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]],
       cidade : ['', [Validators.required]],
       estado : ['', [Validators.required]],
-      endereco : ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+      logradouro : ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       numero : ['', [Validators.required]],
-    }, formOptions);
+      complemento : [],
+      bairro : [],
+    });
+  }
+
+  public getByCep() : void {
+
+    if (this.f.cep.value != undefined && this.f.cep.value != '' && this.f.cep.valid){
+      var cep : number = this.f.cep.value;
+
+      alert(this.f.cep.value)
+
+      const observer = {
+        next : (_endereco : Endereco) => {
+            this.endereco = _endereco;
+        },
+        error : (error : any) =>
+        {
+          // this.spinner.hide(),
+          // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+        },
+        // complete : () => this.spinner.hide()
+      };
+      this.enderecoService.getByCep(11075410).subscribe(observer);
+    }
   }
 
   public saveChange() : void{

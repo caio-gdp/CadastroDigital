@@ -1,0 +1,84 @@
+<div class="row">
+  <!-- testar validação de formulario e reativo
+        <p>Form value : {{form.value | json}}</p>
+        <p>Form valid : {{form.status | json}}</p> -->
+    <div class="col-sm-20">
+      <div class="container">
+        <div class="col-lg-60 mt-4">
+          <div class="card">
+            <div class="card-header">
+              <h5><b>Cadastro Digital</b></h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col col-md-4"><app-menu></app-menu></div>
+                <div class="col">
+                <div class="card">
+                  <div class="card-header">
+                    <h6><b>Dados Profissionais</b></h6>
+                  </div>
+                  <div class="p-4">
+                    <div class="card card-informacao">
+                      <div class="card-body">
+                        <h5 class="card-title"><b>Informação</b></h5>
+                        <p class="card-text">Todos os itens com (*) são obrigatórios.</p>
+
+                      </div>
+                    </div>
+                  </div>
+                  <form [formGroup]="form">
+                    <div class="col-3">
+                      <select class="effect" id="indicacao" formControlName="indicacao">
+                        <option>Indicação*</option>
+                        <option>Elaine Cristina Rodrigues</option>
+                        <option>Fabio Pimentel</option>
+                        <option>Caio Pimentel</option>
+                        <option>Nenhum</option>
+                      </select>
+                    </div>
+                    <div class="col-3">
+                      <select class="effect" id="categoria" formControlName="categoria">
+                        <option>Categoria*</option>
+                        <option>IPREV</option>
+                        <option>CAPEP</option>
+                        <option>Camara</option>
+                      </select>
+                    </div>
+                    <div class="col-3">
+                      <input type="text" class="effect" placeholder="Centro de Custo" formControlName="centroCusto">
+                    </div>
+                    <div class="p-4">
+                      <div class="card card-informacao">
+                        <div class="card-body">
+                          <h5 class="card-title"><b>Informação</b></h5>
+                          <p class="card-text">Os seguintes benefícios serão atribuídos automaticamente ao sócio e dependentes</p>
+                          <span class="card-text">OdontoBase</span><br>
+                          <span class="card-text">IPrev</span><br>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col div-btn-custom">
+                        <button class="btn btn-danger btn-custom" routerLink="dashboard">
+                          Cancelar
+                        </button>
+                      </div>
+                      <div class="col div-btn-custom">
+                        <button class="btn btn-success btn-custom" (click)="saveChange()" [disabled]="!form.valid">
+                          Avançar
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+
+
+

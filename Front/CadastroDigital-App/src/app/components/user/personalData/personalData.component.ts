@@ -10,6 +10,12 @@ import { CidadeService } from '@app/services/cidade.service';
 import { Cidade } from '@app/models/Cidade';
 import { Pais } from '@app/models/Pais';
 import { PaisService } from '@app/services/Pais.service';
+import { EstadoCivil } from '@app/models/EstadoCivil';
+import { EstadoCivilService } from '@app/services/estadocivil.service';
+import { Sexo } from '@app/models/Sexo';
+import { SexoService } from '@app/services/sexo.service';
+import { TipoRedeSocial } from '@app/models/TipoRedeSocial';
+import { TipoRedeSocialService } from '@app/services/tiporedesocial.service';
 
 @Component({
   selector: 'app-personalData',
@@ -22,6 +28,9 @@ export class PersonalDataComponent implements OnInit {
   public estados: Estado[] = [];
   public cidades: Cidade[] = [];
   public pais : Pais;
+  public estadosCivil: EstadoCivil[] = [];
+  public sexos: Sexo[] = [];
+  public tiposRedesSociais: TipoRedeSocial[] = [];
 
   form!: FormGroup;
 
@@ -37,12 +46,18 @@ export class PersonalDataComponent implements OnInit {
     private orgaoExpedidorService: OrgaoExpedidorService,
     private estadoService: EstadoService,
     private cidadeService: CidadeService,
-    private paisService: PaisService) { }
+    private paisService: PaisService,
+    private estadoCivilService: EstadoCivilService,
+    private sexoService: SexoService,
+    private tipoRedeSocialService : TipoRedeSocialService) { }
 
   ngOnInit() {
     this.validation();
     this.getOrgaoExpedidor();
     this.getEstado();
+    this.getEstadoCivil();
+    this.getSexo();
+    this.getTipoRedeSocial();
   }
 
   public cssValidation(filedForm: FormControl | AbstractControl): any {
@@ -108,10 +123,10 @@ export class PersonalDataComponent implements OnInit {
 }
 
 public getEstado() : void{
+
   const observer = {
     next : (_estados : Estado[]) => {
         this.estados = _estados;
-
         this.getPais(this.estados[0].paisId);
     },
     error : (error : any) =>
@@ -127,7 +142,7 @@ public getEstado() : void{
 public getCidade() : void{
 
   var obj = (<HTMLSelectElement>document.getElementById("ufExpedidor"));
-  var estado : number = +(<HTMLOptionElement>obj[obj.options.selectedIndex]).value.replace(":","");
+  var estado : number = +(<HTMLOptionElement>obj[obj.options.selectedIndex]).value;
 
    const observer = {
      next : (_cidades : Cidade[]) => {
@@ -141,15 +156,12 @@ public getCidade() : void{
      // complete : () => this.spinner.hide()
    };
   this.cidadeService.get(estado).subscribe(observer);
-
 }
 
 public getPais(id : number) : void{
-
    const observer = {
      next : (_pais : Pais) => {
          this.pais = _pais;
-         alert(this.pais.id)
      },
      error : (error : any) =>
      {
@@ -159,6 +171,52 @@ public getPais(id : number) : void{
      // complete : () => this.spinner.hide()
    };
   this.paisService.getById(id).subscribe(observer);
+}
+
+public getEstadoCivil() : void{
+  const observer = {
+    next : (_estadosCivil : EstadoCivil[]) => {
+        this.estadosCivil = _estadosCivil;
+    },
+    error : (error : any) =>
+    {
+      // this.spinner.hide(),
+      // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+    },
+    // complete : () => this.spinner.hide()
+  };
+  this.estadoCivilService.get().subscribe(observer);
+}
+
+public getSexo() : void{
+  const observer = {
+    next : (_sexos : Sexo[]) => {
+        this.sexos = _sexos;
+    },
+    error : (error : any) =>
+    {
+      // this.spinner.hide(),
+      // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+    },
+    // complete : () => this.spinner.hide()
+  };
+  this.sexoService.get().subscribe(observer);
+}
+
+public getTipoRedeSocial() : void{
+
+  const observer = {
+    next : (_tiposredessociais : TipoRedeSocial[]) => {
+        this.tiposRedesSociais = _tiposredessociais;
+    },
+    error : (error : any) =>
+    {
+      // this.spinner.hide(),
+      // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+    },
+    // complete : () => this.spinner.hide()
+  };
+  this.tipoRedeSocialService.get().subscribe(observer);
 }
 
  public saveChange() : void{

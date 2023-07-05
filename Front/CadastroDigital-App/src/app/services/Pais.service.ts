@@ -11,8 +11,6 @@ export class PaisService {
   constructor(private http: HttpClient) { }
 
   public getById(id : number) : Observable<Pais>{
-
-    alert(`${this.baseUrl}/${id}`);
     return this.http.get<Pais>(`${this.baseUrl}/${id}`).pipe(take(1));
   }
 }

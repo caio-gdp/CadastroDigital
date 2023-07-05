@@ -1,0 +1,102 @@
+
+body {
+  font-family: Myriad Pro;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.form{
+  float: right;
+}
+
+:focus{outline: none;}
+
+.card{
+  position: relative
+}
+
+.card-informacao{
+  background-color: #ebeaea;
+  border-left: 4px solid #d52b1e;
+  box-shadow: 2px 2px #ebeaea;
+}
+
+.col-3{
+  float: left;
+  width: 27.33%;
+  margin: 25px 3%;
+  position: relative;
+} /* necessary to give position: relative to parent. */
+
+.effect{
+  border: 0;
+  padding: 4px 0;
+  border-bottom: 1px solid #ccc;
+  background-color: transparent;
+}
+
+.effect ~
+.focus-border{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0px;
+    height: 2px;
+    background-color: #3399FF;
+    transition: 0.4s;
+  }
+
+.effect:focus ~
+.focus-border,
+.has-content.effect ~
+.focus-border{
+  width: 100%;
+  transition: 0.4s;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="datetime"]
+{
+  font: 15px/24px "Lato", Arial, sans-serif;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  height: 40px;
+}
+
+select {
+  font: 15px/24px "Lato", Arial, sans-serif;
+  color: gray;
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  height: 40px;
+}
+
+.btn:disabled{
+  background-color: darkgrey;
+  border-color: darkgrey;;
+}
+
+.btn-custom{
+  padding: 4px 12px;
+	border-radius: 50px;
+  font-size: 18px;
+  line-height: 20px; /* <- changed this */
+  box-sizing: border-box; /* <- added this */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-align: center;
+  vertical-align: middle;
+  height: 35px;
+  width: 150px;
+
+}
+
+.div-btn-custom{
+  padding: 4px 120px 15px;
+}

@@ -23,7 +23,7 @@ namespace CadastroDigital.Api.Controllers
             _hostEnviroment = hostEnviroment;
         }
 
-        [HttpGet("{pais}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var pais = await _paisService.GetById(id);

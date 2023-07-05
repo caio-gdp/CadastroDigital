@@ -10,13 +10,14 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { NavComponent } from './shared/nav/nav.component';
-import { AddressComponent } from './components/user/address/address.component';
+import { AddressDataComponent } from './components/user/addressData/addressData.component';
 import { SobreComponent } from './components/sobre/sobre.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
 import { BeneficioComponent } from './components/beneficio/beneficio.component';
 import { ConvenioComponent } from './components/convenio/convenio.component';
 import { ServicoComponent } from './components/servico/servico.component';
 import { PersonalDataComponent } from './components/user/personalData/personalData.component';
+import { ProfissionalDataComponent } from './components/user/profissionalData/profissionalData.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
       {  path : 'login', component: LoginComponent  },
       {  path : 'registration', component: RegistrationComponent  },
       {  path : 'personalData', component: PersonalDataComponent  },
-      {  path : 'address', component: AddressComponent  }
+      {  path : 'addressData', component: AddressDataComponent  },
+      {  path : 'profissionalData', component: ProfissionalDataComponent  },
     ]
   },
   { path : 'user/profile', component: ProfileComponent  },
