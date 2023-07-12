@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, AbstractControlOptions, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatorField } from '@app/helpers/ValidatorField';
 import { RedeSocial } from '@app/models/RedeSocial';
@@ -16,6 +16,9 @@ import { Sexo } from '@app/models/Sexo';
 import { SexoService } from '@app/services/sexo.service';
 import { TipoRedeSocial } from '@app/models/TipoRedeSocial';
 import { TipoRedeSocialService } from '@app/services/tiporedesocial.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-personalData',
@@ -31,6 +34,7 @@ export class PersonalDataComponent implements OnInit {
   public estadosCivil: EstadoCivil[] = [];
   public sexos: Sexo[] = [];
   public tiposRedesSociais: TipoRedeSocial[] = [];
+  i : number;
 
   form!: FormGroup;
 
@@ -49,7 +53,11 @@ export class PersonalDataComponent implements OnInit {
     private paisService: PaisService,
     private estadoCivilService: EstadoCivilService,
     private sexoService: SexoService,
-    private tipoRedeSocialService : TipoRedeSocialService) { }
+    private tipoRedeSocialService : TipoRedeSocialService,
+    private modalService: BsModalService,
+    private modalRef : BsModalRef,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.validation();
@@ -79,16 +87,20 @@ export class PersonalDataComponent implements OnInit {
   }
 
   addRedeSocial() : void{
-    this.redesSociais.push(this.criarLote({id: 0} as RedeSocial));
+    this.redesSociais.push(this.criarRedeSocial({id: 0} as RedeSocial));
   }
 
-  criarLote(redeSocial : RedeSocial): FormGroup {
+  criarRedeSocial(redeSocial : RedeSocial): FormGroup {
     return this.fb.group({
       id: [redeSocial.id],
       pessoaId: [redeSocial.pessoaId],
       tipoRedeSocialId: [redeSocial.tipoRedeSocialId],
       endereco: [redeSocial.endereco]
     })
+  }
+
+  removerRedeSocial(i : number){
+    this.redesSociais.removeAt(i);
   }
 
   bsConfig() : any{
@@ -217,6 +229,40 @@ public getTipoRedeSocial() : void{
     // complete : () => this.spinner.hide()
   };
   this.tipoRedeSocialService.get().subscribe(observer);
+}
+
+openModal(template: TemplateRef<any>, i : number) : void {
+  this.i = i;
+  this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+}
+
+confirm(): void {
+
+  this.modalRef?.hide();
+  this.spinner.show();
+
+  this.removerRedeSocial(this.i)
+
+  this.spinner.hide();
+
+  // if (this.pessoaId != 0){
+  //   this.pessoaService.delete(this.pessoaId).subscribe({
+  //     next: (result : boolean) => {
+  //       if (result){
+  //         this.toastr.success('Registro excluído com sucesso.', "Excluído");
+  //         this.getPessoas();
+  //       }
+  //     },
+  //     error: (error : any) => {
+  //       this.toastr.error('Erro ao tentar excluir o registro.', "Erro!");
+  //       console.error(error);
+  //     },
+  //   }).add(() => this.spinner.hide());
+  // }
+}
+
+decline(): void {
+   this.modalRef?.hide();
 }
 
  public saveChange() : void{

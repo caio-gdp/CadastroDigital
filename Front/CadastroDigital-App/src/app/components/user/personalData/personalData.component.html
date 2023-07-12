@@ -17,7 +17,7 @@
                   <div class="card-header">
                     <h6><b>Dados Pessoais</b></h6>
                   </div>
-                  <div class="p-4">
+                  <div class="col-1">
                     <div class="card card-informacao">
                       <div class="card-body">
                         <h5 class="card-title"><b>Informação</b></h5>
@@ -119,112 +119,63 @@
                       <div class="card card-informacao">
                         <div class="card-body">
                           <h5 class="card-title"><b>Informação</b></h5>
-                          <p class="card-text">Clique em Rede Social para adicionar e preencher novas redes sociais.</p>
+                          <p class="card-text">Clique em Adicionar Rede Social para adicionar e preencher novas redes sociais.</p>
                         </div>
                       </div>
                     </div>
-                    <div class="col-3">
-                      <select class="effect">
-                        <option>Tipo Rede Social*</option>
-                        <option *ngFor="let tipoRedeSocial of tiposRedesSociais" value="{{tipoRedeSocial.id}}">{{tipoRedeSocial.descricao}}</option>
-                      <!-- <div class="invalid-tooltip" *ngIf="f.tiporedesocial.errors?.required">
-                        Tipo de Rede Social é obrigatório.
-                      </div> -->
-                      <span class="focus-border"></span>
-                      </select>
-                      <!-- <input formControlName="tipoRedeSocialId"class="effect" type="text" placeholder="Rede Social" [ngClass]="cssValidation(f.rg)" maxlength="12"> -->
-                    </div>
-                    <div class="col-3">
-                      <input class="effect" type="text" placeholder="Endereço Rede Social" [ngClass]="cssValidation(f.rg)" maxlength="12">
-                    </div>
-                    <div class="col-3">
-                      <button class="p-2 btn btn-sm btn-outline-primary mb-1" (click)="addRedeSocial()">
-                        <i class="fa fa-plus-circle my-1"></i>
-                        <b class="ml-1">Adicionar Rede Social</b>
-                      </button>
-                    </div>
-                    <div formArrayName="redesSociais" *ngFor="let redeSocial of redesSociais.controls; let i=index">
-                      <div class="col-3">
-                        <input formControlName="tipoRedeSocialId"class="effect" type="text" placeholder="Rede Social" [ngClass]="cssValidation(f.rg)" maxlength="12">
-                      </div>
-                      <div class="col-3">
-                        <input formControlName="endereco" class="effect" type="text" placeholder="Endereço Rede Social" [ngClass]="cssValidation(f.rg)" maxlength="12">
-                      </div>
-                      <div class="col-3">
-                        <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex">
-                          <i class="fa fa-window-close my-1"></i>
-                          <b class="ml-1 d-none d-sm-block">Excluir</b>
-                        </button>
-                      </div>
-                    </div>
-
-                    <!-- <div class="card rounded shadow-sm mt-4">
+                    <div class="col-1">
+                    <div class="card rounded shadow-sm mt-4 ce">
                       <div class="p-3">
                         <div class="d-flex border-bottom">
-                          <h2 class="mr-auto">
-                            Lotes do Evento
-                          </h2>
-                          <h2>
-                            <i class="fas fa-money-bill-wave"></i>
-                          </h2>
+                          <h5 class="mr-auto">
+                            Rede Social
+                          </h5>
+                          <h5>&nbsp;
+                            <i class="fab fa-facebook">&nbsp;</i>
+                            <i class="fab fa-instagram">&nbsp;</i>
+                            <i class="fab fa-twitter">&nbsp;</i>
+                          </h5>
                         </div>
-                        <p>Clique em Lote para adicionar e preencher novos Lotes</p>
                         <div class="form-row p-1">
                           <div class="col">
-                            <div>
+                            <div formArrayName="redesSociais" *ngFor="let redeSocial of redesSociais.controls; let i=index">
                               <fieldset class="form-group">
-                                <legend class="d-flex justify-content-between capitalize">
-                                  <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex"
-                                    tooltip="Excluir Lote"
-                                    [adaptivePosition]="false"
-                                    [delay]="500"
-                                    placement="left">
-                                  <i class="fa fa-window-close my-1"></i>
-                                  <b class="ml-1 d-none d-sm-block">Excluir</b>
-                                </button>
-                              </legend>
+
                               <div class="row">
-                                <div class="form-group col-md-4">
-                                  <label>Nome</label>
-                                  <input type="text" class="form-control is-invalid" formControlName="nome" placeholder="Lote">
+                                <div class="col-3">
+                                  <select class="effect">
+                                    <option>Tipo Rede Social*</option>
+                                    <option *ngFor="let tipoRedeSocial of tiposRedesSociais" value="{{tipoRedeSocial.id}}">{{tipoRedeSocial.descricao}}</option>
+                                  <!-- <div class="invalid-tooltip" *ngIf="f.tiporedesocial.errors?.required">
+                                    Tipo de Rede Social é obrigatório.
+                                  </div> -->
+                                  <span class="focus-border"></span>
+                                  </select>
+                                  <!-- <input formControlName="tipoRedeSocialId"class="effect" type="text" placeholder="Rede Social" [ngClass]="cssValidation(f.rg)" maxlength="12"> -->
                                 </div>
-                                <div class="form-group col-md-4">
-                                  <label>Quantidade</label>
-                                  <input type="text" class="form-control" formControlName="quantidade" placeholder="000">
+                                <div class="col-3">
+                                  <input class="effect" type="text" placeholder="Endereço Rede Social" [ngClass]="cssValidation(f.rg)" maxlength="12">
                                 </div>
-                                <div class="form-group col-md-4">
-                                  <label>Preço</label>
-                                  <input type="text" currencyMask class="form-control" formControlName="preco" placeholder="R$ 0,00">
-                                </div>
-                                <div class="form-group col-md-4">
-                                  <label>Data Início</label>
-                                  <input type="text" class="form-control" formControlName="dataInicio" placeholder="01/01/2019">
-                                </div>
-                                <div class="form-group col-md-4">
-                                  <label>Data Fim</label>
-                                  <input type="text" class="form-control" formControlName="dataFim" placeholder="01/01/2019">
+                                <div class="col-3">
+                                  <button class="p-2 btn btn-sm btn-danger mb-1 d-flex" (click)="openModal(template, i)">
+                                    <i class="fa fa-window-close my-1"></i>
+                                    <b class="ml-2 d-none d-sm-block">Excluir</b>
+                                  </button>
                                 </div>
                               </div>
                             </fieldset>
                           </div>
                         </div>
                       </div>
-                      <button class="d-flex btn btn-outline-primary">
-                        <i class="fa fa-plus-circle my-1"></i>
-                        <b class="ml-1">Lote</b>
-                      </button>
-                    </div>
-                    <div class="card-footer">
-                      <div class="d-flex">
-                        <button class="btn btn-outline-secondary mr-auto border">
-                          Cancelar Alteração
-                        </button>
-                        <button class="btn btn-success">
-                          Salvar Lotes
+                      <div class="col text-end mt-3">
+                        <button class="p-2 btn btn-sm btn-outline-primary mb-2" (click)="addRedeSocial()">
+                          <i class="fa fa-plus-circle my-1"></i>
+                          <b class="ml-1">Adicionar Rede Social</b>
                         </button>
                       </div>
                     </div>
-                  </div> -->
+                  </div>
+                  </div>
                     <div class="row">
                       <div class="col div-btn-custom">
                         <button class="btn btn-danger btn-custom" routerLink="dashboard">
@@ -247,6 +198,14 @@
     </div>
     </div>
   </div>
+
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <p>Você confirma a exclusão da Rede Social?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+    </div>
+  </ng-template>
 
 
 

@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { BankDataComponent } from './bankData.component';
+import { DependentComponent } from './dependentcomponent';
 
-describe('BankDataComponent', () => {
-  let component: BankDataComponent;
-  let fixture: ComponentFixture<BankDataComponent>;
+describe('DependentagregateComponent', () => {
+  let component: DependentComponent;
+  let fixture: ComponentFixture<DependentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BankDataComponent ]
+      declarations: [ DependentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BankDataComponent);
+    fixture = TestBed.createComponent(DependentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

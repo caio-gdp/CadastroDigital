@@ -1,0 +1,210 @@
+<div class="row">
+  <!-- testar validação de formulario e reativo
+        <p>Form value : {{form.value | json}}</p>
+        <p>Form valid : {{form.status | json}}</p> -->
+    <div class="col-sm-20">
+      <div class="container">
+        <div class="col-lg-60 mt-4">
+          <div class="card">
+            <div class="card-header">
+              <h5><b>Cadastro Digital</b></h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col col-md-4"><app-menu></app-menu></div>
+                <div class="col">
+                <div class="card">
+                  <div class="card-header">
+                    <h6><b>Agregados</b></h6>
+                  </div>
+                  <div class="col-1">
+                    <div class="card card-informacao">
+                      <div class="card-body">
+                        <h5 class="card-title"><b>Informação</b></h5>
+                        <p class="card-text">Preencha os campos obrigatórios e clique no botão novo para criar uma nova associação;<br>
+                          O Beneficio da Union é descontado automaticamente em folha do associado o valor de R$ 0,00<br>
+                        Todos os itens com (*) são obrigatórios.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <form [formGroup]="form">
+                    <div class="row">
+                      <div class="col-3">
+                          Agregado: 1
+                      </div>
+                      <div class="col-3">
+                        <select class="effect" id="grauparentesco" formControlName="grauparentesco" >
+                          <option>Beneficios*</option>
+                          <option value="1">Union</option>
+                          <option value="1">OdontoBase</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-3">
+                        <input class="effect" type="datetime" placeholder="Data de Nascimento*"
+                        formControlName="dataNascimento" bsDatepicker maxlength="10" >
+                        <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.required">
+                          Data de Nascimento é obrigatório.
+                        </div>
+                        <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.minlength">
+                          Data de Nascimento deve ter no minimo 10 caracteres.
+                        </div>
+                        <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.maxlength">
+                          Data de Nascimento deve ter no máxino 10 caracteres.
+                        </div>
+                        <span class="focus-border"></span>
+                      </div>
+
+                      <div class="col-3">
+                        <select class="effect" id="grauparentesco" formControlName="grauparentesco" >
+                          <option>Grau de Parentesco*</option>
+                          <option value="1">Esposo(a)</option>
+                          <option value="2">Filho(a)</option>
+                        </select>
+                      </div>
+                      <div class="col-3">
+                        <input formControlName="cpf" id="cpf" class="effect" type="text" placeholder="CPF"
+                          mask="000.000.000-00" maxlength="14">
+                        <div class="invalid-tooltip" *ngIf="f.cpf.errors?.required">
+                          CPF é obrigatório.
+                        </div>
+                        <div class="invalid-tooltip" *ngIf="f.cpf.errors?.minlength">
+                          CPF deve ter no minimo 11 caracteres.
+                        </div>
+                        <div class="invalid-tooltip" *ngIf="f.cpf.errors?.maxlength">
+                          CPF deve ter no máxino 11 caracteres.
+                        </div>
+                        <span class="focus-border"></span>
+                      </div>
+                    </div>
+                    <div class="col-1">
+                      <input class="effect" type="text" placeholder="" formControlName="nome"
+                      placeholder="Nome Completo*">
+                      <div class="invalid-tooltip" *ngIf="f.nome.errors?.required">
+                        Nome é obrigatório.
+                      </div>
+                      <div class="invalid-tooltip" *ngIf="f.nome.errors?.minlength">
+                        Nome deve ter no minimo 3 caracteres.
+                      </div>
+                      <div class="invalid-tooltip" *ngIf="f.nome.errors?.maxlength">
+                        Nome deve ter no máxino 150 caracteres.
+                      </div>
+                      <span class="focus-border"></span>
+                    </div>
+                     <div class="row">
+                      <div class="col-3">
+                        <input formControlName="rg" id="rg" class="effect" type="text" placeholder="RG" maxlength="12">
+                        <div class="invalid-tooltip" *ngIf="f.rg.errors?.required">
+                          RG é obrigatório.
+                        </div>
+                        <div class="invalid-tooltip" *ngIf="f.rg.errors?.minlength">
+                          RG deve ter no minimo 8 caracteres.
+                        </div>
+                        <div class="invalid-tooltip" *ngIf="f.rg.errors?.maxlength">
+                          RG deve ter no máxino 12 caracteres.
+                        </div>
+                        <span class="focus-border"></span>
+                      </div>
+                      <div class="col-3">
+                        <input class="effect" type="datetime" placeholder="Data de Emissão"
+                        formControlName="dataEmissao" bsDatepicker maxlength="10" >
+                        <div class="invalid-tooltip" *ngIf="f.dataEmissao.errors?.required">
+                          Data de Emissão é obrigatório.
+                        </div>
+                        <div class="invalid-tooltip" *ngIf="f.dataEmissao.errors?.minlength">
+                          Data de Emissão deve ter no minimo 10 caracteres.
+                        </div>
+                        <div class="invalid-tooltip" *ngIf="f.dataEmissao.errors?.maxlength">
+                          Data de Emissão deve ter no máxino 10 caracteres.
+                        </div>
+                        <span class="focus-border"></span>
+                      </div>
+                      <div class="col-3">
+                        <select class="effect" type="select" formControlName="orgaoExpedidor">
+                          <!-- <option disabled selected hidden>Orgão Expedidor*</option> -->
+                          <option>Orgão Expedidor</option>
+                          <option ></option>
+                        <div class="invalid-tooltip" *ngIf="f.orgaoExpedidor.errors?.required">
+                          Orgão Expedidor é obrigatório.
+                        </div>
+                        <span class="focus-border"></span>
+                        </select>
+                      </div>
+                      <div class="col-3">
+                        <select class="effect" id="ufExpedidor" formControlName="ufExpedidor" >
+                          <option>Estado Expedidor*</option>
+                          <option ></option>
+                        <div class="invalid-tooltip" *ngIf="f.ufExpedidor.errors?.required">
+                          Estado Expedidor é obrigatório.
+                        </div>
+                        <span class="focus-border"></span>
+                        </select>
+                      </div>
+                      <div class="col-3">
+                        <select class="effect" type="select" placeholder="" formControlName="sexo">
+                          <option disabled selected hidden>Sexo*</option>
+                          <option ></option>
+                        <div class="invalid-tooltip" *ngIf="f.sexo.errors?.required">
+                          Sexo é obrigatório.
+                        </div>
+                        <span class="focus-border"></span>
+                        </select>
+                      </div>
+                      <div class="col-3">
+                        <input class="effect" type="text" placeholder="" formControlName="telefone"
+                          mask="(00)00000-0000" placeholder="Celular">
+                        <div class="invalid-tooltip" *ngIf="f.telefone.errors?.required">
+                          Celular é obrigatório.
+                        </div>
+                        <div class="invalid-tooltip" *ngIf="f.telefone.errors?.minlength">
+                          Celular deve ter no minimo 16 caracteres.
+                        </div>
+                        <div class="invalid-tooltip" *ngIf="f.telefone.errors?.maxlength">
+                          Celular deve ter no máxino 16 caracteres.
+                        </div>
+                        <span class="focus-border"></span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <button style="width: 100px; position: absolute ;
+                      left: 85%;
+                      top: 65%;">+Novo</button>
+                    </div>
+                    <p></p>
+                    <div class="row">
+                    <div class="col-1">
+                      <div class="card card-informacao">
+                        <div class="card-body">
+                          <h5 class="card-title"><b>Informação</b></h5>
+                          <p class="card-text">TABELA DE VALORES:</p>
+                          <span class="card-text">TABELA DE VALORES</span><br>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                      <div class="col div-btn-custom">
+                        <button class="btn btn-danger btn-custom" routerLink="dashboard">
+                          Cancelar
+                        </button>
+                      </div>
+                      <div class="col div-btn-custom">
+                        <button class="btn btn-success btn-custom" [disabled]="!form.valid">
+                          Avançar
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+
+
+

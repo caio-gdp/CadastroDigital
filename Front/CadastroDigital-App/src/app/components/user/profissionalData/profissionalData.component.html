@@ -17,41 +17,68 @@
                   <div class="card-header">
                     <h6><b>Dados Profissionais</b></h6>
                   </div>
-                  <div class="p-4">
+                  <div class="col-1">
                     <div class="card card-informacao">
                       <div class="card-body">
                         <h5 class="card-title"><b>Informação</b></h5>
                         <p class="card-text">Todos os itens com (*) são obrigatórios.</p>
-
                       </div>
                     </div>
                   </div>
                   <form [formGroup]="form">
-                    <div class="col-3">
-                      <select class="effect" id="indicacao" formControlName="indicacao">
-                        <option>Indicação*</option>
-                        <option>Elaine Cristina Rodrigues</option>
-                        <option>Fabio Pimentel</option>
-                        <option>Caio Pimentel</option>
-                        <option>Nenhum</option>
-                      </select>
+                    <div class="row">
+                      <div class="col-3">
+                        <select class="effect" id="indicacao" formControlName="indicacao">
+                          <option>Indicação*</option>
+                          <option>Elaine Cristina Rodrigues</option>
+                          <option>Fabio Pimentel</option>
+                          <option>Caio Pimentel</option>
+                          <option>Nenhum</option>
+                        </select>
+                      </div>
+                      <div class="col-3">
+                        <select class="effect" id="categoria" formControlName="categoria" (change)="addCentroCusto()">
+                          <option>Categoria*</option>
+                          <option value="1">Prefeitura</option>
+                          <option value="2">IPREV</option>
+                          <option value="3">CAPEP</option>
+                          <option value="4">Camara</option>
+                          <option value="5">Sócio Usuário</option>
+                        </select>
+                      </div>
+                      <div class="col-3">
+                        <input style="display: none" type="text" class="effect" placeholder="Centro de Custo" id="centroCusto" formControlName="centroCusto">
+                      </div>
                     </div>
-                    <div class="col-3">
-                      <select class="effect" id="categoria" formControlName="categoria">
-                        <option>Categoria*</option>
-                        <option>IPREV</option>
-                        <option>CAPEP</option>
-                        <option>Camara</option>
-                      </select>
+                    <div id="divInformacaoBancaria" style="display: none;">
+                      <div class="row">
+                        <div class="col-3">
+                          <select class="effect" id="tipoConta" formControlName="tipoConta">
+                            <option>Operação*</option>
+                            <option>Poupança</option>
+                            <option>Conta Corrente</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <select class="effect" id="banco" formControlName="banco">
+                          <option>Banco*</option>
+                          <option>001 - Banco do Brasik</option>
+                          <option>341 - Itaú</option>
+                        </select>
+                      </div>
+                      <div class="col-3">
+                        <input type="text" class="effect" id="agencia" formControlName="agencia" placeholder="Agencia*">
+                      </div>
+                      <div class="col-3">
+                        <input type="text" class="effect" id="agencia" formControlName="conta" placeholder="Conta*">
+                      </div>
                     </div>
-                    <div class="col-3">
-                      <input type="text" class="effect" placeholder="Centro de Custo" formControlName="centroCusto">
-                    </div>
-                    <div class="p-4">
+                    <div class="col-1">
                       <div class="card card-informacao">
                         <div class="card-body">
                           <h5 class="card-title"><b>Informação</b></h5>
-                          <p class="card-text">Os seguintes benefícios serão atribuídos automaticamente ao sócio e dependentes</p>
+                          <p class="card-text">Os seguintes benefícios serão atribuídos automaticamente ao sócio e dependentes menores de 18 anos</p>
                           <span class="card-text">OdontoBase</span><br>
                           <span class="card-text">IPrev</span><br>
                         </div>

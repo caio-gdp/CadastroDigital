@@ -18,6 +18,8 @@ import { ConvenioComponent } from './components/convenio/convenio.component';
 import { ServicoComponent } from './components/servico/servico.component';
 import { PersonalDataComponent } from './components/user/personalData/personalData.component';
 import { ProfissionalDataComponent } from './components/user/profissionalData/profissionalData.component';
+import { DependentComponent } from './components/user/dependent/dependentcomponent';
+import { AgregateComponent } from './components/user/agregate/agregate.component';
 
 const routes: Routes = [
   {
@@ -28,6 +30,8 @@ const routes: Routes = [
       {  path : 'personalData', component: PersonalDataComponent  },
       {  path : 'addressData', component: AddressDataComponent  },
       {  path : 'profissionalData', component: ProfissionalDataComponent  },
+      {  path : 'dependent', component: DependentComponent  },
+      {  path : 'agregate', component: AgregateComponent },
     ]
   },
   { path : 'user/profile', component: ProfileComponent  },

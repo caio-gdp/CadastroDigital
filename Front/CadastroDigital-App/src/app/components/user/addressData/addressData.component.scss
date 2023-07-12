@@ -177,16 +177,11 @@ input:focus:-ms-input-placeholder {
   transition: 0.4s;
 }
 
-.eye-pwd{
+.search{
   position: absolute;
-  left: 45%;
-  top: 64%;
-}
-
-.eye-pwd-confirm{
-  position: absolute;
-  left: 94%;
-  top: 64%;
+  left: 28%;
+  top: 34%;
+  cursor: hand;
 }
 
 .fa-exclamation-circle{

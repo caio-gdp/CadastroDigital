@@ -47,6 +47,8 @@ import { SexoService } from './services/sexo.service';
 import { TipoRedeSocialService } from './services/tiporedesocial.service';
 import { EnderecoService } from './services/endereco.service';
 import { ProfissionalDataComponent } from './components/user/profissionalData/profissionalData.component';
+import { DependentComponent } from './components/user/dependent/dependentcomponent';
+import { AgregateComponent } from './components/user/agregate/agregate.component';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(localePT);
@@ -65,6 +67,8 @@ registerLocaleData(localePT);
       LoginComponent,
       RegistrationComponent,
       PersonalDataComponent,
+      DependentComponent,
+      AgregateComponent,
       ProfileComponent,
       MenuComponent,
       AddressDataComponent,
