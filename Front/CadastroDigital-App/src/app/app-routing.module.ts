@@ -20,6 +20,10 @@ import { PersonalDataComponent } from './components/user/personalData/personalDa
 import { ProfissionalDataComponent } from './components/user/profissionalData/profissionalData.component';
 import { DependentComponent } from './components/user/dependent/dependentcomponent';
 import { AgregateComponent } from './components/user/agregate/agregate.component';
+import { PhotoComponent } from './components/user/photo/photo.component';
+import { DocumentsComponent } from './components/user/Documents/Documents.component';
+import { FileComponent } from './components/user/File/File.component';
+import { AssignComponent } from './components/user/assign/assign.component';
 
 const routes: Routes = [
   {
@@ -32,6 +36,10 @@ const routes: Routes = [
       {  path : 'profissionalData', component: ProfissionalDataComponent  },
       {  path : 'dependent', component: DependentComponent  },
       {  path : 'agregate', component: AgregateComponent },
+      {  path : 'photo', component: PhotoComponent },
+      {  path : 'documents', component: DocumentsComponent },
+      {  path : 'file', component: FileComponent },
+      {  path : 'assign', component: AssignComponent },
     ]
   },
   { path : 'user/profile', component: ProfileComponent  },

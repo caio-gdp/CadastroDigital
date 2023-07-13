@@ -102,7 +102,7 @@ namespace CadastroDigital.Api.Controllers
         }
 
         [HttpPost("upload-image/{pessoaId}")]
-        public async Task<IActionResult> Post(int pessoaId)
+        public async Task<IActionResult> UploadImage(int pessoaId)
         {
             var pessoa = await _pessoaService.GetPessoaById(pessoaId);
 

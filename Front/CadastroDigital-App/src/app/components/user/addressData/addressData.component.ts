@@ -53,8 +53,6 @@ export class AddressDataComponent implements OnInit {
     if (this.f.cep.value != undefined && this.f.cep.value != '' && this.f.cep.valid){
       var cep : number = this.f.cep.value;
 
-      alert(this.f.cep.value)
-
       const observer = {
         next : (_endereco : Endereco) => {
             this.endereco = _endereco;

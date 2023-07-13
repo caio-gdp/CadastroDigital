@@ -1,0 +1,60 @@
+<div class="row">
+  <!-- testar validação de formulario e reativo
+        <p>Form value : {{form.value | json}}</p>
+        <p>Form valid : {{form.status | json}}</p> -->
+    <div class="col-sm-20">
+      <div class="container">
+        <div class="col-lg-60 mt-4">
+          <div class="card">
+            <div class="card-header">
+              <h5><b>Cadastro Digital</b></h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col col-md-4"><app-menu></app-menu></div>
+                <div class="col">
+                  <div class="card">
+                    <div class="card-header">
+                      <h6><b>Foto Perfil</b></h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="col-1">
+                        <div class="card card-informacao">
+                          <div class="card-body">
+                            <h5 class="card-title"><b>Informação</b></h5>
+                            <p class="card-text">Todos os itens com (*) são obrigatórios.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-5" >
+                          <div [formGroup]="form" class="card-photo-view shadow-sm p-4">
+                            <div class="form-row">
+                              <div class="form-group m-0">
+                                <input type="file" (change)="onFileChange($event)" #file class="form-control is-invalid" placeholder="" style="display: none;">
+                              </div>
+                            </div>
+                            <div class="card profile-card-2">
+                              <div class="card-image-block">
+                                <img class="image" [src]="imagemUrl" class="img-fluid" (click)="file.click()" alt="Card image cap" tooltip="Upload de Nova Imagem" [adaptivePosition]="false" placement="bottom">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+
+
+
+
+

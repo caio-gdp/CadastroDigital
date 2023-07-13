@@ -49,6 +49,10 @@ import { EnderecoService } from './services/endereco.service';
 import { ProfissionalDataComponent } from './components/user/profissionalData/profissionalData.component';
 import { DependentComponent } from './components/user/dependent/dependentcomponent';
 import { AgregateComponent } from './components/user/agregate/agregate.component';
+import { PhotoComponent } from './components/user/photo/photo.component';
+import { DocumentsComponent } from './components/user/Documents/Documents.component';
+import { FileComponent } from './components/user/File/File.component';
+import { AssignComponent } from './components/user/assign/assign.component';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(localePT);
@@ -72,7 +76,11 @@ registerLocaleData(localePT);
       ProfileComponent,
       MenuComponent,
       AddressDataComponent,
-      ProfissionalDataComponent
+      ProfissionalDataComponent,
+      PhotoComponent,
+      DocumentsComponent,
+      FileComponent,
+      AssignComponent
    ],
   imports: [
     BrowserModule,

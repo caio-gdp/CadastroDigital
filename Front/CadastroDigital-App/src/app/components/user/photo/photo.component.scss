@@ -1,0 +1,22 @@
+.card-informacao{
+  background-color: #ebeaea;
+  border-left: 4px solid #d52b1e;
+  box-shadow: 2px 2px #ebeaea;
+}
+
+.col-1{
+  float: left;
+  width: 94%;
+  margin: 25px 3%;
+  position: relative;
+} /* necessary to give position: relative to parent. */
+
+.card-image-block{
+  img{
+    cursor: pointer;
+    border-radius: 3px 3px 0 0;
+    width: 100%;
+  }
+}
+
+

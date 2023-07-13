@@ -1,0 +1,73 @@
+<div class="row">
+  <!-- testar validação de formulario e reativo
+        <p>Form value : {{form.value | json}}</p>
+        <p>Form valid : {{form.status | json}}</p> -->
+    <div class="col-sm-20">
+      <div class="container">
+        <div class="col-lg-60 mt-4">
+          <div class="card">
+            <div class="card-header">
+              <h5><b>Cadastro Digital</b></h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col col-md-4"><app-menu></app-menu></div>
+                <div class="col">
+                  <div class="card">
+                    <div class="card-header">
+                      <h6><b>Foto Perfil</b></h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="col-1">
+                        <div class="card card-informacao">
+                          <div class="card-body">
+                            <h5 class="card-title"><b>Informação</b></h5>
+                            <p class="card-text">Selecione o documento para abrir, confira as infomações e assine.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="p-4">
+                        <div class="card rounded shadow-sm mt-4 ce">
+                          <div class="p-3">
+                            <div class="d-flex">
+                              <!-- <div formArrayName="dependentes" *ngFor="let dependente of dependentes.controls; let i=index"> -->
+                              <div>
+                                <form [formGroup]="form">
+                                  <table >
+                                    <tr>
+                                      <td align="center" style="border: 1px solid; width: 150px;">Ficha</td>
+                                      <td align="center" style="border: 1px solid; width: 150px;">Assinado</td>
+                                      <td align="center" style="border: 1px solid; width: 150px;">Documento</td>
+                                      <td align="center" style="border: 1px solid; width: 150px;">Assinar</td>
+                                    </tr>
+                                    <tr>
+                                      <td style="border: 1px solid; width: 150px;">&nbsp;Sócio</td>
+                                      <td align="center" style="border: 1px solid; width: 150px;"><i class="fa fa-times"></i></td>
+                                      <td align="center" style="border: 1px solid; width: 150px;"><a href="assets/files/ficha-socio.pdf" target="_blank">Abrir</a></td>
+                                      <td align="center" style="border: 1px solid; width: 150px;"><a href="user/assign" target="_blank">Assinar</a></td>
+                                    </tr>
+                                  </table>
+                               </form>
+                          </div>
+                        </div>
+                      </div>
+                        </div>
+                      </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+
