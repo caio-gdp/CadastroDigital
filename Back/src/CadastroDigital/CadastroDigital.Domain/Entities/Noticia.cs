@@ -7,14 +7,11 @@ namespace CadastroDigital.Domain.Entities
 {
     public class Noticia : Base
     {
+        public string Autor { get; set; }
         public string Titulo { get; set; }
         public string Resumo { get; set; }
-        public string Descricao { get; set; }
-        public string ImagemUrl { get; set; }
-        public DateTime DataInclusao { get; set; }
-        public string UsuarioInclusao { get; set; }
-        public DateTime DataAlteracao { get; set; }
-        public string UsuarioAlteracao { get; set; }
-        public string MotivoAlteracao { get; set; }
+        public string Link { get; set; }
+        public string Imagem { get; set; }
+        public DateTime Data { get; set; }
     }
 }

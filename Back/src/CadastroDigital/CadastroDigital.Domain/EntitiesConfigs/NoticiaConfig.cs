@@ -20,40 +20,35 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .ValueGeneratedOnAdd()
             .IsRequired();
 
+            builder.Property(f => f.Autor)
+            .HasColumnName("Autor")
+            .HasMaxLength(50)
+            .IsRequired();
+
             builder.Property(f => f.Titulo)
             .HasColumnName("Titulo")
             .HasMaxLength(100)
             .IsRequired();
 
             builder.Property(f => f.Resumo)
-            .HasColumnName("Assunto")
+            .HasColumnName("Resumo")
             .HasMaxLength(100)
             .IsRequired();
 
-            builder.Property(f => f.Descricao)
-            .HasColumnName("Descricao")
+            builder.Property(f => f.Link)
+            .HasColumnName("Link")
             .HasColumnType("ntext")
             .IsRequired();
 
-            builder.Property(f => f.ImagemUrl)
-            .HasColumnName("ImagemUrl")
+            builder.Property(f => f.Imagem)
+            .HasColumnName("Imagem")
             .IsRequired();
          
-            builder.Property(f => f.DataInclusao)
-            .HasColumnName("DataInclusao")
+            builder.Property(f => f.Data)
+            .HasColumnName("Data")
             .IsRequired();
 
-            builder.Property(f => f.UsuarioInclusao)
-            .HasColumnName("UsuarioInclusao")
-            .IsRequired();
-
-            builder.Property(f => f.DataAlteracao)
-            .HasColumnName("DataAlteracao")
-            .IsRequired(false);
-
-            builder.Property(f => f.UsuarioAlteracao)
-            .HasColumnName("UsuarioAlteracao")
-            .IsRequired(false);
+            
         }
     }
 }

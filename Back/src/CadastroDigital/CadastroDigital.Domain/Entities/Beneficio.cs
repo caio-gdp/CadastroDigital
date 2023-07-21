@@ -8,7 +8,10 @@ namespace CadastroDigital.Domain.Entities
     public class Beneficio : Base
     {
         public string Nome { get; set; }
+        public string Descricao { get; set; }
         public decimal Valor { get; set; }
+        public string Imagem { get; set; }
+        public string Site { get; set; }
         public DateTime DataInclusao { get; set; }
         public string UsuarioInclusao { get; set; }
         public DateTime? DataAlteracao { get; set; }

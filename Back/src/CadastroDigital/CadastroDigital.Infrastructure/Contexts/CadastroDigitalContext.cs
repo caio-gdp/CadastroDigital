@@ -31,7 +31,7 @@ namespace CadastroDigital.Infrastructure.Contexts
         public DbSet<Dependente> Dependente { get; set; }
         public DbSet<Beneficio> Beneficio { get; set; }
         public DbSet<Beneficio> BeneficioAgregado { get; set; }
-        public DbSet<Convenio> Convenio { get; set; }
+        public DbSet<Parceria> Parceria { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<Diretor> Diretor { get; set; }
         public DbSet<RedeSocial> RedeSocial { get; set; }
@@ -40,6 +40,7 @@ namespace CadastroDigital.Infrastructure.Contexts
         public DbSet<TipoRedeSocial> TipoRedeSocial { get; set; }
         public DbSet<TipoParente> TipoParente { get; set; }
         public DbSet<OrgaoExpedidor> OrgaoExpedidor { get; set; }
+        public DbSet<Noticia> Noticia { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
@@ -66,7 +67,7 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new DependenteConfig());
             modelBuilder.ApplyConfiguration(new BeneficioConfig());
             modelBuilder.ApplyConfiguration(new BeneficioAgregadoConfig());
-            modelBuilder.ApplyConfiguration(new ConvenioConfig());
+            modelBuilder.ApplyConfiguration(new ParceriaConfig());
             modelBuilder.ApplyConfiguration(new CategoriaConfig());
             modelBuilder.ApplyConfiguration(new DiretorConfig());
             modelBuilder.ApplyConfiguration(new RedeSocialConfig());
@@ -75,6 +76,7 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new TipoRedeSocialConfig());
             modelBuilder.ApplyConfiguration(new TipoParenteConfig());
             modelBuilder.ApplyConfiguration(new OrgaoExpedidorConfig());
+            modelBuilder.ApplyConfiguration(new NoticiaConfig());
 
             //HasData
             modelBuilder.Entity<Pais>().HasData(PaisConfig.HasData());

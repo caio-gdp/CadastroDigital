@@ -28,28 +28,28 @@
     <div class="col-lg-6">
       <article class="card card-full mb-4 hover-a">
         <!--thumbnail-->
-        <div class="ratio_466-261 image-wrapper">
-          <a href="#">
-            <img class="img-fluid lazy" src="../../assets/img/assets/lazy-empty.png" data-src="../../assets/img/360x202/img1.jpg" alt="Image description">
+        <div class="div_ratio_466-261 image-wrapper">
+          <a href="{{noticias[0].link}}">
+            <img class="img-fluid lazy img-md-not" src="../../assets/img/noticias/{{noticias[0].imagem}}">
           </a>
         </div>
-        <div class="card-body">
+        <div class="card-body div-card-body-md-not">
           <!--title-->
           <h2 class="card-title h1-sm h3-lg">
-            <a href="#">What You Need to Know About Safe Deposit Boxes</a>
+            <a href="{{noticias[0].link}}" target="_blank">{{noticias[0].titulo}}</a>
           </h2>
           <!-- author, date & comments -->
           <div class="card-text mb-2 text-muted small">
             <span class="d-none d-sm-inline me-1">
-              <a class="fw-bold" href="#">John Doe</a>
+              <a class="fw-bold" href="#">{{noticias[0].autor}}</a>
             </span>
-            <time datetime="2019-10-22">Oct 22, 2019</time>
+            <time datetime="2019-10-22">{{noticias[0].data | date : 'dd/MM/yyyy' : '' : 'pt-br'}}</time>
             <span title="9 comment" class="m-0 float-end">
-              <span class="icon-comments"></span> 9
+              <span class="icon-comments"></span>
             </span>
           </div>
           <!--text content-->
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          <p class="card-text">{{noticias[0].resumo}}</p>
         </div>
       </article>
     </div>
@@ -61,15 +61,15 @@
           <div class="card card-full mb-4 hover-a">
             <!--thumbnail-->
             <div class="ratio_165-92 image-wrapper">
-              <a href="#">
-                <img class="img-fluid lazy" src="../../assets/img/assets/lazy-empty.png" data-src="../../assets/img/165x92/img1.jpg" alt="Image description">
+              <a href="{{noticias[1].link}}">
+                <img class="img-fluid lazy img-sm-not" src="../../assets/img/noticias/{{noticias[1].imagem}}">
               </a>
             </div>
             <!-- title & date -->
-            <div class="card-body">
-              <h3 class="card-title h6 h5-sm h6-lg"><a href="#">Callum Wilson ready to fulfil ‘cage’ dreams of playing for England</a></h3>
+            <div class="card-body div-card-body-sm-not">
+              <h3 class="card-title h6 h5-sm h6-lg"><a href="{{noticias[1].link}}">{{noticias[1].titulo}}</a></h3>
               <div class="card-text text-muted small">
-                <time datetime="2019-10-22">Oct 22, 2019</time>
+                <time>{{noticias[1].data | date : 'dd/MM/yyyy' : '' : 'pt-br'}}</time>
               </div>
             </div>
           </div>
@@ -79,15 +79,15 @@
           <div class="card card-full mb-4 hover-a">
             <!--thumbnail-->
             <div class="ratio_165-92 image-wrapper">
-              <a href="#">
-                <img class="img-fluid lazy" src="../../assets/img/assets/lazy-empty.png" data-src="../../assets/img/165x92/img2.jpg" alt="Image description">
+              <a href="{{noticias[2].link}}" >
+                <img class="img-fluid lazy img-sm-not" src="../../assets/img/noticias/{{noticias[2].imagem}}">
               </a>
             </div>
             <!-- title & date -->
-            <div class="card-body">
-              <h3 class="card-title h6 h5-sm h6-lg"><a href="#">Fans celebrate in Paris after side reaches World Cup</a></h3>
+            <div class="card-body div-card-body-sm-not">
+              <h3 class="card-title h6 h5-sm h6-lg"><a href="{{noticias[2].link}}">{{noticias[2].titulo}}</a></h3>
               <div class="card-text text-muted small">
-                <time datetime="2019-10-22">Oct 22, 2019</time>
+                <time>{{noticias[2].data | date : 'dd/MM/yyyy' : '' : 'pt-br'}}</time>
               </div>
             </div>
           </div>
@@ -97,15 +97,15 @@
           <div class="card card-full mb-4 hover-a">
             <!--thumbnail-->
             <div class="ratio_165-92 image-wrapper">
-              <a href="#">
-                <img class="img-fluid lazy" src="../../assets/img/165x92/img3.jpg" data-src="../../assets/img/165x92/img3.jpg" alt="Image description">
+              <a href="{{noticias[3].link}}">
+                <img class="img-fluid lazy img-sm-not" src="../../assets/img/noticias/{{noticias[3].imagem}}">
               </a>
             </div>
             <!-- title & date -->
-            <div class="card-body">
-              <h3 class="card-title h6 h5-sm h6-lg"><a href="#">Referee whose jaw was broken by players forgives his attackers</a></h3>
+            <div class="card-body div-card-body-sm-not">
+              <h3 class="card-title h6 h5-sm h6-lg"><a href="{{noticias[3].link}}">{{noticias[3].titulo}}</a></h3>
               <div class="card-text text-muted small">
-                <time datetime="2019-10-22">Oct 22, 2019</time>
+                <time>{{noticias[2].data | date : 'dd/MM/yyyy' : '' : 'pt-br'}}</time>
               </div>
             </div>
           </div>
@@ -115,15 +115,15 @@
           <div class="card card-full mb-4 hover-a">
             <!--thumbnail-->
             <div class="ratio_165-92 image-wrapper">
-              <a href="#">
-                <img class="img-fluid lazy" src="../../assets/img/assets/lazy-empty.png" data-src="../../assets/img/165x92/img4.jpg" alt="Image description">
+              <a href="{{noticias[4].link}}">
+                <img class="img-fluid lazy img-sm-not" src="../../assets/img/noticias/{{noticias[4].imagem}}">
               </a>
             </div>
             <!-- title & date -->
-            <div class="card-body">
-              <h3 class="card-title h6 h5-sm h6-lg"><a href="#">From doubted to dominator: Pogba’s World Cup evolution</a></h3>
+            <div class="card-body div-card-body-sm-not">
+              <h3 class="card-title h6 h5-sm h6-lg"><a href="{{noticias[4].link}}">{{noticias[4].titulo}}</a></h3>
               <div class="card-text text-muted small">
-                <time datetime="2019-10-22">Oct 22, 2019</time>
+                <time>{{noticias[2].data | date : 'dd/MM/yyyy' : '' : 'pt-br'}}</time>
               </div>
             </div>
           </div>
@@ -148,30 +148,63 @@
     <article class="card card-full hover-a mb-4">
       <div class="row">
         <div class="col-lg-6">
-          <div class="ratio_360-202 image-wrapper">
+          <div class="div_ratio_360-202 image-wrapper">
             <a href="#">
-              <img class="img-fluid lazy" src="../../assets/img/assets/lazy-empty.png" data-src="../../assets/img/360x202/img8.jpg" alt="Image description">
+              <img class="img-fluid lazy img-md-ben" src="../../assets/img/beneficios/naso_logo.jpg" >
             </a>
           </div>
         </div>
         <div class="col-lg-6">
-          <div class="card-body pt-3 pt-lg-0">
+          <div class="card-body pt-3 pt-lg-0 div-card-body-md-ben">
             <!--title-->
             <h2 class="card-title h1-sm h3-lg">
-              <a href="#">Leica D-Lux 7 compact camera with 17MP four-thirds sensor</a>
+              <a href="#">NASO</a>
             </h2>
             <!-- author, date and comments -->
             <div class="card-text mb-2 text-muted small">
               <span class="d-none d-sm-inline me-1">
-                <a class="fw-bold" href="#">John Doe</a>
+                <a class="fw-bold" href="#">Núcleo de Assistência à Saúde Odontológica</a>
               </span>
-              <time datetime="2019-10-21">Oct 21, 2019</time>
+              <time></time>
               <span title="5 comment" class="float-end">
-                <span class="icon-comments"></span> 5
+                <span class="icon-comments"></span>
               </span>
             </div>
             <!--description-->
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content...</p>
+            <p class="card-text">www.naso.com</p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+  <div class="big-post">
+    <article class="card card-full hover-a mb-4">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="div_ratio_360-202 image-wrapper">
+            <a href="#">
+              <img class="img-fluid lazy img-md-ben" src="../../assets/img/beneficios/union_logo.jpg" >
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card-body pt-3 pt-lg-0 div-card-body-md-ben">
+            <!--title-->
+            <h2 class="card-title h1-sm h3-lg">
+              <a href="#">Union</a>
+            </h2>
+            <!-- author, date and comments -->
+            <div class="card-text mb-2 text-muted small">
+              <span class="d-none d-sm-inline me-1">
+                <a class="fw-bold" href="#">Assistência Funerária</a>
+              </span>
+              <time></time>
+              <span title="5 comment" class="float-end">
+                <span class="icon-comments"></span>
+              </span>
+            </div>
+            <!--description-->
+            <p class="card-text">www.unionassistencia.com.br</p>
           </div>
         </div>
       </div>
@@ -187,7 +220,7 @@
           <div class="col-3 col-md-4 pe-2 pe-md-0">
             <div class="ratio_115-80 image-wrapper">
               <a href="#">
-                <img class="img-fluid lazy" src="../../assets/img/assets/lazy-empty.png" data-src="../../assets/img/115x80/img27.jpg" alt="Image description">
+                <img class="img-fluid lazy" src="../../assets/img/beneficios/naso_logo.jpg">
               </a>
             </div>
           </div>
@@ -195,10 +228,10 @@
           <div class="col-9 col-md-8">
             <div class="card-body pt-0">
               <h3 class="card-title h6 h5-sm h6-lg">
-                <a href="#">The Bride Was a Dream in a Dirndl, but Putin Stole the Show</a>
+                <a href="#">NASO - Núcleo de assistência à saúde odontológica</a>
               </h3>
               <div class="card-text small text-muted">
-                <time datetime="2019-10-19">Oct 19, 2019</time>
+                <a href="#">www.naso.com.br</a>
               </div>
             </div>
           </div>
@@ -213,7 +246,7 @@
           <div class="col-3 col-md-4 pe-2 pe-md-0">
             <div class="ratio_115-80 image-wrapper">
               <a href="#">
-                <img class="img-fluid lazy" src="../../assets/img/assets/lazy-empty.png" data-src="../../assets/img/115x80/img28.jpg" alt="Image description">
+                <img class="img-fluid lazy" src="../../assets/img/beneficios/union_logo.jpg" >
               </a>
             </div>
           </div>
@@ -221,10 +254,10 @@
             <!-- title & date -->
             <div class="card-body pt-0">
               <h3 class="card-title h6 h5-sm h6-lg">
-                <a href="#">Quebec’s ‘Trash Radio’ Host Fires Up Outrage, and Big Ratings</a>
+                <a href="#">Union - Assistência Funerária<br>&nbsp;</a>
               </h3>
               <div class="card-text small text-muted">
-                <time datetime="2019-10-18">Oct 18, 2019</time>
+                <a href="#">www.union.com.br</a>
               </div>
             </div>
           </div>

@@ -20,6 +20,28 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .ValueGeneratedOnAdd()
             .IsRequired();
 
+            builder.Property(f => f.Nome)
+            .HasColumnName("Nome")
+            .IsRequired();
+            
+            builder.Property(f => f.Descricao)
+            .HasColumnName("Descricao")
+            .HasMaxLength(100)
+            .IsRequired();
+
+            builder.Property(f => f.Valor)
+            .HasColumnName("Valor")
+            .IsRequired();
+
+            builder.Property(f => f.Imagem)
+            .HasColumnName("Imagem")
+            .IsRequired();
+
+            builder.Property(f => f.Site)
+            .HasColumnName("Site")
+            .HasMaxLength(100)
+            .IsRequired();
+
             builder.Property(f => f.DataInclusao)
             .HasColumnName("DataInclusao")
             .IsRequired();
@@ -28,12 +50,30 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasColumnName("UsuarioInclusao")
             .IsRequired();
 
+            builder.Property(f => f.DataAlteracao)
+            .HasColumnName("DataAlteracao")
+            .IsRequired(false);
+
+            builder.Property(f => f.UsuarioAlteracao)
+            .HasColumnName("UsuarioAlteracao")
+            .IsRequired(false);
+
+            builder.Property(f => f.MotivoAlteracao)
+            .HasColumnName("MotivoAlteracao")
+            .HasMaxLength(100)
+            .IsRequired(false);
+
             builder.Property(f => f.DataExclusao)
             .HasColumnName("DataExclusao")
             .IsRequired(false);
 
             builder.Property(f => f.UsuarioExclusao)
             .HasColumnName("UsuarioExclusao")
+            .IsRequired(false);
+
+            builder.Property(f => f.MotivoExclusao)
+            .HasColumnName("MotivoExclusao")
+            .HasMaxLength(100)
             .IsRequired(false);
         }
     }

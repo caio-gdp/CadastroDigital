@@ -28,7 +28,7 @@ namespace CadastroDigital.Domain.Entities
         public Cargo Cargo { get; set; }
         public Agregado Agregado { get; set; }
         public Diretor Diretor { get; set; }
-        public Convenio Convenio { get; set; }
+        public Parceria Parceria { get; set; }
         public Dependente Dependente { get; set; }
         public InformacaoBancaria InformacaoBancaria { get; set; }
         public ProcessoJuridico ProcessoJuridico { get; set; }

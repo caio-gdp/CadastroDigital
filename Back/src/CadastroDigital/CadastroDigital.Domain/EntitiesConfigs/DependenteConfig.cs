@@ -28,10 +28,10 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasForeignKey<Socio>(f => f.Id)
             .HasConstraintName("fk_dependente_socio");
 
-            builder.HasOne(f => f.TipoParente)
-            .WithOne(f => f.Dependente)
-            .HasForeignKey<TipoParente>(f => f.Id)
-            .HasConstraintName("fk_dependente_tipoparente");
+            // builder.HasOne(f => f.TipoParente)
+            // .WithOne(f => f.Dependente)
+            // .HasForeignKey<TipoParente>(f => f.Id)
+            // .HasConstraintName("fk_dependente_tipoparente");
 
             //Atributos
             builder.Property(f => f.Id)

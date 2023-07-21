@@ -17,7 +17,7 @@ namespace CadastroDigital.Domain.Entities
         public string UsuarioExclusao { get; set; }
         
         public Socio Socio { get; set; }
-        public TipoParente TipoParente { get; set; }
+        // public TipoParente TipoParente { get; set; }
         public BeneficioAgregado BeneficioAgregado { get; set; }
     }
 }

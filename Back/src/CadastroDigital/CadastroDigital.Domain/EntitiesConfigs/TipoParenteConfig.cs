@@ -61,6 +61,14 @@ namespace CadastroDigital.Domain.EntitiesConfigs
                 new TipoParente(){
                     Id = 8,
                     Descricao = "Tio(a)"
+                },
+                new TipoParente(){
+                    Id = 9,
+                    Descricao = "Tutela"
+                },
+                new TipoParente(){
+                    Id = 10,
+                    Descricao = "Enteado(a)"
                 }
             };
         }

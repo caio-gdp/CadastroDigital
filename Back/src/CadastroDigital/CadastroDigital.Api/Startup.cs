@@ -51,6 +51,9 @@ namespace CadastroDigital.Api
             services.AddScoped<IOrgaoExpedidorService, OrgaoExpedidorService>();
             services.AddScoped<ISexoService, SexoService>();
             services.AddScoped<ITipoRedeSocialService, TipoRedeSocialService>();
+            services.AddScoped<INoticiaService, NoticiaService>();
+            services.AddScoped<IBeneficioService, BeneficioService>();
+            services.AddScoped<IParceriaService, ParceriaService>();
             services.AddScoped(typeof(IRepositoryBaseCadastroDigital<>), typeof(RepositoryBaseCadastroDigital<>));
             services.AddCors(c =>  
                             {  

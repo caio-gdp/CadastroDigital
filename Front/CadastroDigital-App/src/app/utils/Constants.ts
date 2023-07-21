@@ -5,4 +5,5 @@ export class Constants {
   // static readonly DATE_FORMAT = 'EEEE, MMMM d, y ';
   static readonly CPF_FORMAT = '000.000.000-00'
   static readonly DATE_FORMAT = 'EEEE, d MMMM, y'
+  static readonly QTD_NOTICIAS = 5
 }

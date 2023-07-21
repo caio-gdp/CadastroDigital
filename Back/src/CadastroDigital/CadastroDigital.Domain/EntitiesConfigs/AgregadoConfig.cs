@@ -23,15 +23,16 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .IsUnique(false)
             .HasDatabaseName("idx_agregado_tipoparente");
 
+            //Foreign Key
             builder.HasOne(f => f.Socio)
             .WithOne(f => f.Agregado)
-            .HasForeignKey<Socio>(f => f.Id)
+            .HasForeignKey<Agregado>(f => f.SocioId)
             .HasConstraintName("fk_agregado_socio");
 
-            builder.HasOne(f => f.TipoParente)
-            .WithOne(f => f.Agregado)
-            .HasForeignKey<TipoParente>(f => f.Id)
-            .HasConstraintName("fk_agregado_tipoparente");
+            // builder.HasOne(f => f.TipoParente)
+            // .WithOne(f => f.Agregado)
+            // .HasForeignKey<Agregado>(f => f.TipoParenteId)
+            // .HasConstraintName("fk_agregado_tipoparente");
 
             //Atributos
             builder.Property(f => f.Id)

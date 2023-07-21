@@ -5,8 +5,8 @@ namespace CadastroDigital.Domain.Entities
     {
         public string Descricao { get; set; }
 
-        public Agregado Agregado { get; set; }
-        public Dependente Dependente { get; set; }
+        // public Agregado Agregado { get; set; }
+        // public Dependente Dependente { get; set; }
 
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CadastroDigital.Infrastructure.Migrations
 {
     [DbContext(typeof(CadastroDigitalContext))]
-    [Migration("20230516155031_Initial")]
+    [Migration("20230721213215_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -171,9 +171,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnName("Id")
                         .UseIdentityColumn();
 
-                    b.Property<int>("AgregadoId")
-                        .HasColumnType("int")
-                        .HasColumnName("AgregadoId");
+                    b.Property<DateTime?>("DataAlteracao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataAlteracao");
 
                     b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime2")
@@ -183,9 +183,91 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DataInclusao");
 
-                    b.Property<int>("TipoBeneficioId")
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Descricao");
+
+                    b.Property<string>("Imagem")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Imagem");
+
+                    b.Property<string>("MotivoAlteracao")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("MotivoAlteracao");
+
+                    b.Property<string>("MotivoExclusao")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("MotivoExclusao");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Nome");
+
+                    b.Property<string>("Site")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Site");
+
+                    b.Property<string>("UsuarioAlteracao")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UsuarioAlteracao");
+
+                    b.Property<string>("UsuarioExclusao")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UsuarioExclusao");
+
+                    b.Property<string>("UsuarioInclusao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UsuarioInclusao");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Valor");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Beneficio");
+                });
+
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.BeneficioAgregado", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("TipoBeneficioId");
+                        .HasColumnName("Id")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("AgregadoId")
+                        .HasColumnType("int")
+                        .HasColumnName("AgregadoId");
+
+                    b.Property<int>("BeneficioId")
+                        .HasColumnType("int")
+                        .HasColumnName("BeneficioId");
+
+                    b.Property<DateTime?>("DataAlteracao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataExclusao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataExclusao");
+
+                    b.Property<DateTime>("DataInclusao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataInclusao");
+
+                    b.Property<string>("MotivoExclusao")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("MotivoExclusao");
 
                     b.Property<string>("UsuarioExclusao")
                         .HasColumnType("nvarchar(max)")
@@ -199,12 +281,27 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AgregadoId")
-                        .HasDatabaseName("idx_beneficio_agregado");
+                        .HasDatabaseName("idx_beneficioagregado_agregado");
 
-                    b.HasIndex("TipoBeneficioId")
-                        .HasDatabaseName("idx_beneficio_tipobeneficio");
+                    b.HasIndex("BeneficioId")
+                        .HasDatabaseName("idx_beneficioagregado_beneficio");
 
-                    b.ToTable("Beneficio");
+                    b.ToTable("BeneficioAgregado");
+                });
+
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.Cargo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cargo");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Categoria", b =>
@@ -33674,50 +33771,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CadastroDigital.Domain.Entities.Convenio", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime?>("DataExclusao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataExclusao");
-
-                    b.Property<DateTime>("DataInclusao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataInclusao");
-
-                    b.Property<int>("SocioId")
-                        .HasColumnType("int")
-                        .HasColumnName("SocioId");
-
-                    b.Property<int>("TipoConvenioId")
-                        .HasColumnType("int")
-                        .HasColumnName("TipoConvenioId");
-
-                    b.Property<string>("UsuarioExclusao")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UsuarioExclusao");
-
-                    b.Property<string>("UsuarioInclusao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UsuarioInclusao");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SocioId")
-                        .HasDatabaseName("idx_convenio_socio");
-
-                    b.HasIndex("TipoConvenioId")
-                        .HasDatabaseName("idx_convenio_tipoconvenio");
-
-                    b.ToTable("Convenio");
-                });
-
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Dependente", b =>
                 {
                     b.Property<int>("Id")
@@ -33798,7 +33851,7 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Imagem")
+                    b.Property<string>("ImagemUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PessoaId")
@@ -33809,8 +33862,7 @@ namespace CadastroDigital.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PessoaId")
-                        .IsUnique();
+                    b.HasIndex("PessoaId");
 
                     b.HasIndex("TipoDocumentoId")
                         .IsUnique();
@@ -33873,75 +33925,52 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
                         .UseIdentityColumn();
 
                     b.Property<string>("Bairro")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Bairro");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Cep")
-                        .HasMaxLength(5)
-                        .HasColumnType("int")
-                        .HasColumnName("Cep");
+                        .HasColumnType("int");
 
                     b.Property<int>("CidadeId")
-                        .HasColumnType("int")
-                        .HasColumnName("CidadeId");
+                        .HasColumnType("int");
 
                     b.Property<string>("Complemento")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Complemento");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DataExclusao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataExclusao");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataInclusao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataInclusao");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Logradouro")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("Logradouro");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Numero")
-                        .HasMaxLength(10)
-                        .HasColumnType("int")
-                        .HasColumnName("Numero");
+                        .HasColumnType("int");
 
                     b.Property<int>("PessoaId")
-                        .HasColumnType("int")
-                        .HasColumnName("PessoaFisicaId");
+                        .HasColumnType("int");
 
                     b.Property<int>("TipoEnderecoId")
-                        .HasColumnType("int")
-                        .HasColumnName("TipoEnderecoId");
+                        .HasColumnType("int");
 
                     b.Property<string>("UsuarioExclusao")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UsuarioExclusao");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UsuarioInclusao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UsuarioInclusao");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CidadeId")
-                        .HasDatabaseName("idx_endereco_cidade");
+                    b.HasIndex("CidadeId");
 
-                    b.HasIndex("PessoaId")
-                        .HasDatabaseName("idx_endereco_pessoafisica");
+                    b.HasIndex("PessoaId");
 
                     b.HasIndex("TipoEnderecoId")
-                        .HasDatabaseName("idx_endereco_tipoendereco");
+                        .IsUnique();
 
                     b.ToTable("Endereco");
                 });
@@ -34238,6 +34267,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Property<int>("SocioId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TipoContaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UsuarioExclusao")
                         .HasColumnType("nvarchar(max)");
 
@@ -34252,7 +34284,55 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.HasIndex("SocioId")
                         .IsUnique();
 
+                    b.HasIndex("TipoContaId")
+                        .IsUnique();
+
                     b.ToTable("InformacaoBancaria");
+                });
+
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.Noticia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Autor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Autor");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Data");
+
+                    b.Property<string>("Imagem")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Imagem");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnType("ntext")
+                        .HasColumnName("Link");
+
+                    b.Property<string>("Resumo")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Resumo");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Titulo");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Noticia");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.OrgaoExpedidor", b =>
@@ -34260,17 +34340,32 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("Id")
                         .UseIdentityColumn();
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Nome");
 
                     b.Property<string>("Sigla")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("Sigla");
 
                     b.HasKey("Id");
 
                     b.ToTable("OrgaoExpedidor");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nome = "Secretária de Segurança Pública",
+                            Sigla = "SSP"
+                        });
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Pais", b =>
@@ -34297,6 +34392,84 @@ namespace CadastroDigital.Infrastructure.Migrations
                             Id = 55,
                             Nome = "Brasil"
                         });
+                });
+
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.Parceria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime?>("DataAlteracao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataAlteracao");
+
+                    b.Property<DateTime?>("DataExclusao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataExclusao");
+
+                    b.Property<DateTime>("DataInclusao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataInclusao");
+
+                    b.Property<int>("Desconto")
+                        .HasColumnType("int")
+                        .HasColumnName("Desconto");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Descricao");
+
+                    b.Property<string>("Imagem")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Imagem");
+
+                    b.Property<string>("MotivoAlteracao")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("MotivoAlteracao");
+
+                    b.Property<string>("MotivoExclusao")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("MotivoExclusao");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Nome");
+
+                    b.Property<string>("Site")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Site");
+
+                    b.Property<string>("UsuarioAlteracao")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UsuarioAlteracao");
+
+                    b.Property<string>("UsuarioExclusao")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UsuarioExclusao");
+
+                    b.Property<string>("UsuarioInclusao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UsuarioInclusao");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Valor");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Parceria");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.PassoCadastro", b =>
@@ -34500,6 +34673,18 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.ToTable("PessoaFisica");
                 });
 
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.ProcessoJuridico", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProcessoJuridico");
+                });
+
             modelBuilder.Entity("CadastroDigital.Domain.Entities.RedeSocial", b =>
                 {
                     b.Property<int>("Id")
@@ -34593,6 +34778,10 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Id");
 
+                    b.Property<int>("CargoId")
+                        .HasColumnType("int")
+                        .HasColumnName("CargoId");
+
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int")
                         .HasColumnName("CategoriaId");
@@ -34619,7 +34808,8 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnName("DiretorNome");
 
                     b.Property<int>("Inscricao")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Inscricao");
 
                     b.Property<bool>("MalaDireta")
                         .HasColumnType("bit")
@@ -34629,9 +34819,24 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Matricula");
 
+                    b.Property<int?>("ParceriaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Pasta")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasColumnName("Pasta");
+
                     b.Property<int>("PessoaId")
                         .HasColumnType("int")
                         .HasColumnName("PessoaId");
+
+                    b.Property<int?>("ProcessoJuridicoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SituacaoId")
+                        .HasColumnType("int")
+                        .HasColumnName("SituacaoId");
 
                     b.Property<string>("UsuarioExclusao")
                         .HasColumnType("nvarchar(max)")
@@ -34644,14 +34849,21 @@ namespace CadastroDigital.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CargoId")
+                        .IsUnique();
+
                     b.HasIndex("CategoriaId")
                         .HasDatabaseName("idx_socio_categoria");
 
                     b.HasIndex("DiretorId")
                         .HasDatabaseName("idx_socio_diretor");
 
+                    b.HasIndex("ParceriaId");
+
                     b.HasIndex("PessoaId")
                         .HasDatabaseName("idx_socio_pessoa");
+
+                    b.HasIndex("ProcessoJuridicoId");
 
                     b.ToTable("Socio");
                 });
@@ -34678,17 +34890,17 @@ namespace CadastroDigital.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Descricao = "Pendente"
+                            Descricao = "Incompleto"
                         },
                         new
                         {
                             Id = 2,
-                            Descricao = "Concluído"
+                            Descricao = "Pendente"
                         },
                         new
                         {
                             Id = 3,
-                            Descricao = "Incompleto"
+                            Descricao = "Concluído"
                         });
                 });
 
@@ -34746,66 +34958,19 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.ToTable("Telefone");
                 });
 
-            modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoBeneficio", b =>
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoConta", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
                         .UseIdentityColumn();
 
-                    b.Property<DateTime?>("DataFim")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataFim");
-
-                    b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataInicio");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Nome");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Valor");
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoBeneficio");
-                });
-
-            modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoConvenio", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime?>("DataFim")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataFim");
-
-                    b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataInicio");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Nome");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Valor");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TipoConvenio");
+                    b.ToTable("TipoConta");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoDocumento", b =>
@@ -34939,14 +35104,72 @@ namespace CadastroDigital.Infrastructure.Migrations
             modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoParente", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id")
+                        .UseIdentityColumn();
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)")
+                        .HasColumnName("Descricao");
 
                     b.HasKey("Id");
 
                     b.ToTable("TipoParente");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descricao = "Pai"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descricao = "Mãe"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descricao = "Filho(a)"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Descricao = "Avô(ó)"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Descricao = "Irmã(o)"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Descricao = "Neto(a)"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Descricao = "Esposo(a)"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Descricao = "Tio(a)"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Descricao = "Tutela"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Descricao = "Enteado(a)"
+                        });
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoPessoa", b =>
@@ -35074,25 +35297,37 @@ namespace CadastroDigital.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CadastroDigital.Domain.Entities.Beneficio", b =>
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.Agregado", b =>
                 {
-                    b.HasOne("CadastroDigital.Domain.Entities.Agregado", "Agregado")
-                        .WithOne("Beneficio")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.Beneficio", "AgregadoId")
-                        .HasConstraintName("fk_beneficio_agregado")
+                    b.HasOne("CadastroDigital.Domain.Entities.Socio", "Socio")
+                        .WithOne("Agregado")
+                        .HasForeignKey("CadastroDigital.Domain.Entities.Agregado", "SocioId")
+                        .HasConstraintName("fk_agregado_socio")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CadastroDigital.Domain.Entities.TipoBeneficio", "TipoBeneficio")
-                        .WithOne("Beneficio")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.Beneficio", "TipoBeneficioId")
-                        .HasConstraintName("fk_beneficio_tipobeneficio")
+                    b.Navigation("Socio");
+                });
+
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.BeneficioAgregado", b =>
+                {
+                    b.HasOne("CadastroDigital.Domain.Entities.Agregado", "Agregado")
+                        .WithOne("BeneficioAgregado")
+                        .HasForeignKey("CadastroDigital.Domain.Entities.BeneficioAgregado", "AgregadoId")
+                        .HasConstraintName("fk_beneficioagregado_agregado")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CadastroDigital.Domain.Entities.Beneficio", "Beneficio")
+                        .WithOne("BeneficioAgregado")
+                        .HasForeignKey("CadastroDigital.Domain.Entities.BeneficioAgregado", "BeneficioId")
+                        .HasConstraintName("fk_beneficioagregado_beneficio")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Agregado");
 
-                    b.Navigation("TipoBeneficio");
+                    b.Navigation("Beneficio");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Cidade", b =>
@@ -35107,32 +35342,11 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Navigation("Estado");
                 });
 
-            modelBuilder.Entity("CadastroDigital.Domain.Entities.Convenio", b =>
-                {
-                    b.HasOne("CadastroDigital.Domain.Entities.Socio", "Socio")
-                        .WithOne("Convenio")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.Convenio", "SocioId")
-                        .HasConstraintName("fk_convenio_socio")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CadastroDigital.Domain.Entities.TipoConvenio", "TipoConvenio")
-                        .WithOne("Convenio")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.Convenio", "TipoConvenioId")
-                        .HasConstraintName("fk_convenio_tipoconvenio")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Socio");
-
-                    b.Navigation("TipoConvenio");
-                });
-
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Documento", b =>
                 {
                     b.HasOne("CadastroDigital.Domain.Entities.Pessoa", "Pessoa")
-                        .WithOne("Documento")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.Documento", "PessoaId")
+                        .WithMany()
+                        .HasForeignKey("PessoaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -35177,16 +35391,14 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("CadastroDigital.Domain.Entities.Pessoa", "Pessoa")
-                        .WithOne("Endereco")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.Endereco", "PessoaId")
-                        .HasConstraintName("fk_endereco_pessoa")
+                        .WithMany()
+                        .HasForeignKey("PessoaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CadastroDigital.Domain.Entities.TipoEndereco", "TipoEndereco")
                         .WithOne("Endereco")
                         .HasForeignKey("CadastroDigital.Domain.Entities.Endereco", "TipoEnderecoId")
-                        .HasConstraintName("fk_endereco_tipoendereco")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -35223,17 +35435,24 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CadastroDigital.Domain.Entities.TipoConta", "TipoConta")
+                        .WithOne("InformacaoBancaria")
+                        .HasForeignKey("CadastroDigital.Domain.Entities.InformacaoBancaria", "TipoContaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Banco");
 
                     b.Navigation("Socio");
+
+                    b.Navigation("TipoConta");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Pessoa", b =>
                 {
-                    b.HasOne("CadastroDigital.Domain.Entities.PassoCadastro", "PassoCadastro")
+                    b.HasOne("CadastroDigital.Domain.Entities.PassoCadastro", null)
                         .WithOne("Pessoa")
                         .HasForeignKey("CadastroDigital.Domain.Entities.Pessoa", "PassoCadastroId")
-                        .HasConstraintName("fk_pessoa_passocadastro")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -35250,8 +35469,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasConstraintName("fk_pessoa_tipopessoa")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("PassoCadastro");
 
                     b.Navigation("StatusCadastro");
 
@@ -35301,9 +35518,8 @@ namespace CadastroDigital.Infrastructure.Migrations
             modelBuilder.Entity("CadastroDigital.Domain.Entities.RedeSocial", b =>
                 {
                     b.HasOne("CadastroDigital.Domain.Entities.Pessoa", "Pessoa")
-                        .WithOne("RedeSocial")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.RedeSocial", "PessoaId")
-                        .HasConstraintName("fk_redesocial_pessoa")
+                        .WithMany()
+                        .HasForeignKey("PessoaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -35321,6 +35537,12 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Socio", b =>
                 {
+                    b.HasOne("CadastroDigital.Domain.Entities.Cargo", "Cargo")
+                        .WithOne("Socio")
+                        .HasForeignKey("CadastroDigital.Domain.Entities.Socio", "CargoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CadastroDigital.Domain.Entities.Categoria", "Categoria")
                         .WithOne("Socio")
                         .HasForeignKey("CadastroDigital.Domain.Entities.Socio", "CategoriaId")
@@ -35333,13 +35555,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasForeignKey("CadastroDigital.Domain.Entities.Socio", "DiretorId")
                         .HasConstraintName("fk_socio_diretor");
 
-                    b.HasOne("CadastroDigital.Domain.Entities.Agregado", "Agregado")
-                        .WithOne("Socio")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.Socio", "Id")
-                        .HasConstraintName("fk_agregado_socio")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CadastroDigital.Domain.Entities.Dependente", "Dependente")
                         .WithOne("Socio")
                         .HasForeignKey("CadastroDigital.Domain.Entities.Socio", "Id")
@@ -35347,14 +35562,21 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CadastroDigital.Domain.Entities.Parceria", "Parceria")
+                        .WithMany()
+                        .HasForeignKey("ParceriaId");
+
                     b.HasOne("CadastroDigital.Domain.Entities.Pessoa", "Pessoa")
-                        .WithOne("Socio")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.Socio", "PessoaId")
-                        .HasConstraintName("fk_socio_pessoa")
+                        .WithMany()
+                        .HasForeignKey("PessoaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Agregado");
+                    b.HasOne("CadastroDigital.Domain.Entities.ProcessoJuridico", "ProcessoJuridico")
+                        .WithMany()
+                        .HasForeignKey("ProcessoJuridicoId");
+
+                    b.Navigation("Cargo");
 
                     b.Navigation("Categoria");
 
@@ -35362,7 +35584,11 @@ namespace CadastroDigital.Infrastructure.Migrations
 
                     b.Navigation("Diretor");
 
+                    b.Navigation("Parceria");
+
                     b.Navigation("Pessoa");
+
+                    b.Navigation("ProcessoJuridico");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Telefone", b =>
@@ -35386,39 +35612,24 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Navigation("TipoTelefone");
                 });
 
-            modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoParente", b =>
-                {
-                    b.HasOne("CadastroDigital.Domain.Entities.Agregado", "Agregado")
-                        .WithOne("TipoParente")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.TipoParente", "Id")
-                        .HasConstraintName("fk_agregado_tipoparente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CadastroDigital.Domain.Entities.Dependente", "Dependente")
-                        .WithOne("TipoParente")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.TipoParente", "Id")
-                        .HasConstraintName("fk_dependente_tipoparente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Agregado");
-
-                    b.Navigation("Dependente");
-                });
-
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Agregado", b =>
                 {
-                    b.Navigation("Beneficio");
-
-                    b.Navigation("Socio");
-
-                    b.Navigation("TipoParente");
+                    b.Navigation("BeneficioAgregado");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Banco", b =>
                 {
                     b.Navigation("InformacaoBancaria");
+                });
+
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.Beneficio", b =>
+                {
+                    b.Navigation("BeneficioAgregado");
+                });
+
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.Cargo", b =>
+                {
+                    b.Navigation("Socio");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Categoria", b =>
@@ -35429,8 +35640,6 @@ namespace CadastroDigital.Infrastructure.Migrations
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Dependente", b =>
                 {
                     b.Navigation("Socio");
-
-                    b.Navigation("TipoParente");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Diretor", b =>
@@ -35467,17 +35676,9 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Pessoa", b =>
                 {
-                    b.Navigation("Documento");
-
                     b.Navigation("Email");
 
-                    b.Navigation("Endereco");
-
                     b.Navigation("PessoaFisica");
-
-                    b.Navigation("RedeSocial");
-
-                    b.Navigation("Socio");
 
                     b.Navigation("Telefone");
                 });
@@ -35489,7 +35690,7 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Socio", b =>
                 {
-                    b.Navigation("Convenio");
+                    b.Navigation("Agregado");
 
                     b.Navigation("InformacaoBancaria");
                 });
@@ -35499,14 +35700,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Navigation("Pessoa");
                 });
 
-            modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoBeneficio", b =>
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoConta", b =>
                 {
-                    b.Navigation("Beneficio");
-                });
-
-            modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoConvenio", b =>
-                {
-                    b.Navigation("Convenio");
+                    b.Navigation("InformacaoBancaria");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoDocumento", b =>

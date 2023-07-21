@@ -1,0 +1,51 @@
+.carrossel {
+  display: "block";
+  width: 640px;
+  height: 360px;
+}
+
+.carrossel > .slide > img{
+  width: 640px;
+  height: 360px;
+}
+
+.img-md-not{
+  width: 100%;
+  height: 359px;
+}
+
+.img-sm-not{
+  width: 100%;
+  height: 154px;
+}
+
+.div-card-body-md-not{
+  height: 188px;
+}
+
+.div-card-body-sm-not{
+  height: 107px;
+}
+
+.img-md-ben{
+  width: 100%;
+  height: 150px;
+}
+
+// .div_ratio_466-261{
+  // width: 100%;
+  // max-width: 960px;
+  // height: auto;
+  // max-width: 466px;
+  // max-height: 261px;
+  // width: auto;
+  // height: auto;
+// }
+
+// .div_ratio_165-92{
+//   width: 100%;
+//  max-width: 960px;
+  // max-height: 92px;
+  // width: auto;
+  // height: auto;
+// }

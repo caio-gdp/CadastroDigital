@@ -4,12 +4,12 @@ using CadastroDigital.Domain.Entities;
 
 namespace CadastroDigital.Domain.EntitiesConfigs
 {
-    public class ConvenioConfig : IEntityTypeConfiguration<Convenio>
+    public class ParceriaConfig : IEntityTypeConfiguration<Parceria>
     {
-        public void Configure(EntityTypeBuilder<Convenio>builder){
+        public void Configure(EntityTypeBuilder<Parceria>builder){
 
             //Tabela
-            builder.ToTable("Convenio");
+            builder.ToTable("Parceria");
             
             //Primary Key
             builder.HasKey(p => p.Id);
@@ -18,6 +18,32 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             builder.Property(f => f.Id)
             .HasColumnName("Id")
             .ValueGeneratedOnAdd()
+            .IsRequired();
+
+             builder.Property(f => f.Nome)
+            .HasColumnName("Nome")
+            .IsRequired();
+
+            builder.Property(f => f.Descricao)
+            .HasColumnName("Descricao")
+            .HasMaxLength(100)
+            .IsRequired();
+
+            builder.Property(f => f.Valor)
+            .HasColumnName("Valor")
+            .IsRequired();
+
+            builder.Property(f => f.Desconto)
+            .HasColumnName("Desconto")
+            .IsRequired();
+
+            builder.Property(f => f.Imagem)
+            .HasColumnName("Imagem")
+            .IsRequired();
+
+            builder.Property(f => f.Site)
+            .HasColumnName("Site")
+            .HasMaxLength(100)
             .IsRequired();
 
             builder.Property(f => f.DataInclusao)
