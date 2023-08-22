@@ -53,6 +53,11 @@ import { PhotoComponent } from './components/user/photo/photo.component';
 import { DocumentsComponent } from './components/user/Documents/Documents.component';
 import { FileComponent } from './components/user/File/File.component';
 import { AssignComponent } from './components/user/assign/assign.component';
+import { NoticiaService } from './services/noticia.service';
+import { BeneficioService } from './services/beneficio.service';
+import { ParceriaService } from './services/parceria.service';
+import { PlaylistService } from './services/playlist.service';
+import { PlaylistComponent } from './components/playlist/playlist.component';
 
 defineLocale('pt-br', ptBrLocale);
 registerLocaleData(localePT);
@@ -80,7 +85,8 @@ registerLocaleData(localePT);
       PhotoComponent,
       DocumentsComponent,
       FileComponent,
-      AssignComponent
+      AssignComponent,
+      PlaylistComponent
    ],
   imports: [
     BrowserModule,
@@ -117,6 +123,10 @@ registerLocaleData(localePT);
               SexoService,
               TipoRedeSocialService,
               EnderecoService,
+              NoticiaService,
+              BeneficioService,
+              ParceriaService,
+              PlaylistService,
               ReCaptchaV3Service,
               provideNgxMask(),
               {provide: RECAPTCHA_V3_SITE_KEY, useValue: '6LemiK8mAAAAADxKrc0KtYeWBNkzQsSXi4ujzh-E'}],

@@ -15,7 +15,6 @@ import { SobreComponent } from './components/sobre/sobre.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
 import { BeneficioComponent } from './components/beneficio/beneficio.component';
 import { ConvenioComponent } from './components/convenio/convenio.component';
-import { ServicoComponent } from './components/servico/servico.component';
 import { PersonalDataComponent } from './components/user/personalData/personalData.component';
 import { ProfissionalDataComponent } from './components/user/profissionalData/profissionalData.component';
 import { DependentComponent } from './components/user/dependent/dependentcomponent';
@@ -24,6 +23,7 @@ import { PhotoComponent } from './components/user/photo/photo.component';
 import { DocumentsComponent } from './components/user/Documents/Documents.component';
 import { FileComponent } from './components/user/File/File.component';
 import { AssignComponent } from './components/user/assign/assign.component';
+import { PlaylistComponent } from './components/playlist/playlist.component';
 
 const routes: Routes = [
   {
@@ -40,6 +40,7 @@ const routes: Routes = [
       {  path : 'documents', component: DocumentsComponent },
       {  path : 'file', component: FileComponent },
       {  path : 'assign', component: AssignComponent },
+      {  path : 'playlist', component: PlaylistComponent },
     ]
   },
   { path : 'user/profile', component: ProfileComponent  },
@@ -57,7 +58,6 @@ const routes: Routes = [
   {  path : 'noticia', component: NoticiaComponent  },
   {  path : 'beneficio', component: BeneficioComponent  },
   {  path : 'convenio', component: ConvenioComponent  },
-  {  path : 'servico', component: ServicoComponent  },
   {  path : 'contato', component: ContatoComponent  },
   {  path : '', redirectTo : 'dashboard', pathMatch : 'full'  },
   {  path : '**', redirectTo : 'dashboard', pathMatch : 'full'  },
