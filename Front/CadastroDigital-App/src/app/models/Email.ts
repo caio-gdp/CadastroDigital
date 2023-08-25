@@ -3,6 +3,6 @@ export interface Email {
   pessoaId : number;
   tipoEmailId : number;
   endereco : string;
-  principal : boolean;
-  valido : boolean;
+  dataInclusao: string;
+  usuarioInclusao: string;
 }

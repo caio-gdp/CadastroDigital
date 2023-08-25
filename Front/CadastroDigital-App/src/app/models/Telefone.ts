@@ -4,6 +4,6 @@ export interface Telefone {
   tipoTelefoneId : number;
   ddd : number;
   numero : number;
-  principal : boolean;
-  valido : boolean;
+  dataInclusao: string;
+  usuarioInclusao: string;
 }

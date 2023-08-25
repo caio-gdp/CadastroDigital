@@ -3,8 +3,12 @@ export interface PessoaFisica {
   cpf : string;
   dataNascimento : string;
   nome : string;
+  rg : string;
+  dataEmissao: string;
+  orgaoExpedidorId?: number | null,
+  ufId?: number | null,
   imagem : string;
   pessoaId : number;
-  sexoId : number;
-  estadoCivilId : number;
+  sexoId? : number | null;
+  estadoCivilId? : number | null;
 }

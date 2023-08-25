@@ -71,12 +71,18 @@ namespace CadastroDigital.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(PessoaDto dto)
         {
+            var pessoa = await _pessoaService.GetPessoaByCpf(dto.PessoaFisica.Cpf);
+
+            if (pessoa != null)
+                return BadRequest("CPF já cadastrado.");
+
             var ret = await _pessoaService.AddPessoa(dto);
             
             if (ret == null)
                 return BadRequest("Erro ao tentar incluir registro.");
 
-            return Ok("Registro incluído com sucesso.");
+            // return Ok("Registro incluído com sucesso");
+            return Ok();
         }
 
         [HttpPut("{id}")]

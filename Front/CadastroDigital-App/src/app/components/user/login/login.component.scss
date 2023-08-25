@@ -1,11 +1,17 @@
 /* NAV BAR LOGIN */
+div{
+  display: inline-block;
+  position: relative;
+}
+
 ul{
-  margin: -25px 5px 0 470px;
+  display: inline-block;
+  margin: 0 0 0 460px;
 }
 
 ul li {
   display: inline-block;
-  margin-right: 15px;
+  margin-right: 5px;
 }
 
 li a#active-page {
@@ -17,7 +23,6 @@ li a:hover,
 li a:active {
   border-bottom: 3px solid #27ae60;
 }
-
 
 li a:link,
 li a:visited {
@@ -34,8 +39,9 @@ li a:active {
 
 form {
   display: inline-block;
-  margin: 0 5px 0 590px;
+  margin: 0 5px 0 0;
 }
+
 input[type="text"],
 input[type="password"] {
   height: 2em;

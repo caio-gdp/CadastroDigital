@@ -1,16 +1,24 @@
-<form visible="false">
-  <li class=""><a class="nav-link" href="user/registration" target="_blank">Cadastre-se</a></li>
+<ng-container>
+  <form [formGroup]="form">
+    <ul>
+      <li><a href="user/registration">Cadastre-se</a></li>
+      <li><input type="text" formControlName="login" autofocus="autofocus" placeholder="Login"></li>
+      <li><input type="password" formControlName="senha" placeholder="Senha"></li>
+      <li><input type="submit" name="login" value="Login" (click)="login()" [disabled]="!form.valid"></li>
+      <li><a href="#">Esqueci minha senha</a></li>
+    </ul>
 
-  <!-- <input type="submit" name="login" value="Cadastro" (click)="registration()"> -->
-  <input type="text" autofocus="autofocus" placeholder="Email">
-  <input type="password" placeholder="Senha">
-  <input type="submit" name="login" value="Login">
+   <!-- <li class=""><a class="nav-link" href="user/registration" target="_blank">Cadastre-se</a></li> -->
 
-  <!--<input type="submit" name="socio" value="Seja Sócio">-->
-  <ul>
-    <li><a href="#">Esqueci minha senha</a></li>
-  </ul>
-</form>
+    <!-- <input type="submit" name="login" value="Cadastro" (click)="registration()"> -->
+
+
+    <!--<input type="submit" name="socio" value="Seja Sócio">-->
+
+  </form>
+
+</ng-container>
+
 <!-- <div class="d-flex align-items-center vh-100">
 
 	<div class="mx-auto text-center shadow-sm bg-white rounded p-5 my-5">

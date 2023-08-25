@@ -21,7 +21,7 @@
                   <div class="card card-informacao">
                     <div class="card-body">
                       <h5 class="card-title"><b>Informação</b></h5>
-                      <p class="card-text">Tenha em mãos seu documento CPF e seu celular, isso vai facilitar sua experiência.<br>
+                      <p class="card-text">Tenha em mãos seu documento CPF, isso vai facilitar sua experiência.<br>
                         Todos os itens com (*) são obrigatórios.</p>
                     </div>
                   </div>
@@ -39,6 +39,9 @@
                     </div>
                     <div class="invalid-tooltip" *ngIf="f.cpf.errors?.maxlength">
                       CPF deve ter no máxino 11 caracteres.
+                    </div>
+                    <div class="invalid-tooltip" *ngIf="f.cpf.errors?.invalido">
+                      CPF inválido.
                     </div>
                     <span class="focus-border"></span>
                   </div>
@@ -68,6 +71,9 @@
                     <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.maxlength">
                       Data de Nascimento deve ter no máxino 10 caracteres.
                     </div>
+                    <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.menorIdade">
+                      Você precisa ter mais de 18 anos para cadastrar-se.
+                    </div>
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-1">
@@ -95,12 +101,9 @@
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-2">
-                    <input class="effect" type="text" placeholder="" [ngClass]="cssValidation(f.email)" formControlName="confirmaemail" placeholder="Confirmar Email*">
-                    <div class="invalid-tooltip" *ngIf="f.email.errors?.required">
-                      Email é obrigatório.
-                    </div>
-                    <div class="invalid-tooltip" *ngIf="f.email.errors?.email">
-                      Deve ser um endereço de email válido.
+                    <input class="effect" type="text" placeholder="" [ngClass]="cssValidation(f.confirmaEmail)" formControlName="confirmaEmail" placeholder="Confirmar Email*">
+                    <div class="invalid-tooltip" *ngIf="f.confirmaEmail.errors?.required">
+                      Confirmar email é obrigatório.
                     </div>
                     <span class="focus-border"></span>
                   </div>
@@ -118,7 +121,6 @@
                     <div class="invalid-tooltip" *ngIf="f.senha.errors?.required">
                       Senha é obrigatório.
                     </div>
-
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-2">
@@ -126,6 +128,9 @@
                     formControlName="confirmaSenha" placeholder="Confirmar Senha*" id="confirmaSenha" maxlength="15">
                     <div class="invalid-tooltip" *ngIf="f.confirmaSenha.errors?.required">
                       Confirmar Senha é obrigatório.
+                    </div>
+                    <div class="invalid-tooltip" *ngIf="f.confirmaSenha.errors?.invalidCheckPassword">
+                      As senhas não coincidem.
                     </div>
                     <span class="focus-border"></span>
                   </div>
@@ -154,12 +159,10 @@
                   </div>
                   <div class="col-1">
                     <div class="form-group col">
-                      <input type="checkbox" (click)="validaSenha()">&nbsp;
+                      <input type="checkbox" formControlName="confirmaNoticia" id="confirmaNoticia">&nbsp;
                       <label class="mr-2">Eu concordo em receber as notícias relacionadas ao SINDEST.</label>
                     </div>
                   </div>
-
-
                   <div class="row">
                     <div class="col div-btn-custom">
                       <button class="btn btn-danger btn-custom" routerLink="dashboard">
@@ -172,7 +175,7 @@
                       </button>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-sm btn-primary" (click)="send()">Send</button>
+                  <!-- <button type="button" class="btn btn-sm btn-primary" (click)="send()">Send</button> -->
                   <div *ngIf="tokenVisible"> reCAPTCHA Token <br />
                     <p style="color:red">{{reCAPTCHAToken}}</p>
                   </div>

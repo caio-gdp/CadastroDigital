@@ -520,3 +520,4 @@ testem.log
 Thumbs.db
 
 *.pdb
+/bin/

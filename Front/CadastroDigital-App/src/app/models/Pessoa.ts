@@ -12,6 +12,8 @@ export interface Pessoa {
    senha : string;
    confirmaSenha : string;
    statusCadastroId : number;
+   passoCadastroId : number;
+   enderecoIp : string;
    notificacao : boolean;
    pessoaFisica : PessoaFisica
    telefone : Telefone;

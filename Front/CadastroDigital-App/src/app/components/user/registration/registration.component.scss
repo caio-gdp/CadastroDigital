@@ -1,9 +1,6 @@
 
 
-
 user agent stylesheet
-
-
 
 body {
   font-family: Myriad Pro;
@@ -303,13 +300,15 @@ input:focus:-ms-input-placeholder {
 .eye-pwd{
   position: absolute;
   left: 45%;
-  top: 62%;
+  top: 63%;
+  cursor: pointer;
 }
 
 .eye-pwd-confirm{
   position: absolute;
   left: 94%;
-  top: 62%;
+  top: 63%;
+  cursor: pointer;
 }
 
 .fa-exclamation-circle{
