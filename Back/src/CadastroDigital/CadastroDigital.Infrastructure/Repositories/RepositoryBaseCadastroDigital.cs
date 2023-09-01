@@ -14,9 +14,9 @@ namespace CadastroDigital.Infrastructure.Repositories
     {
         public CadastroDigitalContext _context { get; set; }
 
-        public RepositoryBaseCadastroDigital(CadastroDigitalContext _context)
+        public RepositoryBaseCadastroDigital(CadastroDigitalContext context)
         {
-            this._context = _context;
+            _context = context;
         }
 
         public void Add(T entity)
@@ -88,58 +88,5 @@ namespace CadastroDigital.Infrastructure.Repositories
 
             return await query.AsNoTracking().Where(expressao).FirstAsync();
         }
-
-        public async Task<Pessoa[]> GetAllPessoas(){
-
-            IQueryable<Pessoa> query = _context.Pessoa
-                .Include(p => p.PessoaFisica);
-
-            query = query.OrderBy(e => e.Id);
-
-            return await query.ToArrayAsync();
-        }
-
-        public async Task<Pessoa> GetPessoaById(int id){
-
-            IQueryable<Pessoa> query = _context.Pessoa
-                .Include(p => p.PessoaFisica)
-                .Where(p => p.Id.Equals(id)).AsNoTracking();
-
-            return await query.FirstOrDefaultAsync();
-        }
-
-        public async Task<Pessoa[]> GetPessoaByCpf(string cpf){
-
-            IQueryable<Pessoa> query = _context.Pessoa
-                .Include(p => p.PessoaFisica)
-                .Where(p => p.PessoaFisica.Cpf.Contains(cpf)).AsNoTracking();
-
-            query = query.OrderBy(e => e.PessoaFisica.Cpf);    
-
-            return await query.ToArrayAsync();
-        }
-
-        public async Task<Pessoa[]> GetPessoaByName(string nome){
-
-            IQueryable<Pessoa> query = _context.Pessoa
-                .Include(p => p.PessoaFisica)
-                .Where(p => p.PessoaFisica.Nome.Contains(nome)).AsNoTracking();
-
-            query = query.OrderBy(e => e.PessoaFisica.Nome);        
-
-            return await query.ToArrayAsync();
-        }
-
-        public async Task<IEnumerable<Cidade>> GetCidadeByEstado(int estado){
-
-            IQueryable<Cidade> query = _context.Cidade
-                .Where(p => p.EstadoId.Equals(estado)).AsNoTracking();
-
-            query = query.OrderBy(e => e.Estado.Nome);    
-
-            return await query.ToListAsync();
-        }
-
-        
     }
 }

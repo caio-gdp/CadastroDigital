@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using CadastroDigital.Domain.Identity;
 
 namespace CadastroDigital.Domain.Entities
 {
     public class Pessoa : Base
     {
+        public int UserId { get; set; }
         public int TipoPessoaId { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime? DataAtualizacao { get; set; }
@@ -15,7 +17,8 @@ namespace CadastroDigital.Domain.Entities
         public int PassoCadastroId { get; set; }
         public string EnderecoIP { get; set; }
         public bool Notificacao { get; set; }
-
+  
+        public User User { get; set; }
         public TipoPessoa TipoPessoa { get; set; }
         public StatusCadastro StatusCadastro { get; set; }
         public PessoaFisica PessoaFisica { get; set; }

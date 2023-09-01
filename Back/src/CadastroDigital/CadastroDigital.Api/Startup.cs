@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 using CadastroDigital.App.Interfaces;
 using CadastroDigital.App.Services;
 using CadastroDigital.Infrastructure.Contexts;
@@ -22,6 +23,11 @@ using Microsoft.OpenApi.Models;
 using AutoMapper;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Http;
+using CadastroDigital.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace CadastroDigital.Api
 {
@@ -38,11 +44,44 @@ namespace CadastroDigital.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CadastroDigitalContext>(
-                    context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
+                context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
             );
+
+            //Comnentar depois de testar
+            services.AddIdentityCore<User>(x =>
+                {
+                    x.Password.RequireDigit = false;
+                    x.Password.RequireNonAlphanumeric = false;
+                    x.Password.RequireLowercase = false;
+                    x.Password.RequireNonAlphanumeric = false;
+                    x.Password.RequireUppercase = false;
+                    x.Password.RequiredLength = 4;
+                }             
+            )
+            .AddRoles<Role>()
+            .AddRoleManager<RoleManager<Role>>()
+            .AddSignInManager<SignInManager<User>>()
+            .AddRoleValidator<RoleValidator<Role>>()
+            .AddEntityFrameworkStores<CadastroDigitalContext>()
+            .AddDefaultTokenProviders();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(x => {
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"])),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             services.AddControllers()
+                    .AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())) //Usa os enums com nomenclatura ao inves de int
                     .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = 
-                        Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore //Evitar looping infinito de referencias foreign key
+                    );
+
             services.AddScoped<IPessoaService, PessoaService>();
             services.AddScoped<ICidadeService, CidadeService>();
             services.AddScoped<IEstadoService, EstadoService>();
@@ -54,6 +93,9 @@ namespace CadastroDigital.Api
             services.AddScoped<INoticiaService, NoticiaService>();
             services.AddScoped<IBeneficioService, BeneficioService>();
             services.AddScoped<IParceriaService, ParceriaService>();
+            services.AddScoped<IRepositoryUser, RepositoryUser>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped(typeof(IRepositoryBaseCadastroDigital<>), typeof(RepositoryBaseCadastroDigital<>));
             services.AddCors(c =>  
                             {  

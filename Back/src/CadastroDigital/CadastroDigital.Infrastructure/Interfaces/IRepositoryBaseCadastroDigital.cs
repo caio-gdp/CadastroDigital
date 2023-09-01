@@ -21,12 +21,5 @@ namespace CadastroDigital.Infrastructure.Interfaces
         void Delete(T entity);
         void DeleteRange(T[] entityArray);
         Task<bool> SaveChanges();
-
-        
-        Task<Pessoa[]> GetAllPessoas();
-        Task<Pessoa> GetPessoaById(int id);
-        Task<Pessoa[]> GetPessoaByCpf(string cpf);
-        Task<Pessoa[]> GetPessoaByName(string nome);
-        Task<IEnumerable<Cidade>> GetCidadeByEstado(int estado);
     }
 }

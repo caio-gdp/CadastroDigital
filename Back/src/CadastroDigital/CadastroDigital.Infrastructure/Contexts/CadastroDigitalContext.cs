@@ -1,11 +1,17 @@
 //using CadastroDigital.App.Model;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CadastroDigital.Domain.Entities;
 using CadastroDigital.Domain.EntitiesConfigs;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using CadastroDigital.Domain.Identity;
 
 namespace CadastroDigital.Infrastructure.Contexts
 {
-    public class CadastroDigitalContext : DbContext
+    //public class CadastroDigitalContext : DbContext
+     public class CadastroDigitalContext : IdentityDbContext<User, Role, int,
+                                                             IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>,
+                                                             IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public CadastroDigitalContext (DbContextOptions<CadastroDigitalContext> options) : base(options)
         {}
@@ -44,6 +50,8 @@ namespace CadastroDigital.Infrastructure.Contexts
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
+
+            base.OnModelCreating(modelBuilder);
 
             //Configs
             modelBuilder.ApplyConfiguration(new CidadeConfig());
