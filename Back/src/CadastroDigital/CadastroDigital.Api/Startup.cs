@@ -94,6 +94,8 @@ namespace CadastroDigital.Api
             services.AddScoped<IBeneficioService, BeneficioService>();
             services.AddScoped<IParceriaService, ParceriaService>();
             services.AddScoped<IRepositoryUser, RepositoryUser>();
+            services.AddScoped<IRepositoryPessoa, RepositoryPessoa>();
+            services.AddScoped<IRepositoryCidade, RepositoryCidade>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped(typeof(IRepositoryBaseCadastroDigital<>), typeof(RepositoryBaseCadastroDigital<>));
@@ -123,6 +125,7 @@ namespace CadastroDigital.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCors(x => x.AllowAnyHeader()
