@@ -9,9 +9,12 @@ using System.IO;
 using System.Linq;
 using System;
 using Microsoft.AspNetCore.Http;
+using CadastroDigital.Api.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CadastroDigital.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PessoaController : ControllerBase
@@ -28,7 +31,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var pessoas = await _pessoaService.Get();
+            var pessoas = await _pessoaService.Get(User.GetUserId());
 
             if (pessoas == null)
                 return NotFound("Nenhum registro encontrado.");
@@ -40,28 +43,29 @@ namespace CadastroDigital.Api.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             try{
-            var pessoa = await _pessoaService.GetPessoaById(id);
 
-            if (pessoa.Equals(null))
-                return NoContent();
+                var pessoa = await _pessoaService.GetPessoaById(User.GetUserId(), id);
 
-            return Ok(pessoa);
+                if (pessoa.Equals(null))
+                    return NoContent();
+
+                return Ok(pessoa);
             }
             catch(Exception ex){
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar a pessoa. Erro: {ex.Message}");
             }
         }
 
-        // [HttpGet("cpf/{cpf}")]
-        // public async Task<IActionResult> GetPessoaByCpf(string cpf)
-        // {
-        //     var pessoas = await _pessoaService.GetPessoaByCpf(cpf);
+        [HttpGet("cpf/{cpf}")]
+        public async Task<IActionResult> GetPessoaByCpf(string cpf)
+        {
+            var pessoas = await _pessoaService.GetPessoaByCpf(cpf);
 
-        //     if (pessoas.Equals(null))
-        //         return NoContent();
+            if (pessoas.Equals(null))
+                return NoContent();
 
-        //     return Ok(pessoas);
-        // }
+            return Ok(pessoas);
+        }
 
         // [HttpGet("nome/{nome}")]
         // public async Task<IActionResult> GetByName(string nome)
@@ -74,27 +78,28 @@ namespace CadastroDigital.Api.Controllers
         //     return Ok(pessoas);
         // }
 
-        // [HttpPost]
-        // public async Task<IActionResult> Post(PessoaDto dto)
-        // {
-        //     var pessoa = await _pessoaService.GetPessoaByCpf(dto.PessoaFisica.Cpf);
+        [HttpPost]
+        public async Task<IActionResult> Post(PessoaDto dto)
+        {
+            var userId = User.GetUserId();
+            var pessoa = await _pessoaService.GetPessoaByCpf(userId);
 
-        //     if (pessoa != null)
-        //         return BadRequest("CPF já cadastrado.");
+            if (pessoa != null)
+                return BadRequest("CPF já cadastrado.");
 
-        //     var ret = await _pessoaService.AddPessoa(dto);
+            var ret = await _pessoaService.AddPessoa(userId, dto);
             
-        //     if (ret == null)
-        //         return BadRequest("Erro ao tentar incluir registro.");
+            if (ret == null)
+                return BadRequest("Erro ao tentar incluir registro.");
 
-        //     // return Ok("Registro incluído com sucesso");
-        //     return Ok();
-        // }
+            // return Ok("Registro incluído com sucesso");
+            return Ok();
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, PessoaDto dto)
         {
-            var ret = await _pessoaService.UpdatePessoa(id, dto);
+            var ret = await _pessoaService.UpdatePessoa(User.GetUserId(), id, dto);
             
             if (ret == null)
                 return BadRequest("Erro ao tentar atualizar registro.");
@@ -105,7 +110,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-           var ret = await _pessoaService.DeletePessoa(id);
+           var ret = await _pessoaService.DeletePessoa(User.GetUserId(), id);
             
             if (!ret)
                 return BadRequest("Erro ao tentar excluir registro.");
@@ -116,7 +121,8 @@ namespace CadastroDigital.Api.Controllers
         [HttpPost("upload-image/{pessoaId}")]
         public async Task<IActionResult> UploadImage(int pessoaId)
         {
-            var pessoa = await _pessoaService.GetPessoaById(pessoaId);
+            var userId = User.GetUserId();
+            var pessoa = await _pessoaService.GetPessoaById(userId, pessoaId);
 
             if (pessoa == null)
                 return NoContent();
@@ -129,7 +135,7 @@ namespace CadastroDigital.Api.Controllers
                 pessoa.PessoaFisica.Imagem = await SaveImage(file);
             }
 
-            var ret = await _pessoaService.UpdatePessoa(pessoaId, pessoa);
+            var ret = await _pessoaService.UpdatePessoa(userId, pessoaId, pessoa);
 
             return Ok(ret);
         }

@@ -28,8 +28,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImagemUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Funcao = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -537,7 +535,7 @@ namespace CadastroDigital.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TipoPessoaId = table.Column<int>(type: "int", nullable: false),
                     DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -552,12 +550,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pessoa", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Pessoa_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Pessoa_PassoCadastro_PassoCadastroId",
                         column: x => x.PassoCadastroId,
@@ -7832,11 +7824,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                 column: "TipoPessoaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pessoa_UserId",
-                table: "Pessoa",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "idx_pessoafisica_estadocivil",
                 table: "PessoaFisica",
                 column: "EstadoCivilId");
@@ -7968,6 +7955,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Agregado");
 
             migrationBuilder.DropTable(
@@ -8035,9 +8025,6 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Pais");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "PassoCadastro");

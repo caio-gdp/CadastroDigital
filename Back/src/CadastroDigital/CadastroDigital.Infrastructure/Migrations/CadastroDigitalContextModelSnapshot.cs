@@ -34578,8 +34578,8 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("TipoPessoaId");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -34591,8 +34591,6 @@ namespace CadastroDigital.Infrastructure.Migrations
 
                     b.HasIndex("TipoPessoaId")
                         .HasDatabaseName("idx_pessoa_tipopessoa");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Pessoa");
                 });
@@ -35353,17 +35351,11 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Property<int>("Funcao")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImagemUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -35702,17 +35694,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CadastroDigital.Domain.Identity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("StatusCadastro");
 
                     b.Navigation("TipoPessoa");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.PessoaFisica", b =>

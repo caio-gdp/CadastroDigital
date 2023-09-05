@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using System.Threading;
 using CadastroDigital.App.Dtos;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Claims;
+using CadastroDigital.Api.Extensions;
 
 namespace CadastroDigital.Api.Controllers
 {
@@ -27,17 +29,18 @@ namespace CadastroDigital.Api.Controllers
             _accountService = accountService;
         }
 
-        [HttpGet("GetUser/{userName}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetUser(string userName){
-            try{
-                var user = await _accountService.GetUserByUserName(userName);
-                return Ok(user);
-            }
-            catch(Exception ex){
-                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar o usuário. Erro: {ex.Message}");
-            }
-        }
+        // [HttpGet("GetUser")]
+        // //[AllowAnonymous]
+        // public async Task<IActionResult> GetUser(){
+        //     try{
+        //         var userName = User.GetUserName();
+        //         var user = await _accountService.GetUserByUserName(userName);
+        //         return Ok(user);
+        //     }
+        //     catch(Exception ex){
+        //          return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar o usuário. Erro: {ex.Message}");
+        //     }
+        // }
 
         [HttpPost("Register")]
         [AllowAnonymous]
@@ -79,7 +82,26 @@ namespace CadastroDigital.Api.Controllers
                 });
             }
             catch(Exception ex){
-                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar o usuário. Erro: {ex.Message}");
+                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar efetuar login. Erro: {ex.Message}");
+            }
+        }
+
+        [HttpPut("UpdateUser")]
+        public async Task<IActionResult> UpdateUser(UserDto userDto){
+            try{
+                var user = await _accountService.GetUserByUserName(User.GetUserId());
+
+                if (user == null) return Unauthorized("Usuário inválido.");
+
+                var userReturn = await _accountService.UpdateAccount(userDto);
+
+                if (user == null)
+                    return NoContent(); 
+
+                return Ok(userReturn);    
+            }
+            catch(Exception ex){
+                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar atualizar o usuário. Erro: {ex.Message}");
             }
         }
     }
