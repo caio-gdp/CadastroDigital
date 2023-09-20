@@ -18,9 +18,14 @@ namespace CadastroDigital.Infrastructure.Repositories
              _context = context;
         }
 
-        public async Task<User> GetUserByUserName(string userName) {
+        public async Task<User> GetUserById(int id) {
 
-            return await _context.Users.SingleOrDefaultAsync(x => x.UserName == userName);
+            return await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<User> GetUserByUserId(string userId) {
+
+            return await _context.Users.SingleOrDefaultAsync(x => x.UserId == userId);
         }
     }
 }

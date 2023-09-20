@@ -15,7 +15,7 @@ namespace CadastroDigital.Domain.Entities
         public DateTime? DataExclusao { get; set; }
         public string UsuarioExclusao { get; set; }
 
-        public Pessoa Pessoa { get; set; }
+        public PessoaFisica PessoaFisica { get; set; }
         public TipoRedeSocial TipoRedeSocial { get; set; }
     }
 }

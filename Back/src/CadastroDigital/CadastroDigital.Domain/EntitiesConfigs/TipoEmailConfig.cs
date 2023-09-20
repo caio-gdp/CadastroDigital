@@ -8,37 +8,37 @@ namespace CadastroDigital.Domain.EntitiesConfigs
     {
         public void Configure(EntityTypeBuilder<TipoEmail>builder){
 
-            //Tabela
-            builder.ToTable("TipoEmail");
+        //Tabela
+        //     builder.ToTable("TipoEmail");
             
-            //Primary Key
-            builder.HasKey(p => p.Id);
+        //     //Primary Key
+        //     builder.HasKey(p => p.Id);
             
-            //Atributos
-            builder.Property(f => f.Id)
-            .HasColumnName("Id")
-            .ValueGeneratedOnAdd()
-            .IsRequired();
+        //     //Atributos
+        //     builder.Property(f => f.Id)
+        //     .HasColumnName("Id")
+        //     .ValueGeneratedOnAdd()
+        //     .IsRequired();
 
-            builder.Property(f => f.Descricao)
-            .HasColumnName("Descricao")
-            .HasMaxLength(12)
-            .IsRequired();
-        }
+        //     builder.Property(f => f.Descricao)
+        //     .HasColumnName("Descricao")
+        //     .HasMaxLength(12)
+        //     .IsRequired();
+        // }
 
-        public static TipoEmail[] HasData(){
+        // public static TipoEmail[] HasData(){
 
-            return new TipoEmail[]{
+        //     return new TipoEmail[]{
 
-                new TipoEmail(){
-                    Id = 1,
-                    Descricao = "Pessoal"
-                },
-                new TipoEmail(){
-                    Id = 2,
-                    Descricao = "Profissional"
-                }
-            };
-        }
+        //         new TipoEmail(){
+        //             Id = 1,
+        //             Descricao = "Pessoal"
+        //         },
+        //         new TipoEmail(){
+        //             Id = 2,
+        //             Descricao = "Profissional"
+        //         }
+        //     };
+         }
     }
 }

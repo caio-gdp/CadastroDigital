@@ -23,8 +23,10 @@ export class NavComponent implements OnInit {
   showMenuLoggedIn() : boolean{
     var ret : boolean = false;
 
+    //alert(this.router.url);
+
     // if (this.router.url != '/user/login' && this.router.url != '/dashboard')
-    if (this.router.url == '/dashboard')
+    if (this.router.url == '/')
       ret = true;
 
       return ret;

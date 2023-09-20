@@ -14,7 +14,6 @@ using CadastroDigital.Api.Extensions;
 
 namespace CadastroDigital.Api.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -29,35 +28,38 @@ namespace CadastroDigital.Api.Controllers
             _accountService = accountService;
         }
 
-        // [HttpGet("GetUser")]
-        // //[AllowAnonymous]
-        // public async Task<IActionResult> GetUser(){
-        //     try{
-        //         var userName = User.GetUserName();
-        //         var user = await _accountService.GetUserByUserName(userName);
-        //         return Ok(user);
-        //     }
-        //     catch(Exception ex){
-        //          return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar o usuário. Erro: {ex.Message}");
-        //     }
-        // }
+        [HttpGet("GetUser")]
+        [Authorize]
+        public async Task<IActionResult> GetUser(){
+            try{
+                var id = User.GetUserId();
+                var user = await _accountService.GetUserByUserId(id);
+                return Ok(user);
+            }
+            catch(Exception ex){
+                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar o usuário. Erro: {ex.Message}");
+            }
+        }
 
         [HttpPost("Register")]
         [AllowAnonymous]
         public async Task<IActionResult> Register(UserDto userDto){
             try{
-                if (await _accountService.UserExists(userDto.UserName))
+                if (await _accountService.UserExists(userDto.UserId))
                     return BadRequest("Usuário já existe");
 
                 var user = await _accountService.CreateAccount(userDto);
 
                 if (user != null)
-                    return Ok(user); 
+                       return Ok(new{
+                            userId = user.UserId,
+                            token = _tokenService.CreateToken(user).Result
+                        });
 
                 return BadRequest("Usuário não criado, tente novamente mais tarde!");    
             }
             catch(Exception ex){
-                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar o usuário. Erro: {ex.Message}");
+                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar registrar o usuário. Erro: {ex.Message}");
             }
         }
 
@@ -65,7 +67,7 @@ namespace CadastroDigital.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(UserLoginDto userLoginDto){
             try{
-                var user = await _accountService.GetUserByUserName(userLoginDto.UserName);
+                var user = await _accountService.GetUserByUserId(userLoginDto.UserId);
 
                 if (user == null) return Unauthorized("Usuário ou senha incorretos.");
 
@@ -73,11 +75,8 @@ namespace CadastroDigital.Api.Controllers
                 
                 if (!result.Succeeded) return Unauthorized(); 
 
-                //return Ok(user);
- 
-                
                 return Ok(new{
-                    userName = user.UserName,
+                    userId = user.UserId,
                     token = _tokenService.CreateToken(user).Result
                 });
             }
@@ -89,7 +88,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpPut("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UserDto userDto){
             try{
-                var user = await _accountService.GetUserByUserName(User.GetUserId());
+                var user = await _accountService.GetUserByUserId(User.GetUserId());
 
                 if (user == null) return Unauthorized("Usuário inválido.");
 

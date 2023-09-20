@@ -8,7 +8,8 @@ export interface PessoaFisica {
   orgaoExpedidorId?: number | null,
   ufId?: number | null,
   imagem : string;
-  pessoaId : number;
+  idUser : number;
+  //pessoaId : number;
   sexoId? : number | null;
   estadoCivilId? : number | null;
 }

@@ -1,85 +1,13 @@
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-    <div>
-      <a class="navbar-brand" routerLink="dashboard">
-        <img id="logo" src="../assets/logo_sindest.png" alt=""/>
-      </a>
-    </div>
-    <app-login *ngIf="showMenuLoggedIn()"></app-login>
-  </nav>
-
-<!--<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" *ngIf="showMenuLoggedOut()">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="dashboard"><img src="../assets/logo_sindest.png"></a>
-    <i class="fa fa-users mb-2"></i>
-    <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav" [collapse]="isCollapsed" [isAnimated]="true">
-
-       <ul class="navbar-nav ">
-        <li class="nav-item">
-          <i class="fa-brands fa-instagram mb-2"></i>
-        </li>
-        <li class="nav-item">
-          <i class="fa-brands fa-facebook mb-2"></i>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="dashboard" aria-current="page" routerLinkActive="active">Cadastre-se</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="register" routerLinkActive="active">Login</a>
-        </li>
-
-      </ul>
-    </div>
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm"> -->
+<nav class="navbar bg-white">
+  <div class="container">
+    <a class="" routerLink="dashboard">
+      <img id="logo" src="../assets/logo_sindest.png" alt=""/>
+    </a>
+    <app-login visible="true"></app-login>
   </div>
 </nav>
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" *ngIf="showMenuLoggedIn()">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="dashboard">SINDEST</a>
-    <i class="fa fa-users mb-2"></i>
-    <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav" [collapse]="isCollapsed" [isAnimated]="true">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="dashboard" aria-current="page" routerLinkActive="active">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="pessoa/lista" routerLinkActive="active">Pessoa</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="Processos" routerLinkActive="active">Processos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="Atendimento" routerLinkActive="active">Atendimento</a>
-        </li>
-       </ul>
-       <ul class="navbar-nav">
-        <li class="nav-item">
-          <i class="fa fa-bell mb-1"></i>
-        </li>
-        <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" style="cursor:pointer"
-            aria-haspopup="true" aria-expanded="false">
-            Alexandre
-          </a>
-          <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" routerLink="user/profile">
-              Perfil
-            </a>
-            <div role="separator" class="divider"></div>
-            <a class="dropdown-item" routerLink="user/login">
-              Sair
-            </a>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>-->
 
 <!--Header start-->
 <header class="header">
@@ -130,10 +58,10 @@
   <div class="fs-6 bg-secondary">
     <div class="container">
       <!--Navbar-->
-      <nav class="navbar navbar-expand-lg navbar-dark px-0 py-0" *ngIf="showMenuLoggedIn()">
+      <nav class="navbar navbar-expand-lg navbar-dark px-0 py-0">
         <!-- Time -->
         <div class="date-area d-none d-lg-block">
-          <time class="navbar-text me-4"  datetime="{{dataAtual}">{{dataAtual | date : 'EEEE, d, MMMM, y' : '' : 'pt-br'}}</time>
+          <time class="navbar-text me-4"  datetime="{{dataAtual}">{{dataAtual }}</time>
         </div>
         <!--Top left menu-->
         <div>

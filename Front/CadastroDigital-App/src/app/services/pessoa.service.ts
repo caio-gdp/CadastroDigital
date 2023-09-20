@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Pessoa } from '../models/Pessoa';
@@ -8,11 +8,15 @@ import { PessoaFisica } from '../models/PessoaFisica';
 export class PessoaService {
 
   baseUrl = 'https://localhost:5001/api/Pessoa';
+  tokenHeader = new HttpHeaders({
+      'Authorization': 'Bearer'
+    }
+  );
 
 constructor(private http: HttpClient) { }
 
   public getPessoas() : Observable<Pessoa[]>{
-    return this.http.get<Pessoa[]>(this.baseUrl).pipe(take(1));
+    return this.http.get<Pessoa[]>(this.baseUrl, {headers: this.tokenHeader}).pipe(take(1));
   }
 
   public getPessoaById(id : number) : Observable<Pessoa>{
@@ -27,8 +31,8 @@ constructor(private http: HttpClient) { }
     return this.http.get<PessoaFisica>(`${this.baseUrl}/${nome}/nome}`).pipe(take(1));
   }
 
-  public post(pessoa : Pessoa) : Observable<Pessoa>{
-    return this.http.post<Pessoa>(this.baseUrl, pessoa).pipe(take(1));
+  public post(pessoaFisica : PessoaFisica) : Observable<PessoaFisica>{
+    return this.http.post<PessoaFisica>(this.baseUrl, pessoaFisica).pipe(take(1));
   }
 
   public put(id : number, pessoa : Pessoa) : Observable<Pessoa>{

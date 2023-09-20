@@ -10,8 +10,8 @@ namespace CadastroDigital.Infrastructure.Interfaces
     {
         // Task<Pessoa[]> GetAllPessoas();
         // Task<Pessoa> GetPessoaById(int id);
-        Task<Pessoa[]> GetPessoaByCpf(string userId);
-        Task<Pessoa[]> GetPessoaByName(string userId, string nome);
+        // Task<Pessoa[]> GetPessoaByCpf(string userId);
+        // Task<Pessoa[]> GetPessoaByName(string userId, string nome);
         
     }
 }

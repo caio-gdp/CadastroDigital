@@ -6,7 +6,7 @@ namespace CadastroDigital.Domain.Enums
     {
         [Description("Pendente")]
         PendenteValidacao = 1,
-        [Description("Concluído")]
+        [Description("Finalizado")]
         Concluido = 2,
         [Description("Incompleto")]
         Incompleto = 3

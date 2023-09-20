@@ -9,43 +9,43 @@ namespace CadastroDigital.Domain.EntitiesConfigs
         public void Configure(EntityTypeBuilder<TipoPessoa>builder){
 
             //Tabela
-            builder.ToTable("TipoPessoa");
+        //     builder.ToTable("TipoPessoa");
             
-            //Primary Key
-            builder.HasKey(p => p.Id);
+        //     //Primary Key
+        //     builder.HasKey(p => p.Id);
             
-            //Atributos
-            builder.Property(f => f.Id)
-            .HasColumnName("Id")
-            .ValueGeneratedOnAdd()
-            .IsRequired();
+        //     //Atributos
+        //     builder.Property(f => f.Id)
+        //     .HasColumnName("Id")
+        //     .ValueGeneratedOnAdd()
+        //     .IsRequired();
 
-            builder.Property(f => f.Sigla)
-            .HasColumnName("Sigla")
-            .ValueGeneratedNever()
-            .IsRequired();
+        //     builder.Property(f => f.Sigla)
+        //     .HasColumnName("Sigla")
+        //     .ValueGeneratedNever()
+        //     .IsRequired();
 
-            builder.Property(f => f.Descricao)
-            .HasColumnName("Descricao")
-            .HasMaxLength(8)
-            .IsRequired();
-        }
+        //     builder.Property(f => f.Descricao)
+        //     .HasColumnName("Descricao")
+        //     .HasMaxLength(8)
+        //     .IsRequired();
+        // }
 
-        public static TipoPessoa[] HasData(){
+        // public static TipoPessoa[] HasData(){
 
-            return new TipoPessoa[]{
+        //     return new TipoPessoa[]{
 
-                new TipoPessoa(){
-                    Id = 1,
-                    Sigla = "F",
-                    Descricao = "Física"
-                },
-                new TipoPessoa(){
-                    Id = 2,
-                    Sigla = "J",
-                    Descricao = "Jurídica"
-                }
-            };
+        //         new TipoPessoa(){
+        //             Id = 1,
+        //             Sigla = "F",
+        //             Descricao = "Física"
+        //         },
+        //         new TipoPessoa(){
+        //             Id = 2,
+        //             Sigla = "J",
+        //             Descricao = "Jurídica"
+        //         }
+        //     };
         }
     }
 }

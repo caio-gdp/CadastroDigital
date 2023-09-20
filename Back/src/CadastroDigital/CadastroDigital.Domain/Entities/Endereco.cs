@@ -7,7 +7,7 @@ namespace CadastroDigital.Domain.Entities
 {
     public class Endereco : Base
     {
-        public int PessoaId { get; set; }
+        public int PessoaFisicaId { get; set; }
         public int TipoEnderecoId { get; set; }
         public string Logradouro { get; set; }
         public int Numero { get; set; }
@@ -20,7 +20,7 @@ namespace CadastroDigital.Domain.Entities
         public DateTime? DataExclusao { get; set; }
         public string UsuarioExclusao { get; set; }
 
-        public Pessoa Pessoa { get; set; }
+        public PessoaFisica PessoaFisica { get; set; }
         public TipoEndereco TipoEndereco { get; set; }
         public Cidade Cidade { get; set; }
 

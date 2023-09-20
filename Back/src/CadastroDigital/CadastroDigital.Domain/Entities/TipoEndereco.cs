@@ -3,7 +3,7 @@ namespace CadastroDigital.Domain.Entities
 {
     public class TipoEndereco : Base
     {
-        public string Descricao { get; set; }
-        public Endereco Endereco { get; set; }
+        // public string Descricao { get; set; }
+        // public Endereco Endereco { get; set; }
     }
 }

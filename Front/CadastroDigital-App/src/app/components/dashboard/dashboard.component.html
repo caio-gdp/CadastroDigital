@@ -17,7 +17,7 @@
   <!--Block start-->
 <!-- <div class="block-area p-4" style="background-color: #caced1;"> -->
 
-  <div class="block-area p-4" style="background-color: #eeeff0;">
+  <div *ngIf="noticias[0] != null" class="block-area p-4" style="background-color: #eeeff0;">
   <!--block title-->
   <div class="block-title-6">
     <h4 class="h5 border-primary">
@@ -137,7 +137,7 @@
 <!--End Block-->
 
 <!--Block start-->
-<div class="block-area p-4" style="background-color: #eeeff0;">
+<div *ngIf="beneficios[0] != null" class="block-area p-4" style="background-color: #eeeff0;">
   <!-- block title -->
   <div class="block-title-6">
     <h4 class="h5 border-primary">
@@ -216,7 +216,7 @@
 <!-- End block -->
 
 <!--Block start-->
-<div class="block-area p-4" style="background-color: #eeeff0;">
+<div *ngIf="parcerias[0] != null" class="block-area p-4" style="background-color: #eeeff0;">
   <!-- block title -->
   <div class="block-title-6">
     <h4 class="h5 border-primary">
@@ -293,7 +293,7 @@
 <!-- End block -->
 
   <!--Block start-->
-  <div class="block-area p-4" style="background-color: #eeeff0;">
+  <div *ngIf="noticias[0] != null" class="block-area p-4" style="background-color: #eeeff0;">
     <!--block title-->
     <div class="block-title-6">
       <h4 class="h5 border-primary">
@@ -362,7 +362,7 @@
               </div>
               <!-- title & date -->
               <div class="card-body div-card-body-sm-not">
-                <h3 class="card-title h6 h5-sm h6-lg"><a href="{{noticias[1].link}}">{{noticias[1].titulo}}</a></h3>
+                <!-- <h3 class="card-title h6 h5-sm h6-lg"><a href="{{noticias[1].link}}">{{noticias[1].titulo}}</a></h3> -->
                 <div class="card-text text-muted small">
                   <time>{{noticias[1].data | date : 'dd/MM/yyyy' : '' : 'pt-br'}}</time>
                 </div>
@@ -380,7 +380,7 @@
               </div>
               <!-- title & date -->
               <div class="card-body div-card-body-sm-not">
-                <h3 class="card-title h6 h5-sm h6-lg"><a href="{{noticias[2].link}}">{{noticias[2].titulo}}</a></h3>
+                <!-- <h3 class="card-title h6 h5-sm h6-lg"><a href="{{noticias[2].link}}">{{noticias[2].titulo}}</a></h3> -->
                 <div class="card-text text-muted small">
                   <time>{{noticias[2].data | date : 'dd/MM/yyyy' : '' : 'pt-br'}}</time>
                 </div>

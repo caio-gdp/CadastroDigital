@@ -9,6 +9,9 @@ import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { PaisService } from '@app/services/Pais.service';
+import { User } from '@app/models/Identity/User';
+import { AccountService } from '@app/services/account.service';
+import { GenericValidator } from '@app/validators/GenericValidator';
 
 @Component({
   selector: 'app-registration',
@@ -17,25 +20,26 @@ import { PaisService } from '@app/services/Pais.service';
 })
 export class RegistrationComponent {
 
-  pessoa: Pessoa;
-  form!: FormGroup;
+  user = {} as User;
+  form = {} as FormGroup;
   tokenVisible: boolean = false;
   reCAPTCHAToken: string = '';
+  validPassword = false;
 
   get f() : any{
     return this.form.controls;
   }
 
-  constructor(public fb : FormBuilder,
-    private pessoaService : PessoaService,
+  constructor(private fb : FormBuilder,
+    private accountService : AccountService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private recaptchaV3Service: ReCaptchaV3Service,
-    private ngZone: NgZone,
+    //private ngZone: NgZone,
     private router: Router
     ){}
 
-  ngOnInit() : void {
+    ngOnInit() : void {
       this.validation();
   }
 
@@ -44,8 +48,8 @@ export class RegistrationComponent {
       dateInputFormat: 'DD/MM/YYYY',
       adaptivePosition: true,
       isAnimated: true,
-      containerClass: 'theme-default',
-      location: 'pt-BR'
+      //containerClass: 'theme-default',
+      location: 'pt'
     };
   }
 
@@ -53,220 +57,177 @@ export class RegistrationComponent {
     return {'is-invalid': filedForm.errors && filedForm.touched};
   }
 
-  private Maior18Anos(filedForm: FormControl | AbstractControl){
-
-      if (filedForm.value != ""){
-        const anoNascimento = filedForm.value.getFullYear();
-        const anoAtual = new Date().getFullYear();
-
-        const idade = (anoAtual - anoNascimento) - 1;
-
-           if (idade < 18)
-             return { menorIdade: true } ;
-      }
-    return null;
-  }
-
-  private CpfInvalido(filedForm: FormControl | AbstractControl){
-
-    if (filedForm.value != ""){
-      var Soma;
-      var Resto;
-      var strCPF = filedForm.value;
-      Soma = 0;
-
-      if (strCPF == "00000000000")
-        return { invalido : true };
-
-      for (var i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
-        Resto = (Soma * 10) % 11;
-
-        if ((Resto == 10) || (Resto == 11))
-          Resto = 0;
-
-        if (Resto != parseInt(strCPF.substring(9, 10)) )
-          return { invalido : true };
-
-        Soma = 0;
-
-        for (i = 1; i <= 10; i++)
-          Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
-
-        Resto = (Soma * 10) % 11;
-
-        if ((Resto == 10) || (Resto == 11))
-          Resto = 0;
-
-          if (Resto != parseInt(strCPF.substring(10, 11) ) )
-            return { invalido : true };
-
-        return { invalido : false };
-      }
-    return null;
-  }
-
-  private checkPassword(filedForm: FormControl | AbstractControl){
-
-    const pass = filedForm.get('senha')?.value;
-    const chcpass = filedForm.value;
-
-     if (pass != '' && chcpass != ''){
-       if (pass != chcpass)
-         return { invalidCheckPassword : true }
-       else
-         return { invalidCheckPassword : false }
-     }
-    return null;
-  }
-
   private validation() : void{
     const formOptions : AbstractControlOptions = {
-      validators : ValidatorField.MustMatch('senha','confirmaSenha')
+      validators : ValidatorField.MustMatch('passwordReg','confirmaPassword')
     }
     this.form = this.fb.group({
-      cpf : ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), this.CpfInvalido]],
-      dataNascimento : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), this.Maior18Anos]],
-      nome : ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
-      telefone : ['', [Validators.required]],
+      userId : ['', [Validators.required, Validators.maxLength(14), this.checkCpf]],
+      dateOfBirth : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), this.checkAge]],
+      name : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
+      phoneNumber : ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
       email : ['', [Validators.required, Validators.email]],
-      senha : ['', [Validators.required, Validators.minLength(6),Validators.maxLength(15)]],
-      confirmaSenha : ['', [Validators.required, this.checkPassword]],
-      confirmaEmail : ['', [Validators.required]],
-      confirmaNoticia : [],
+      passwordReg : ['', [Validators.required, Validators.minLength(6),Validators.maxLength(15)]],
+      confirmaPassword : ['', [Validators.required, this.checkConfirmedPassword]],
+      confirmaEmail : ['', [Validators.required, this.checkEmail]],
+      noticia : [],
     }, formOptions);
-
   }
 
-  public saveChange() : void{
-
-    this.spinner.show();
-    let chk = <HTMLInputElement>document.getElementById('confirmaNoticia')
+  public register() : void{
 
     if (this.form.valid){
+      this.spinner.show();
 
-      // this.pessoa = {...this.form.value};
+      this.user = {...this.form.value}
 
-      this.pessoa = {
-        id: 0,
-        dataCadastro: new Date().toISOString().slice(0,10),
-        dataAtualizacao: '',
-        codigoValidacao: 0,
-        dataHoraCodigoValidacao: new Date().toISOString().slice(0,10),
-        senha: this.form.get('senha')?.value,
-        confirmaSenha: this.form.get('confirmaSenha')?.value,
-        statusCadastroId: 3,
-        passoCadastroId: 1,
-        enderecoIp: '',
-        notificacao: chk.checked,
-        tipoPessoaId: 2,
-        pessoaFisica: {
-          id: 0,
-          cpf: this.form.get('cpf')?.value,
-          dataNascimento: this.form.get('dataNascimento')?.value,
-          nome: this.form.get('nome')?.value,
-          rg: '',
-          dataEmissao: '',
-          orgaoExpedidorId: null,
-          ufId: null,
-          imagem: '',
-          pessoaId: 0,
-          sexoId: null,
-          estadoCivilId: null
-        },
-        telefone: {
-          id: 0,
-          pessoaId: 0,
-          tipoTelefoneId: 2,
-          ddd: this.form.get('celular')?.value.substring(0,2),
-          numero: this.form.get('celular')?.value.substring(3),
-          dataInclusao: new Date().toISOString().slice(0,10),
-          usuarioInclusao: 'web'
-        },
-        email: {
-          id: 0,
-          pessoaId: 0,
-          tipoEmailId: 1,
-          endereco: this.form.get('email')?.value,
-          dataInclusao: new Date().toISOString().slice(0,10),
-          usuarioInclusao: 'web'
-        }
-      }
-
-      this.pessoaService.post(this.pessoa).subscribe({
-        next: (pessoa: Pessoa) => {
-          this.toastr.success('Registro salvo com sucesso.', 'Sucesso')
-          this.toastr.info('Efetue o login para concluir o cadastro', 'Informação', {extendedTimeOut: 1000})
-          this.router.navigate([`dashboard`]);
+      this.accountService.register(this.user).subscribe({
+        next : () => {
+            this.toastr.success("Pré cadastro realizado. Efetue o login para finalizar o cadastro.", "Informação", {extendedTimeOut: 1000})
+            this.router.navigateByUrl('dashboard')
         },
         error: (error: any) => {
-          console.log(error);
-          console.error(error);
-          this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
+            this.toastr.error(error.error)
         },
-      }).add(() => this.spinner.hide());
+      }).add(() => this.spinner.hide())
     }
-    else{
-      this.toastr.error('Preencha os campos obrigatórios.', 'Atenção!')
-    }
-  }
-
-   public readonlyDatePicker(e : any) : Boolean{
-     if (e.keyCode > 0) return false;
-
-     return true;
   }
 
   public validaSenha(){
      const campo = <HTMLElement>document.getElementById('spansenha');
-     const senha = <HTMLElement>document.getElementById('senha');
+     const senha = <HTMLElement>document.getElementById('passwordReg');
      campo.className = "fa fa-check";
   }
 
   public viewPassword(campo1 : string, campo2 : string, i : any)
   {
     const input = <HTMLInputElement>document.getElementById(campo1);
-    const span = <HTMLElement>document.getElementById(campo2);
+    const span = <HTMLSpanElement>document.getElementById(campo2);
 
     if (input.type == 'text'){
+
       input.type = 'password';
+
       if (i == 1)
-        span.className = "fa fa-eye eye-pwd";
+        span.className = "fa fa-eye eye-pwd float-end";
       else
-        span.className = "fa fa-eye eye-pwd-confirm";
+        span.className = "fa fa-eye eye-pwd float-end";
     }
     else{
+
       input.type = 'text';
+
       if (i == 1)
-        span.className = "fa fa-eye-slash eye-pwd";
+        span.className = "fa fa-eye-slash eye-pwd float-end";
       else
-        span.className = "fa fa-eye-slash eye-pwd-confirm";
+        span.className = "fa fa-eye-slash eye-pwd float-end";
     }
   }
 
-  public confereSenha(e : any){
+  public checkCpf(filedForm: FormControl | AbstractControl){
 
-    const input = <HTMLInputElement>document.getElementById("senha");
+    if (filedForm.value != ""){
+      var Soma;
+      var Resto;
+      var strCPF = filedForm.value;
+      var valid = true;
+      Soma = 0;
+
+      if (strCPF == "00000000000" || strCPF == "11111111111" || strCPF == "22222222222" || strCPF == "33333333333" ||
+      strCPF == "44444444444" || strCPF == "55555555555" || strCPF == "66666666666" || strCPF == "77777777777" || strCPF == "88888888888" ||
+      strCPF == "99999999999")
+        valid = false;
+        //return { invalid : true };
+
+      for (var i=1; i<=9; i++)
+        Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+
+      Resto = (Soma * 10) % 11;
+
+      if ((Resto == 10) || (Resto == 11))
+        Resto = 0;
+
+      if (Resto != parseInt(strCPF.substring(9, 10)))
+        valid = false;
+        //return { invalid : true };
+
+      Soma = 0;
+
+      for (i = 1; i <= 10; i++)
+        Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+
+      Resto = (Soma * 10) % 11;
+
+      if ((Resto == 10) || (Resto == 11))
+        Resto = 0;
+
+      if (Resto != parseInt(strCPF.substring(10, 11)))
+        valid = false
+        //return { invalid : true };
+
+      if (valid)
+        return null;
+      else
+        return { invalidCheckCpf: true };
+    }
+    return null;
+  }
+
+  public checkConfirmedPassword(filedForm: FormControl | AbstractControl){
+
+    const pass = <HTMLInputElement>document.getElementById("passwordReg");
+    const chkpass = filedForm.value;
+
+    if (pass.value != '' && chkpass != ''){
+      if (pass.value != chkpass)
+        return { invalidCheckConfirmedPassword : true }
+      else
+      return null;
+    }
+    return null;
+  }
+
+  public checkViewPassword(e : any){
+
+    const input = this.form.controls["passwordReg"].value;
     const spansenhaminlen = <HTMLElement>document.getElementById('spansenhaminlen');
     const spansenhaupcase = <HTMLElement>document.getElementById('spansenhaupcase');
     const spansenhanum = <HTMLElement>document.getElementById('spansenhanum');
+    const spansenhaesp = <HTMLElement>document.getElementById('spansenhaesp');
+    var minLen = false;
     var charmaiusculo = false;
     var charnumerico = false;
+    var charespecial = false;
 
-    if (input.value.length > 5)
-      spansenhaminlen.className = "fa fa-check";
-    else
-      spansenhaminlen.className = "fa fa-times";
+    if (input.length > 5)
+      minLen = true;
 
-    for (var i = 0; i < input.value.length; i++)
+    for (var i = 0; i < input.length; i++)
     {
-      var valorAscii = input.value.charCodeAt(i);
+      var valorAscii = input.charCodeAt(i);1
 
       if (valorAscii >= 65 && valorAscii <= 90)
         charmaiusculo = true;
 
       if (valorAscii >= 48 && valorAscii <= 57)
         charnumerico = true;
+
+      if (valorAscii >= 33 && valorAscii <= 47)
+        charespecial = true;
+
+      if (valorAscii >= 58 && valorAscii <= 62)
+        charespecial = true;
+
+      if (valorAscii == 64 || valorAscii == 91 || valorAscii == 93 || valorAscii == 94 || valorAscii == 95 ||
+        valorAscii == 123 || valorAscii == 125 || valorAscii == 126 || valorAscii == 162 || valorAscii == 163 ||
+        valorAscii == 172 || valorAscii == 178 || valorAscii == 179 || valorAscii == 180 || valorAscii == 185)
+        charespecial = true;
     }
+
+    if (minLen)
+      spansenhaminlen.className = "fa fa-check";
+    else
+      spansenhaminlen.className = "fa fa-times";
 
     if (charmaiusculo)
       spansenhaupcase.className = "fa fa-check";
@@ -277,6 +238,31 @@ export class RegistrationComponent {
       spansenhanum.className = "fa fa-check";
     else
       spansenhanum.className = "fa fa-times";
+
+    if (charespecial)
+      spansenhaesp.className = "fa fa-check";
+    else
+      spansenhaesp.className = "fa fa-times";
+
+    if (!minLen || !charmaiusculo || !charnumerico || !charespecial)
+      return { validPassword : false };
+    else
+      return { validPassword : true };
+  }
+
+  public checkAge(filedForm: FormControl | AbstractControl){
+
+    if (filedForm.value != ""){
+      const date = new Date(filedForm.value);
+      const anoNascimento = date.getFullYear();
+      const anoAtual = new Date().getFullYear();
+
+      const idade = (anoAtual - anoNascimento) - 1;
+
+         if (idade < 18)
+           return { menorIdade: true } ;
+    }
+    return null;
   }
 
    public send(): void {
@@ -288,6 +274,20 @@ export class RegistrationComponent {
      });
    }
 
+   public checkEmail(filedForm: FormControl | AbstractControl){
+
+    const email = <HTMLInputElement>document.getElementById("email");
+    const chkemail = filedForm.value;
+
+    if (email.value != '' && chkemail != ''){
+      if (email.value != chkemail)
+        return { invalidCheckEmail : true }
+      else
+        return null;
+    }
+    return null;
+  }
+
   // errored(e: any){
   //   console.log('erro reCAPTCHA não encontrado');
   // }
@@ -296,5 +296,8 @@ export class RegistrationComponent {
   //   // this.http;
   // }
 
+  public onlyNumbers(e: any){
+    GenericValidator.onlyNumbers(e);
+  }
 
 }

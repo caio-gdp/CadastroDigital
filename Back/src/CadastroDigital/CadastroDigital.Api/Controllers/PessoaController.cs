@@ -19,153 +19,153 @@ namespace CadastroDigital.Api.Controllers
     [Route("api/[controller]")]
     public class PessoaController : ControllerBase
     {
-        private readonly IPessoaService _pessoaService;
-        private readonly IWebHostEnvironment _hostEnviroment;
+        // private readonly IPessoaService _pessoaService;
+        // private readonly IWebHostEnvironment _hostEnviroment;
 
-        public PessoaController(IPessoaService pessoaService, IWebHostEnvironment hostEnviroment)
-        {
-            _pessoaService = pessoaService;
-            _hostEnviroment = hostEnviroment;
-        }
- 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var pessoas = await _pessoaService.Get(User.GetUserId());
-
-            if (pessoas == null)
-                return NotFound("Nenhum registro encontrado.");
-
-            return Ok(pessoas);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            try{
-
-                var pessoa = await _pessoaService.GetPessoaById(User.GetUserId(), id);
-
-                if (pessoa.Equals(null))
-                    return NoContent();
-
-                return Ok(pessoa);
-            }
-            catch(Exception ex){
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar a pessoa. Erro: {ex.Message}");
-            }
-        }
-
-        [HttpGet("cpf/{cpf}")]
-        public async Task<IActionResult> GetPessoaByCpf(string cpf)
-        {
-            var pessoas = await _pessoaService.GetPessoaByCpf(cpf);
-
-            if (pessoas.Equals(null))
-                return NoContent();
-
-            return Ok(pessoas);
-        }
-
-        // [HttpGet("nome/{nome}")]
-        // public async Task<IActionResult> GetByName(string nome)
+        // public PessoaController(IPessoaService pessoaService, IWebHostEnvironment hostEnviroment)
         // {
-        //     var pessoas = await _pessoaService.GetPessoaByName(nome);
+        //     _pessoaService = pessoaService;
+        //     _hostEnviroment = hostEnviroment;
+        // }
+ 
+        // [HttpGet]
+        // public async Task<IActionResult> Get()
+        // {
+        //     var pessoas = await _pessoaService.Get(User.GetUserId());
 
         //     if (pessoas == null)
+        //         return NotFound("Nenhum registro encontrado.");
+
+        //     return Ok(pessoas);
+        // }
+
+        // [HttpGet("{id}")]
+        // public async Task<IActionResult> GetById(int id)
+        // {
+        //     try{
+
+        //         var pessoa = await _pessoaService.GetPessoaById(User.GetUserId(), id);
+
+        //         if (pessoa.Equals(null))
+        //             return NoContent();
+
+        //         return Ok(pessoa);
+        //     }
+        //     catch(Exception ex){
+        //         return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar a pessoa. Erro: {ex.Message}");
+        //     }
+        // }
+
+        // [HttpGet("cpf/{cpf}")]
+        // public async Task<IActionResult> GetPessoaByCpf(string cpf)
+        // {
+        //     var pessoas = await _pessoaService.GetPessoaByCpf(cpf);
+
+        //     if (pessoas.Equals(null))
         //         return NoContent();
 
         //     return Ok(pessoas);
         // }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(PessoaDto dto)
-        {
-            var userId = User.GetUserId();
-            var pessoa = await _pessoaService.GetPessoaByCpf(userId);
+        // // [HttpGet("nome/{nome}")]
+        // // public async Task<IActionResult> GetByName(string nome)
+        // // {
+        // //     var pessoas = await _pessoaService.GetPessoaByName(nome);
 
-            if (pessoa != null)
-                return BadRequest("CPF já cadastrado.");
+        // //     if (pessoas == null)
+        // //         return NoContent();
 
-            var ret = await _pessoaService.AddPessoa(userId, dto);
+        // //     return Ok(pessoas);
+        // // }
+
+        // [HttpPost]
+        // public async Task<IActionResult> Post(PessoaDto dto)
+        // {
+        //     var userId = User.GetUserId();
+        //     var pessoa = await _pessoaService.GetPessoaByCpf(userId);
+
+        //     if (pessoa != null)
+        //         return BadRequest("CPF já cadastrado.");
+
+        //     var ret = await _pessoaService.AddPessoa(userId, dto);
             
-            if (ret == null)
-                return BadRequest("Erro ao tentar incluir registro.");
+        //     if (ret == null)
+        //         return BadRequest("Erro ao tentar incluir registro.");
 
-            // return Ok("Registro incluído com sucesso");
-            return Ok();
-        }
+        //     // return Ok("Registro incluído com sucesso");
+        //     return Ok();
+        // }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, PessoaDto dto)
-        {
-            var ret = await _pessoaService.UpdatePessoa(User.GetUserId(), id, dto);
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> Put(int id, PessoaDto dto)
+        // {
+        //     var ret = await _pessoaService.UpdatePessoa(User.GetUserId(), id, dto);
             
-            if (ret == null)
-                return BadRequest("Erro ao tentar atualizar registro.");
+        //     if (ret == null)
+        //         return BadRequest("Erro ao tentar atualizar registro.");
 
-            return Ok("Registro atualizado com sucesso.");
-        }
+        //     return Ok("Registro atualizado com sucesso.");
+        // }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-           var ret = await _pessoaService.DeletePessoa(User.GetUserId(), id);
+        // [HttpDelete("{id}")]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //    var ret = await _pessoaService.DeletePessoa(User.GetUserId(), id);
             
-            if (!ret)
-                return BadRequest("Erro ao tentar excluir registro.");
+        //     if (!ret)
+        //         return BadRequest("Erro ao tentar excluir registro.");
 
-            return Ok("Registro excluído com sucesso.");
-        }
+        //     return Ok("Registro excluído com sucesso.");
+        // }
 
-        [HttpPost("upload-image/{pessoaId}")]
-        public async Task<IActionResult> UploadImage(int pessoaId)
-        {
-            var userId = User.GetUserId();
-            var pessoa = await _pessoaService.GetPessoaById(userId, pessoaId);
+        // [HttpPost("upload-image/{pessoaId}")]
+        // public async Task<IActionResult> UploadImage(int pessoaId)
+        // {
+        //     var userId = User.GetUserId();
+        //     var pessoa = await _pessoaService.GetPessoaById(userId, pessoaId);
 
-            if (pessoa == null)
-                return NoContent();
+        //     if (pessoa == null)
+        //         return NoContent();
 
-            var file = Request.Form.Files[0];
+        //     var file = Request.Form.Files[0];
 
-            if (file.Length > 0)
-            {
-                DeleteImage(pessoa.PessoaFisica.Imagem);
-                pessoa.PessoaFisica.Imagem = await SaveImage(file);
-            }
+        //     if (file.Length > 0)
+        //     {
+        //         DeleteImage(pessoa.PessoaFisica.Imagem);
+        //         pessoa.PessoaFisica.Imagem = await SaveImage(file);
+        //     }
 
-            var ret = await _pessoaService.UpdatePessoa(userId, pessoaId, pessoa);
+        //     var ret = await _pessoaService.UpdatePessoa(userId, pessoaId, pessoa);
 
-            return Ok(ret);
-        }
+        //     return Ok(ret);
+        // }
 
-        [NonAction]
-        public async Task<string> SaveImage(Microsoft.AspNetCore.Http.IFormFile imageFile){
+        // [NonAction]
+        // public async Task<string> SaveImage(Microsoft.AspNetCore.Http.IFormFile imageFile){
 
-            string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName)
-                                                 .Take(10)
-                                                 .ToArray())
-                                                 .Replace(' ','-');
+        //     string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName)
+        //                                          .Take(10)
+        //                                          .ToArray())
+        //                                          .Replace(' ','-');
 
-            imageName = $"{imageName}{DateTime.UtcNow.ToString("yymmssfff")}{Path.GetExtension(imageFile.FileName)}";
+        //     imageName = $"{imageName}{DateTime.UtcNow.ToString("yymmssfff")}{Path.GetExtension(imageFile.FileName)}";
 
-            var imagePath = Path.Combine(_hostEnviroment.ContentRootPath, @"Resources/Images");
+        //     var imagePath = Path.Combine(_hostEnviroment.ContentRootPath, @"Resources/Images");
 
-            using (var fileStream = new FileStream(imagePath, FileMode.Create)){
-                await imageFile.CopyToAsync(fileStream);
-            }
+        //     using (var fileStream = new FileStream(imagePath, FileMode.Create)){
+        //         await imageFile.CopyToAsync(fileStream);
+        //     }
             
-            return imageName;
-        }
+        //     return imageName;
+        // }
 
-        [NonAction]
-        public void DeleteImage(string imageName){
+        // [NonAction]
+        // public void DeleteImage(string imageName){
 
-            var imagePath = Path.Combine(_hostEnviroment.ContentRootPath, @"Resources/Images", imageName);
+        //     var imagePath = Path.Combine(_hostEnviroment.ContentRootPath, @"Resources/Images", imageName);
             
-            if (System.IO.File.Exists(imagePath))
-                System.IO.File.Delete(imagePath);
-        }
+        //     if (System.IO.File.Exists(imagePath))
+        //         System.IO.File.Delete(imagePath);
+        // }
     }
 }

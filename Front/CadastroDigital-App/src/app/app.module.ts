@@ -1,9 +1,9 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BsDatepickerModule, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 
@@ -33,8 +33,8 @@ import { ProfileComponent } from './components/user/profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './components/user/menu/menu.component';
 import { AddressDataComponent } from './components/user/addressData/addressData.component';
-import { registerLocaleData } from '@angular/common';
-import localePT from '@angular/common/locales/pt';
+//import { registerLocaleData } from '@angular/common';
+//import localePT from '@angular/common/locales/pt';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service, RecaptchaV3Module } from 'ng-recaptcha';
 import { PersonalDataComponent } from './components/user/personalData/personalData.component';
@@ -59,8 +59,8 @@ import { ParceriaService } from './services/parceria.service';
 import { PlaylistService } from './services/playlist.service';
 import { PlaylistComponent } from './components/playlist/playlist.component';
 
-defineLocale('pt-br', ptBrLocale);
-registerLocaleData(localePT);
+defineLocale('pt', ptBrLocale);
+//registerLocaleData(localePT);
 @NgModule({
   declarations: [
     AppComponent,
@@ -133,4 +133,8 @@ registerLocaleData(localePT);
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private bsLocaleService: BsLocaleService) {
+    this.bsLocaleService.use('pt');
+    }
+}

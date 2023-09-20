@@ -82,7 +82,8 @@ namespace CadastroDigital.Api
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore //Evitar looping infinito de referencias foreign key
                     );
 
-            services.AddScoped<IPessoaService, PessoaService>();
+            //services.AddScoped<IPessoaService, PessoaService>();
+            services.AddScoped<IPessoaFisicaService, PessoaFisicaService>();
             services.AddScoped<ICidadeService, CidadeService>();
             services.AddScoped<IEstadoService, EstadoService>();
             services.AddScoped<IPaisService, PaisService>();
@@ -94,7 +95,7 @@ namespace CadastroDigital.Api
             services.AddScoped<IBeneficioService, BeneficioService>();
             services.AddScoped<IParceriaService, ParceriaService>();
             services.AddScoped<IRepositoryUser, RepositoryUser>();
-            services.AddScoped<IRepositoryPessoa, RepositoryPessoa>();
+            //services.AddScoped<IRepositoryPessoa, RepositoryPessoa>();
             services.AddScoped<IRepositoryCidade, RepositoryCidade>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAccountService, AccountService>();

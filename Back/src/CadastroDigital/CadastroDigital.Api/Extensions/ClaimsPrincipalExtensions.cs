@@ -7,7 +7,12 @@ namespace CadastroDigital.Api.Extensions
     {
         public static string GetUserId(this ClaimsPrincipal user){
 
-            return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;;
+            return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        }
+
+        public static int GetId(this ClaimsPrincipal user){
+
+            return int.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         }
 
         // public static int GetUserId(this ClaimsPrincipal user){

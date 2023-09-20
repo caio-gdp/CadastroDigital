@@ -15,7 +15,7 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             builder.HasKey(p => p.Id);
             
             //Index
-            builder.HasIndex(i => i.PessoaId)
+            builder.HasIndex(i => i.PessoaFisicaId)
             .IsUnique(false)
             .HasDatabaseName("idx_socio_pessoa");
 
@@ -65,8 +65,8 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasColumnName("CentroCusto")
             .IsRequired();
 
-            builder.Property(f => f.PessoaId)
-            .HasColumnName("PessoaId")
+            builder.Property(f => f.PessoaFisicaId)
+            .HasColumnName("PessoaFisicaId")
             .ValueGeneratedNever()
             .IsRequired();
 

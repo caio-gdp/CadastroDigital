@@ -11,7 +11,7 @@ namespace CadastroDigital.Domain.Entities
         public int? Pasta { get; set; }
         public int Matricula { get; set; }
         public int CentroCusto { get; set; }
-        public int PessoaId { get; set; }
+        public int PessoaFisicaId { get; set; }
         public int CategoriaId { get; set; }
         public int CargoId { get; set; }
         public int SituacaoId { get; set; }
@@ -23,7 +23,7 @@ namespace CadastroDigital.Domain.Entities
         public DateTime? DataExclusao { get; set; }
         public string UsuarioExclusao { get; set; }
         
-        public Pessoa Pessoa { get; set; }
+        public PessoaFisica PessoaFisica { get; set; }
         public Categoria Categoria { get; set; }
         public Cargo Cargo { get; set; }
         public Agregado Agregado { get; set; }

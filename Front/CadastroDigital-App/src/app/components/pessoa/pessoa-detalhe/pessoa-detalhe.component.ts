@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-pessoa-detalhe',
   templateUrl: './pessoa-detalhe.component.html',
-  styleUrls: ['./pessoa-detalhe.component.css']
+  styleUrls: ['./pessoa-detalhe.component.scss']
 })
 export class PessoaDetalheComponent implements OnInit {
 
@@ -110,28 +110,28 @@ export class PessoaDetalheComponent implements OnInit {
 
   public saveChange() : void{
 
-    this.spinner.show();
+    //this.spinner.show();
 
-    if (this.form.valid){
+    // if (this.form.valid){
 
-      this.pessoa = (this.stateForm == 'post') ? {...this.form.value} : {id: this.pessoa.id, ...this.form.value};
+    //   this.pessoa = (this.stateForm == 'post') ? {...this.form.value} : {id: this.pessoa.id, ...this.form.value};
 
-      // this.pessoaService[this.stateForm](this.pessoa).subscribe({
-      //   next: () => this.toastr.success('Registro salvo com sucesso.', 'Sucesso'),
-      //   error: (error: any) => {
-      //     console.error(error);
-      //     this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
-      //   },
-      // }).add(() => this.spinner.hide());
+    //   // this.pessoaService[this.stateForm](this.pessoa).subscribe({
+    //   //   next: () => this.toastr.success('Registro salvo com sucesso.', 'Sucesso'),
+    //   //   error: (error: any) => {
+    //   //     console.error(error);
+    //   //     this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
+    //   //   },
+    //   // }).add(() => this.spinner.hide());
 
-      this.pessoaService.post(this.pessoa).subscribe({
-        next: () => this.toastr.success('Registro salvo com sucesso.', 'Sucesso'),
-        error: (error: any) => {
-          console.error(error);
-          this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
-        },
-      }).add(() => this.spinner.hide());
-    }
+    //   this.pessoaService.post(this.pessoa).subscribe({
+    //     next: () => this.toastr.success('Registro salvo com sucesso.', 'Sucesso'),
+    //     error: (error: any) => {
+    //       console.error(error);
+    //       this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
+    //     },
+    //   }).add(() => this.spinner.hide());
+    // }
   }
 
 }

@@ -19,6 +19,9 @@ import { TipoRedeSocialService } from '@app/services/tiporedesocial.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PessoaFisica } from '@app/models/PessoaFisica';
+import { PessoaService } from '@app/services/pessoa.service';
+import { HttpEvent } from '@angular/common/http';
 
 @Component({
   selector: 'app-personalData',
@@ -27,6 +30,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class PersonalDataComponent implements OnInit {
 
+  pessoaFisica = {} as PessoaFisica;
   public orgaosExpedidores: OrgaoExpedidor[] = [];
   public estados: Estado[] = [];
   public cidades: Cidade[] = [];
@@ -47,6 +51,7 @@ export class PersonalDataComponent implements OnInit {
   }
 
   constructor(public fb : FormBuilder,
+    private pessoaService : PessoaService,
     private orgaoExpedidorService: OrgaoExpedidorService,
     private estadoService: EstadoService,
     private cidadeService: CidadeService,
@@ -75,7 +80,7 @@ export class PersonalDataComponent implements OnInit {
   private validation() : void{
     this.form = this.fb.group({
       rg : ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
-      dataEmissao : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      dataEmissao : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), this.checkDate]],
       orgaoExpedidor : ['', [Validators.required]],
       ufExpedidor : ['', [Validators.required]],
       naturalidade : ['', [Validators.required]],
@@ -84,6 +89,20 @@ export class PersonalDataComponent implements OnInit {
       sexo : ['', [Validators.required]],
       redesSociais: this.fb.array([])
     });
+  }
+
+  public checkDate(filedForm: FormControl | AbstractControl){
+
+    if (filedForm.value != ""){
+      const dateEmissao = new Date(filedForm.value);
+      const dateAtual = new Date();
+
+      console.log(dateEmissao + '-' + dateAtual)
+
+         if (dateEmissao > dateAtual)
+           return { invalidDate: true } ;
+    }
+    return null;
   }
 
   addRedeSocial() : void{
@@ -108,16 +127,10 @@ export class PersonalDataComponent implements OnInit {
       dateInputFormat: 'DD/MM/YYYY',
       adaptivePosition: true,
       isAnimated: true,
-      containerClass: 'theme-default',
+      //containerClass: 'theme-default',
       location: 'pt-BR'
     };
   }
-
-  public readonlyDatePicker(e : any) : Boolean{
-    if (e.keyCode > 0) return false;
-
-    return true;
- }
 
  public getOrgaoExpedidor() : void{
   const observer = {
@@ -168,6 +181,8 @@ public getCidade() : void{
      // complete : () => this.spinner.hide()
    };
   this.cidadeService.get(estado).subscribe(observer);
+
+  this.changeCss('ufExpedidor');
 }
 
 public getPais(id : number) : void{
@@ -236,6 +251,11 @@ openModal(template: TemplateRef<any>, i : number) : void {
   this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
 }
 
+changeCss(id: string){
+  var obj = <HTMLSelectElement>document.getElementById(id);
+  obj.blur();
+}
+
 confirm(): void {
 
   this.modalRef?.hide();
@@ -244,21 +264,6 @@ confirm(): void {
   this.removerRedeSocial(this.i)
 
   this.spinner.hide();
-
-  // if (this.pessoaId != 0){
-  //   this.pessoaService.delete(this.pessoaId).subscribe({
-  //     next: (result : boolean) => {
-  //       if (result){
-  //         this.toastr.success('Registro excluído com sucesso.', "Excluído");
-  //         this.getPessoas();
-  //       }
-  //     },
-  //     error: (error : any) => {
-  //       this.toastr.error('Erro ao tentar excluir o registro.', "Erro!");
-  //       console.error(error);
-  //     },
-  //   }).add(() => this.spinner.hide());
-  // }
 }
 
 decline(): void {
@@ -267,11 +272,11 @@ decline(): void {
 
  public saveChange() : void{
 
-//   this.spinner.show();
+  this.spinner.show();
 
-//   if (this.form.valid){
+  if (this.form.valid){
 
-//     // this.pessoa = {...this.form.value};
+    this.pessoaFisica = {...this.form.value};
 
 //     this.pessoa = {
 //       id: 0,
@@ -313,15 +318,19 @@ decline(): void {
 //       }
 //     }
 
-//     this.pessoaService.post(this.pessoa).subscribe({
-//       next: (pessoa: Pessoa) => {
-//         this.toastr.success('Registro salvo com sucesso.', 'Sucesso')},
-//       error: (error: any) => {
-//         console.error(error);
-//         this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
-//       },
-//     }).add(() => this.spinner.hide());
-//   }
+    this.pessoaFisica.idUser = 6
+
+    console.log(this.pessoaFisica)
+
+     this.pessoaService.post(this.pessoaFisica).subscribe({
+       next: (pessoa: PessoaFisica) => {
+         this.toastr.success('Registro salvo com sucesso.', 'Sucesso')},
+       error: (error: any) => {
+         console.error(error);
+         this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
+       },
+     }).add(() => this.spinner.hide());
+   }
 //   else{
 //     this.toastr.error('Preencha os campos obrigatórios.', 'Atenção!')
 //   }

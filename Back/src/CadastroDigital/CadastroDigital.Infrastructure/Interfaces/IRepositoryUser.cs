@@ -10,7 +10,7 @@ namespace CadastroDigital.Infrastructure.Interfaces
     public interface IRepositoryUser //: IRepositoryBaseCadastroDigital<User>
     {
         // Task<IEnumerable<User>> GetUser();
-        // Task<User> GetUserById(int id);
-        Task<User> GetUserByUserName(string userName);
+        Task<User> GetUserById(int id);
+        Task<User> GetUserByUserId(string userId);
     }
 }

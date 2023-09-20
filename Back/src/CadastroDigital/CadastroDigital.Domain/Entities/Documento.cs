@@ -12,7 +12,7 @@ namespace CadastroDigital.Domain.Entities
         public string ImagemUrl { get; set; }
  
      
-        public Pessoa Pessoa { get; set; }
+        public PessoaFisica PessoaFisica { get; set; }
         public TipoDocumento TipoDocumento { get; set; }
   
     }

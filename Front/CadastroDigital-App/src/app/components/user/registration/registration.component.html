@@ -1,7 +1,7 @@
 <div class="row">
-<!-- testar validação de formulario e reativo
+testar validação de formulario e reativo
       <p>Form value : {{form.value | json}}</p>
-      <p>Form valid : {{form.status | json}}</p> -->
+      <p>Form valid : {{form.status | json}}</p>
   <div class="col-sm-20">
     <div class="container">
       <div class="col-lg-60 mt-4">
@@ -29,69 +29,68 @@
                 <form [formGroup]="form">
                   <!-- <h2>Input with Label Effects</h2> -->
                   <div class="col-3">
-                    <input formControlName="cpf" id="cpf" class="effect" type="text" placeholder="CPF*" [ngClass]="cssValidation(f.cpf)"
-                      mask="000.000.000-00" maxlength="14">
-                    <div class="invalid-tooltip" *ngIf="f.cpf.errors?.required">
+                    <input class="effect" type="text" [ngClass]="cssValidation(f.userId)" formControlName="userId"
+                    placeholder="CPF*" maxlength="14" mask="000.000.000-00" (keypress)="onlyNumbers($event)">
+                    <div class="invalid-tooltip" *ngIf="f.userId.errors?.required">
                       CPF é obrigatório.
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.cpf.errors?.minlength">
-                      CPF deve ter no minimo 11 caracteres.
-                    </div>
-                    <div class="invalid-tooltip" *ngIf="f.cpf.errors?.maxlength">
+                    <div class="invalid-tooltip" *ngIf="f.userId.errors?.maxlength">
                       CPF deve ter no máxino 11 caracteres.
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.cpf.errors?.invalido">
+                    <div class="invalid-tooltip" *ngIf="f.userId.errors?.invalidCheckCpf">
                       CPF inválido.
                     </div>
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-3">
-                    <input class="effect" type="text" placeholder="" [ngClass]="cssValidation(f.telefone)" formControlName="telefone"
-                      mask="(00)00000-0000" placeholder="Celular*">
-                    <div class="invalid-tooltip" *ngIf="f.telefone.errors?.required">
+                    <input class="effect" type="text" [ngClass]="cssValidation(f.phoneNumber)" formControlName="phoneNumber"
+                      mask="(00)00000-0000" placeholder="Celular*" (keypress)="onlyNumbers($event)">
+                    <div class="invalid-tooltip" *ngIf="f.phoneNumber.errors?.required">
                       Celular é obrigatório.
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.telefone.errors?.minlength">
-                      Celular deve ter no minimo 16 caracteres.
+                    <div class="invalid-tooltip" *ngIf="f.phoneNumber.errors?.minlength">
+                      Celular deve ter no minimo 11 caracteres.
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.telefone.errors?.maxlength">
-                      Celular deve ter no máxino 16 caracteres.
+                    <div class="invalid-tooltip" *ngIf="f.phoneNumber.errors?.maxlength">
+                      Celular deve ter no máxino 11 caracteres.
                     </div>
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-3">
-                    <input class="effect" type="datetime" [ngClass]="cssValidation(f.dataNascimento)" placeholder="Data de Nascimento*"
-                    formControlName="dataNascimento" bsDatepicker [bsConfig]="bsConfig()" maxlength="10" (keypress)="readonlyDatePicker($event)">
-                    <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.required">
+                    <input class="effect" type="text" [ngClass]="cssValidation(f.dateOfBirth)" placeholder="Data de Nascimento*"
+                      formControlName="dateOfBirth" bsDatepicker [bsConfig]="bsConfig()" maxlength="10" onkeydown="return false">
+                    <!-- <input class="effect" type="text" [ngClass]="cssValidation(f.dateOfBirth)" placeholder="Data de Nascimento*"
+                    formControlName="dateOfBirth" bsDatepicker [bsConfig]="bsConfig()" maxlength="10" onfocus="(this.type='date')" onblur="(this.type='text')"> -->
+                    <div class="invalid-tooltip" *ngIf="f.dateOfBirth.errors?.required">
                       Data de Nascimento é obrigatório.
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.minlength">
+                    <div class="invalid-tooltip" *ngIf="f.dateOfBirth.errors?.minlength">
                       Data de Nascimento deve ter no minimo 10 caracteres.
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.maxlength">
+                    <div class="invalid-tooltip" *ngIf="f.dateOfBirth.errors?.maxlength">
                       Data de Nascimento deve ter no máxino 10 caracteres.
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.menorIdade">
+                    <div class="invalid-tooltip" *ngIf="f.dateOfBirth.errors?.menorIdade">
                       Você precisa ter mais de 18 anos para cadastrar-se.
                     </div>
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-1">
-                    <input class="effect" type="text" placeholder="" [ngClass]="cssValidation(f.nome)" formControlName="nome"
+                    <input class="effect" type="text" [ngClass]="cssValidation(f.name)" formControlName="name"
                     placeholder="Nome Completo*">
-                    <div class="invalid-tooltip" *ngIf="f.nome.errors?.required">
+                    <div class="invalid-tooltip" *ngIf="f.name.errors?.required">
                       Nome é obrigatório.
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.nome.errors?.minlength">
+                    <div class="invalid-tooltip" *ngIf="f.name.errors?.minlength">
                       Nome deve ter no minimo 3 caracteres.
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.nome.errors?.maxlength">
+                    <div class="invalid-tooltip" *ngIf="f.name.errors?.maxlength">
                       Nome deve ter no máxino 150 caracteres.
                     </div>
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-2">
-                    <input class="effect" type="text" placeholder="" [ngClass]="cssValidation(f.email)" formControlName="email" placeholder="Email*">
+                    <input class="effect" type="text" placeholder="" [ngClass]="cssValidation(f.email)" formControlName="email" id="email" placeholder="Email*">
                     <div class="invalid-tooltip" *ngIf="f.email.errors?.required">
                       Email é obrigatório.
                     </div>
@@ -105,6 +104,9 @@
                     <div class="invalid-tooltip" *ngIf="f.confirmaEmail.errors?.required">
                       Confirmar email é obrigatório.
                     </div>
+                    <div class="invalid-tooltip" *ngIf="f.confirmaEmail.errors?.invalidCheckEmail">
+                      Os emails não coincidem.
+                    </div>
                     <span class="focus-border"></span>
                   </div>
                   <div class="p-4">
@@ -116,29 +118,27 @@
                     </div>
                   </div>
                   <div class="col-2">
-                    <input class="effect" type="password" placeholder="" [ngClass]="cssValidation(f.senha)"
-                    formControlName="senha" placeholder="Senha*" id="senha" (keyup)="confereSenha($event)" maxlength="15">
-                    <div class="invalid-tooltip" *ngIf="f.senha.errors?.required">
+                    <input class="effect" type="password" [ngClass]="cssValidation(f.passwordReg)"
+                      formControlName="passwordReg" id="passwordReg" placeholder="Senha*" (keyup)="checkViewPassword($event)" maxlength="15">
+                    <span class="fa fa-eye eye-pwd float-end" (click)="viewPassword('passwordReg','spanviewsenha',1)" id="spanviewsenha"></span>
+                    <div class="invalid-tooltip" *ngIf="f.passwordReg.errors?.required">
                       Senha é obrigatório.
+                    </div>
+                    <div class="invalid-tooltip" *ngIf="f.passwordReg.errors?.validPassword">
                     </div>
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-2">
-                    <input class="effect" type="password" placeholder="" [ngClass]="cssValidation(f.confirmaSenha)"
-                    formControlName="confirmaSenha" placeholder="Confirmar Senha*" id="confirmaSenha" maxlength="15">
-                    <div class="invalid-tooltip" *ngIf="f.confirmaSenha.errors?.required">
+                    <input class="effect" type="password" [ngClass]="cssValidation(f.confirmaPassword)"
+                      formControlName="confirmaPassword" id="confirmaPassword" placeholder="Confirmar Senha*" maxlength="15">
+                      <span class="fa fa-eye eye-pwd float-end" (click)="viewPassword('confirmaPassword','spanviewconfirmasenha',2)" id="spanviewconfirmasenha"></span>
+                    <div class="invalid-tooltip" *ngIf="f.confirmaPassword.errors?.required">
                       Confirmar Senha é obrigatório.
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.confirmaSenha.errors?.invalidCheckPassword">
+                    <div class="invalid-tooltip" *ngIf="f.confirmaPassword.errors?.invalidCheckConfirmedPassword">
                       As senhas não coincidem.
                     </div>
                     <span class="focus-border"></span>
-                  </div>
-                  <div>
-                    <span class="fa fa-eye eye-pwd" (click)="viewPassword('senha','spanviewsenha',1)" id="spanviewsenha"></span>
-                  </div>
-                  <div>
-                    <span class="fa fa-eye eye-pwd-confirm" (click)="viewPassword('confirmaSenha','spanviewconfirmasenha',2)" id="spanviewconfirmasenha"></span>
                   </div>
                   <div class="p-4" >
                     <div class="card card-informacao">
@@ -151,35 +151,32 @@
                         <span class="card-text">Caracteres maiúsculos e minúsculos</span><br>
                         <span class="fa fa-times" aria-hidden="true" id="spansenhanum"></span>&nbsp;
                         <span class="card-text">Caractere numérico</span><br>
-                        <!-- <span class="card-text">Caractere especial ('"!@#$%¨&*()-_=+´}]~^[{,<.>;:/¹²³£¬¢)</span> -->
-                          <span class="fa fa-times" aria-hidden="true" id="spansenhanum"></span>&nbsp;
-                          <span class="card-text">Caractere especial ('"!@#$%¨&*()-_=+&apos&#125;]~^[&#123;,&lt.>;:/¹²³£¬¢)</span>
+                        <span class="fa fa-times" aria-hidden="true" id="spansenhaesp"></span>&nbsp;
+                        <span class="card-text">Caractere especial ('"!@#$%¨&*()-_=+&apos;&#125;]~^[&#123;,&lt;.>;:/¹²³£¬¢)</span>
                       </div>
                     </div>
                   </div>
                   <div class="col-1">
                     <div class="form-group col">
-                      <input type="checkbox" formControlName="confirmaNoticia" id="confirmaNoticia">&nbsp;
+                      <input type="checkbox" formControlName="noticia">&nbsp;
                       <label class="mr-2">Eu concordo em receber as notícias relacionadas ao SINDEST.</label>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col div-btn-custom">
-                      <button class="btn btn-danger btn-custom" routerLink="dashboard">
-                        Cancelar
-                      </button>
-                    </div>
-                    <div class="col div-btn-custom">
-                      <button class="btn btn-success btn-custom" (click)="saveChange()" [disabled]="!form.valid">
-                        Avançar
-                      </button>
-                    </div>
-                  </div>
-                  <!-- <button type="button" class="btn btn-sm btn-primary" (click)="send()">Send</button> -->
-                  <div *ngIf="tokenVisible"> reCAPTCHA Token <br />
-                    <p style="color:red">{{reCAPTCHAToken}}</p>
-                  </div>
                 </form>
+                <div class="row">
+                  <div class="col div-btn-custom">
+                    <button class="btn btn-danger btn-custom" routerLink="dashboard">
+                      Cancelar
+                    </button>
+                    <button class="btn btn-success btn-custom float-end" (click)="register()" [disabled]="!form.valid">
+                      Avançar
+                    </button>
+                  </div>
+                </div>
+                <!-- <button type="button" class="btn btn-sm btn-primary" (click)="send()">Send</button> -->
+                <div *ngIf="tokenVisible"> reCAPTCHA Token <br />
+                  <p style="color:red">{{reCAPTCHAToken}}</p>
+                </div>
               </div>
               </div>
             </div>
