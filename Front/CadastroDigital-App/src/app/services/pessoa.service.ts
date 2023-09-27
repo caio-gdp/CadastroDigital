@@ -16,7 +16,7 @@ export class PessoaService {
 constructor(private http: HttpClient) { }
 
   public getPessoas() : Observable<Pessoa[]>{
-    return this.http.get<Pessoa[]>(this.baseUrl, {headers: this.tokenHeader}).pipe(take(1));
+    return this.http.get<Pessoa[]>(this.baseUrl).pipe(take(1));
   }
 
   public getPessoaById(id : number) : Observable<Pessoa>{

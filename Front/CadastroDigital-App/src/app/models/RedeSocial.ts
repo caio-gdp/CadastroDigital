@@ -1,6 +1,6 @@
 export interface RedeSocial {
     id : number;
-    pessoaId : number;
+    pessoaFisicaId : number;
     tipoRedeSocialId : number;
     endereco : string;
 }

@@ -1,7 +1,7 @@
 <div class="row">
-testar validação de formulario e reativo
+<!-- testar validação de formulario e reativo
       <p>Form value : {{form.value | json}}</p>
-      <p>Form valid : {{form.status | json}}</p>
+      <p>Form valid : {{form.status | json}}</p> -->
   <div class="col-sm-20">
     <div class="container">
       <div class="col-lg-60 mt-4">
@@ -117,14 +117,15 @@ testar validação de formulario e reativo
                       </div>
                     </div>
                   </div>
+                  <input type="hidden" id="teste" value="{{teste}}">
                   <div class="col-2">
                     <input class="effect" type="password" [ngClass]="cssValidation(f.passwordReg)"
-                      formControlName="passwordReg" id="passwordReg" placeholder="Senha*" (keyup)="checkViewPassword($event)" maxlength="15">
+                      formControlName="passwordReg" id="passwordReg" placeholder="Senha*" maxlength="15">
                     <span class="fa fa-eye eye-pwd float-end" (click)="viewPassword('passwordReg','spanviewsenha',1)" id="spanviewsenha"></span>
                     <div class="invalid-tooltip" *ngIf="f.passwordReg.errors?.required">
                       Senha é obrigatório.
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.passwordReg.errors?.validPassword">
+                    <div class="invalid-tooltip" *ngIf="f.passwordReg.errors?.invalidPassword">
                     </div>
                     <span class="focus-border"></span>
                   </div>

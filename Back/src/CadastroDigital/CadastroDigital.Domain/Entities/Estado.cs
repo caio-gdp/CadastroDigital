@@ -11,8 +11,9 @@ namespace CadastroDigital.Domain.Entities
         public string Sigla { get; set; }
         public int PaisId { get; set; }
 
+        public PessoaFisica PessoaFisica { get; set; }
         public Pais Pais { get; set; }
         public Cidade Cidade { get; set; }
-        public PessoaFisica PessoaFisica { get; set; }
+        
     }
 }

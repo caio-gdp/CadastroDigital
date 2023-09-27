@@ -6,12 +6,17 @@ import { Observable, take } from 'rxjs';
 @Injectable()
 export class EnderecoService {
 
-  baseUrl = 'https://viacep.com.br/ws'
+  cepUrl = 'https://viacep.com.br/ws'
+  baseUrl = 'https://localhost:5001/api/Endereco';
 
   constructor(private http: HttpClient) { }
 
   public getByCep(cep : number) : Observable<Endereco>{
-    return this.http.get<Endereco>(`${this.baseUrl}/${cep}/json/`).pipe(take(1));
+    return this.http.get<Endereco>(`${this.cepUrl}/${cep}/json/`).pipe(take(1));
+  }
+
+  public post(endereco : Endereco) : Observable<Endereco>{
+    return this.http.post<Endereco>(this.baseUrl, endereco).pipe(take(1));
   }
 
 }

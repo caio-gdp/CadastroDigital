@@ -1,15 +1,18 @@
+import { RedeSocial } from "./RedeSocial";
+
 export interface PessoaFisica {
   id : number;
-  cpf : string;
   dataNascimento : string;
-  nome : string;
   rg : string;
   dataEmissao: string;
-  orgaoExpedidorId?: number | null,
-  ufId?: number | null,
+  orgaoExpedidorId: number | null,
+  ufExpedidorId: number | null,
+  naturalidadeId: number | null,
+  nacionalidadeId: number | null,
+  ufId: number | null,
   imagem : string;
   idUser : number;
-  //pessoaId : number;
-  sexoId? : number | null;
-  estadoCivilId? : number | null;
+  sexoId : number | null;
+  estadoCivilId : number | null;
+  redeSocial : RedeSocial
 }

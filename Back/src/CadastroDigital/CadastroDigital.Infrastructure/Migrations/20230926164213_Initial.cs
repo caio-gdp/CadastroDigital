@@ -23,41 +23,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Noticia = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TipoPessoa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PassoCadastroId = table.Column<int>(type: "int", nullable: false),
-                    StatusCadastroId = table.Column<int>(type: "int", nullable: false),
-                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Funcao = table.Column<int>(type: "int", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Banco",
                 columns: table => new
                 {
@@ -240,15 +205,16 @@ namespace CadastroDigital.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pessoa",
+                name: "PassoCadastro",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pessoa", x => x.Id);
+                    table.PrimaryKey("PK_PassoCadastro", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -277,6 +243,19 @@ namespace CadastroDigital.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StatusCadastro",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StatusCadastro", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TipoConta",
                 columns: table => new
                 {
@@ -300,18 +279,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TipoDocumento", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TipoEndereco",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TipoEndereco", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -357,6 +324,95 @@ namespace CadastroDigital.Infrastructure.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Estado",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Sigla = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    PaisId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Estado", x => x.Id);
+                    table.ForeignKey(
+                        name: "fk_estado_pais",
+                        column: x => x.PaisId,
+                        principalTable: "Pais",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Noticia = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TipoPessoa = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PassoCadastroId = table.Column<int>(type: "int", nullable: false),
+                    StatusCadastroId = table.Column<int>(type: "int", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Funcao = table.Column<int>(type: "int", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_PassoCadastro_PassoCadastroId",
+                        column: x => x.PassoCadastroId,
+                        principalTable: "PassoCadastro",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_StatusCadastro_StatusCadastroId",
+                        column: x => x.StatusCadastroId,
+                        principalTable: "StatusCadastro",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cidade",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    EstadoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cidade", x => x.Id);
+                    table.ForeignKey(
+                        name: "fk_cidade_estado",
+                        column: x => x.EstadoId,
+                        principalTable: "Estado",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -462,64 +518,154 @@ namespace CadastroDigital.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Estado",
+                name: "PessoaFisica",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Sigla = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
-                    PaisId = table.Column<int>(type: "int", nullable: false)
+                    Rg = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    DataEmissao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OrgaoExpedidorId = table.Column<int>(type: "int", nullable: false),
+                    UfExpedidorId = table.Column<int>(type: "int", nullable: false),
+                    Imagem = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdUser = table.Column<int>(type: "int", nullable: false),
+                    SexoId = table.Column<int>(type: "int", nullable: false),
+                    EstadoCivilId = table.Column<int>(type: "int", nullable: false),
+                    NaturalidadeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Estado", x => x.Id);
+                    table.PrimaryKey("PK_PessoaFisica", x => x.Id);
                     table.ForeignKey(
-                        name: "fk_estado_pais",
-                        column: x => x.PaisId,
-                        principalTable: "Pais",
+                        name: "fk_pessoafisica_estadocivil",
+                        column: x => x.EstadoCivilId,
+                        principalTable: "EstadoCivil",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_pessoafisica_naturalidade",
+                        column: x => x.NaturalidadeId,
+                        principalTable: "Cidade",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_pessoafisica_orgaoexpedidor",
+                        column: x => x.OrgaoExpedidorId,
+                        principalTable: "OrgaoExpedidor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_pessoafisica_sexo",
+                        column: x => x.SexoId,
+                        principalTable: "Sexo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_pessoafisica_ufexpedidor",
+                        column: x => x.UfExpedidorId,
+                        principalTable: "Estado",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "fk_pessoafisica_user",
+                        column: x => x.IdUser,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PassoCadastro",
+                name: "Documento",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descricao = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    PessoaId = table.Column<int>(type: "int", nullable: true)
+                    TipoDocumentoId = table.Column<int>(type: "int", nullable: false),
+                    PessoaId = table.Column<int>(type: "int", nullable: false),
+                    ImagemUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PessoaFisicaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PassoCadastro", x => x.Id);
+                    table.PrimaryKey("PK_Documento", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PassoCadastro_Pessoa_PessoaId",
-                        column: x => x.PessoaId,
-                        principalTable: "Pessoa",
+                        name: "FK_Documento_PessoaFisica_PessoaFisicaId",
+                        column: x => x.PessoaFisicaId,
+                        principalTable: "PessoaFisica",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Documento_TipoDocumento_TipoDocumentoId",
+                        column: x => x.TipoDocumentoId,
+                        principalTable: "TipoDocumento",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Endereco",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PessoaFisicaId = table.Column<int>(type: "int", nullable: false),
+                    Logradouro = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Numero = table.Column<int>(type: "int", maxLength: 10, nullable: false),
+                    Complemento = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Bairro = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Cep = table.Column<int>(type: "int", maxLength: 5, nullable: false),
+                    CidadeId = table.Column<int>(type: "int", nullable: false),
+                    DataInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UsuarioInclusao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataExclusao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioExclusao = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Endereco", x => x.Id);
+                    table.ForeignKey(
+                        name: "fk_endereco_cidade",
+                        column: x => x.CidadeId,
+                        principalTable: "Cidade",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_endereco_pessoafisica",
+                        column: x => x.PessoaFisicaId,
+                        principalTable: "PessoaFisica",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StatusCadastro",
+                name: "RedeSocial",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descricao = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    PessoaId = table.Column<int>(type: "int", nullable: true)
+                    PessoaFisicaId = table.Column<int>(type: "int", nullable: false),
+                    TipoRedeSocialId = table.Column<int>(type: "int", nullable: false),
+                    Endereco = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    DataInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UsuarioInclusao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataExclusao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioExclusao = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StatusCadastro", x => x.Id);
+                    table.PrimaryKey("PK_RedeSocial", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StatusCadastro_Pessoa_PessoaId",
-                        column: x => x.PessoaId,
-                        principalTable: "Pessoa",
+                        name: "fk_redesocial_pessoa",
+                        column: x => x.PessoaFisicaId,
+                        principalTable: "PessoaFisica",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_redesocial_tiporedesocial",
+                        column: x => x.TipoRedeSocialId,
+                        principalTable: "TipoRedeSocial",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -531,7 +677,7 @@ namespace CadastroDigital.Infrastructure.Migrations
                     Pasta = table.Column<int>(type: "int", nullable: false),
                     Matricula = table.Column<int>(type: "int", nullable: false),
                     CentroCusto = table.Column<int>(type: "int", nullable: false),
-                    PessoaId = table.Column<int>(type: "int", nullable: false),
+                    PessoaFisicaId = table.Column<int>(type: "int", nullable: false),
                     CategoriaId = table.Column<int>(type: "int", nullable: false),
                     CargoId = table.Column<int>(type: "int", nullable: false),
                     SituacaoId = table.Column<int>(type: "int", nullable: false),
@@ -579,9 +725,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Socio_Pessoa_PessoaId",
-                        column: x => x.PessoaId,
-                        principalTable: "Pessoa",
+                        name: "FK_Socio_PessoaFisica_PessoaFisicaId",
+                        column: x => x.PessoaFisicaId,
+                        principalTable: "PessoaFisica",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -590,137 +736,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                         principalTable: "ProcessoJuridico",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Documento",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TipoDocumentoId = table.Column<int>(type: "int", nullable: false),
-                    PessoaId = table.Column<int>(type: "int", nullable: false),
-                    ImagemUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Documento", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Documento_Pessoa_PessoaId",
-                        column: x => x.PessoaId,
-                        principalTable: "Pessoa",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Documento_TipoDocumento_TipoDocumentoId",
-                        column: x => x.TipoDocumentoId,
-                        principalTable: "TipoDocumento",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RedeSocial",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PessoaId = table.Column<int>(type: "int", nullable: false),
-                    TipoRedeSocialId = table.Column<int>(type: "int", nullable: false),
-                    Endereco = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    DataInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioInclusao = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataExclusao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UsuarioExclusao = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RedeSocial", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RedeSocial_Pessoa_PessoaId",
-                        column: x => x.PessoaId,
-                        principalTable: "Pessoa",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_redesocial_tiporedesocial",
-                        column: x => x.TipoRedeSocialId,
-                        principalTable: "TipoRedeSocial",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cidade",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    EstadoId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cidade", x => x.Id);
-                    table.ForeignKey(
-                        name: "fk_cidade_estado",
-                        column: x => x.EstadoId,
-                        principalTable: "Estado",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PessoaFisica",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Cpf = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Rg = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
-                    DataEmissao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    OrgaoExpedidorId = table.Column<int>(type: "int", nullable: true),
-                    UfId = table.Column<int>(type: "int", nullable: true),
-                    Imagem = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdUser = table.Column<int>(type: "int", nullable: false),
-                    SexoId = table.Column<int>(type: "int", nullable: true),
-                    EstadoCivilId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PessoaFisica", x => x.Id);
-                    table.ForeignKey(
-                        name: "fk_pessoafisica_estadocivil",
-                        column: x => x.EstadoCivilId,
-                        principalTable: "EstadoCivil",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "fk_pessoafisica_orgaoexpedidor",
-                        column: x => x.OrgaoExpedidorId,
-                        principalTable: "OrgaoExpedidor",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "fk_pessoafisica_sexo",
-                        column: x => x.SexoId,
-                        principalTable: "Sexo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "fk_pessoafisica_uf",
-                        column: x => x.UfId,
-                        principalTable: "Estado",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "fk_pessoafisica_user",
-                        column: x => x.IdUser,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -785,48 +800,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                         name: "FK_InformacaoBancaria_TipoConta_TipoContaId",
                         column: x => x.TipoContaId,
                         principalTable: "TipoConta",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Endereco",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PessoaId = table.Column<int>(type: "int", nullable: false),
-                    TipoEnderecoId = table.Column<int>(type: "int", nullable: false),
-                    Logradouro = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Numero = table.Column<int>(type: "int", nullable: false),
-                    Complemento = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Bairro = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cep = table.Column<int>(type: "int", nullable: false),
-                    CidadeId = table.Column<int>(type: "int", nullable: false),
-                    DataInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioInclusao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DataExclusao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UsuarioExclusao = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Endereco", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Endereco_Cidade_CidadeId",
-                        column: x => x.CidadeId,
-                        principalTable: "Cidade",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Endereco_Pessoa_PessoaId",
-                        column: x => x.PessoaId,
-                        principalTable: "Pessoa",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Endereco_TipoEndereco_TipoEnderecoId",
-                        column: x => x.TipoEnderecoId,
-                        principalTable: "TipoEndereco",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -903,16 +876,16 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "PassoCadastro",
-                columns: new[] { "Id", "Descricao", "PessoaId" },
+                columns: new[] { "Id", "Descricao" },
                 values: new object[,]
                 {
-                    { 1, "Pré-Cadastro", null },
-                    { 2, "Dados Pessoais", null },
-                    { 3, "Dados Residenciais", null },
-                    { 4, "Dados Profissionais", null },
-                    { 5, "Dados Financeiros", null },
-                    { 6, "Dependentes e Agregados", null },
-                    { 7, "Documentos", null }
+                    { 1, "Pré-Cadastro" },
+                    { 2, "Dados Pessoais" },
+                    { 3, "Dados Residenciais" },
+                    { 4, "Dados Profissionais" },
+                    { 5, "Dados Financeiros" },
+                    { 6, "Dependentes e Agregados" },
+                    { 7, "Documentos" }
                 });
 
             migrationBuilder.InsertData(
@@ -927,12 +900,12 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "StatusCadastro",
-                columns: new[] { "Id", "Descricao", "PessoaId" },
+                columns: new[] { "Id", "Descricao" },
                 values: new object[,]
                 {
-                    { 1, "Incompleto", null },
-                    { 2, "Pendente", null },
-                    { 3, "Concluído", null }
+                    { 1, "Incompleto" },
+                    { 2, "Pendente" },
+                    { 3, "Concluído" }
                 });
 
             migrationBuilder.InsertData(
@@ -7572,6 +7545,16 @@ namespace CadastroDigital.Infrastructure.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_PassoCadastroId",
+                table: "AspNetUsers",
+                column: "PassoCadastroId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_StatusCadastroId",
+                table: "AspNetUsers",
+                column: "StatusCadastroId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -7604,9 +7587,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                 column: "TipoParenteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Documento_PessoaId",
+                name: "IX_Documento_PessoaFisicaId",
                 table: "Documento",
-                column: "PessoaId");
+                column: "PessoaFisicaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Documento_TipoDocumentoId",
@@ -7615,19 +7598,14 @@ namespace CadastroDigital.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Endereco_CidadeId",
+                name: "idx_endereco_cidade",
                 table: "Endereco",
                 column: "CidadeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Endereco_PessoaId",
+                name: "idx_endereco_pessoafisica",
                 table: "Endereco",
-                column: "PessoaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Endereco_TipoEnderecoId",
-                table: "Endereco",
-                column: "TipoEnderecoId");
+                column: "PessoaFisicaId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_estado_pais",
@@ -7653,14 +7631,19 @@ namespace CadastroDigital.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PassoCadastro_PessoaId",
-                table: "PassoCadastro",
-                column: "PessoaId");
-
-            migrationBuilder.CreateIndex(
                 name: "idx_pessoafisica_estadocivil",
                 table: "PessoaFisica",
                 column: "EstadoCivilId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_pessoafisica_naturalidade",
+                table: "PessoaFisica",
+                column: "NaturalidadeId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_pessoafisica_orgaoexpedidor",
+                table: "PessoaFisica",
+                column: "OrgaoExpedidorId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_pessoafisica_sexo",
@@ -7668,33 +7651,24 @@ namespace CadastroDigital.Infrastructure.Migrations
                 column: "SexoId");
 
             migrationBuilder.CreateIndex(
+                name: "idx_pessoafisica_ufexpedidor",
+                table: "PessoaFisica",
+                column: "UfExpedidorId");
+
+            migrationBuilder.CreateIndex(
                 name: "idx_pessoafisica_user",
                 table: "PessoaFisica",
                 column: "IdUser");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PessoaFisica_OrgaoExpedidorId",
-                table: "PessoaFisica",
-                column: "OrgaoExpedidorId",
-                unique: true,
-                filter: "[OrgaoExpedidorId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PessoaFisica_UfId",
-                table: "PessoaFisica",
-                column: "UfId",
-                unique: true,
-                filter: "[UfId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "idx_redesocial_pessoa",
-                table: "RedeSocial",
-                column: "PessoaId");
-
-            migrationBuilder.CreateIndex(
                 name: "idx_redesocial_tiporedesocial",
                 table: "RedeSocial",
                 column: "TipoRedeSocialId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RedeSocial_PessoaFisicaId",
+                table: "RedeSocial",
+                column: "PessoaFisicaId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_socio_categoria",
@@ -7709,7 +7683,7 @@ namespace CadastroDigital.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "idx_socio_pessoa",
                 table: "Socio",
-                column: "PessoaId");
+                column: "PessoaFisicaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Socio_CargoId",
@@ -7726,11 +7700,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                 name: "IX_Socio_ProcessoJuridicoId",
                 table: "Socio",
                 column: "ProcessoJuridicoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StatusCadastro_PessoaId",
-                table: "StatusCadastro",
-                column: "PessoaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -7766,16 +7735,7 @@ namespace CadastroDigital.Infrastructure.Migrations
                 name: "Noticia");
 
             migrationBuilder.DropTable(
-                name: "PassoCadastro");
-
-            migrationBuilder.DropTable(
-                name: "PessoaFisica");
-
-            migrationBuilder.DropTable(
                 name: "RedeSocial");
-
-            migrationBuilder.DropTable(
-                name: "StatusCadastro");
 
             migrationBuilder.DropTable(
                 name: "TipoParente");
@@ -7793,37 +7753,16 @@ namespace CadastroDigital.Infrastructure.Migrations
                 name: "TipoDocumento");
 
             migrationBuilder.DropTable(
-                name: "Cidade");
-
-            migrationBuilder.DropTable(
-                name: "TipoEndereco");
-
-            migrationBuilder.DropTable(
                 name: "Banco");
 
             migrationBuilder.DropTable(
                 name: "TipoConta");
 
             migrationBuilder.DropTable(
-                name: "EstadoCivil");
-
-            migrationBuilder.DropTable(
-                name: "OrgaoExpedidor");
-
-            migrationBuilder.DropTable(
-                name: "Sexo");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "TipoRedeSocial");
 
             migrationBuilder.DropTable(
                 name: "Socio");
-
-            migrationBuilder.DropTable(
-                name: "Estado");
 
             migrationBuilder.DropTable(
                 name: "Dependente");
@@ -7841,10 +7780,34 @@ namespace CadastroDigital.Infrastructure.Migrations
                 name: "Parceria");
 
             migrationBuilder.DropTable(
-                name: "Pessoa");
+                name: "PessoaFisica");
 
             migrationBuilder.DropTable(
                 name: "ProcessoJuridico");
+
+            migrationBuilder.DropTable(
+                name: "EstadoCivil");
+
+            migrationBuilder.DropTable(
+                name: "Cidade");
+
+            migrationBuilder.DropTable(
+                name: "OrgaoExpedidor");
+
+            migrationBuilder.DropTable(
+                name: "Sexo");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Estado");
+
+            migrationBuilder.DropTable(
+                name: "PassoCadastro");
+
+            migrationBuilder.DropTable(
+                name: "StatusCadastro");
 
             migrationBuilder.DropTable(
                 name: "Pais");

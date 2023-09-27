@@ -29,16 +29,16 @@ namespace CadastroDigital.Api.Controllers
         //     return Ok(endereco);
         // }
 
-        // [HttpPost]
-        // public async Task<IActionResult> Post(EnderecoDto dto)
-        // {
-        //     var ret = await _enderecoService.AddEndereco(dto);
+        [HttpPost]
+        public async Task<IActionResult> Post(EnderecoDto dto)
+        {
+            var ret = await _enderecoService.AddEndereco(dto);
             
-        //     if (ret == null)
-        //         return BadRequest("Erro ao tentar incluir registro.");
+            if (ret == null)
+                return BadRequest("Erro ao tentar incluir registro.");
 
-        //     return Ok("Registro incluído com sucesso.");
-        // }
+            return Ok();
+        }
 
  
         // [HttpPut("{pessoaid}")]

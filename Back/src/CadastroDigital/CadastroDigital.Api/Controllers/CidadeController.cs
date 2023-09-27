@@ -27,5 +27,17 @@ namespace CadastroDigital.Api.Controllers
 
              return Ok(cidades);
         }
+
+        
+        [HttpGet("cidade/{cidade}")]
+        public async Task<IActionResult> GetCidadeByName(string cidade)
+        {
+            var cidadeRet = await _cidadeService.GetCidadeByName(cidade);
+
+            if (cidadeRet.Equals(null))
+                 return NotFound("");
+
+             return Ok(cidadeRet);
+        }
     }
 }

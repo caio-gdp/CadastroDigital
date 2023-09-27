@@ -7,7 +7,7 @@ namespace CadastroDigital.Domain.Entities
 {
     public class RedeSocial : Base
     {
-        public int PessoaId { get; set; }
+        public int PessoaFisicaId { get; set; }
         public int TipoRedeSocialId { get; set; }
         public string Endereco { get; set; }
         public DateTime DataInclusao { get; set; }

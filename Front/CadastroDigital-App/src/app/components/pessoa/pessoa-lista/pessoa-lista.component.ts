@@ -45,8 +45,8 @@ export class PessoaListaComponent implements OnInit {
   public filtrarPessoas(filtrarPor : string) : Pessoa[]{
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.pessoas.filter(
-      pessoa => pessoa.pessoaFisica.nome.toLocaleLowerCase().indexOf(filtrarPor) != -1 ||
-      pessoa.pessoaFisica.cpf.indexOf(filtrarPor) != -1
+      pessoa => null//pessoa.pessoaFisica.nome.toLocaleLowerCase().indexOf(filtrarPor) != -1 ||
+      //pessoa.pessoaFisica.cpf.indexOf(filtrarPor) != -1
     );
   }
 

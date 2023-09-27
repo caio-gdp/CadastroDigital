@@ -5,9 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using CadastroDigital.Domain.Enums;
 using CadastroDigital.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Collections;
+using System.ComponentModel.DataAnnotations;
 
 namespace CadastroDigital.Domain.Identity
 {
+    [Index(nameof(PassoCadastroId), IsUnique = false)]
+    [Index(nameof(StatusCadastroId), IsUnique = false)]
     public class User : IdentityUser<int>
     {
         public string UserId { get; set; }
@@ -16,6 +21,7 @@ namespace CadastroDigital.Domain.Identity
         public string TipoPessoa { get; set; }
         public int PassoCadastroId { get; set; }
         public int StatusCadastroId { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime? DataAtualizacao { get; set; }
         public PessoaFisica PessoaFisica { get; set; }

@@ -30,6 +30,14 @@ namespace CadastroDigital.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
+        public async Task<Cidade> GetCidadeByName(string cidade){
+
+            IQueryable<Cidade> query = _context.Cidade
+                .Where(p => p.Nome.Equals(cidade)).AsNoTracking();
+
+            return await query.FirstAsync();
+        }
+
         
     }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatorField } from '@app/helpers/ValidatorField';
 import { ToastrService } from 'ngx-toastr';
@@ -18,13 +18,13 @@ import { GenericValidator } from '@app/validators/GenericValidator';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss'],
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit {
 
   user = {} as User;
   form = {} as FormGroup;
   tokenVisible: boolean = false;
   reCAPTCHAToken: string = '';
-  validPassword = false;
+  teste = false;
 
   get f() : any{
     return this.form.controls;
@@ -39,8 +39,8 @@ export class RegistrationComponent {
     private router: Router
     ){}
 
-    ngOnInit() : void {
-      this.validation();
+  ngOnInit() : void {
+    this.validation();
   }
 
   bsConfig() : any{
@@ -67,7 +67,7 @@ export class RegistrationComponent {
       name : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
       phoneNumber : ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
       email : ['', [Validators.required, Validators.email]],
-      passwordReg : ['', [Validators.required, Validators.minLength(6),Validators.maxLength(15)]],
+      passwordReg : ['', [Validators.required, Validators.minLength(6),Validators.maxLength(15), this.checkPassword]],
       confirmaPassword : ['', [Validators.required, this.checkConfirmedPassword]],
       confirmaEmail : ['', [Validators.required, this.checkEmail]],
       noticia : [],
@@ -187,67 +187,72 @@ export class RegistrationComponent {
     return null;
   }
 
-  public checkViewPassword(e : any){
+  public checkPassword(filedForm: FormControl | AbstractControl){
 
-    const input = this.form.controls["passwordReg"].value;
-    const spansenhaminlen = <HTMLElement>document.getElementById('spansenhaminlen');
-    const spansenhaupcase = <HTMLElement>document.getElementById('spansenhaupcase');
-    const spansenhanum = <HTMLElement>document.getElementById('spansenhanum');
-    const spansenhaesp = <HTMLElement>document.getElementById('spansenhaesp');
-    var minLen = false;
-    var charmaiusculo = false;
-    var charnumerico = false;
-    var charespecial = false;
+    if (filedForm.value != ""){
 
-    if (input.length > 5)
-      minLen = true;
+      const spansenhaminlen = <HTMLElement>document.getElementById('spansenhaminlen');
+      const spansenhaupcase = <HTMLElement>document.getElementById('spansenhaupcase');
+      const spansenhanum = <HTMLElement>document.getElementById('spansenhanum');
+      const spansenhaesp = <HTMLElement>document.getElementById('spansenhaesp');
 
-    for (var i = 0; i < input.length; i++)
-    {
-      var valorAscii = input.charCodeAt(i);1
+      var minLen = false;
+      var charmaiusculo = false;
+      var charnumerico = false;
+      var charespecial = false;
 
-      if (valorAscii >= 65 && valorAscii <= 90)
-        charmaiusculo = true;
+      var input = document.querySelector("#passwordReg")
 
-      if (valorAscii >= 48 && valorAscii <= 57)
-        charnumerico = true;
+      if (filedForm.value.length > 5)
+        minLen = true;
 
-      if (valorAscii >= 33 && valorAscii <= 47)
-        charespecial = true;
+      for (var i = 0; i < filedForm.value.length; i++)
+      {
+        var valorAscii = filedForm.value.charCodeAt(i);1
 
-      if (valorAscii >= 58 && valorAscii <= 62)
-        charespecial = true;
+        if (valorAscii >= 65 && valorAscii <= 90)
+          charmaiusculo = true;
 
-      if (valorAscii == 64 || valorAscii == 91 || valorAscii == 93 || valorAscii == 94 || valorAscii == 95 ||
-        valorAscii == 123 || valorAscii == 125 || valorAscii == 126 || valorAscii == 162 || valorAscii == 163 ||
-        valorAscii == 172 || valorAscii == 178 || valorAscii == 179 || valorAscii == 180 || valorAscii == 185)
-        charespecial = true;
+        if (valorAscii >= 48 && valorAscii <= 57)
+          charnumerico = true;
+
+        if (valorAscii >= 33 && valorAscii <= 47)
+          charespecial = true;
+
+        if (valorAscii >= 58 && valorAscii <= 62)
+          charespecial = true;
+
+        if (valorAscii == 64 || valorAscii == 91 || valorAscii == 93 || valorAscii == 94 || valorAscii == 95 ||
+          valorAscii == 123 || valorAscii == 125 || valorAscii == 126 || valorAscii == 162 || valorAscii == 163 ||
+          valorAscii == 172 || valorAscii == 178 || valorAscii == 179 || valorAscii == 180 || valorAscii == 185)
+          charespecial = true;
+      }
+
+      if (minLen)
+        spansenhaminlen.className = "fa fa-check";
+      else
+        spansenhaminlen.className = "fa fa-times";
+
+      if (charmaiusculo)
+        spansenhaupcase.className = "fa fa-check";
+      else
+        spansenhaupcase.className = "fa fa-times";
+
+      if (charnumerico)
+        spansenhanum.className = "fa fa-check";
+      else
+        spansenhanum.className = "fa fa-times";
+
+      if (charespecial)
+        spansenhaesp.className = "fa fa-check";
+      else
+        spansenhaesp.className = "fa fa-times";
+
+      if (!minLen || !charmaiusculo || !charnumerico || !charespecial)
+        return { invalidPassword : true };
+
     }
-
-    if (minLen)
-      spansenhaminlen.className = "fa fa-check";
-    else
-      spansenhaminlen.className = "fa fa-times";
-
-    if (charmaiusculo)
-      spansenhaupcase.className = "fa fa-check";
-    else
-      spansenhaupcase.className = "fa fa-times";
-
-    if (charnumerico)
-      spansenhanum.className = "fa fa-check";
-    else
-      spansenhanum.className = "fa fa-times";
-
-    if (charespecial)
-      spansenhaesp.className = "fa fa-check";
-    else
-      spansenhaesp.className = "fa fa-times";
-
-    if (!minLen || !charmaiusculo || !charnumerico || !charespecial)
-      return { validPassword : false };
-    else
-      return { validPassword : true };
+    return null
   }
 
   public checkAge(filedForm: FormControl | AbstractControl){

@@ -10,7 +10,11 @@ export class CidadeService {
 
   constructor(private http: HttpClient) { }
 
-  public get(estado : number) : Observable<Cidade[]>{
+  public getByEstado(estado : number) : Observable<Cidade[]>{
     return this.http.get<Cidade[]>(`${this.baseUrl}/estado/${estado}`).pipe(take(1));
+  }
+
+  public getByName(cidade : string) : Observable<Cidade>{
+    return this.http.get<Cidade>(`${this.baseUrl}/cidade/${cidade}`).pipe(take(1));
   }
 }

@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper.Configuration.Annotations;
 
 namespace CadastroDigital.Domain.Entities
 {
     public class Endereco : Base
     {
         public int PessoaFisicaId { get; set; }
-        public int TipoEnderecoId { get; set; }
         public string Logradouro { get; set; }
         public int Numero { get; set; }
         public string Complemento { get; set; }
@@ -20,8 +21,10 @@ namespace CadastroDigital.Domain.Entities
         public DateTime? DataExclusao { get; set; }
         public string UsuarioExclusao { get; set; }
 
+        [Ignore]
+        public string localidade { get; set; }
+
         public PessoaFisica PessoaFisica { get; set; }
-        public TipoEndereco TipoEndereco { get; set; }
         public Cidade Cidade { get; set; }
 
     }

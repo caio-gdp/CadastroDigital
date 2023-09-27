@@ -194,4 +194,24 @@ input:focus:-ms-input-placeholder {
   color: #19da00;
 }
 
+/* Cor de fundo do autocomplete */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+/* Cor do texto do autocomplete */
+input:-webkit-autofill {
+  -webkit-text-fill-color: #333 !important;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+
+}
+input[type=number] {
+ -moz-appearance: textfield;
+ appearance: textfield;
+
+}
+
 

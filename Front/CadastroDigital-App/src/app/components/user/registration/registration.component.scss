@@ -85,7 +85,7 @@ input[type="datetime"]
 input:focus::-webkit-input-placeholder {
   // color: transparent;
   position: absolute;
-  top: -2px;
+  //top: -2px;
   font-size: 12px;
   color: #3399FF;
   transition: 0.3s;
@@ -93,7 +93,7 @@ input:focus::-webkit-input-placeholder {
 input:focus:-moz-placeholder { /* Firefox 18- */
   // color: transparent;
   position: absolute;
-  top: -2px;
+  //top: -2px;
   font-size: 12px;
   color: #3399FF;
   transition: 0.3s;
@@ -109,7 +109,7 @@ input:focus::-moz-placeholder {  /* Firefox 19+ */
 input:focus:-ms-input-placeholder {
   // color: transparent;
   position: absolute;
-  top: -2px;
+  //top: -2px;
   font-size: 12px;
   color: #3399FF;
   transition: 0.3s;

@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { PessoaComponent } from './components/pessoa/pessoa.component';
 import { PessoaListaComponent } from './components/pessoa/pessoa-lista/pessoa-lista.component';
 import { PessoaDetalheComponent } from './components/pessoa/pessoa-detalhe/pessoa-detalhe.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './shared/nav/nav.component';
 
@@ -58,6 +58,8 @@ import { BeneficioService } from './services/beneficio.service';
 import { ParceriaService } from './services/parceria.service';
 import { PlaylistService } from './services/playlist.service';
 import { PlaylistComponent } from './components/playlist/playlist.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { PessoaFisicaService } from './services/pessoafisica.service';
 
 defineLocale('pt', ptBrLocale);
 //registerLocaleData(localePT);
@@ -115,6 +117,7 @@ defineLocale('pt', ptBrLocale);
   //             {provide: provideNgxMask, useValue: provideNgxMask()},
   //             {provide: ReCaptchaV3Service , useValue: '6LfIjJ8mAAAAAP0yk5n375Dhu6BUnem_vQOeHqh-'}],
   providers: [PessoaService,
+              PessoaFisicaService,
               OrgaoExpedidorService,
               EstadoService,
               CidadeService,
@@ -129,6 +132,7 @@ defineLocale('pt', ptBrLocale);
               PlaylistService,
               ReCaptchaV3Service,
               provideNgxMask(),
+              {provide : HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
               {provide: RECAPTCHA_V3_SITE_KEY, useValue: '6LemiK8mAAAAADxKrc0KtYeWBNkzQsSXi4ujzh-E'}],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

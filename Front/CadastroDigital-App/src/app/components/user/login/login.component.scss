@@ -1,91 +1,91 @@
 nav{
-  border: 1px solid;
+  //border: 1px solid;
   width: auto;
 }
-// .container{
-//   //position: relative;
-//   //background: lightgray;
-//   border: 1px solid;
-//   //left: 65%;
-//   width: 60%;
-// }
+.container{
+  //position: relative;
+  //background: lightgray;
+  //border: 1px solid;
+  //left: 65%;
+  width: 60%;
+}
 
-// ul {
-//   //position: absolute;
-//   //background: orange;
-//   //width: 95%;
-//   //margin-top: 3%;
-//   //margin-left: 65%;
-//  // white-space: nowrap;
-//   //left: 100px;
+ul {
+  position: absolute;
+  background: orange;
+  width: 95%;
+  margin-top: 3%;
+  margin-left: 65%;
+ white-space: nowrap;
+  left: 100px;
 
-// }
+}
 
-// ul{
-//   border: 1px solid;
-//   display: flex;
-//   flex-wrap: no-wrap;
-//   margin-top: 3%;
-// }
+ul{
+  //border: 1px solid;
+  display: flex;
+  flex-wrap: no-wrap;
+  margin-top: 3%;
+}
 
-// ul li {
-//   display: inline-block;
-//   margin-right: 3px;
-//   white-space: nowrap;
-// }
+ul li {
+  display: inline-block;
+  margin-right: 3px;
+  white-space: nowrap;
+}
 
-// li a:link,
-// li a:visited {
-//   color: #2c3e50;
-//   text-decoration: none;
-//   border-bottom: 3px solid transparent;
-//   transition: border-bottom 0.4s;
-// }
+li a:link,
+li a:visited {
+  color: #2c3e50;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: border-bottom 0.4s;
+}
 
-// li a:hover,
-// li a:active {
-//   border-bottom: 3px solid #27ae60;
-// }
+li a:hover,
+li a:active {
+  border-bottom: 3px solid #27ae60;
+}
 
-// input[type="text"],
-// input[type="password"] {
-//   height: 2em;
-//   width: 200px;
-//   margin-right: 5px;
-//   padding: 1em .5em 1.2em 1em;
-//   border: 1px solid #d6d6d6;
-//   border-radius: 5px;
-//   font-size: .75em;
-//   transition: border 0.2s;
-// }
+input[type="text"],
+input[type="password"] {
+  height: 2em;
+  width: 200px;
+  margin-right: 5px;
+  padding: 1em .5em 1.2em 1em;
+  border: 1px solid #d6d6d6;
+  border-radius: 5px;
+  font-size: .75em;
+  transition: border 0.2s;
+}
 
-// input[type="text"]:hover,
-// input[type="password"]:hover {
-//   border: 1px solid #27ae60;
-// }
+input[type="text"]:hover,
+input[type="password"]:hover {
+  border: 1px solid #27ae60;
+}
 
-// input[type="text"]:focus,
-// input[type="password"]:focus {
-//   outline: none;
-//   border: 1px solid #27ae60;
-//   box-shadow: 0 0 2px #27ae60;
-// }
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border: 1px solid #27ae60;
+  box-shadow: 0 0 2px #27ae60;
+}
 
-// input[type="submit"] {
-//   height: 28px;
-//   width: 80px;
-//   background-color: #27ae60;
-//   border: 1px solid #27ae60;
-//   border-radius: 5px;
-//   font-size: .9em;
-//   color: #f9fefd;
-//   margin-right: 5px;
-// }
+input[type="submit"] {
+  height: 28px;
+  width: 80px;
+  background-color: #27ae60;
+  border: 1px solid #27ae60;
+  border-radius: 5px;
+  font-size: .9em;
+  color: #f9fefd;
+  margin-right: 5px;
+}
 
-// input[type="submit"]:hover,
-// input[type="submit"]:focus {
-//   cursor: pointer;
-//   background-color: #10715e;
-//   outline: none;
-// }
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  cursor: pointer;
+  background-color: #10715e;
+  outline: none;
+}
 

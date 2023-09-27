@@ -51,12 +51,11 @@ namespace CadastroDigital.Infrastructure.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
 
-            base.OnModelCreating(modelBuilder);
-
             //Configs
             modelBuilder.ApplyConfiguration(new CidadeConfig());
             //modelBuilder.ApplyConfiguration(new EmailConfig());
             modelBuilder.ApplyConfiguration(new EnderecoConfig());
+                modelBuilder.Entity<Endereco>().Ignore(t => t.localidade);
             modelBuilder.ApplyConfiguration(new EstadoConfig());
             modelBuilder.ApplyConfiguration(new EstadoCivilConfig());
             modelBuilder.ApplyConfiguration(new PaisConfig());

@@ -13,8 +13,8 @@ using Microsoft.Extensions.Logging;
 
 namespace CadastroDigital.Api.Controllers
 {
-    
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class PessoaFisicaController : Controller
     {
         //private readonly ILogger<PessoaFisica> _logger;
@@ -30,7 +30,9 @@ namespace CadastroDigital.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(PessoaFisicaDto dto)
         {
-            var idUser = User.GetId();
+            //var idUser = User.GetId();
+            var idUser = dto.IdUser;
+
 
             var ret = await _pessoaFisicaService.AddPessoa(idUser, dto);
             

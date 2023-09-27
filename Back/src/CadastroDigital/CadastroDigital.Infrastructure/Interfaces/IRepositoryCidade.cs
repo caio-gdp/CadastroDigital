@@ -9,5 +9,6 @@ namespace CadastroDigital.Infrastructure.Interfaces
     public interface IRepositoryCidade //: IRepositoryBaseCadastroDigital<Cidade>
     {
         Task<IEnumerable<Cidade>> GetCidadeByEstado(int estado);
+        Task<Cidade> GetCidadeByName(string cidade);
     }
 }

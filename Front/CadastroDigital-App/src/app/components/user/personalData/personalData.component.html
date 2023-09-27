@@ -27,7 +27,8 @@
                   </div>
                   <form [formGroup]="form">
                     <div class="col-3">
-                      <input formControlName="rg" id="rg" class="effect" type="number" placeholder="RG*" [ngClass]="cssValidation(f.rg)" maxlength="12">
+                      <input formControlName="rg" id="rg" class="effect" type="text" placeholder="RG*" [ngClass]="cssValidation(f.rg)"
+                        maxlength="12">
                       <div class="invalid-tooltip" *ngIf="f.rg.errors?.required">
                         RG é obrigatório.
                       </div>
@@ -57,66 +58,65 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
-                      <select class="effect" type="text" [ngClass]="cssValidation(f.orgaoExpedidor)" formControlName="orgaoExpedidor" id="orgaoExpedidor" (change)="changeCss('orgaoExpedidor')" >
+                      <select class="effect" type="text" [ngClass]="cssValidation(f.orgaoExpedidorid)" formControlName="orgaoExpedidorId" id="orgaoExpedidorid" (change)="changeCss('orgaoExpedidorid')" >
                         <option disabled selected hidden value="">Orgão Expedidor*</option>
                         <option *ngFor="let orgaoExpedidor of orgaosExpedidores" ngValue="{{orgaoExpedidor.id}}">{{orgaoExpedidor.sigla}}</option>
-                        <div class="invalid-tooltip" *ngIf="f.orgaoExpedidor.errors?.required">
+                        <div class="invalid-tooltip" *ngIf="f.orgaoExpedidorId.errors?.required">
                           Orgão Expedidor é obrigatório.
                         </div>
                         <span class="focus-border"></span>
                       </select>
                     </div>
                     <div class="col-3">
-                      <select class="effect" id="ufExpedidor" [ngClass]="cssValidation(f.ufExpedidor)" formControlName="ufExpedidor" (change)="getCidade()">
+                      <select class="effect" id="ufExpedidorId" [ngClass]="cssValidation(f.ufExpedidorId)" formControlName="ufExpedidorId" (change)="getCidade()">
                         <option disabled selected hidden value="">Estado Expedidor*</option>
                         <option *ngFor="let estado of estados" value="{{estado.id}}">{{estado.sigla}}</option>
-                      <div class="invalid-tooltip" *ngIf="f.ufExpedidor.errors?.required">
+                      <div class="invalid-tooltip" *ngIf="f.ufExpedidorId.errors?.required">
                         Estado Expedidor é obrigatório.
                       </div>
                       <span class="focus-border"></span>
                       </select>
                     </div>
                     <div class="col-3">
-                      <select class="effect" id="naturalidade" [ngClass]="cssValidation(f.naturalidade)" formControlName="naturalidade" id="naturalidade" (change)="changeCss('naturalidade')">
+                      <select class="effect" id="naturalidadeId" [ngClass]="cssValidation(f.naturalidadeId)" formControlName="naturalidadeId" id="naturalidadeId" (change)="changeCss('naturalidadeId')">
                         <option disabled selected hidden value="">Naturalidade*</option>
                         <option *ngFor="let cidade of cidades" ngValue="{{cidade.id}}">{{cidade.nome}}</option>
-                      <div class="invalid-tooltip" *ngIf="f.naturalidade.errors?.required">
+                      <div class="invalid-tooltip" *ngIf="f.naturalidadeId.errors?.required">
                         Naturalidade é obrigatório.
                       </div>
                       <span class="focus-border"></span>
                       </select>
                     </div>
                     <div class="col-3">
-                      <select class="effect" id="nacionalidade" [ngClass]="cssValidation(f.nacionalidade)" formControlName="nacionalidade" id="nacionalidade" (change)="changeCss('nacionalidade')">
+                      <select class="effect" id="nacionalidadeId" [ngClass]="cssValidation(f.nacionalidadeId)" formControlName="nacionalidadeId" id="nacionalidadeId" (change)="changeCss('nacionalidadeId')">
                         <option disabled selected hidden value="">Nacionalidade*</option>
                         <option *ngIf="pais != undefined" ngValue="{{pais.id}}">{{pais.nome}}</option>
-                      <div class="invalid-tooltip" *ngIf="f.nacionalidade.errors?.required">
+                      <div class="invalid-tooltip" *ngIf="f.nacionalidadeId.errors?.required">
                         Nacionalidade é obrigatório.
                       </div>
                       <span class="focus-border"></span>
                       </select>
                     </div>
                     <div class="col-3">
-                      <select class="effect" [ngClass]="cssValidation(f.estadoCivil)" formControlName="estadoCivil" id="estadoCivil" (change)="changeCss('estadoCivil')">
+                      <select class="effect" [ngClass]="cssValidation(f.estadoCivilId)" formControlName="estadoCivilId" id="estadoCivilId" (change)="changeCss('estadoCivilId')">
                         <option disabled selected hidden value="">Estado Civil*</option>
                         <option *ngFor="let estadocivil of estadosCivil" ngValue="{{estadocivil.id}}">{{estadocivil.nome}}</option>
-                      <div class="invalid-tooltip" *ngIf="f.estadoCivil.errors?.required">
-                        Estado Civil é obrigatório.
-                      </div>
-                      <span class="focus-border"></span>
+                        <div class="invalid-tooltip" *ngIf="f.estadoCivilId.errors?.required">
+                          Estado Civil é obrigatório.
+                        </div>
+                        <span class="focus-border"></span>
                       </select>
                     </div>
                     <div class="col-3">
-                      <select class="effect" type="select" placeholder="" [ngClass]="cssValidation(f.sexo)" formControlName="sexo" id="sexo" (change)="changeCss('sexo')">
+                      <select class="effect" type="select" placeholder="" [ngClass]="cssValidation(f.sexoId)" formControlName="sexoId" id="sexoId" (change)="changeCss('sexoId')">
                         <option disabled selected hidden value="">Sexo*</option>
                         <option *ngFor="let sexo of sexos" ngValue="{{sexo.id}}">{{sexo.nome}}</option>
-                      <div class="invalid-tooltip" *ngIf="f.sexo.errors?.required">
-                        Sexo é obrigatório.
-                      </div>
-                      <span class="focus-border"></span>
+                        <div class="invalid-tooltip" *ngIf="f.sexoId.errors?.required">
+                          Sexo é obrigatório.
+                        </div>
+                        <span class="focus-border"></span>
                       </select>
                     </div>
-
                     <div class="col-1">
                       <div class="card card-informacao">
                         <div class="card-body">
@@ -127,7 +127,7 @@
                     </div>
                     <div class="col-1">
                     <div class="card rounded shadow-sm mt-4 ce">
-                      <div class="p-3">
+                      <div class="p-2">
                         <div class="d-flex border-bottom">
                           <h5 class="mr-auto">
                             Rede Social
@@ -139,32 +139,40 @@
                             <i class="fab fa-linkedin">&nbsp;</i>
                           </h5>
                         </div>
-                        <div class="form-row p-1">
-                          <div class="col">
+                        <div class="form-row">
+                          <div [formGroup]="form" class="col">
                             <div formArrayName="redesSociais" *ngFor="let redeSocial of redesSociais.controls; let i=index">
-                              <fieldset class="form-group">
-                              <div class="row">
-                                <div class="col-3">
-                                  <select class="effect">
-                                    <option disabled selected hidden value="">Rede Social*</option>
-                                    <option *ngFor="let tipoRedeSocial of tiposRedesSociais" value="{{tipoRedeSocial.id}}">{{tipoRedeSocial.descricao}}</option>
-                                  <div class="invalid-tooltip" *ngIf="f.tiporedesocial.errors?.required">
-                                    Tipo de Rede Social é obrigatório.
-                                  </div>
+                              <fieldset [formGroupName]="i" class="form-group">
+                                <div class="row">
+                                  <div class="col-3">
+                                    <select class="effect" formControlName="tipoRedeSocialId" [ngClass]="cssValidation(redesSociais.get(i+'.tipoRedeSocialId'))">
+                                      <option disabled selected hidden value="">Rede Social*</option>
+                                      <option *ngFor="let tipoRedeSocial of tiposRedesSociais" value="{{tipoRedeSocial.id}}">{{tipoRedeSocial.descricao}}</option>
+                                      <span class="focus-border"></span>
+                                    </select>
+                                    <div class="invalid-tooltip" *ngIf="f.redesSociais.get(i+'.tipoRedeSocialId').errors?.required">
+                                      Tipo de Rede Social é obrigatório.
+                                    </div>
                                     <span class="focus-border"></span>
-                                  </select>
-                                  <!-- <input formControlName="tipoRedeSocialId"class="effect" type="text" placeholder="Rede Social" [ngClass]="cssValidation(f.rg)" maxlength="12"> -->
+                                  </div>
+                                  <div class="col-3">
+                                    <input class="effect" type="text" placeholder="Endereço" formControlName="endereco" [ngClass]="cssValidation(redesSociais.get(i+'.endereco'))" maxlength="150">
+                                    <div class="invalid-tooltip" *ngIf="f.redesSociais.get(i+'.endereco').errors?.required">
+                                      Endereço de Rede Social é obrigatório.
+                                    </div>
+                                    <span class="focus-border"></span>
+                                  </div>
+                                  <div class="col-3">
+                                    <button class="btn btn-sm btn-danger mb-1 d-flex" (click)="openModal(template, i)">
+                                      <i class="fa fa-window-close my-1"></i>
+                                      <b class="ml-1 d-none d-sm-block">&nbsp;Excluir</b>
+                                    </button>
+                                    <!-- <button class="p-2 btn btn-sm btn-danger mb-1 d-flex float-end" (click)="openModal(template, i)">
+                                      <i class="fa fa-window-close my-1"></i>
+                                      <b class="ml-1 d-none d-sm-block">&nbsp;Excluir</b>
+                                    </button> -->
+                                  </div>
                                 </div>
-                                <div class="col-3">
-                                  <input class="effect" type="text" placeholder="Endereço" [ngClass]="cssValidation(f.rg)" maxlength="150">
-                                </div>
-                                <div class="col-3">
-                                  <button class="p-2 btn btn-sm btn-danger mb-1 d-flex" (click)="openModal(template, i)">
-                                    <i class="fa fa-trash my-1"></i>
-                                    <!--<b class="ml-2 d-none d-sm-block">Excluir</b>-->
-                                  </button>
-                                </div>
-                              </div>
                             </fieldset>
                           </div>
                         </div>
@@ -178,7 +186,6 @@
                     </div>
                   </div>
                   </div>
-
                   </form>
                   <div class="row nowrap">
                     <div class="col div-btn-custom">

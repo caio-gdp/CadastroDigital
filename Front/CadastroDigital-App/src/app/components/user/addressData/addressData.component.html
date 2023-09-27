@@ -1,7 +1,7 @@
 <div class="row">
-  <!-- testar validação de formulario e reativo
+   testar validação de formulario e reativo
         <p>Form value : {{form.value | json}}</p>
-        <p>Form valid : {{form.status | json}}</p> -->
+        <p>Form valid : {{form.status | json}}</p>
     <div class="col-sm-20">
       <div class="container">
         <div class="col-lg-60 mt-4">
@@ -82,17 +82,17 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3 input-effect">
-                      <input readonly class="effect" type="text" placeholder="Cidade*" formControlName="cidade"
-                      [ngClass]="cssValidation(f.cidade)" ngModel="{{endereco.localidade}}">
-                      <div class="invalid-tooltip" *ngIf="f.cidade.errors?.required">
+                      <input readonly class="effect" type="text" placeholder="Cidade*" formControlName="localidade"
+                      [ngClass]="cssValidation(f.localidade)" ngModel="{{endereco.localidade}}">
+                      <div class="invalid-tooltip" *ngIf="f.localidade.errors?.required">
                         Cidade é obrigatório.
                       </div>
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3 input-effect">
-                      <input readonly class="effect" type="text" placeholder="Estado*" formControlName="estado"
-                      [ngClass]="cssValidation(f.estado)" ngModel="{{endereco.uf}}">
-                      <div class="invalid-tooltip" *ngIf="f.estado.errors?.required">
+                      <input readonly class="effect" type="text" placeholder="Estado*" formControlName="uf"
+                      [ngClass]="cssValidation(f.uf)" ngModel="{{endereco.uf}}">
+                      <div class="invalid-tooltip" *ngIf="f.uf.errors?.required">
                         Estado é obrigatório.
                       </div>
                       <span class="focus-border"></span>
@@ -101,19 +101,17 @@
                       <div class="form-group col">
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col div-btn-custom">
-                        <button class="btn btn-danger btn-custom" routerLink="dashboard">
-                          Cancelar
-                        </button>
-                      </div>
-                      <div class="col div-btn-custom">
-                        <button class="btn btn-success btn-custom" (click)="saveChange()" [disabled]="!form.valid">
-                          Avançar
-                        </button>
-                      </div>
-                    </div>
                   </form>
+                  <div class="row">
+                    <div class="col div-btn-custom">
+                      <button class="btn btn-danger btn-custom" routerLink="dashboard">
+                        Cancelar
+                      </button>
+                      <button class="btn btn-success btn-custom float-end" (click)="saveChange()" [disabled]="!form.valid">
+                        Avançar
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 </div>
               </div>

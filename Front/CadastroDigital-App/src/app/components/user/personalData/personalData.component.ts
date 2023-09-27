@@ -22,6 +22,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PessoaFisica } from '@app/models/PessoaFisica';
 import { PessoaService } from '@app/services/pessoa.service';
 import { HttpEvent } from '@angular/common/http';
+import { PessoaFisicaService } from '@app/services/pessoafisica.service';
+import { GenericValidator } from '@app/validators/GenericValidator';
 
 @Component({
   selector: 'app-personalData',
@@ -31,14 +33,14 @@ import { HttpEvent } from '@angular/common/http';
 export class PersonalDataComponent implements OnInit {
 
   pessoaFisica = {} as PessoaFisica;
-  public orgaosExpedidores: OrgaoExpedidor[] = [];
-  public estados: Estado[] = [];
-  public cidades: Cidade[] = [];
-  public pais : Pais;
-  public estadosCivil: EstadoCivil[] = [];
-  public sexos: Sexo[] = [];
-  public tiposRedesSociais: TipoRedeSocial[] = [];
-  i : number;
+  orgaosExpedidores: OrgaoExpedidor[] = [];
+  estados: Estado[] = [];
+  cidades: Cidade[] = [];
+  pais : Pais;
+  estadosCivil: EstadoCivil[] = [];
+  sexos: Sexo[] = [];
+  tiposRedesSociais: TipoRedeSocial[] = [];
+  index : number;
 
   form!: FormGroup;
 
@@ -50,8 +52,8 @@ export class PersonalDataComponent implements OnInit {
     return this.form.get('redesSociais') as FormArray;
   }
 
-  constructor(public fb : FormBuilder,
-    private pessoaService : PessoaService,
+  constructor(private fb : FormBuilder,
+    private pessoaFisicaService : PessoaFisicaService,
     private orgaoExpedidorService: OrgaoExpedidorService,
     private estadoService: EstadoService,
     private cidadeService: CidadeService,
@@ -73,31 +75,29 @@ export class PersonalDataComponent implements OnInit {
     this.getTipoRedeSocial();
   }
 
-  public cssValidation(filedForm: FormControl | AbstractControl): any {
-    return {'is-invalid': filedForm.errors && filedForm.touched};
+  cssValidation(filedForm: FormControl | AbstractControl | null): any {
+    return {'is-invalid': filedForm?.errors && filedForm?.touched};
   }
 
   private validation() : void{
     this.form = this.fb.group({
       rg : ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
       dataEmissao : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), this.checkDate]],
-      orgaoExpedidor : ['', [Validators.required]],
-      ufExpedidor : ['', [Validators.required]],
-      naturalidade : ['', [Validators.required]],
-      nacionalidade : ['', [Validators.required]],
-      estadoCivil : ['', [Validators.required]],
-      sexo : ['', [Validators.required]],
+      orgaoExpedidorId : ['' , [Validators.required]],
+      ufExpedidorId : ['', [Validators.required]],
+      naturalidadeId : ['', [Validators.required]],
+      nacionalidadeId : ['', [Validators.required]],
+      estadoCivilId : ['', [Validators.required]],
+      sexoId : ['', [Validators.required]],
       redesSociais: this.fb.array([])
     });
   }
 
-  public checkDate(filedForm: FormControl | AbstractControl){
+  checkDate(filedForm: FormControl | AbstractControl){
 
     if (filedForm.value != ""){
       const dateEmissao = new Date(filedForm.value);
       const dateAtual = new Date();
-
-      console.log(dateEmissao + '-' + dateAtual)
 
          if (dateEmissao > dateAtual)
            return { invalidDate: true } ;
@@ -109,12 +109,12 @@ export class PersonalDataComponent implements OnInit {
     this.redesSociais.push(this.criarRedeSocial({id: 0} as RedeSocial));
   }
 
-  criarRedeSocial(redeSocial : RedeSocial): FormGroup {
+  criarRedeSocial(redeSocial : RedeSocial): FormGroup | null {
     return this.fb.group({
       id: [redeSocial.id],
-      pessoaId: [redeSocial.pessoaId],
-      tipoRedeSocialId: [redeSocial.tipoRedeSocialId],
-      endereco: [redeSocial.endereco]
+      pessoaId: [redeSocial.pessoaFisicaId],
+      tipoRedeSocialId: [redeSocial.tipoRedeSocialId, Validators.required],
+      endereco: [redeSocial.endereco, Validators.required]
     })
   }
 
@@ -132,7 +132,7 @@ export class PersonalDataComponent implements OnInit {
     };
   }
 
- public getOrgaoExpedidor() : void{
+ getOrgaoExpedidor() : void{
   const observer = {
     next : (_orgaosExpedidores : OrgaoExpedidor[]) => {
         this.orgaosExpedidores = _orgaosExpedidores;
@@ -147,7 +147,7 @@ export class PersonalDataComponent implements OnInit {
   this.orgaoExpedidorService.get().subscribe(observer);
 }
 
-public getEstado() : void{
+getEstado() : void{
 
   const observer = {
     next : (_estados : Estado[]) => {
@@ -164,9 +164,9 @@ public getEstado() : void{
   this.estadoService.get().subscribe(observer);
 }
 
-public getCidade() : void{
+getCidade() : void{
 
-  var obj = (<HTMLSelectElement>document.getElementById("ufExpedidor"));
+  var obj = (<HTMLSelectElement>document.getElementById("ufExpedidorId"));
   var estado : number = +(<HTMLOptionElement>obj[obj.options.selectedIndex]).value;
 
    const observer = {
@@ -180,12 +180,12 @@ public getCidade() : void{
      },
      // complete : () => this.spinner.hide()
    };
-  this.cidadeService.get(estado).subscribe(observer);
+  this.cidadeService.getByEstado(estado).subscribe(observer);
 
-  this.changeCss('ufExpedidor');
+  this.changeCss('ufExpedidorId');
 }
 
-public getPais(id : number) : void{
+getPais(id : number) : void{
    const observer = {
      next : (_pais : Pais) => {
          this.pais = _pais;
@@ -230,7 +230,7 @@ public getSexo() : void{
   this.sexoService.get().subscribe(observer);
 }
 
-public getTipoRedeSocial() : void{
+getTipoRedeSocial() : void{
 
   const observer = {
     next : (_tiposredessociais : TipoRedeSocial[]) => {
@@ -247,7 +247,7 @@ public getTipoRedeSocial() : void{
 }
 
 openModal(template: TemplateRef<any>, i : number) : void {
-  this.i = i;
+  this.index = i;
   this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
 }
 
@@ -261,7 +261,7 @@ confirm(): void {
   this.modalRef?.hide();
   this.spinner.show();
 
-  this.removerRedeSocial(this.i)
+  this.removerRedeSocial(this.index)
 
   this.spinner.hide();
 }
@@ -277,52 +277,23 @@ decline(): void {
   if (this.form.valid){
 
     this.pessoaFisica = {...this.form.value};
+    this.pessoaFisica.orgaoExpedidorId = Number(this.pessoaFisica.orgaoExpedidorId);
+    this.pessoaFisica.ufExpedidorId = Number(this.pessoaFisica.ufExpedidorId);
+    this.pessoaFisica.naturalidadeId = Number(this.pessoaFisica.naturalidadeId);
+    this.pessoaFisica.nacionalidadeId = Number(this.pessoaFisica.nacionalidadeId);
+    this.pessoaFisica.estadoCivilId = Number(this.pessoaFisica.estadoCivilId);
+    this.pessoaFisica.sexoId = Number(this.pessoaFisica.sexoId);
 
-//     this.pessoa = {
-//       id: 0,
-//       dataCadastro: new Date().toISOString().slice(0,10),
-//       dataAtualizacao: new Date().toISOString().slice(0,10),
-//       codigoValidacao: 1234,
-//       dataHoraCodigoValidacao: new Date().toISOString().slice(0,10),
-//       senha: this.form.get('senha')?.value,
-//       confirmaSenha: this.form.get('confirmaSenha')?.value,
-//       statusCadastroId: 1,
-//       notificacao: false,
-//       tipoPessoaId: 2,
-//       pessoaFisica: {
-//         id: 0,
-//         cpf: this.form.get('cpf')?.value,
-//         dataNascimento: this.form.get('dataNascimento')?.value,
-//         nome: this.form.get('nome')?.value,
-//         imagem: 'imagem4.jpg',
-//         pessoaId: 0,
-//         sexoId: 1,
-//         estadoCivilId: 1
-//       },
-//       telefone: {
-//         id: 0,
-//         tipoTelefoneId: 2,
-//         ddd: this.form.get('celular')?.value.substring(0,2),
-//         numero: this.form.get('celular')?.value.substring(3),
-//         principal: true,
-//         valido: true,
-//         pessoaId: 0
-//       },
-//       email: {
-//         id: 0,
-//         pessoaId: 0,
-//         tipoEmailId: 1,
-//         endereco: this.form.get('email')?.value,
-//         principal: true,
-//         valido: true
-//       }
-//     }
 
-    this.pessoaFisica.idUser = 6
+    if (this.pessoaFisica.redeSocial != undefined)
+      this.pessoaFisica.redeSocial.tipoRedeSocialId = Number(this.pessoaFisica.redeSocial.tipoRedeSocialId);
+
+
+    this.pessoaFisica.idUser = 1
 
     console.log(this.pessoaFisica)
 
-     this.pessoaService.post(this.pessoaFisica).subscribe({
+     this.pessoaFisicaService.post(this.pessoaFisica).subscribe({
        next: (pessoa: PessoaFisica) => {
          this.toastr.success('Registro salvo com sucesso.', 'Sucesso')},
        error: (error: any) => {
@@ -335,7 +306,5 @@ decline(): void {
 //     this.toastr.error('Preencha os campos obrigatórios.', 'Atenção!')
 //   }
 // }
-
  }
-
 }

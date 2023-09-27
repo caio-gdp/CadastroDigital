@@ -27,11 +27,18 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .IsUnique(false)
             .HasDatabaseName("idx_pessoafisica_estadocivil");
 
+            builder.HasIndex(i => i.OrgaoExpedidorId)
+            .IsUnique(false)
+            .HasDatabaseName("idx_pessoafisica_orgaoexpedidor");
+
+            builder.HasIndex(i => i.UfExpedidorId)
+            .IsUnique(false)
+            .HasDatabaseName("idx_pessoafisica_ufexpedidor");
+
             builder.HasIndex(i => i.NaturalidadeId)
             .IsUnique(false)
             .HasDatabaseName("idx_pessoafisica_naturalidade");
 
-          
             //Foreign Key
             builder.HasOne(f => f.User)
             .WithOne(f => f.PessoaFisica)
@@ -43,11 +50,6 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasForeignKey<PessoaFisica>(f => f.OrgaoExpedidorId)
             .HasConstraintName("fk_pessoafisica_orgaoexpedidor");
 
-            builder.HasOne(f => f.Estado)
-            .WithOne(f => f.PessoaFisica)
-            .HasForeignKey<PessoaFisica>(f => f.UfId)
-            .HasConstraintName("fk_pessoafisica_uf");
-
             builder.HasOne(f => f.Sexo)
             .WithOne(f => f.PessoaFisica)
             .HasForeignKey<PessoaFisica>(f => f.SexoId)
@@ -58,29 +60,21 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasForeignKey<PessoaFisica>(f => f.EstadoCivilId)
             .HasConstraintName("fk_pessoafisica_estadocivil");
 
-            builder.HasOne(f => f.EstadoCivil)
-            .WithOne(f => f.PessoaFisica)
-            .HasForeignKey<PessoaFisica>(f => f.EstadoCivilId)
-            .HasConstraintName("fk_pessoafisica_estadocivil");
-
-            builder.HasOne(f => f.Cidade)
+            builder.HasOne(f => f.Naturalidade)
             .WithOne(f => f.PessoaFisica)
             .HasForeignKey<PessoaFisica>(f => f.NaturalidadeId)
             .HasConstraintName("fk_pessoafisica_naturalidade");
+
+            builder.HasOne(f => f.UfExpedidor)
+            .WithOne(f => f.PessoaFisica)
+            .HasForeignKey<PessoaFisica>(f => f.UfExpedidorId)
+            .HasConstraintName("fk_pessoafisica_ufexpedidor")
+            .OnDelete(DeleteBehavior.Restrict);
 
             //Atributos
             builder.Property(f => f.Id)
             .HasColumnName("Id")
             .ValueGeneratedOnAdd()
-            .IsRequired();
-
-            builder.Property(f => f.Nome)
-            .HasColumnName("Nome")
-            .HasMaxLength(200)
-            .IsRequired();
-
-            builder.Property(f => f.DataNascimento)
-            .HasColumnName("DataNascimento")
             .IsRequired();
 
             builder.Property(f => f.Rg)
@@ -97,8 +91,8 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .ValueGeneratedNever()
             .IsRequired();
 
-            builder.Property(f => f.UfId)
-            .HasColumnName("UfId")
+            builder.Property(f => f.UfExpedidorId)
+            .HasColumnName("UfExpedidorId")
             .ValueGeneratedNever()
             .IsRequired();
 
