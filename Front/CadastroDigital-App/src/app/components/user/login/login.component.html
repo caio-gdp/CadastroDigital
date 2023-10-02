@@ -1,22 +1,139 @@
 <nav class="navbar navbar-light">
-  <form class="form-inline" #loginform="ngForm" *ngIf="currentUser != 'undefined'">
-    <a href="user/registration">Cadastre-se</a>
-    <input [(ngModel)]="model.userId" type="text" name="userId" id="userId" autofocus="autofocus" placeholder="Login">
-    <input [(ngModel)]="model.passwordHash" type="password" name="passwordHash" id="passwordHash" placeholder="Senha">
-    <input type="submit" name="login" id="login" value="Login" [disabled]="loginform.invalid" (click)="login()">
-    <a href="#">Esqueci minha senha</a>
-  </form>
+  <div *ngIf="(accountService.currentUser$ | async) == null">
+    <form #loginform="ngForm" class="form-inline">
+      <a href="user/registration">Cadastre-se</a>
+      <input [(ngModel)]="model.userId" type="text" id="userId" name="userId" autofocus="autofocus" placeholder="Login" required>
+      <input [(ngModel)]="model.passwordHash" type="password" id="passwordHash" name="passwordHash" placeholder="Senha" required>
+      <button type="submit" [disabled]="loginform.invalid" (click)="login()">Enviar</button>
+      <a href="#">Esqueci minha senha</a>
+    </form>
+  </div>
+  <div class="logged" *ngIf="(accountService.currentUser$ | async) != null">
+    <ul >
+      <li class="nav-item dropdown" dropdown *ngIf="(accountService.currentUser$ | async) as user">
+        <img src="assets/imagem1.jpg">
+        <i class="fa fa-bell" ></i>
+        <a dropdownToggle class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{user.name | titlecase}}
+        </a>
+        <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" routerLink="user/registration">
+          <a class="dropdown-item">
+            Atendimentos
+          </a>
+          <a class="dropdown-item">
+            Processos
+          </a>
+          <a class="dropdown-item">
+            Registro
+          </a>
+          <div role="separator" class="divider"></div>
+          <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
+            Sair
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- <div *ngIf="(accountService.currentUser$ | async) != null">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown" dropdown *ngIf="(accountService.currentUser$ | async) as user">
+        <i class="fa fa-bell" ></i>
+        <a dropdownToggle class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{user.name | titlecase}}
+        </a>
+        <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" routerLink="user/registration">
+          <a class="dropdown-item">
+            Registro
+          </a>
+          <div role="separator" class="divider"></div>
+          <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
+            Sair
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div> -->
+
+  <!-- <ul class="navbar">
+    <li class="nav-item dropdown" dropdown>
+      <i class="fa fa-bell" ></i>
+      <a class="nav-link dropdown-toggle" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" dropdownToggle>
+        Link
+      </a>
+      <ul class="dropdown-menu" *dropdownMenu aria-labelledby="navbarScrollingDropdown">
+        <li ngbDropdownItem><a class="dropdown-item" href="#">Action</a></li>
+        <li ngbDropdownItem><a class="dropdown-item" href="#">Another action</a></li>
+        <li ngbDropdownItem><hr class="dropdown-divider"></li>
+        <li ngbDropdownItem><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </li>
+  </ul> -->
+
+
+
+
+
+
+  <!-- <div class="btn-group">
+    <button type="button" class="btn btn-info">Ação</button>
+    <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Alguma ação</a>
+      <a class="dropdown-item" href="#">Outra ação</a>
+      <a class="dropdown-item" href="#">Alguma coisa aqui</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Link separado</a>
+    </div>
+  </div> -->
+
+
+
+
+  <!-- <div class="d-flex">
+    <div class="dropdown mr-1">
+      <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">
+        Offset
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+        <a class="dropdown-item" href="#">Alguma ação</a>
+        <a class="dropdown-item" href="#">Outra ação</a>
+        <a class="dropdown-item" href="#">Alguma coisa aqui</a>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary">Referência</button>
+      <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+        <span class="sr-only">Dropdown</span>
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+        <a class="dropdown-item" href="#">Alguma ação</a>
+        <a class="dropdown-item" href="#">Outra ação</a>
+        <a class="dropdown-item" href="#">Alguma coisa aqui</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Link separado</a>
+      </div>
+    </div>
+  </div> -->
+
+
+
+  <!-- <div  class="header" id="banner"></div> -->
+  <!-- <div class="header" id="navbar">
+    <div class="nb_item">Alexandre
+        <ul id="rgstr_menu">
+            <li>INDIVIDUAL</li>
+            <li>DELEGATION</li>
+        </ul>
+    </div>
+  </div> -->
+
+
 </nav>
 
-    <!-- <form #loginform="ngForm">
-      <ul [hidden]="loged">
-        <li><a href="user/registration">Cadastre-se</a></li>
-        <li><input [(ngModel)]="model.userName" type="text" name="userName" id="userName" autofocus="autofocus" placeholder="Login"></li>
-        <li><input [(ngModel)]="model.passwordHash" type="password" name="passwordHash" id="passwordHash" placeholder="Senha"></li>
-        <li><input type="submit" name="login" id="login" value="Login" [disabled]="loginform.invalid" (click)="login()"></li>
-        <li><a href="#">Esqueci minha senha</a></li>
-      </ul>
-    </form> -->
 
 
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControlName, FormGroup } from '@angular/forms';
 import { enableDebugTools } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -14,22 +14,20 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  model = new UserLogin();
-  loged = false;
+  model = {} as UserLogin;
   currentUser : any;
 
-  //form!: FormGroup;
-
-  constructor(private accountService : AccountService,
-              private pessoaService : PessoaService,
+  constructor(public accountService : AccountService,
               private toastr: ToastrService,
               private spinner: NgxSpinnerService,
               private router: Router){
                 this.currentUser = accountService.currentUser$;
-
               }
+
+  ngOnInit() : void{
+  }
 
   public login() : void{
 
@@ -37,44 +35,22 @@ export class LoginComponent {
 
     this.accountService.login(this.model).subscribe({
       next: () => {
-        //this.toastr.success('Registro salvo com sucesso.', 'Sucesso')
-        this.loged = true
-        //this.router.navigate([`dashboard`]);
-        this.router.navigate([`user/registration`]);
+        this.toastr.success('Login efetuado com sucesso.', 'Sucesso');
+        this.router.navigateByUrl('dashboard');
       },
       error: (error: any) => {
         console.log(error);
         console.error(error);
         if (error.status == 401)
           this.toastr.error("Usuário ou senha inválido")
+        else
+          this.toastr.error("Erro ao tentar efetuar login")
       },
     }).add(() => this.spinner.hide());
-
-  //   this.accountService.login(this.model).subscribe({
-  //     next: (user : UserLogin)  => {this.router.navigateByUrl('/dashboard'); },
-  //     error : (error: any) => {
-  //       if (error.status == 401){alert(error.status);
-  //         this.toastr.error("Usuário ou senha inválido");}
-
-  //       else
-  //         console.error(error);
-  //     },
-  // });
-
-     //if (this.form.valid){
-      // this.pessoaService.getPessoaByCpf(this.form.controls.login.value).subscribe({
-      //   next: (pessoa: Pessoa) => {
-      //     // this.toastr.success('Registro salvo com sucesso.', 'Sucesso')
-      //     // this.toastr.info('Efetue o login para concluir o cadastro', 'Informação', {extendedTimeOut: 1000})
-      //     this.router.navigate([`registration`]);
-      //   },
-      //   error: (error: any) => {
-      //     console.log(error);
-      //     console.error(error);
-      //     this.toastr.error('Login inválido.', 'Erro!')
-      //   },
-      // }).add(() => this.spinner.hide());
-    //}
   }
 
+  public logout() : void{
+    this.accountService.logout();
+    window.location.reload();
+  }
 }

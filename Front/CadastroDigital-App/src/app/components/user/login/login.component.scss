@@ -1,49 +1,51 @@
-nav{
-  //border: 1px solid;
-  width: auto;
-}
-.container{
-  //position: relative;
-  //background: lightgray;
-  //border: 1px solid;
-  //left: 65%;
-  width: 60%;
+// // nav{
+// //   width: auto;
+// //   //position: relative;
+// // }
+
+.logged{
+  text-align: center;
 }
 
-ul {
-  position: absolute;
-  background: orange;
-  width: 95%;
-  margin-top: 3%;
-  margin-left: 65%;
- white-space: nowrap;
-  left: 100px;
-
+div{
+  padding-right: 15px;
 }
 
 ul{
-  //border: 1px solid;
-  display: flex;
-  flex-wrap: no-wrap;
-  margin-top: 3%;
+  margin: auto;
+  padding-right: 20px;
+  list-style-type: none;
+  //position: relative;
+
+  //display: block;
 }
 
-ul li {
+li a{
   display: inline-block;
-  margin-right: 3px;
+  //margin-right: 3px;
   white-space: nowrap;
+  font-size: .95em;
+  margin: 0 10px;
+
 }
 
-li a:link,
-li a:visited {
+img{
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+a:link,
+a:visited {
   color: #2c3e50;
   text-decoration: none;
   border-bottom: 3px solid transparent;
   transition: border-bottom 0.4s;
 }
 
-li a:hover,
-li a:active {
+a:hover,
+a:active {
   border-bottom: 3px solid #27ae60;
 }
 
@@ -71,21 +73,47 @@ input[type="password"]:focus {
   box-shadow: 0 0 2px #27ae60;
 }
 
-input[type="submit"] {
-  height: 28px;
-  width: 80px;
-  background-color: #27ae60;
-  border: 1px solid #27ae60;
-  border-radius: 5px;
-  font-size: .9em;
-  color: #f9fefd;
-  margin-right: 5px;
+form:valid{
+  button{
+    height: 28px;
+    width: 80px;
+    background-color: #27ae60;
+    border: 1px solid #27ae60;
+    border-radius: 5px;
+    font-size: .9em;
+    color: #f9fefd;
+    margin-right: 5px;
+  }
+  button:hover,
+  button:focus {
+  cursor: pointer;
+    background-color: #10715e;
+    outline: none;
+  }
 }
 
-input[type="submit"]:hover,
-input[type="submit"]:focus {
-  cursor: pointer;
-  background-color: #10715e;
-  outline: none;
+form:invalid{
+  button{
+    height: 28px;
+    width: 80px;
+    background-color: #bebebe;
+    border: 1px solid #bebebe;
+    border-radius: 5px;
+    font-size: .9em;
+    color: #f9fefd;
+    margin-right: 5px;
+    cursor: not-allowed;
+  }
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus
+{
+  //border: 1px solid white;
+  -webkit-text-fill-color: 333 !important;          /* Cor do texto do autocomplete */
+  -webkit-box-shadow: 0 0 0px 1000px white inset; /* Cor de fundo do autocomplete */
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 

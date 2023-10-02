@@ -1,13 +1,15 @@
 
 <!-- <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm"> -->
-<nav class="navbar bg-white">
-  <div class="container">
-    <a class="" routerLink="dashboard">
-      <img id="logo" src="../assets/logo_sindest.png" alt=""/>
-    </a>
-    <app-login visible="true"></app-login>
+
+  <div>
+    <nav class="navbar bg-white">
+      <a routerLink="dashboard">
+        <img id="logo" src="../assets/logo_sindest.png" alt=""/>
+      </a>
+      <app-login visible="true"></app-login>
+    </nav>
   </div>
-</nav>
+
 
 <!--Header start-->
 <header class="header">
@@ -61,7 +63,7 @@
       <nav class="navbar navbar-expand-lg navbar-dark px-0 py-0">
         <!-- Time -->
         <div class="date-area d-none d-lg-block">
-          <time class="navbar-text me-4"  datetime="{{dataAtual}">{{dataAtual }}</time>
+          <time class="navbar-text me-4"  datetime="{{dataAtual}">{{dataAtual | dateTimeFormat : "d" }}</time>
         </div>
         <!--Top left menu-->
         <div>

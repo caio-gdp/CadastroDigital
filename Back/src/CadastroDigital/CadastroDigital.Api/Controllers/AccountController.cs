@@ -75,10 +75,21 @@ namespace CadastroDigital.Api.Controllers
                 
                 if (!result.Succeeded) return Unauthorized(); 
 
-                return Ok(new{
-                    userId = user.UserId,
-                    token = _tokenService.CreateToken(user).Result
-                });
+                UserDtoResponse userResponse = new UserDtoResponse{
+                    Id = user.Id,
+                    UserId = user.UserId,
+                    Token = _tokenService.CreateToken(user).Result,
+                    Name = user.Name,
+                    Noticia = user.Noticia,
+                    TipoPessoa = user.TipoPessoa,
+                    PassoCadastroId = user.PassoCadastroId,
+                    StatusCadastroId = user.StatusCadastroId,
+                    DateOfBirth = user.DateOfBirth,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber
+                };
+
+                return Ok(userResponse);
             }
             catch(Exception ex){
                  return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar efetuar login. Erro: {ex.Message}");

@@ -1,5 +1,5 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, CheckboxRequiredValidator, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatorField } from '@app/helpers/ValidatorField';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -12,6 +12,9 @@ import { PaisService } from '@app/services/Pais.service';
 import { User } from '@app/models/Identity/User';
 import { AccountService } from '@app/services/account.service';
 import { GenericValidator } from '@app/validators/GenericValidator';
+import { UserLogin } from '@app/models/Identity/UserLogin';
+import { Observable } from 'rxjs';
+import { DateTimeFormatPipe } from '@app/helpers/DateTimeFormat.pipe';
 
 @Component({
   selector: 'app-registration',
@@ -25,22 +28,52 @@ export class RegistrationComponent implements OnInit {
   tokenVisible: boolean = false;
   reCAPTCHAToken: string = '';
   teste = false;
+  model = {} as UserLogin;
+  currentUser : any;
 
   get f() : any{
     return this.form.controls;
   }
 
   constructor(private fb : FormBuilder,
-    private accountService : AccountService,
+    public accountService : AccountService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private recaptchaV3Service: ReCaptchaV3Service,
     //private ngZone: NgZone,
     private router: Router
-    ){}
+    ){
+        this.currentUser = accountService.currentUser$;
+    }
 
   ngOnInit() : void {
     this.validation();
+    //Depois da validação preencher os campos
+    this.fillField();
+
+  }
+
+  fillField(){
+    var jsonUser: any;
+    jsonUser = localStorage.getItem('user');
+    this.user = JSON.parse(jsonUser);
+
+    if (this.user != null){
+      var cpf = <HTMLInputElement>document.getElementById("userId");
+      this.f.userId.hidden;
+      this.f.userId.value = this.user.userId;
+      this.f.phoneNumber.value = this.user.phoneNumber;
+      //this.f.dateOfBirth.value = this.user.dateOfBirth | DateTimeFormatPipe;
+      this.f.name.value = this.user.name;
+      this.f.email.value = this.user.email;
+      this.f.confirmaEmail.value = this.user.email;
+      this.f.noticia.value = this.user.noticia;
+
+      alert(this.user.noticia)
+
+      var divpass = <HTMLDivElement>document.getElementById('divPass');
+      divpass.hidden = true;
+    }
   }
 
   bsConfig() : any{
@@ -61,6 +94,7 @@ export class RegistrationComponent implements OnInit {
     const formOptions : AbstractControlOptions = {
       validators : ValidatorField.MustMatch('passwordReg','confirmaPassword')
     }
+
     this.form = this.fb.group({
       userId : ['', [Validators.required, Validators.maxLength(14), this.checkCpf]],
       dateOfBirth : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), this.checkAge]],
@@ -87,6 +121,7 @@ export class RegistrationComponent implements OnInit {
             this.router.navigateByUrl('dashboard')
         },
         error: (error: any) => {
+            console.log(error)
             this.toastr.error(error.error)
         },
       }).add(() => this.spinner.hide())
@@ -270,14 +305,14 @@ export class RegistrationComponent implements OnInit {
     return null;
   }
 
-   public send(): void {
-     this.recaptchaV3Service.execute('importantAction')
-     .subscribe((token: string) => {
-      this.tokenVisible = true;
-       this.reCAPTCHAToken = `Token [${token}] generated`;
-      //  console.debug(`Token [${token}] generated`);
-     });
-   }
+  public send(): void {
+    this.recaptchaV3Service.execute('importantAction')
+    .subscribe((token: string) => {
+    this.tokenVisible = true;
+      this.reCAPTCHAToken = `Token [${token}] generated`;
+    //  console.debug(`Token [${token}] generated`);
+    });
+  }
 
    public checkEmail(filedForm: FormControl | AbstractControl){
 

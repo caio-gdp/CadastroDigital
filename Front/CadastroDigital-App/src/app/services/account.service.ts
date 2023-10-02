@@ -22,6 +22,8 @@ export class AccountService {
         const user = response;
 
         if (user){
+          var i = user.name.indexOf(' ');
+          user.name = user.name.substring(0,i)
           this.setCurrentUser(user)
         }
       })
@@ -29,6 +31,8 @@ export class AccountService {
   }
 
   public register(model: any) : Observable<User>{
+
+    alert(model)
 
     var user = {} as User;
 
@@ -39,12 +43,12 @@ export class AccountService {
     user.email = model.email;
     user.passwordHash = model.passwordReg;
     user.noticia = model.noticia = null ? false : true;
-    user.tipoPessoa = "F";
-    user.dataCadastro = new Date();
-    user.passoCadastroId = 1,
-    user.statusCadastroId = 3
+    // user.tipoPessoa = "F";
+    // user.dataCadastro = new Date();
+    // user.passoCadastroId = 1,
+    // user.statusCadastroId = 3
 
-     // return this.http.post<User>(this.baseUrl + 'register', model).pipe(
+    //  return this.http.post<User>(this.baseUrl + 'register', model).pipe(
     //   take(1),
     //   map((response: User) => {
     //     const user = response;
@@ -55,7 +59,7 @@ export class AccountService {
     //   })
     // );
 
-    return this.http.post<User>(this.baseUrl + 'register', user).pipe(take(1));
+    return this.http.post<User>(this.baseUrl + 'register', model).pipe(take(1));
 
   }
 

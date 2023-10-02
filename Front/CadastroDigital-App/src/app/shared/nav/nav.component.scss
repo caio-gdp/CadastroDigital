@@ -1,17 +1,18 @@
+
 #logo {
-  width: auto;
+  //width: auto;
   height: 60px;
   display: inline-block;
   white-space: nowrap;
+  margin-left: 10px;
 }
 
 .container{
-  //border: 1px solid;
   display: inline-block;
   white-space: nowrap;
-  display: flex;
+  //display: flex;
   flex-wrap: no-wrap;
-  min-width: 80%;
+  width: 100%;
 }
 
 /* i {
@@ -65,34 +66,34 @@ form {
 
 /* SEARCH */
 
-input[type="text"] {
-  height: 2em;
-  width: 200px;
-  margin-right: 5px;
-  padding: 1em .5em 1.2em 1em;
-  border: 1px solid #d6d6d6;
-  border-radius: 5px;
-  font-size: .75em;
-  transition: border 0.2s;
-}
+// input[type="text"] {
+//   height: 2em;
+//   width: 200px;
+//   margin-right: 5px;
+//   padding: 1em .5em 1.2em 1em;
+//   border: 1px solid #d6d6d6;
+//   border-radius: 5px;
+//   font-size: .75em;
+//   transition: border 0.2s;
+// }
 
-input[type="text"]:hover,
-input[type="password"]:hover {
-  border: 1px solid #27ae60;
-}
+// input[type="text"]:hover,
+// input[type="password"]:hover {
+//   border: 1px solid #27ae60;
+// }
 
-input[type="text"]:focus {
-  outline: none;
-  border: 1px solid #27ae60;
-  box-shadow: 0 0 2px #27ae60;
-}
+// input[type="text"]:focus {
+//   outline: none;
+//   border: 1px solid #27ae60;
+//   box-shadow: 0 0 2px #27ae60;
+// }
 
-input[type="submit"]:hover,
-input[type="submit"]:focus {
-  cursor: pointer;
-  background-color: #10715e;
-  outline: none;
-}
+// input[type="submit"]:hover,
+// input[type="submit"]:focus {
+//   cursor: pointer;
+//   background-color: #10715e;
+//   outline: none;
+// }
 
 /* header {
   top: 0;
@@ -102,8 +103,6 @@ input[type="submit"]:focus {
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.1);
 }*/
-
-
 
 nav div {
   margin: 0 5px 0 5px;
@@ -120,20 +119,20 @@ nav ul li {
 
 }
 
-nav form {
-  display: inline-block;
-  margin: 0 5px 0 5px;
-}
+// nav form {
+//   display: inline-block;
+//   margin: 0 5px 0 5px;
+// }
 
-nav li a#active-page {
-  border-bottom: 3px solid #27ae60;
-}
+// nav li a#active-page {
+//   border-bottom: 3px solid #27ae60;
+// }
 
 /* nav bar link styles */
- nav li a:hover,
-nav li a:active {
-  border-bottom: 3px solid #27ae60;
-}
+//  nav li a:hover,
+// nav li a:active {
+//   border-bottom: 3px solid #27ae60;
+// }
 
 
 nav li a:link,

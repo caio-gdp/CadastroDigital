@@ -2,6 +2,7 @@
 <!-- testar validação de formulario e reativo
       <p>Form value : {{form.value | json}}</p>
       <p>Form valid : {{form.status | json}}</p> -->
+
   <div class="col-sm-20">
     <div class="container">
       <div class="col-lg-60 mt-4">
@@ -29,8 +30,8 @@
                 <form [formGroup]="form">
                   <!-- <h2>Input with Label Effects</h2> -->
                   <div class="col-3">
-                    <input class="effect" type="text" [ngClass]="cssValidation(f.userId)" formControlName="userId"
-                    placeholder="CPF*" maxlength="14" mask="000.000.000-00" (keypress)="onlyNumbers($event)">
+                    <input class="effect" type="text" [ngClass]="cssValidation(f.userId)" formControlName="userId" id="userId"
+                      placeholder="CPF*" maxlength="14" mask="000.000.000-00" (keypress)="onlyNumbers($event)">
                     <div class="invalid-tooltip" *ngIf="f.userId.errors?.required">
                       CPF é obrigatório.
                     </div>
@@ -109,57 +110,58 @@
                     </div>
                     <span class="focus-border"></span>
                   </div>
-                  <div class="p-4">
-                    <div class="card card-informacao">
-                      <div class="card-body">
-                        <h5 class="card-title"><b>Informação</b></h5>
-                        <p class="card-text">O CPF informado e a senha que você vai criar abaixo serão utilizados para acessar seu cadastro no SINDEST.</p>
+                  <div id="divPass">
+                    <div class="p-4">
+                      <div class="card card-informacao">
+                        <div class="card-body">
+                          <h5 class="card-title"><b>Informação</b></h5>
+                          <p class="card-text">O CPF informado e a senha que você vai criar abaixo serão utilizados para acessar seu cadastro no SINDEST.</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <input type="hidden" id="teste" value="{{teste}}">
-                  <div class="col-2">
-                    <input class="effect" type="password" [ngClass]="cssValidation(f.passwordReg)"
-                      formControlName="passwordReg" id="passwordReg" placeholder="Senha*" maxlength="15">
-                    <span class="fa fa-eye eye-pwd float-end" (click)="viewPassword('passwordReg','spanviewsenha',1)" id="spanviewsenha"></span>
-                    <div class="invalid-tooltip" *ngIf="f.passwordReg.errors?.required">
-                      Senha é obrigatório.
+                    <div class="col-2">
+                      <input class="effect" type="password" [ngClass]="cssValidation(f.passwordReg)"
+                        formControlName="passwordReg" id="passwordReg" placeholder="Senha*" maxlength="15">
+                      <span class="fa fa-eye eye-pwd float-end" (click)="viewPassword('passwordReg','spanviewsenha',1)" id="spanviewsenha"></span>
+                      <div class="invalid-tooltip" *ngIf="f.passwordReg.errors?.required">
+                        Senha é obrigatório.
+                      </div>
+                      <div class="invalid-tooltip" *ngIf="f.passwordReg.errors?.invalidPassword">
+                      </div>
+                      <span class="focus-border"></span>
                     </div>
-                    <div class="invalid-tooltip" *ngIf="f.passwordReg.errors?.invalidPassword">
+                    <div class="col-2">
+                      <input class="effect" type="password" [ngClass]="cssValidation(f.confirmaPassword)"
+                        formControlName="confirmaPassword" id="confirmaPassword" placeholder="Confirmar Senha*" maxlength="15">
+                        <span class="fa fa-eye eye-pwd float-end" (click)="viewPassword('confirmaPassword','spanviewconfirmasenha',2)" id="spanviewconfirmasenha"></span>
+                      <div class="invalid-tooltip" *ngIf="f.confirmaPassword.errors?.required">
+                        Confirmar Senha é obrigatório.
+                      </div>
+                      <div class="invalid-tooltip" *ngIf="f.confirmaPassword.errors?.invalidCheckConfirmedPassword">
+                        As senhas não coincidem.
+                      </div>
+                      <span class="focus-border"></span>
                     </div>
-                    <span class="focus-border"></span>
-                  </div>
-                  <div class="col-2">
-                    <input class="effect" type="password" [ngClass]="cssValidation(f.confirmaPassword)"
-                      formControlName="confirmaPassword" id="confirmaPassword" placeholder="Confirmar Senha*" maxlength="15">
-                      <span class="fa fa-eye eye-pwd float-end" (click)="viewPassword('confirmaPassword','spanviewconfirmasenha',2)" id="spanviewconfirmasenha"></span>
-                    <div class="invalid-tooltip" *ngIf="f.confirmaPassword.errors?.required">
-                      Confirmar Senha é obrigatório.
-                    </div>
-                    <div class="invalid-tooltip" *ngIf="f.confirmaPassword.errors?.invalidCheckConfirmedPassword">
-                      As senhas não coincidem.
-                    </div>
-                    <span class="focus-border"></span>
-                  </div>
-                  <div class="p-4" >
-                    <div class="card card-informacao">
-                      <div class="card-body">
-                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-                        <span>&nbsp;A nova senha deve conter:</span><br>
-                        <span class="fa fa-times" aria-hidden="true" id="spansenhaminlen"></span>&nbsp;
-                        <span class="card-text">De 6 a 15 caracteres</span><br>
-                        <span class="fa fa-times" aria-hidden="true" id="spansenhaupcase"></span>&nbsp;
-                        <span class="card-text">Caracteres maiúsculos e minúsculos</span><br>
-                        <span class="fa fa-times" aria-hidden="true" id="spansenhanum"></span>&nbsp;
-                        <span class="card-text">Caractere numérico</span><br>
-                        <span class="fa fa-times" aria-hidden="true" id="spansenhaesp"></span>&nbsp;
-                        <span class="card-text">Caractere especial ('"!@#$%¨&*()-_=+&apos;&#125;]~^[&#123;,&lt;.>;:/¹²³£¬¢)</span>
+                    <div class="p-4" >
+                      <div class="card card-informacao">
+                        <div class="card-body">
+                          <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                          <span>&nbsp;A nova senha deve conter:</span><br>
+                          <span class="fa fa-times" aria-hidden="true" id="spansenhaminlen"></span>&nbsp;
+                          <span class="card-text">De 6 a 15 caracteres</span><br>
+                          <span class="fa fa-times" aria-hidden="true" id="spansenhaupcase"></span>&nbsp;
+                          <span class="card-text">Caracteres maiúsculos e minúsculos</span><br>
+                          <span class="fa fa-times" aria-hidden="true" id="spansenhanum"></span>&nbsp;
+                          <span class="card-text">Caractere numérico</span><br>
+                          <span class="fa fa-times" aria-hidden="true" id="spansenhaesp"></span>&nbsp;
+                          <span class="card-text">Caractere especial ('"!@#$%¨&*()-_=+&apos;&#125;]~^[&#123;,&lt;.>;:/¹²³£¬¢)</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div class="col-1">
                     <div class="form-group col">
-                      <input type="checkbox" formControlName="noticia">&nbsp;
+                      <input type="checkbox" checked="{{f.noticia}}" formControlName="noticia">&nbsp;
                       <label class="mr-2">Eu concordo em receber as notícias relacionadas ao SINDEST.</label>
                     </div>
                   </div>
