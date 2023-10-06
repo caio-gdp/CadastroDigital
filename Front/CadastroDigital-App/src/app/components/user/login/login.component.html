@@ -1,3 +1,5 @@
+<!-- {{accountService.currentUser$ | json}}
+{{currentUser | json}} -->
 <nav class="navbar navbar-light">
   <div *ngIf="(accountService.currentUser$ | async) == null">
     <form #loginform="ngForm" class="form-inline">
@@ -15,7 +17,7 @@
         <i class="fa fa-bell" ></i>
         <a dropdownToggle class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          {{user.name | titlecase}}
+          {{firstName | titlecase}}
         </a>
         <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" routerLink="user/registration">
           <a class="dropdown-item">
@@ -28,7 +30,7 @@
             Registro
           </a>
           <div role="separator" class="divider"></div>
-          <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
+          <a class="dropdown-item" (click)="logout()" routerLink="dashboard" style="cursor: pointer;">
             Sair
           </a>
         </div>

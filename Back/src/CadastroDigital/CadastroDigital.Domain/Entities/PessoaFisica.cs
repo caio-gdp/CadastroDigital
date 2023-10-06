@@ -11,7 +11,6 @@ namespace CadastroDigital.Domain.Entities
         public DateTime? DataEmissao { get; set; }
         public int OrgaoExpedidorId { get; set; }
         public int UfExpedidorId { get; set; }
-        public string Imagem { get; set; }
         public int IdUser { get; set; }
         public int SexoId { get; set; }
         public int EstadoCivilId { get; set; }

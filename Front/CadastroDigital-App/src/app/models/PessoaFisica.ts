@@ -14,5 +14,5 @@ export interface PessoaFisica {
   idUser : number;
   sexoId : number | null;
   estadoCivilId : number | null;
-  redeSocial : RedeSocial
+  redesSociais : RedeSocial[] | any;
 }

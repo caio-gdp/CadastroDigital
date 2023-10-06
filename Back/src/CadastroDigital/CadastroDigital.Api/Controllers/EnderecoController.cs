@@ -29,10 +29,21 @@ namespace CadastroDigital.Api.Controllers
         //     return Ok(endereco);
         // }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(EnderecoDto dto)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var ret = await _enderecoService.AddEndereco(dto);
+            var endereco = await _enderecoService.GetById(id);
+
+            if (endereco.Equals(null))
+                return NoContent();
+
+            return Ok(endereco);
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Post(int id, EnderecoDto dto)
+        {
+            var ret = await _enderecoService.AddEndereco(id, dto);
             
             if (ret == null)
                 return BadRequest("Erro ao tentar incluir registro.");
@@ -40,8 +51,7 @@ namespace CadastroDigital.Api.Controllers
             return Ok();
         }
 
- 
-        // [HttpPut("{pessoaid}")]
+         // [HttpPut("{pessoaid}")]
         // public async Task<IActionResult> Put(int id, EnderecoDto dto)
         // {
         //     var ret = await _enderecoService.UpdateEndereco(id, dto);

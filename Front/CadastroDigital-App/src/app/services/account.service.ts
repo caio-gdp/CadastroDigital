@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject, map, take } from 'rxjs';
+import { Observable, ReplaySubject, first, map, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { User } from '@app/models/Identity/User';
-import { UserLogin } from '@app/models/Identity/UserLogin';
 
 @Injectable({
   providedIn: 'root'
@@ -22,45 +21,34 @@ export class AccountService {
         const user = response;
 
         if (user){
-          var i = user.name.indexOf(' ');
-          user.name = user.name.substring(0,i)
           this.setCurrentUser(user)
         }
       })
     );
   }
 
-  public register(model: any) : Observable<User>{
+  getUser(): Observable<User>{
+    return this.http.get<User>(this.baseUrl + 'getUser').pipe(take(1));
+  }
 
-    alert(model)
+  public register(model: User) : Observable<User>{
 
-    var user = {} as User;
-
-    user.userId = model.userId;
-    user.phoneNumber = model.phoneNumber;
-    user.dateOfBirth = model.dateOfBirth;
-    user.name = model.name;
-    user.email = model.email;
-    user.passwordHash = model.passwordReg;
-    user.noticia = model.noticia = null ? false : true;
-    // user.tipoPessoa = "F";
-    // user.dataCadastro = new Date();
-    // user.passoCadastroId = 1,
-    // user.statusCadastroId = 3
-
-    //  return this.http.post<User>(this.baseUrl + 'register', model).pipe(
-    //   take(1),
-    //   map((response: User) => {
-    //     const user = response;
-
-    //     if (user){
-    //       this.setCurrentUser(user)
-    //     }
-    //   })
-    // );
+    model.noticia = null ? false : true;
 
     return this.http.post<User>(this.baseUrl + 'register', model).pipe(take(1));
+  }
 
+  public updateUser(model: User) : Observable<void>{
+
+    return this.http.put<User>(this.baseUrl + 'updateUser', model).pipe(
+      take(1),
+      map((response: User) => {
+        const user = response;
+
+        if (user){
+          this.setCurrentUser(user)
+        }
+    }));
   }
 
   public setCurrentUser(user: User) : void{

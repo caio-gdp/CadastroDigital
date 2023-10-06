@@ -20,7 +20,7 @@ namespace CadastroDigital.Infrastructure.Repositories
             _context = context;
         } 
         
-        public async Task<IEnumerable<Cidade>> GetCidadeByEstado(int estado){
+        public async Task<IEnumerable<Cidade>> GetByEstado(int estado){
 
             IQueryable<Cidade> query = _context.Cidade
                 .Where(p => p.EstadoId.Equals(estado)).AsNoTracking();
@@ -30,7 +30,7 @@ namespace CadastroDigital.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<Cidade> GetCidadeByName(string cidade){
+        public async Task<Cidade> GetByName(string cidade){
 
             IQueryable<Cidade> query = _context.Cidade
                 .Where(p => p.Nome.Equals(cidade)).AsNoTracking();

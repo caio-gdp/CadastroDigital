@@ -1,20 +1,14 @@
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, AbstractControlOptions, CheckboxRequiredValidator, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, ElementRef, LOCALE_ID, NgZone, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatorField } from '@app/helpers/ValidatorField';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Pessoa } from '@app/models/Pessoa';
-import { PessoaService } from '@app/services/pessoa.service';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { PaisService } from '@app/services/Pais.service';
 import { User } from '@app/models/Identity/User';
 import { AccountService } from '@app/services/account.service';
 import { GenericValidator } from '@app/validators/GenericValidator';
 import { UserLogin } from '@app/models/Identity/UserLogin';
-import { Observable } from 'rxjs';
-import { DateTimeFormatPipe } from '@app/helpers/DateTimeFormat.pipe';
 
 @Component({
   selector: 'app-registration',
@@ -30,6 +24,9 @@ export class RegistrationComponent implements OnInit {
   teste = false;
   model = {} as UserLogin;
   currentUser : any;
+  fieldDisable : boolean = true;
+  stateForm = 'post';
+  jsonUser: any;
 
   get f() : any{
     return this.form.controls;
@@ -41,7 +38,8 @@ export class RegistrationComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private recaptchaV3Service: ReCaptchaV3Service,
     //private ngZone: NgZone,
-    private router: Router
+    private router: Router,
+    private cdRef:ChangeDetectorRef
     ){
         this.currentUser = accountService.currentUser$;
     }
@@ -49,31 +47,29 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() : void {
     this.validation();
     //Depois da validação preencher os campos
-    this.fillField();
-
+    this.loadUser();
   }
 
-  fillField(){
-    var jsonUser: any;
-    jsonUser = localStorage.getItem('user');
-    this.user = JSON.parse(jsonUser);
+  ngAfterContentInit(){
+    this.cdRef.detectChanges();
+  }
 
-    if (this.user != null){
-      var cpf = <HTMLInputElement>document.getElementById("userId");
-      this.f.userId.hidden;
-      this.f.userId.value = this.user.userId;
-      this.f.phoneNumber.value = this.user.phoneNumber;
-      //this.f.dateOfBirth.value = this.user.dateOfBirth | DateTimeFormatPipe;
-      this.f.name.value = this.user.name;
-      this.f.email.value = this.user.email;
-      this.f.confirmaEmail.value = this.user.email;
-      this.f.noticia.value = this.user.noticia;
+  loadUser(): void{
 
-      alert(this.user.noticia)
+    this.jsonUser = localStorage.getItem('user');
+    let user = JSON.parse(this.jsonUser);
 
-      var divpass = <HTMLDivElement>document.getElementById('divPass');
+      user.dateOfBirth = new Date(user.dateOfBirth).toLocaleDateString('pt-BR');
+
+      this.form.patchValue(user);
+      this.f.confirmaEmail.value = user.email;
+
+      let cpf = this.form.get('userId');
+      cpf?.disable();
+
+      let divpass = <HTMLDivElement>document.getElementById('divPass');
       divpass.hidden = true;
-    }
+
   }
 
   bsConfig() : any{
@@ -91,46 +87,107 @@ export class RegistrationComponent implements OnInit {
   }
 
   private validation() : void{
+
     const formOptions : AbstractControlOptions = {
       validators : ValidatorField.MustMatch('passwordReg','confirmaPassword')
     }
 
-    this.form = this.fb.group({
-      userId : ['', [Validators.required, Validators.maxLength(14), this.checkCpf]],
-      dateOfBirth : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), this.checkAge]],
-      name : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
-      phoneNumber : ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
-      email : ['', [Validators.required, Validators.email]],
-      passwordReg : ['', [Validators.required, Validators.minLength(6),Validators.maxLength(15), this.checkPassword]],
-      confirmaPassword : ['', [Validators.required, this.checkConfirmedPassword]],
-      confirmaEmail : ['', [Validators.required, this.checkEmail]],
-      noticia : [],
-    }, formOptions);
-  }
-
-  public register() : void{
-
-    if (this.form.valid){
-      this.spinner.show();
-
-      this.user = {...this.form.value}
-
-      this.accountService.register(this.user).subscribe({
-        next : () => {
-            this.toastr.success("Pré cadastro realizado. Efetue o login para finalizar o cadastro.", "Informação", {extendedTimeOut: 1000})
-            this.router.navigateByUrl('dashboard')
-        },
-        error: (error: any) => {
-            console.log(error)
-            this.toastr.error(error.error)
-        },
-      }).add(() => this.spinner.hide())
+   if (this.jsonUser == null){
+      this.form = this.fb.group({
+        userId : ['', [Validators.required, Validators.maxLength(14), this.checkCpf]],
+        dateOfBirth : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), this.checkAge]],
+        name : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
+        phoneNumber : ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
+        email : ['', [Validators.required, Validators.email]],
+        passwordHash : ['', [Validators.required, Validators.minLength(6),Validators.maxLength(15), this.checkPassword]],
+        confirmaPassword : ['', [Validators.required, this.checkConfirmedPassword]],
+        confirmaEmail : ['', [Validators.required, this.checkEmail]],
+        noticia : [],
+      }, formOptions,);
+   }
+    else{
+      this.form = this.fb.group({
+        userId : [],
+        dateOfBirth : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), this.checkAge]],
+        name : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
+        phoneNumber : ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
+        email : ['', [Validators.required, Validators.email]],
+        passwordHash : [],
+        confirmaPassword : [],
+        confirmaEmail : ['', [Validators.required, this.checkEmail]],
+        noticia : [],
+       });
     }
   }
 
+  public saveChange() : void{
+
+    if (this.form.valid){
+
+      if (this.jsonUser != null)
+        this.stateForm = 'put';
+
+      this.spinner.show();
+
+       this.user = (this.stateForm == 'post') ? {...this.form.value} : {id: this.user.userId, ...this.form.value};
+
+      if (this.stateForm == 'post'){
+        this.accountService.register(this.user).subscribe({
+          next : () => {
+              this.toastr.success("Pré cadastro realizado. Efetue o login para finalizar o cadastro.", "Informação", {extendedTimeOut: 1000})
+              this.router.navigateByUrl('dashboard')
+          },
+          error: (error: any) => {
+              console.log(error)
+              this.toastr.error(error.error)
+          },
+        }).add(() => this.spinner.hide())
+      }
+      else{
+        this.user.userId = this.currentUser.userId;
+        this.user.id = 0;
+        console.log(this.user)
+        this.accountService.updateUser(this.user).subscribe({
+          next : () => {
+              this.toastr.success("Cadastro Atualizado.", "Informação")
+              this.router.navigateByUrl('user/registration')
+          },
+          error: (error: any) => {
+              console.log(error)
+              this.toastr.error(error.error)
+          },
+        }).add(() => this.spinner.hide())
+      }
+    }
+  }
+
+  // private register(user : User) : void{
+  //   this.accountService.register(this.user).subscribe({
+  //     next : () => {
+  //         this.toastr.success("Pré cadastro realizado. Efetue o login para finalizar o cadastro.", "Informação", {extendedTimeOut: 1000})
+  //         this.router.navigateByUrl('dashboard')
+  //     },
+  //     error: (error: any) => {
+  //           this.toastr.error(error.error)
+  //     },
+  //   }).add(() => this.spinner.hide())
+  // }
+
+  // private updateRegister(user : User) : void{
+  //   this.accountService.updateRegister(this.user).subscribe({
+  //     next : () => {
+  //         this.toastr.success("Atualização realizada.", "Informação", {extendedTimeOut: 1000})
+  //         this.router.navigateByUrl('user/registration')
+  //     },
+  //     error: (error: any) => {
+  //           this.toastr.error(error.error)
+  //     },
+  //   }).add(() => this.spinner.hide())
+  // }
+
   public validaSenha(){
      const campo = <HTMLElement>document.getElementById('spansenha');
-     const senha = <HTMLElement>document.getElementById('passwordReg');
+     const senha = <HTMLElement>document.getElementById('passwordHash');
      campo.className = "fa fa-check";
   }
 
@@ -210,7 +267,7 @@ export class RegistrationComponent implements OnInit {
 
   public checkConfirmedPassword(filedForm: FormControl | AbstractControl){
 
-    const pass = <HTMLInputElement>document.getElementById("passwordReg");
+    const pass = <HTMLInputElement>document.getElementById("passwordHash");
     const chkpass = filedForm.value;
 
     if (pass.value != '' && chkpass != ''){
@@ -236,7 +293,7 @@ export class RegistrationComponent implements OnInit {
       var charnumerico = false;
       var charespecial = false;
 
-      var input = document.querySelector("#passwordReg")
+      var input = document.querySelector("#passwordHash")
 
       if (filedForm.value.length > 5)
         minLen = true;

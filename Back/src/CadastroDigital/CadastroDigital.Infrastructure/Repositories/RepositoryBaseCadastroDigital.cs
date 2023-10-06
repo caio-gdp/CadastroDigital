@@ -7,6 +7,7 @@ using CadastroDigital.Domain.Entities;
 using CadastroDigital.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Collections;
 
 namespace CadastroDigital.Infrastructure.Repositories
 {
@@ -79,14 +80,25 @@ namespace CadastroDigital.Infrastructure.Repositories
             return await query.AsNoTracking().Where(expressao).FirstAsync();
         }
 
-        public async Task<T> GetById(Expression<Func<T, bool>> expressao, string[] includes){
+        public async Task<T> GetById(Expression<Func<T, bool>> expressao, Expression<Func<T, object>> includes){
 
             IQueryable<T> query = _context.Set<T>().AsNoTracking();
 
-            foreach (var include in includes)
-                query = query.Include(include).AsNoTracking();
+              //foreach (var include in includes)
+                query = query.Include(includes).AsNoTracking();
 
             return await query.AsNoTracking().Where(expressao).FirstAsync();
+        }
+
+        public async Task<PessoaFisica> GetTeste(int id){
+
+            IQueryable<PessoaFisica> query = _context.PessoaFisica
+                .Include(p => p.RedesSociais)
+                .Where(p => p.Id == id).AsNoTracking();
+
+            //query = query.OrderBy(e => e.PessoaFisica.Nome);        
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

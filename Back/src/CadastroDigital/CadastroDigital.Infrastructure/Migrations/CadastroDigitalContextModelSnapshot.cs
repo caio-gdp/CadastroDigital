@@ -34517,8 +34517,7 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnName("IdUser");
 
                     b.Property<string>("Imagem")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Imagem");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NaturalidadeId")
                         .HasColumnType("int")
@@ -35040,6 +35039,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Property<int>("Funcao")
                         .HasColumnType("int");
 
+                    b.Property<string>("Imagem")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -35057,8 +35059,8 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Noticia")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Noticia")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PassoCadastroId")
                         .HasColumnType("int");

@@ -23,6 +23,8 @@ namespace CadastroDigital.Domain.Entities
 
         [Ignore]
         public string localidade { get; set; }
+        [Ignore]
+        public string uf { get; set; }
 
         public PessoaFisica PessoaFisica { get; set; }
         public Cidade Cidade { get; set; }

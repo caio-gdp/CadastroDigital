@@ -56,6 +56,7 @@ namespace CadastroDigital.Infrastructure.Contexts
             //modelBuilder.ApplyConfiguration(new EmailConfig());
             modelBuilder.ApplyConfiguration(new EnderecoConfig());
                 modelBuilder.Entity<Endereco>().Ignore(t => t.localidade);
+                modelBuilder.Entity<Endereco>().Ignore(t => t.uf);
             modelBuilder.ApplyConfiguration(new EstadoConfig());
             modelBuilder.ApplyConfiguration(new EstadoCivilConfig());
             modelBuilder.ApplyConfiguration(new PaisConfig());

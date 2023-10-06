@@ -13,6 +13,11 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             
             //Primary Key
             builder.HasKey(p => p.Id);
+
+            // //Index
+            builder.HasIndex(i => i.PessoaFisicaId)
+            .IsUnique(false)
+            .HasDatabaseName("idx_redesocial_pessoafisica");
             
             builder.HasIndex(i => i.TipoRedeSocialId)
             .IsUnique(false)
@@ -23,7 +28,7 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .WithMany(f => f.RedesSociais)
             .HasForeignKey(f => f.PessoaFisicaId)
             .HasConstraintName("fk_redesocial_pessoa");
-
+           
             builder.HasOne(f => f.TipoRedeSocial)
             .WithOne(f => f.RedeSocial)
             .HasForeignKey<RedeSocial>(f => f.TipoRedeSocialId)

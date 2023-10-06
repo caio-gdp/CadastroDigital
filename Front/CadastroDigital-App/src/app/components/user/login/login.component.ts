@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControlName, FormGroup } from '@angular/forms';
 import { enableDebugTools } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { User } from '@app/models/Identity/User';
 import { UserLogin } from '@app/models/Identity/UserLogin';
 import { Pessoa } from '@app/models/Pessoa';
 import { AccountService } from '@app/services/account.service';
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
 
   model = {} as UserLogin;
   currentUser : any;
+  firstName : string;
 
   constructor(public accountService : AccountService,
               private toastr: ToastrService,
@@ -27,6 +29,7 @@ export class LoginComponent implements OnInit {
               }
 
   ngOnInit() : void{
+    this.setFirstName();
   }
 
   public login() : void{
@@ -52,5 +55,15 @@ export class LoginComponent implements OnInit {
   public logout() : void{
     this.accountService.logout();
     window.location.reload();
+  }
+
+  public setFirstName() : void{
+    var jsonUser: any;
+    jsonUser = localStorage.getItem('user');
+    var user = JSON.parse(jsonUser);
+    if (user != null){
+      var index = user.name.indexOf(' ');
+      this.firstName = user.name.substring(0,index);
+    }
   }
 }

@@ -84,6 +84,7 @@ namespace CadastroDigital.Api
 
             //services.AddScoped<IPessoaService, PessoaService>();
             services.AddScoped<IPessoaFisicaService, PessoaFisicaService>();
+            services.AddScoped<IRedeSocialService, RedeSocialService>();
             services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<ICidadeService, CidadeService>();
             services.AddScoped<IEstadoService, EstadoService>();

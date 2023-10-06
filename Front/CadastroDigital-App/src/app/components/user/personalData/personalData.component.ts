@@ -24,6 +24,8 @@ import { PessoaService } from '@app/services/pessoa.service';
 import { HttpEvent } from '@angular/common/http';
 import { PessoaFisicaService } from '@app/services/pessoafisica.service';
 import { GenericValidator } from '@app/validators/GenericValidator';
+import { AccountService } from '@app/services/account.service';
+import { User } from '@app/models/Identity/User';
 
 @Component({
   selector: 'app-personalData',
@@ -32,6 +34,7 @@ import { GenericValidator } from '@app/validators/GenericValidator';
 })
 export class PersonalDataComponent implements OnInit {
 
+  user : User;
   pessoaFisica = {} as PessoaFisica;
   orgaosExpedidores: OrgaoExpedidor[] = [];
   estados: Estado[] = [];
@@ -41,6 +44,8 @@ export class PersonalDataComponent implements OnInit {
   sexos: Sexo[] = [];
   tiposRedesSociais: TipoRedeSocial[] = [];
   index : number;
+  currentUser : any;
+  jsonUser: any;
 
   form!: FormGroup;
 
@@ -53,6 +58,7 @@ export class PersonalDataComponent implements OnInit {
   }
 
   constructor(private fb : FormBuilder,
+    public accountService: AccountService,
     private pessoaFisicaService : PessoaFisicaService,
     private orgaoExpedidorService: OrgaoExpedidorService,
     private estadoService: EstadoService,
@@ -64,7 +70,9 @@ export class PersonalDataComponent implements OnInit {
     private modalService: BsModalService,
     private modalRef : BsModalRef,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService) {
+      this.currentUser = accountService.currentUser$;
+    }
 
   ngOnInit() {
     this.validation();
@@ -73,6 +81,7 @@ export class PersonalDataComponent implements OnInit {
     this.getEstadoCivil();
     this.getSexo();
     this.getTipoRedeSocial();
+    this.loadPersonalData();
   }
 
   cssValidation(filedForm: FormControl | AbstractControl | null): any {
@@ -91,6 +100,41 @@ export class PersonalDataComponent implements OnInit {
       sexoId : ['', [Validators.required]],
       redesSociais: this.fb.array([])
     });
+  }
+
+  loadPersonalData(): void{
+
+    this.jsonUser = localStorage.getItem('user');
+    this.user = JSON.parse(this.jsonUser);
+
+    if (this.user != null){
+      this.spinner.show()
+      this.pessoaFisicaService.getPessoaByIdUser(this.user.id).subscribe(
+        (personalDataRetorno: PessoaFisica) => {
+          this.pessoaFisica = personalDataRetorno
+          this.pessoaFisica.dataEmissao = new Date(this.pessoaFisica.dataEmissao).toLocaleDateString('pt-BR');
+          this.form.patchValue(this.pessoaFisica);
+          this.redesSociais.patchValue(this.pessoaFisica.redesSociais);
+
+          // if (this.pessoaFisica.redesSociais != null){
+          //   let redesSociaisArr = <FormArray>this.form.controls['redesSociais'];
+
+          //   console.log(this.pessoaFisica.redesSociais)
+
+          //   for (let i = 0; i < this.pessoaFisica.redesSociais.length; i++){
+          //     .patchValue(this.pessoaFisica.redesSociais);
+          //   }
+          // }
+
+
+          this.getCidade();
+        },
+        (error: any) => {
+          console.log(error)
+          this.toastr.error('Dados pessoais não carregado')
+      },
+      ).add(() => this.spinner.hide());
+    }
   }
 
   checkDate(filedForm: FormControl | AbstractControl){
@@ -132,7 +176,7 @@ export class PersonalDataComponent implements OnInit {
     };
   }
 
- getOrgaoExpedidor() : void{
+getOrgaoExpedidor() : void{
   const observer = {
     next : (_orgaosExpedidores : OrgaoExpedidor[]) => {
         this.orgaosExpedidores = _orgaosExpedidores;
@@ -167,7 +211,7 @@ getEstado() : void{
 getCidade() : void{
 
   var obj = (<HTMLSelectElement>document.getElementById("ufExpedidorId"));
-  var estado : number = +(<HTMLOptionElement>obj[obj.options.selectedIndex]).value;
+  var estado : number = +(<HTMLOptionElement>obj[obj.options.selectedIndex])?.value;
 
    const observer = {
      next : (_cidades : Cidade[]) => {
@@ -193,7 +237,7 @@ getPais(id : number) : void{
      error : (error : any) =>
      {
        // this.spinner.hide(),
-       // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+       this.toastr.error('Erro ao carregar os registros.', "Erro!")
      },
      // complete : () => this.spinner.hide()
    };
@@ -284,12 +328,16 @@ decline(): void {
     this.pessoaFisica.estadoCivilId = Number(this.pessoaFisica.estadoCivilId);
     this.pessoaFisica.sexoId = Number(this.pessoaFisica.sexoId);
 
+    if (this.pessoaFisica.redesSociais != undefined){
+      for (let i = 0; i < this.pessoaFisica.redesSociais.length; i++){
+        this.pessoaFisica.redesSociais[i].tipoRedeSocialId = Number(this.pessoaFisica.redesSociais[i].tipoRedeSocialId);
+      }
+    }
 
-    if (this.pessoaFisica.redeSocial != undefined)
-      this.pessoaFisica.redeSocial.tipoRedeSocialId = Number(this.pessoaFisica.redeSocial.tipoRedeSocialId);
 
 
-    this.pessoaFisica.idUser = 1
+    if (this.user != null)
+      this.pessoaFisica.idUser = this.user.id;
 
     console.log(this.pessoaFisica)
 

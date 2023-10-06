@@ -3,6 +3,8 @@ import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, Form
 import { ValidatorField } from '@app/helpers/ValidatorField';
 import { Cidade } from '@app/models/Cidade';
 import { Endereco } from '@app/models/Endereco';
+import { User } from '@app/models/Identity/User';
+import { AccountService } from '@app/services/account.service';
 import { CidadeService } from '@app/services/cidade.service';
 import { EnderecoService } from '@app/services/endereco.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -17,6 +19,9 @@ export class AddressDataComponent implements OnInit {
 
   endereco = {} as Endereco;
   cidade = {} as Cidade;
+  currentUser : any;
+  jsonUser: any;
+  user : User;
 
   form!: FormGroup;
 
@@ -25,14 +30,19 @@ export class AddressDataComponent implements OnInit {
   }
 
   constructor(public fb : FormBuilder,
+    public accountService: AccountService,
     private spinner: NgxSpinnerService,
     private toastr : ToastrService,
     private enderecoService : EnderecoService,
     private cidadeService: CidadeService,
-    private ref: ChangeDetectorRef) { }
+    private ref: ChangeDetectorRef) {
+      this.currentUser = accountService.currentUser$;
+
+    }
 
   ngOnInit() : void {
     this.validation();
+    this.loadAddressData();
   }
 
   cssValidation(filedForm: FormControl | AbstractControl): any {
@@ -53,6 +63,29 @@ export class AddressDataComponent implements OnInit {
       complemento : [],
       bairro : ['', [Validators.required]]
     });
+  }
+
+  loadAddressData() : void{
+    this.jsonUser = localStorage.getItem('user');
+    this.user = JSON.parse(this.jsonUser);
+
+    if (this.user != null){
+      this.spinner.show()
+      this.enderecoService.getEndereco(this.user.id).subscribe(
+        (enderecoRetorno: Endereco) => {
+          this.endereco = enderecoRetorno
+          console.log(this.endereco)
+          this.form.patchValue(this.endereco);
+        },
+        (error: any) => {
+          console.log(error)
+          this.toastr.error('Endereço não carregado')
+      },
+      ).add(() => this.spinner.hide());
+    }
+
+
+
   }
 
   getByCep() : void {
@@ -83,16 +116,9 @@ export class AddressDataComponent implements OnInit {
 
       this.endereco = {...this.form.value};
 
-
-
-      //this.getCidadeByName();
-
-
-      this.endereco.pessoafisicaId = 1
-
        console.log(this.endereco);
 
-        this.enderecoService.post(this.endereco).subscribe({
+        this.enderecoService.post(this.user.id, this.endereco).subscribe({
           next: (endereco: Endereco) => {
             this.toastr.success('Registro salvo com sucesso.', 'Sucesso')},
           error: (error: any) => {
@@ -103,22 +129,4 @@ export class AddressDataComponent implements OnInit {
     }
   }
 
-  // getCidadeByName() : void{
-
-  //    const observer = {
-  //      next : (_cidade : Cidade) => {
-  //          this.cidade = _cidade;
-  //          this.endereco.cidadeId = this.cidade.id;
-
-  //          console.log(this.endereco);
-  //      },
-  //      error : (error : any) =>
-  //      {
-  //        // this.spinner.hide(),
-  //        // this.toastr.error('Erro ao carregar os registros.', "Erro!")
-  //      },
-  //      // complete : () => this.spinner.hide()
-  //    };
-  //   this.cidadeService.getByName(this.f.cidade.value).subscribe(observer);
-  // }
 }

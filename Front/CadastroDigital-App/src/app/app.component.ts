@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AccountService } from './services/account.service';
+import { User } from './models/Identity/User';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +9,27 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-  title = 'CadastroDigital-App';
+
+  constructor (public accountService: AccountService){}
+
+  ngOnInit() : void{
+      this.setCurrentUser();
+  }
+
+  setCurrentUser(): void{
+
+    let user: User | null;
+
+    if (localStorage.getItem('user'))
+      user = JSON.parse(localStorage.getItem('user') ?? '{}')
+    else
+      user = null;
+
+    if (user){
+      this.accountService.setCurrentUser(user);
+    }
+  }
+
 }
 
 

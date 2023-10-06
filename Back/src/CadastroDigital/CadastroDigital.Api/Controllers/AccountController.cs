@@ -97,18 +97,33 @@ namespace CadastroDigital.Api.Controllers
         }
 
         [HttpPut("UpdateUser")]
+        [Authorize]
         public async Task<IActionResult> UpdateUser(UserDto userDto){
             try{
-                var user = await _accountService.GetUserByUserId(User.GetUserId());
+                //var user = await _accountService.GetUserByUserId(userDto.UserId);
 
-                if (user == null) return Unauthorized("Usuário inválido.");
+               // if (user == null) return Unauthorized("Usuário inválido.");
 
                 var userReturn = await _accountService.UpdateAccount(userDto);
 
-                if (user == null)
-                    return NoContent(); 
+                if (userReturn == null)
+                    return Unauthorized("Usuário inválido.");
 
-                return Ok(userReturn);    
+                UserDtoResponse userResponse = new UserDtoResponse{
+                    Id = userReturn.Id,
+                    UserId = userReturn.UserId,
+                    Token = userReturn.Token,
+                    Name = userReturn.Name,
+                    Noticia = userReturn.Noticia,
+                    TipoPessoa = userReturn.TipoPessoa,
+                    PassoCadastroId = userReturn.PassoCadastroId,
+                    StatusCadastroId = userReturn.StatusCadastroId,
+                    DateOfBirth = userReturn.DateOfBirth,
+                    Email = userReturn.Email,
+                    PhoneNumber = userReturn.PhoneNumber
+                };    
+
+                return Ok(userResponse);    
             }
             catch(Exception ex){
                  return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar atualizar o usuário. Erro: {ex.Message}");

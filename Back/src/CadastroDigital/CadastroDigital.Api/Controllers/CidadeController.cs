@@ -20,7 +20,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet("estado/{estado}")]
         public async Task<IActionResult> GetCidadeByEstado(int estado)
         {
-            var cidades = await _cidadeService.GetCidadeByEstado(estado);
+            var cidades = await _cidadeService.GetByEstado(estado);
 
             if (cidades.Equals(null))
                  return NotFound("");
@@ -32,7 +32,7 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet("cidade/{cidade}")]
         public async Task<IActionResult> GetCidadeByName(string cidade)
         {
-            var cidadeRet = await _cidadeService.GetCidadeByName(cidade);
+            var cidadeRet = await _cidadeService.GetByName(cidade);
 
             if (cidadeRet.Equals(null))
                  return NotFound("");

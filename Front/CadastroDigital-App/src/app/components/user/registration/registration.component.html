@@ -1,7 +1,7 @@
 <div class="row">
-<!-- testar validação de formulario e reativo
+testar validação de formulario e reativo
       <p>Form value : {{form.value | json}}</p>
-      <p>Form valid : {{form.status | json}}</p> -->
+      <p>Form valid : {{form.status | json}}</p>
 
   <div class="col-sm-20">
     <div class="container">
@@ -27,7 +27,7 @@
                     </div>
                   </div>
                 </div>
-                <form [formGroup]="form">
+                <form [formGroup]="form" >
                   <!-- <h2>Input with Label Effects</h2> -->
                   <div class="col-3">
                     <input class="effect" type="text" [ngClass]="cssValidation(f.userId)" formControlName="userId" id="userId"
@@ -91,7 +91,7 @@
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-2">
-                    <input class="effect" type="text" placeholder="" [ngClass]="cssValidation(f.email)" formControlName="email" id="email" placeholder="Email*">
+                    <input class="effect" type="text" [ngClass]="cssValidation(f.email)" formControlName="email" id="email" placeholder="Email*">
                     <div class="invalid-tooltip" *ngIf="f.email.errors?.required">
                       Email é obrigatório.
                     </div>
@@ -120,13 +120,13 @@
                       </div>
                     </div>
                     <div class="col-2">
-                      <input class="effect" type="password" [ngClass]="cssValidation(f.passwordReg)"
-                        formControlName="passwordReg" id="passwordReg" placeholder="Senha*" maxlength="15">
-                      <span class="fa fa-eye eye-pwd float-end" (click)="viewPassword('passwordReg','spanviewsenha',1)" id="spanviewsenha"></span>
-                      <div class="invalid-tooltip" *ngIf="f.passwordReg.errors?.required">
+                      <input class="effect" type="password" [ngClass]="cssValidation(f.passwordHash)"
+                        formControlName="passwordHash" id="passwordHash" placeholder="Senha*" maxlength="15">
+                      <span class="fa fa-eye eye-pwd float-end" (click)="viewPassword('passwordHash','spanviewsenha',1)" id="spanviewsenha"></span>
+                      <div class="invalid-tooltip" *ngIf="f.passwordHash.errors?.required">
                         Senha é obrigatório.
                       </div>
-                      <div class="invalid-tooltip" *ngIf="f.passwordReg.errors?.invalidPassword">
+                      <div class="invalid-tooltip" *ngIf="f.passwordHash.errors?.invalidPassword">
                       </div>
                       <span class="focus-border"></span>
                     </div>
@@ -171,7 +171,7 @@
                     <button class="btn btn-danger btn-custom" routerLink="dashboard">
                       Cancelar
                     </button>
-                    <button class="btn btn-success btn-custom float-end" (click)="register()" [disabled]="!form.valid">
+                    <button class="btn btn-success btn-custom float-end" type="submit" (click)="saveChange()" [disabled]="!form.valid">
                       Avançar
                     </button>
                   </div>

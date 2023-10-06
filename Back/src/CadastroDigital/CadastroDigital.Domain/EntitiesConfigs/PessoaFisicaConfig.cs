@@ -96,10 +96,6 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .ValueGeneratedNever()
             .IsRequired();
 
-            builder.Property(f => f.Imagem)
-            .HasColumnName("Imagem")
-            .IsRequired(false);
-              
             builder.Property(f => f.IdUser)
             .HasColumnName("IdUser")
             .ValueGeneratedNever()

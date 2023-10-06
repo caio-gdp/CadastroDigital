@@ -15,8 +15,12 @@ export class EnderecoService {
     return this.http.get<Endereco>(`${this.cepUrl}/${cep}/json/`).pipe(take(1));
   }
 
-  public post(endereco : Endereco) : Observable<Endereco>{
-    return this.http.post<Endereco>(this.baseUrl, endereco).pipe(take(1));
+  public post(id : number, endereco : Endereco) : Observable<Endereco>{
+      return this.http.post<Endereco>(`${this.baseUrl}/${id}/`, endereco).pipe(take(1));
+  }
+
+  public getEndereco(id : number) : Observable<Endereco>{
+    return this.http.get<Endereco>(`${this.baseUrl}/${id}/`).pipe(take(1));
   }
 
 }
