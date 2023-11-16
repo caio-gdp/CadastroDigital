@@ -101,6 +101,12 @@ namespace CadastroDigital.Api
             services.AddScoped<IRepositoryCidade, RepositoryCidade>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ICargoService, CargoService>();
+            services.AddScoped<IRepositoryCargo, RepositoryCargo>();
+            services.AddScoped<ICategoriaService, CategoriaService>();
+            services.AddScoped<IFuncaoService, FuncaoService>();
+            services.AddScoped<IRepositoryFuncao, RepositoryFuncao>();
+            services.AddScoped<IDiretoriaService, DiretoriaService>();
             services.AddScoped(typeof(IRepositoryBaseCadastroDigital<>), typeof(RepositoryBaseCadastroDigital<>));
             services.AddCors(c =>  
                             {  

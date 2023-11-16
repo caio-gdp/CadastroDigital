@@ -32,24 +32,24 @@ namespace CadastroDigital.Domain.EntitiesConfigs
 
                 new Categoria(){
                     Id = 1,
-                    Descricao = "Sócio Usuário"
+                    Descricao = "PMS"
                 },
                 new Categoria(){
                     Id = 2,
-                    Descricao = "Prefeitura"
-                },
-                new Categoria(){
-                    Id = 3,
                     Descricao = "Câmara"
                 },
                 new Categoria(){
-                    Id = 4,
+                    Id = 3,
                     Descricao = "Iprev"
                 },
                 new Categoria(){
-                    Id = 5,
+                    Id = 4,
                     Descricao = "Capep"
-                }
+                },
+                new Categoria(){
+                    Id = 5,
+                    Descricao = "Sócio Usuário"
+                },
             };
         }
 

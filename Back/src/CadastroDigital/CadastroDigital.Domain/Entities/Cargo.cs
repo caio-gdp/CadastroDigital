@@ -2,9 +2,11 @@ namespace CadastroDigital.Domain.Entities
 {
     public class Cargo : Base
     {
-        public string Descricao { get; set; }
+        public string CodigoLocalTrabalho { get; set; }
+        public string CentroCusto { get; set; }
+        public string NomeLocalTrabalho { get; set; }
 
-        public Socio Socio { get; set; }
+        public InformacaoProfissional InformacaoProfissional { get; set; }
 
     }
 }

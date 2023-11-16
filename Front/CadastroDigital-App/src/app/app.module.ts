@@ -60,6 +60,9 @@ import { PlaylistService } from './services/playlist.service';
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { PessoaFisicaService } from './services/pessoafisica.service';
+import { DiretoriaService } from './services/diretoria.service';
+import { CategoriaService } from './services/categoria.service';
+import { CargoService } from './services/cargo.service';
 
 defineLocale('pt', ptBrLocale);
 //registerLocaleData(localePT);
@@ -129,6 +132,9 @@ defineLocale('pt', ptBrLocale);
               NoticiaService,
               BeneficioService,
               ParceriaService,
+              DiretoriaService,
+              CategoriaService,
+              CargoService,
               PlaylistService,
               ReCaptchaV3Service,
               provideNgxMask(),

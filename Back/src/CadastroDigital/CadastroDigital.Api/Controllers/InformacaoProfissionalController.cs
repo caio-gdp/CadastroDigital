@@ -9,13 +9,13 @@ namespace CadastroDigital.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EnderecoController : ControllerBase
+    public class InformacaoProfissionalController : ControllerBase
     {
-        private readonly IEnderecoService _enderecoService;
+        private readonly IInformacaoProfissionalService _informacaoProfissionalService;
    
-        public EnderecoController(IEnderecoService enderecoService)
+        public InformacaoProfissionalController(IInformacaoProfissionalService informacaoProfissionalService)
         {
-            _enderecoService = enderecoService;
+            _informacaoProfissionalService = informacaoProfissionalService;
         }
 
         // [HttpGet("{id}")]
@@ -32,24 +32,24 @@ namespace CadastroDigital.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var endereco = await _enderecoService.GetById(id);
+            var informacaoProfissional = await _informacaoProfissionalService.GetById(id);
 
-            if (endereco.Equals(null))
+            if (informacaoProfissional.Equals(null))
                 return NoContent();
 
-            return Ok(endereco);
+            return Ok(informacaoProfissional);
         }
 
-        [HttpPost("{id}")]
-        public async Task<IActionResult> Post(int id, EnderecoDto dto)
-        {
-            var ret = await _enderecoService.AddEndereco(id, dto);
+        // [HttpPost("{id}")]
+        // public async Task<IActionResult> Post(int id, EnderecoDto dto)
+        // {
+        //     var ret = await _enderecoService.AddEndereco(id, dto);
             
-            if (ret == null)
-                return BadRequest("Erro ao tentar incluir registro.");
+        //     if (ret == null)
+        //         return BadRequest("Erro ao tentar incluir registro.");
 
-            return Ok();
-        }
+        //     return Ok();
+        // }
 
          // [HttpPut("{pessoaid}")]
         // public async Task<IActionResult> Put(int id, EnderecoDto dto)

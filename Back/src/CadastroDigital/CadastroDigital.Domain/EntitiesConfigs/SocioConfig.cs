@@ -19,13 +19,13 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .IsUnique(false)
             .HasDatabaseName("idx_socio_pessoa");
 
-            builder.HasIndex(i => i.CategoriaId)
-            .IsUnique(false)
-            .HasDatabaseName("idx_socio_categoria");
+            // builder.HasIndex(i => i.CategoriaId)
+            // .IsUnique(false)
+            // .HasDatabaseName("idx_socio_categoria");
 
-            builder.HasIndex(i => i.DiretorId)
-            .IsUnique(false)
-            .HasDatabaseName("idx_socio_diretor");
+            // builder.HasIndex(i => i.DiretorId)
+            // .IsUnique(false)
+            // .HasDatabaseName("idx_socio_diretor");
 
             //Foreign Key
             // builder.HasOne(f => f.Pessoa)
@@ -33,15 +33,15 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             // .HasForeignKey<Socio>(f => f.PessoaId)
             // .HasConstraintName("fk_socio_pessoa");
 
-            builder.HasOne(f => f.Categoria)
-            .WithOne(f => f.Socio)
-            .HasForeignKey<Socio>(f => f.CategoriaId)
-            .HasConstraintName("fk_socio_categoria");
+            // builder.HasOne(f => f.Categoria)
+            // .WithOne(f => f.Socio)
+            // .HasForeignKey<Socio>(f => f.CategoriaId)
+            // .HasConstraintName("fk_socio_categoria");
 
-            builder.HasOne(f => f.Diretor)
-            .WithOne(f => f.Socio)
-            .HasForeignKey<Socio>(f => f.DiretorId)
-            .HasConstraintName("fk_socio_diretor");
+            // builder.HasOne(f => f.Diretor)
+            // .WithOne(f => f.Socio)
+            // .HasForeignKey<Socio>(f => f.DiretorId)
+            // .HasConstraintName("fk_socio_diretor");
 
             //Atributos
             builder.Property(f => f.Id)
@@ -61,39 +61,39 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasColumnName("Matricula")
             .IsRequired();
 
-            builder.Property(f => f.CentroCusto)
-            .HasColumnName("CentroCusto")
-            .IsRequired();
+            // builder.Property(f => f.CentroCusto)
+            // .HasColumnName("CentroCusto")
+            // .IsRequired();
 
             builder.Property(f => f.PessoaFisicaId)
             .HasColumnName("PessoaFisicaId")
             .ValueGeneratedNever()
             .IsRequired();
 
-            builder.Property(f => f.CategoriaId)
-            .HasColumnName("CategoriaId")
-            .ValueGeneratedNever()
-            .IsRequired();
+            // builder.Property(f => f.CategoriaId)
+            // .HasColumnName("CategoriaId")
+            // .ValueGeneratedNever()
+            // .IsRequired();
 
-            builder.Property(f => f.CargoId)
-            .HasColumnName("CargoId")
-            .ValueGeneratedNever()
-            .IsRequired();
+            // builder.Property(f => f.CargoId)
+            // .HasColumnName("CargoId")
+            // .ValueGeneratedNever()
+            // .IsRequired();
 
             builder.Property(f => f.SituacaoId)
             .HasColumnName("SituacaoId")
             .ValueGeneratedNever()
             .IsRequired();
 
-            builder.Property(f => f.DiretorId)
-            .HasColumnName("DiretorId")
-            .ValueGeneratedNever()
-            .IsRequired(false);
+            // builder.Property(f => f.DiretorId)
+            // .HasColumnName("DiretorId")
+            // .ValueGeneratedNever()
+            // .IsRequired(false);
 
-            builder.Property(f => f.DiretorNome)
-            .HasColumnName("DiretorNome")
-            .HasMaxLength(200)
-            .IsRequired(false);
+            // builder.Property(f => f.DiretorNome)
+            // .HasColumnName("DiretorNome")
+            // .HasMaxLength(200)
+            // .IsRequired(false);
 
             builder.Property(f => f.MalaDireta)
             .HasColumnName("MalaDireta")

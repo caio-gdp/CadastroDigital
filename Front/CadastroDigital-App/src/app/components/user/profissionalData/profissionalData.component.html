@@ -27,30 +27,47 @@
                   </div>
                   <form [formGroup]="form">
                     <div class="row">
-                      <div class="col-3">
-                        <select class="effect" id="indicacao" formControlName="indicacao">
-                          <option>Indicação*</option>
-                          <option>Elaine Cristina Rodrigues</option>
-                          <option>Fabio Pimentel</option>
-                          <option>Caio Pimentel</option>
-                          <option>Nenhum</option>
+                      <div class="col-2">
+                        <select class="effect" [ngClass]="cssValidation(f.indicacao)" id="indicacao" formControlName="indicacao">
+                          <option disabled selected hidden value="">Indicação*</option>
+                          <option *ngFor="let diretor of diretores" value="{{diretor.id}}">{{diretor.nome}}</option>
+                          <div class="invalid-tooltip" *ngIf="f.indicacao.errors?.required">
+                            A indicação é obrigatória.
+                          </div>
+                          <span class="focus-border"></span>
                         </select>
                       </div>
-                      <div class="col-3">
-                        <select class="effect" id="categoria" formControlName="categoria" (change)="addCentroCusto()">
-                          <option>Categoria*</option>
-                          <option value="1">Prefeitura</option>
-                          <option value="2">IPREV</option>
-                          <option value="3">CAPEP</option>
-                          <option value="4">Camara</option>
-                          <option value="5">Sócio Usuário</option>
+                      <div class="col-2">
+                        <select class="effect" id="categoria" formControlName="categoria" (change)="addFormCategoria()">
+                          <option disabled selected hidden value="">Categoria*</option>
+                          <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.descricao}}</option>
+                          <div class="invalid-tooltip" *ngIf="f.indicacao.errors?.required">
+                            A categoria é obrigatória.
+                          </div>
+                          <span class="focus-border"></span>
                         </select>
                       </div>
-                      <div class="col-3">
-                        <input style="display: none" type="text" class="effect" placeholder="Centro de Custo" id="centroCusto" formControlName="centroCusto">
+                      <div id="divCentroCusto" style="display: none" class="col-3">
+                        <input type="number" class="effect" placeholder="Centro de Custo" id="centroCusto" formControlName="centroCusto"
+                        mask="00.00.00.00.00" (keyup)="getLocalTrabalho()">
+                      </div>
+                      <div  id="divLocalTrabalho" style="display: none" class="col-3">
+                        <input [disabled]="true" type="text" class="effect" placeholder="Local Trabalho" id="localTrabalho" formControlName="localTrabalho"
+                        value="">
+                      </div>
+                      <div id="divFuncao" style="display: none" class="col-3">
+                        <select class="effect" id="funcao" formControlName="funcao">
+                          <option disabled selected hidden value="">Função*</option>
+                          <option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.codigo  + "-" + funcao.descricao}}</option>
+                          <!-- <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.descricao}}</option>
+                          <div class="invalid-tooltip" *ngIf="f.indicacao.errors?.required">
+                            A categoria é obrigatória.
+                          </div>
+                          <span class="focus-border"></span> -->
+                        </select>
                       </div>
                     </div>
-                    <div id="divInformacaoBancaria" style="display: none;">
+                    <!-- <div id="divInformacaoBancaria" style="display: none;">
                       <div class="row">
                         <div class="col-3">
                           <select class="effect" id="tipoConta" formControlName="tipoConta">
@@ -73,12 +90,12 @@
                       <div class="col-3">
                         <input type="text" class="effect" id="agencia" formControlName="conta" placeholder="Conta*">
                       </div>
-                    </div>
+                    </div> -->
                     <div class="col-1">
                       <div class="card card-informacao">
                         <div class="card-body">
                           <h5 class="card-title"><b>Informação</b></h5>
-                          <p class="card-text">Os seguintes benefícios serão atribuídos automaticamente ao sócio e dependentes menores de 18 anos</p>
+                          <p class="card-text">Os seguintes benefícios serão atribuídos automaticamente ao sócio e dependentes menores de 18 anos ao associar-se.</p>
                           <span class="card-text">OdontoBase</span><br>
                           <span class="card-text">IPrev</span><br>
                         </div>

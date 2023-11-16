@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using CadastroDigital.Domain.Entities;
+using System;
 
 namespace CadastroDigital.Domain.EntitiesConfigs
 {
@@ -76,5 +77,6 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasMaxLength(100)
             .IsRequired(false);
         }
+
     }
 }

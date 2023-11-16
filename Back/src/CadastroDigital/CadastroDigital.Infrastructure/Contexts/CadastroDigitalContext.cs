@@ -39,7 +39,7 @@ namespace CadastroDigital.Infrastructure.Contexts
         public DbSet<Beneficio> BeneficioAgregado { get; set; }
         public DbSet<Parceria> Parceria { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
-        public DbSet<Diretor> Diretor { get; set; }
+        public DbSet<Diretoria> Diretoria { get; set; }
         public DbSet<RedeSocial> RedeSocial { get; set; }
         public DbSet<Socio> Socio { get; set; }
         public DbSet<TipoDocumento> TipoDocumento { get; set; }
@@ -47,7 +47,9 @@ namespace CadastroDigital.Infrastructure.Contexts
         public DbSet<TipoParente> TipoParente { get; set; }
         public DbSet<OrgaoExpedidor> OrgaoExpedidor { get; set; }
         public DbSet<Noticia> Noticia { get; set; }
-
+        public DbSet<Cargo> Cargo { get; set; }
+        public DbSet<Funcao> Funcao { get; set; }
+        public DbSet<InformacaoProfissional> InformacaoProfissional { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
 
@@ -77,7 +79,7 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new BeneficioAgregadoConfig());
             modelBuilder.ApplyConfiguration(new ParceriaConfig());
             modelBuilder.ApplyConfiguration(new CategoriaConfig());
-            modelBuilder.ApplyConfiguration(new DiretorConfig());
+            modelBuilder.ApplyConfiguration(new DiretoriaConfig());
             modelBuilder.ApplyConfiguration(new RedeSocialConfig());
             modelBuilder.ApplyConfiguration(new SocioConfig());
             modelBuilder.ApplyConfiguration(new TipoDocumentoConfig());
@@ -85,6 +87,9 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new TipoParenteConfig());
             modelBuilder.ApplyConfiguration(new OrgaoExpedidorConfig());
             modelBuilder.ApplyConfiguration(new NoticiaConfig());
+            modelBuilder.ApplyConfiguration(new CargoConfig());
+            modelBuilder.ApplyConfiguration(new FuncaoConfig());
+            modelBuilder.ApplyConfiguration(new InformacaoProfissionalConfig());
 
             //HasData
             modelBuilder.Entity<Pais>().HasData(PaisConfig.HasData());
@@ -93,6 +98,8 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.Entity<EstadoCivil>().HasData(EstadoCivilConfig.HasData());
             modelBuilder.Entity<Sexo>().HasData(SexoConfig.HasData());
             modelBuilder.Entity<StatusCadastro>().HasData(StatusCadastroConfig.HasData());
+            modelBuilder.Entity<Categoria>().HasData(CategoriaConfig.HasData());
+            modelBuilder.Entity<Diretoria>().HasData(DiretoriaConfig.HasData());
             //modelBuilder.Entity<TipoEmail>().HasData(TipoEmailConfig.HasData());
             //modelBuilder.Entity<TipoEndereco>().HasData(TipoEnderecoConfig.HasData());
             //modelBuilder.Entity<TipoPessoa>().HasData(TipoPessoaConfig.HasData());
@@ -103,6 +110,8 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.Entity<TipoRedeSocial>().HasData(TipoRedeSocialConfig.HasData());
             modelBuilder.Entity<TipoParente>().HasData(TipoParenteConfig.HasData());
             modelBuilder.Entity<OrgaoExpedidor>().HasData(OrgaoExpedidorConfig.HasData());
+            modelBuilder.Entity<Cargo>().HasData(CargoConfig.HasData());
+            modelBuilder.Entity<Funcao>().HasData(FuncaoConfig.HasData());
 
             base.OnModelCreating(modelBuilder);
         }

@@ -67,24 +67,13 @@ namespace CadastroDigital.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CodigoLocalTrabalho = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    CentroCusto = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: true),
+                    NomeLocalTrabalho = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cargo", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Categoria",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Descricao = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categoria", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,7 +97,7 @@ namespace CadastroDigital.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Diretor",
+                name: "Diretoria",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -117,7 +106,7 @@ namespace CadastroDigital.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Diretor", x => x.Id);
+                    table.PrimaryKey("PK_Diretoria", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,6 +120,21 @@ namespace CadastroDigital.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EstadoCivil", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Funcao",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Codigo = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: true),
+                    Descricao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Funcao", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -329,6 +333,24 @@ namespace CadastroDigital.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categoria",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categoria", x => x.Id);
+                    table.ForeignKey(
+                        name: "fk_funcao_categoria",
+                        column: x => x.Id,
+                        principalTable: "Funcao",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Estado",
                 columns: table => new
                 {
@@ -365,7 +387,7 @@ namespace CadastroDigital.Infrastructure.Migrations
                     DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Imagem = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Funcao = table.Column<int>(type: "int", nullable: false),
+                    FuncaoId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -384,6 +406,12 @@ namespace CadastroDigital.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Funcao_FuncaoId",
+                        column: x => x.FuncaoId,
+                        principalTable: "Funcao",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_PassoCadastro_PassoCadastroId",
                         column: x => x.PassoCadastroId,
@@ -528,7 +556,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                     DataEmissao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OrgaoExpedidorId = table.Column<int>(type: "int", nullable: false),
                     UfExpedidorId = table.Column<int>(type: "int", nullable: false),
-                    Imagem = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdUser = table.Column<int>(type: "int", nullable: false),
                     SexoId = table.Column<int>(type: "int", nullable: false),
                     EstadoCivilId = table.Column<int>(type: "int", nullable: false),
@@ -639,6 +666,53 @@ namespace CadastroDigital.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InformacaoProfissional",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PessoaFisicaId = table.Column<int>(type: "int", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: false),
+                    Registro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CargoId = table.Column<int>(type: "int", nullable: true),
+                    FuncaoId = table.Column<int>(type: "int", nullable: true),
+                    Indicacao = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InformacaoProfissional", x => x.Id);
+                    table.ForeignKey(
+                        name: "fk_informacaoProfissional_cargo",
+                        column: x => x.CargoId,
+                        principalTable: "Cargo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "fk_informacaoProfissional_categoria",
+                        column: x => x.CategoriaId,
+                        principalTable: "Categoria",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_informacaoProfissional_funcao",
+                        column: x => x.FuncaoId,
+                        principalTable: "Funcao",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "fk_informacaoProfissional_indicacao",
+                        column: x => x.Indicacao,
+                        principalTable: "Diretoria",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_informacaoProfissional_pessoaFisica",
+                        column: x => x.PessoaFisicaId,
+                        principalTable: "PessoaFisica",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RedeSocial",
                 columns: table => new
                 {
@@ -677,18 +751,15 @@ namespace CadastroDigital.Infrastructure.Migrations
                     Inscricao = table.Column<int>(type: "int", nullable: false),
                     Pasta = table.Column<int>(type: "int", nullable: false),
                     Matricula = table.Column<int>(type: "int", nullable: false),
-                    CentroCusto = table.Column<int>(type: "int", nullable: false),
                     PessoaFisicaId = table.Column<int>(type: "int", nullable: false),
-                    CategoriaId = table.Column<int>(type: "int", nullable: false),
-                    CargoId = table.Column<int>(type: "int", nullable: false),
                     SituacaoId = table.Column<int>(type: "int", nullable: false),
-                    DiretorId = table.Column<int>(type: "int", nullable: true),
-                    DiretorNome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     MalaDireta = table.Column<bool>(type: "bit", nullable: false),
                     DataInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataExclusao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UsuarioExclusao = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoriaId = table.Column<int>(type: "int", nullable: true),
+                    CargoId = table.Column<int>(type: "int", nullable: true),
                     ParceriaId = table.Column<int>(type: "int", nullable: true),
                     ProcessoJuridicoId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -706,17 +777,11 @@ namespace CadastroDigital.Infrastructure.Migrations
                         column: x => x.CargoId,
                         principalTable: "Cargo",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "fk_socio_categoria",
+                        name: "FK_Socio_Categoria_CategoriaId",
                         column: x => x.CategoriaId,
                         principalTable: "Categoria",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_socio_diretor",
-                        column: x => x.DiretorId,
-                        principalTable: "Diretor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -843,15 +908,805 @@ namespace CadastroDigital.Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 1, "341", "Itaú" },
-                    { 2, "237", "Bradesco" },
-                    { 3, "104", "Caixa Econômica Federal" },
-                    { 4, "033", "Santander" },
-                    { 5, "260", "Nubank" },
-                    { 6, "077", "Inter" },
-                    { 7, "655", "Votorantim" },
+                    { 10, "001", "Banco do Brasil" },
                     { 8, "336", "C6" },
+                    { 7, "655", "Votorantim" },
+                    { 6, "077", "Inter" },
                     { 9, "208", "BTG Pactual" },
-                    { 10, "001", "Banco do Brasil" }
+                    { 4, "033", "Santander" },
+                    { 3, "104", "Caixa Econômica Federal" },
+                    { 2, "237", "Bradesco" },
+                    { 5, "260", "Nubank" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 438, "23.01.01.01", "930", "GER.DERSIDUOS" },
+                    { 432, "22.02.02.01", "923", "PAUTAEPESQUISA" },
+                    { 433, "22.02.03.01", "924", "JORNAISEREVISTAS" },
+                    { 434, "23.00.00.01", "925", "GABSEMAM" },
+                    { 435, "23.00.00.02", "926", "CEDIDOSAORGPUB" },
+                    { 436, "23.00.00.04", "927", "APOIOADMGABSEMA" },
+                    { 437, "23.01.00.02", "928", "FISCAMBIENTAL" },
+                    { 439, "23.01.01.02", "931", "LICENCIAMENTOAMB" },
+                    { 444, "23.02.00.00", "936", "DPDEPARQEVERDE" },
+                    { 441, "23.01.03.00", "933", "CODEVIDA" },
+                    { 442, "23.01.03.02", "934", "ABRIGANIMAL" },
+                    { 443, "23.01.03.03", "935", "FISCVIDAANIMAL" },
+                    { 431, "22.02.00.01", "922", "APOIOADMSECOR" },
+                    { 445, "23.02.00.01", "937", "APOIOADMFINANC" },
+                    { 446, "23.02.01.00", "1028", "COORDPAISAGISMO" },
+                    { 447, "23.02.01.01", "938", "SEÇÃOPAISAGISMO" },
+                    { 440, "23.01.01.03", "932", "CONTBALNEABILIDAD" },
+                    { 430, "22.02.00.00", "921", "DEPJORNALISTICO" },
+                    { 425, "21.01.01.01", "916", "PLANJURBANO" },
+                    { 428, "22.00.00.01", "919", "GABSECOR" },
+                    { 411, "20.03.00.00", "902", "DPEVENTOSCULTURA" },
+                    { 412, "20.03.00.01", "903", "apoioadmSECULT" },
+                    { 413, "20.03.01.00", "904", "COORDEVENTOSPOP" },
+                    { 414, "20.03.01.03", "905", "PROJVIACULTURAL" },
+                    { 415, "20.03.02.01", "906", "CORALMUNICIPAL" },
+                    { 416, "20.03.03.00", "907", "COORDINFSECULT" },
+                    { 417, "20.03.03.02", "908", "MANUT.SECULT" },
+                    { 418, "20.03.03.03", "909", "PRESERVMONUMENTO" },
+                    { 419, "20.03.03.04", "910", "TRASPORTESECULT" },
+                    { 420, "21.00.00.00.01", "911", "GABSEDURB" },
+                    { 421, "21.00.00.02", "912", "CEDIDOAORGPUB" },
+                    { 422, "21.00.00.04", "913", "APOIOADMFINGAB" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 423, "21.00.00.05", "914", "APOIOPLANEJAMENTO" },
+                    { 424, "21.01.00.00", "915", "DPPLANJEDESENVO" },
+                    { 448, "23.02.01.02", "939", "SEÇÃOAREASVERDES" },
+                    { 426, "21.02.00.00", "917", "DPREVITALIZURBAN" },
+                    { 427, "21.02.00.01", "918", "APOIOFINCSEDURB" },
+                    { 429, "22.00.00.04", "920", "APOIOADMSECOR" },
+                    { 449, "23.02.01.03", "940", "MANUTEQJARDINAGE" },
+                    { 454, "24.01.00.00", "945", "DPDEFESACONSUMID" },
+                    { 451, "23.02.02.02", "942", "MANUTPQAMBIENTAI" },
+                    { 473, "26.00.00.01", "964", "GABSEPORT" },
+                    { 474, "27.00.00.01", "965", "GABOPM" },
+                    { 475, "27.00.00.04", "966", "APOIOADMFINCGAB" },
+                    { 476, "28.00.00.01", "967", "GABSESERP" },
+                    { 477, "28.00.00.02", "1029", "CEDIDOAORGPUBL" },
+                    { 478, "28.00.00.03", "968", "CEDIDOAORGS/VE" },
+                    { 479, "28.00.00.04", "969", "SSAFSESERP" },
+                    { 472, "25.03.01.01", "963", "PREVDEFESACIVIL" },
+                    { 480, "28.01.00.00", "970", "DEAR-MORROS" },
+                    { 482, "28.01.01.00", "972", "CORTEC-M" },
+                    { 483, "28.02.00.00", "973", "DEAR#NOME?CONTINENTA" },
+                    { 484, "28.02.00.01", "974", "DEAFSESERP" },
+                    { 485, "28.02.01.00", "975", "CORTEC-ACONTINENT" },
+                    { 486, "28.03.00.00", "976", "DEAR-RCH" },
+                    { 487, "28.03.00.01", "977", "SAAFSERSEP" },
+                    { 488, "28.03.01.00", "978", "CORETC-RCHSESERP" },
+                    { 481, "28.01.00.02", "971", "SEQ.MARINASANTOS" },
+                    { 471, "25.03.01.00", "962", "CORISC" },
+                    { 470, "25.03.00.00", "961", "DEFESACIVIL" },
+                    { 469, "25.01.05.00", "960", "CORSEG-MORROS" },
+                    { 452, "24.00.00.01", "943", "GABSECID" },
+                    { 453, "24.00.00.03", "944", "CEDIDOSORGPUB" },
+                    { 410, "20.02.02.05", "901", "OFICINASCULTURAIS" },
+                    { 455, "24.02.00.00", "946", "DPCIDADANIA" },
+                    { 456, "24.02.02.01", "947", "IGUALDADERACIAL" },
+                    { 457, "25.00.00.01", "948", "GABSESEG" },
+                    { 458, "25.00.00.02", "949", "CEDIDOAORGPUB" },
+                    { 459, "25.00.00.03", "950", "CEDIDOSAORGPUB" },
+                    { 460, "25.00.00.06", "951", "JUNTAMILITAR" },
+                    { 461, "25.00.00.07", "952", "CONTRLOPERACIONAL" },
+                    { 462, "25.00.00.08", "953", "INDICDESEGURANÇA" },
+                    { 463, "25.01.00.00", "954", "DPGUARDAMUNICIPA" },
+                    { 464, "25.01.00.03", "955", "TREINAMENTOGM" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 465, "25.01.01.00", "956", "CORDACONTINENTAL" },
+                    { 466, "25.01.02.00", "957", "CORSEG-OI" },
+                    { 467, "25.01.03.00", "958", "CORSEG-CH" },
+                    { 468, "25.01.04.00", "959", "CORSEG#NOME?" },
+                    { 450, "23.02.02.01", "941", "CONSERVBOTANICO" },
+                    { 409, "20.02.02.03", "900", "MUNICDEBAILADO" },
+                    { 404, "20.02.01.07", "895", "BIBLIOHILDASOUZA" },
+                    { 407, "20.02.02.01", "898", "ESCOLALIVREARTE" },
+                    { 350, "18.01.00.10", "841", "TURISMONAUTICO" },
+                    { 351, "18.01.00.11", "842", "INFTURISTICA" },
+                    { 352, "18.02.00.01", "843", "APOIOADMSETUR" },
+                    { 353, "18.02.01.00", "844", "COORDAQUARIOMUNI" },
+                    { 354, "18.02.01.04", "845", "PROGDEMANUT" },
+                    { 355, "18.02.02.00", "846", "COORDORQUIDARIO" },
+                    { 356, "18.02.02.01", "847", "UNIBIOLOGIA" },
+                    { 349, "18.01.00.08", "840", "SERVSETUR" },
+                    { 357, "18.02.02.02", "848", "UNIEDUCAMBIENTAL" },
+                    { 359, "19.00.00.01", "850", "GABSEMES" },
+                    { 360, "19.00.00.02", "851", "CEDIDOAORGPUB" },
+                    { 361, "19.00.00.04", "852", "APFINCGABSEMES" },
+                    { 362, "19.00.00.06", "853", "CONVENIOSESPORTES" },
+                    { 363, "19.00.00.07", "854", "MEMOESPVANEY" },
+                    { 364, "19.01.00.00", "855", "DPEQUIPESPORTIVO" },
+                    { 365, "19.01.00.04", "856", "QDRICARDOSAMPAIO" },
+                    { 358, "18.02.02.05", "849", "UNIDADEBOTANICA" },
+                    { 348, "18.01.00.03", "839", "SETURRECEPTIVO" },
+                    { 347, "18.01.00.01", "838", "APOIOADMSETUR" },
+                    { 346, "18.00.00.05", "837", "APOIOCONSELHO" },
+                    { 329, "17.00.00.04", "822", "APOIOADMGABSIED" },
+                    { 330, "17.00.00.05", "823", "RHSIEDI" },
+                    { 331, "17.02.00.00", "824", "SEOSP" },
+                    { 332, "17.02.01.00", "825", "COORDDEOBRAS" },
+                    { 333, "17.03.00.00", "826", "DPCONTROLEDIFIC" },
+                    { 334, "17.03.00.01", "827", "SEAP-OP" },
+                    { 335, "17.03.00.02", "828", "SEAPOP" },
+                    { 336, "17.03.02.01", "829", "FISCALIZAÇÃODEOB" },
+                    { 337, "17.03.02.01", "1026", "SEOSP" },
+                    { 338, "17.03.02.02", "830", "FISCDEOBENORMA" },
+                    { 339, "17.03.02.03", "831", "FISCDEOBTECMOR" },
+                    { 340, "17.03.03.00", "832", "COINST" },
+                    { 341, "17.03.03.01", "833", "ISPEÇAOEINSTALA" },
+                    { 342, "17.03.03.03", "1027", "INSPEESTRUTURA" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 343, "18.00.00.01", "834", "GABSETUR" },
+                    { 344, "18.00.00.02", "835", "CEDIDOAORGPUB" },
+                    { 345, "18.00.00.04", "836", "APOIOGABSETUR" },
+                    { 366, "19.01.00.06", "857", "QDADALBERTOMARIN" },
+                    { 408, "20.02.02.03", "899", "ESCDEMUSICA" },
+                    { 367, "19.01.01.00", "858", "COORDESPPRAIA" },
+                    { 369, "19.01.01.02", "860", "FISCESPORTPRAIA" },
+                    { 391, "20.01.03.00", "882", "COORDCOLISEU" },
+                    { 392, "20.01.04.00", "883", "COORDGUARANY" },
+                    { 393, "20.01.05.02", "884", "SECAOMUSEUTRANSP" },
+                    { 394, "20.01.05.03", "885", "GALERIADEARTE" },
+                    { 395, "20.01.06.01", "886", "MUSEUIMAGEM/SOM" },
+                    { 396, "20.01.06.03", "887", "CINEMADERUA" },
+                    { 397, "20.02.00.00", "888", "DPFORMCULTURAL" },
+                    { 390, "20.01.02.00", "881", "COORDBRASCUBAS" },
+                    { 398, "20.02.00.01", "889", "APOIOADMSECULT" },
+                    { 400, "20.02.01.02", "891", "CENTROCULTMORROS" },
+                    { 401, "20.02.01.03", "892", "PROJLITERARIOS" },
+                    { 402, "20.02.01.04", "893", "BIBLIOTECACENTRAL" },
+                    { 403, "20.02.01.06", "894", "BIBLIOTECAZN" },
+                    { 489, "28.04.00.00", "979", "DEAR-RZNSESERP" },
+                    { 405, "20.02.01.08", "896", "HEMEROTECA" },
+                    { 406, "20.02.02.00", "897", "CORDFORMCULTURAL" },
+                    { 399, "20.02.01.00", "890", "COORDDEINFCULT" },
+                    { 389, "20.01.00.00", "880", "DEPCINETEATROES" },
+                    { 388, "20.00.00.06", "879", "ORGTECCONDEPASA" },
+                    { 387, "20.00.00.05", "878", "APOIOCONSSECULT" },
+                    { 370, "19.01.01.03", "861", "ESPORTENAUTICOS" },
+                    { 371, "19.01.02.00", "862", "COORDREBOUÇAS" },
+                    { 372, "19.01.03.00", "863", "COORDMNASCIMENTO" },
+                    { 373, "19.01.04.00", "864", "COORDESPORTIVAZN" },
+                    { 374, "19.01.05.00", "865", "COORDARAUJOPAGAO" },
+                    { 375, "19.02.00.00", "866", "DPATIVEVENTESPO" },
+                    { 376, "19.02.00.01", "867", "APOIOADMFINANC" },
+                    { 377, "19.02.00.02", "868", "ORGCOMPETIÇOES" },
+                    { 378, "19.02.00.03", "869", "MONITORIALESPORT" },
+                    { 379, "19.02.00.04", "870", "AVALIAÇÃOFISICA" },
+                    { 380, "19.02.01.01", "871", "ESCOLADEESPORTE" },
+                    { 381, "19.02.01.02", "872", "ESPORTESRADICAIS" },
+                    { 382, "19.02.01.03", "873", "ESPORTESADAPTADOS" },
+                    { 383, "19.02.01.04", "874", "ESPORTES3ªIDADE" },
+                    { 384, "20.00.00.01", "875", "GABSECULT" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 385, "20.00.00.02", "876", "CEDIDOSORGPUB" },
+                    { 386, "20.00.00.04", "877", "APOIOGABSECULT" },
+                    { 368, "19.01.01.01", "859", "SEABPRAIA" },
+                    { 490, "28.04.01.00", "980", "COORTECZNSESERP" },
+                    { 495, "28.06.01.01", "985", "SEOFIC" },
+                    { 492, "28.05.01.00", "982", "CORTEC-ZOI" },
+                    { 597, "", "169", "SEED" },
+                    { 598, "", "131", "SEEGES" },
+                    { 599, "", "165", "SEFEP" },
+                    { 600, "", "96", "SEFIN" },
+                    { 601, "", "168", "SEFINS" },
+                    { 602, "", "179", "SEFIS" },
+                    { 603, "", "178", "SEFIS-AMB" },
+                    { 596, "", "111", "SEDURBAM" },
+                    { 604, "", "176", "SEFORTRE" },
+                    { 606, "", "183", "SEFROT" },
+                    { 607, "", "175", "SEFROTI" },
+                    { 608, "", "105", "SEGES" },
+                    { 609, "", "197", "SEGES" },
+                    { 610, "", "1034", "Seges/Sefrot" },
+                    { 611, "", "126", "SEHIG" },
+                    { 612, "", "138", "SELETRIC" },
+                    { 605, "", "1035", "Sefrot" },
+                    { 595, "", "202", "SEDURB" },
+                    { 594, "", "102", "SEDUC" },
+                    { 593, "", "135", "SEDES" },
+                    { 576, "", "134", "SEACON" },
+                    { 577, "", "1017", "SEACON" },
+                    { 578, "", "189", "SEADOMI" },
+                    { 579, "", "146", "SEAGEN" },
+                    { 580, "", "125", "SEAJUR" },
+                    { 581, "", "190", "SEALM" },
+                    { 582, "", "191", "SEALM" },
+                    { 583, "", "103", "SEAS" },
+                    { 584, "", "143", "SECEDI" },
+                    { 585, "", "204", "SECID" },
+                    { 586, "", "130", "SECOM" },
+                    { 587, "", "194", "SECONSERV" },
+                    { 588, "", "203", "SECOR" },
+                    { 589, "", "164", "SECRAS" },
+                    { 590, "", "193", "SecretariadeGestão" },
+                    { 591, "", "118", "SECTUR" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 592, "", "100", "SECULT" },
+                    { 613, "", "116", "SEMAM" },
+                    { 575, "", "154", "SEAC" },
+                    { 614, "", "161", "SEMAN" },
+                    { 616, "", "160", "SENIC" },
+                    { 638, "", "106", "SGO" },
+                    { 639, "", "148", "SHM-SF" },
+                    { 640, "", "1021", "SHM-SF" },
+                    { 641, "", "136", "SICTUR" },
+                    { 642, "", "128", "SIED" },
+                    { 643, "", "120", "SIEDI" },
+                    { 644, "", "201", "SINDEST" },
+                    { 637, "", "1020", "SEUB-RC" },
+                    { 645, "", "1042", "SINDEST" },
+                    { 647, "", "98", "SMS" },
+                    { 648, "", "33", "SOCIOUSUARIO-SINDEST" },
+                    { 649, "", "108", "UME" },
+                    { 650, "", "1022", "UMECIDADEDESANTOS" },
+                    { 651, "", "187", "UME-LO" },
+                    { 652, "", "1023", "UME-PADRELEONARDONUNES" },
+                    { 653, "", "1024", "USFMORROJOSEMENINO" },
+                    { 646, "", "1043", "SINDEST" },
+                    { 636, "", "177", "SEUB-PA" },
+                    { 635, "", "1019", "SEUB-EMB" },
+                    { 634, "", "188", "SEUB-CG" },
+                    { 617, "", "162", "SENUTRI" },
+                    { 618, "", "99", "SEOSP" },
+                    { 619, "", "123", "SEPLAN" },
+                    { 620, "", "122", "SEPORT" },
+                    { 621, "", "195", "seproc" },
+                    { 622, "", "156", "SEPROS" },
+                    { 623, "", "1036", "SEPROS-ZOI" },
+                    { 624, "", "104", "SEPROS-C" },
+                    { 625, "", "155", "SEPROS-ZNO" },
+                    { 626, "", "180", "SEPROS-ZOI" },
+                    { 627, "", "1018", "SEPROS-ZOI" },
+                    { 628, "", "115", "SESEG" },
+                    { 629, "", "117", "SESERP" },
+                    { 630, "", "159", "SESFAMI" },
+                    { 631, "", "109", "SETUR" },
+                    { 632, "", "150", "SEUB" },
+                    { 633, "", "199", "SEUBPP" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 615, "", "110", "SEMES" },
+                    { 491, "28.05.00.01", "981", "SEAFSESERP" },
+                    { 574, "", "185", "SEABRIGO-CA" },
+                    { 572, "", "1015", "SAAF-DEFREC" },
+                    { 514, "", "1040", "Aposentado" },
+                    { 515, "", "1003", "AQUARIO" },
+                    { 516, "", "1004", "C" },
+                    { 517, "", "97", "CAMARA" },
+                    { 518, "", "147", "CAPEP" },
+                    { 519, "", "167", "CECERPA" },
+                    { 520, "", "145", "CECOM-V" },
+                    { 513, "", "174", "AMBESA" },
+                    { 521, "", "200", "CEDIDOAOUTROSORG.C/VENC." },
+                    { 523, "", "196", "COAQ" },
+                    { 524, "", "127", "COCERT" },
+                    { 525, "", "119", "COFIC" },
+                    { 526, "", "114", "COINST" },
+                    { 527, "", "1006", "COORDANALISEPROJPARTICULAR" },
+                    { 529, "", "113", "COORTEC" },
+                    { 530, "", "198", "COORTEC-ZOI" },
+                    { 522, "", "1005", "CEDIDOSADIVERS.ORG.PUBLICO" },
+                    { 512, "29.03.01.03", "1002", "INSC.DIVATIVA" },
+                    { 511, "29.03.01.02", "1001", "COBDIVIDAATIVA" },
+                    { 510, "29.03.00.01", "1000", "SAAFPROFISC" },
+                    { 493, "28.06.00.00", "983", "DPSERVPUBLICOS" },
+                    { 494, "28.06.01.00", "984", "coserp" },
+                    { 328, "17.00.00.01", "821", "GABSIEDI" },
+                    { 496, "28.06.01.02", "986", "SELETRIC" },
+                    { 497, "28.06.01.04", "987", "SEALM-SERP" },
+                    { 498, "28.06.02.02", "988", "SECEM-AREIABRANCA" },
+                    { 499, "28.06.02.03", "989", "SECEM-FILOSOFIA" },
+                    { 500, "28.06.02.04", "990", "SECEM-PAQUETA" },
+                    { 501, "29.00.00.01", "991", "GABPROCGERALMUN" },
+                    { 502, "29.00.00.03", "992", "CEDIDAPARACAPEP" },
+                    { 503, "29.00.00.05", "993", "SEREB" },
+                    { 504, "29.00.00.06", "994", "SEPRE" },
+                    { 505, "29.01.00.00", "995", "PROJUR" },
+                    { 506, "29.01.00.01", "996", "SAAF#NOME?" },
+                    { 507, "29.02.00.00", "997", "PROTRAB" },
+                    { 508, "29.02.00.01", "998", "SAAF-PROTRAB" },
+                    { 509, "29.02.01.00", "999", "CEACI" },
+                    { 531, "", "172", "CORSEG" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 573, "", "153", "SAAF-SEMAM" },
+                    { 532, "", "149", "CORSEG-AC" },
+                    { 534, "", "140", "CORSEG-OI" },
+                    { 556, "", "1011", "LourdezOrtiz" },
+                    { 557, "", "1012", "NAPSIII" },
+                    { 558, "", "205", "OPM-OUVIDORIAPUBLICADOMUNICIPIO" },
+                    { 559, "", "166", "OUVIDORIA" },
+                    { 560, "", "1032", "P.S.zonaleste" },
+                    { 561, "", "192", "PENSIONISTA" },
+                    { 562, "", "107", "PGM" },
+                    { 555, "", "1010", "JUNTAMILITARSANTOS" },
+                    { 563, "", "1", "PMS" },
+                    { 565, "", "144", "PMS-SESEG" },
+                    { 566, "", "173", "POUPATEMPO" },
+                    { 567, "", "1033", "PREFEITURAMUNICIPALDESANTOS" },
+                    { 568, "", "157", "PROFISC" },
+                    { 569, "", "1013", "ProntoSocorroZonaLeste" },
+                    { 570, "", "1014", "REGIONALDOCENTRO" },
+                    { 571, "", "133", "SAAF" },
+                    { 564, "", "121", "PMS" },
+                    { 554, "", "95", "IPREV" },
+                    { 553, "", "1009", "INSTITUTODAMULHER" },
+                    { 552, "", "112", "GPM" },
+                    { 535, "", "124", "CORTEC" },
+                    { 536, "", "186", "CORTEC-RCH" },
+                    { 537, "", "158", "COSERP" },
+                    { 538, "", "163", "DEAB" },
+                    { 539, "", "184", "DEAR" },
+                    { 540, "", "137", "DEAR-ZOI" },
+                    { 541, "", "171", "DEATRI" },
+                    { 542, "", "170", "DEGEP" },
+                    { 543, "", "132", "DEOPS" },
+                    { 544, "", "182", "DEQUIP" },
+                    { 545, "", "181", "DESMET" },
+                    { 546, "", "139", "DEVIP" },
+                    { 547, "", "151", "DGM" },
+                    { 548, "", "142", "DGMS" },
+                    { 549, "", "1008", "GAB.SEC.MUNIC.DEEDUCAÇÃO" },
+                    { 550, "", "152", "GABINETE" },
+                    { 551, "", "141", "GMS" },
+                    { 533, "", "129", "CORSEG-CH" },
+                    { 327, "16.02.02.07", "820", "MULHVITVIOLENCIA" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 528, "", "1007", "COORD.CENTROSAT.INT." },
+                    { 325, "16.02.02.04", "818", "SEABRIG" },
+                    { 104, "14.00.01.10", "601", "UMEEUNICECALDAS" },
+                    { 105, "14.00.01.11", "602", "UMEPROFIVETAMES" },
+                    { 106, "14.00.01.12", "603", "UMEJOSEDACOSTA" },
+                    { 107, "14.00.01.13", "604", "UMELEONORMENDES" },
+                    { 108, "14.00.01.14", "605", "UMEPROF.MªHELEN" },
+                    { 109, "14.00.01.15", "606", "UMEOLIVIAFERNAND" },
+                    { 110, "14.00.01.16", "607", "UMEPORCHATASSIS" },
+                    { 103, "14.00.01.09", "600", "UMEELZAVIRTUOSO" },
+                    { 111, "14.00.01.17", "608", "UMEMªCARMELITAP" },
+                    { 113, "14.00.01.19", "610", "UMEAUX.INSTRUÇÃO" },
+                    { 114, "14.00.01.20", "611", "UMEAVELINODAPAZ" },
+                    { 115, "14.00.01.21", "612", "UMEAYRTONSENNA" },
+                    { 116, "14.00.01.22", "613", "UMEBARDORIOBCO" },
+                    { 117, "14.00.01.23", "614", "UMECIDADESANTOS" },
+                    { 118, "14.00.01.24", "615", "UMEDINOBUENO" },
+                    { 119, "14.00.01.26", "616", "UMEEDMEALADEVIG" },
+                    { 112, "14.00.01.18", "609", "UMEANTONIODEMOST" },
+                    { 102, "14.00.01.08", "599", "UMEDEROSSEJOSEO" },
+                    { 101, "14.00.01.07", "598", "UMEPASSOSSOBRINH" },
+                    { 100, "14.00.01.06", "597", "UMELOBOVIANA" },
+                    { 83, "13.04.00.02", "580", "APOIOTEC.LICITAÇ" },
+                    { 84, "13.04.01.00", "581", "COORD.LICITAÇOES" },
+                    { 85, "13.04.01.01", "582", "COMISS.PERM.LICI" },
+                    { 86, "13.04.01.02", "583", "COMISSPERM.LICII" },
+                    { 87, "13.04.01.04", "585", "COMISSPERM.LICIV" },
+                    { 88, "13.04.02.01", "586", "ELAB.DEEDITAISE" },
+                    { 89, "13.04.02.02", "587", "SEÇÃOALMOX-GESTA" },
+                    { 90, "13.05.00.01", "588", "APOIOADM.FINC" },
+                    { 91, "13.05.01.00", "589", "COORD.TEC.DAINF" },
+                    { 92, "13.05.01.02", "590", "PROD.EMANUT.DE" },
+                    { 93, "14.00.00.02", "1037", "GABSEDUC" },
+                    { 94, "14.00.00.04", "591", "APOIOADM.FINCGAB" },
+                    { 95, "14.00.01.00", "592", "COORDSUPEDUCAÇAO" },
+                    { 96, "14.00.01.02", "593", "UMECANDINHARIBEI" },
+                    { 97, "14.00.01.03", "594", "UMEPeWALDEMARVA" },
+                    { 98, "14.00.01.04", "595", "UMEGEMARABELLO" },
+                    { 99, "14.00.01.05", "596", "UMELYDIAFEDERECI" },
+                    { 120, "14.00.01.27", "617", "UMEEMILIAMªREIS" },
+                    { 82, "13.04.00.01", "579", "APOIOADMEFINANC" },
+                    { 121, "14.00.01.28", "618", "UMEFLORESTANFERN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 123, "14.00.01.31", "620", "UMELOURDESORTIZ" },
+                    { 145, "14.00.02.49", "642", "UMELAURIVALRODRI" },
+                    { 146, "14.00.02.50", "643", "UMEPROFMªLUIZA" },
+                    { 147, "14.00.02.51", "644", "UMESANDRAC.TGAM" },
+                    { 148, "14.00.02.52", "645", "UMEREGINAALTMAN" },
+                    { 149, "14.00.02.53", "646", "UMEYARANSANTINI" },
+                    { 150, "14.00.02.54", "647", "UMECELYMNEGRINI" },
+                    { 151, "14.00.02.55", "648", "UMEGAL.CLOVISBA" },
+                    { 144, "14.00.02.48", "641", "UMEJOAOWSAMPAIO" },
+                    { 152, "14.00.02.56", "649", "UMECYROACARNEIR" },
+                    { 154, "14.00.02.58", "651", "UMELUIZCPRESTES" },
+                    { 155, "14.00.02.59", "652", "UMEPROFMAGALIAL" },
+                    { 156, "14.00.02.60", "653", "UMEMªPATRICIA" },
+                    { 157, "14.00.02.61", "654", "UMENELSONT.PIZA" },
+                    { 158, "14.00.02.62", "655", "UMESAMUELALMOU" },
+                    { 159, "14.00.02.63", "656", "UMEOSWALDOJUSTO" },
+                    { 160, "14.00.02.64", "657", "UMEFER.COSTA" },
+                    { 153, "14.00.02.57", "650", "UMEJOAOINACIO" },
+                    { 143, "14.00.02.47", "640", "UMEDRLUIZLOPES" },
+                    { 142, "14.00.02.46", "639", "UMEPROFJOSESAP" },
+                    { 141, "14.00.02.45", "638", "UMEHILDAOPAPA" },
+                    { 124, "14.00.01.32", "621", "UMEMºLUIZAALONS" },
+                    { 125, "14.00.01.33", "622", "UMEMARIOA.ALCAN" },
+                    { 126, "14.00.01.34", "623", "UMEMONTECABRAO" },
+                    { 127, "14.00.01.35", "624", "UMEOLAVOBILAC" },
+                    { 128, "14.00.01.36", "625", "UMEPEDROII" },
+                    { 129, "14.00.01.37", "626", "UMERICARDOSAMPAI" },
+                    { 130, "14.00.01.38", "627", "UMEACACIODEPAUL" },
+                    { 131, "14.00.01.39", "628", "UMEANDRADASI" },
+                    { 132, "14.00.01.40", "629", "UMEPE.FRANCISCOL" },
+                    { 133, "14.00.01.41", "630", "UMENOELGFERREIR" },
+                    { 134, "14.00.01.42", "631", "UMEJOSEBONIFACIO" },
+                    { 135, "14.00.01.43", "632", "UMEJOAOPAPASOBR" },
+                    { 136, "14.00.01.44", "633", "UMEANDRADASII" },
+                    { 137, "14.00.01.45", "634", "UMEIRMAMªDOLORE" },
+                    { 138, "14.00.02.42", "635", "UMEANIZIOBENTO" },
+                    { 139, "14.00.02.43", "636", "UMEHILDARABACA" },
+                    { 140, "14.00.02.44", "637", "UMEFLAVIOCBARBO" },
+                    { 122, "14.00.01.29", "619", "UMEGOTADELEITE" },
+                    { 161, "14.00.02.65", "658", "UMEAZEVEDOJR" },
+                    { 81, "13.04.00.00", "578", "DEP. LICIT.ESUPRI" },
+                    { 79, "13.03.02.03", "576", "CONTROLEDEPESS.I" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 21, "12.00.00.01", "520", "GAB.SEFIN" },
+                    { 22, "12.00.00.02", "521", "CEDIDOAORG.PUB" },
+                    { 23, "12.01.00.00", "522", "DEORG" },
+                    { 24, "12.01.00.02", "523", "SEPLAN" },
+                    { 25, "12.01.00.03", "524", "S.EXECUC.ORCAMENT" },
+                    { 26, "12.02.00.00", "525", "DP.CONTROL.FINANC" },
+                    { 27, "12.02.00.02", "526", "S.CONTROL.CONVE" },
+                    { 20, "11.03.02.00", "519", "coord.apoioemp." },
+                    { 28, "12.02.00.03", "527", "SEÇÃODEEMPENHO" },
+                    { 30, "12.03.00.02", "529", "S.CONTROL.ARREC." },
+                    { 31, "12.04.00.00", "530", "DP.FISC.RECEITA" },
+                    { 32, "12.04.00.01", "531", "S.APOIOADM.FINC." },
+                    { 33, "12.04.01.00", "532", "CORD.FISC.TRIB.IMO" },
+                    { 34, "12.04.01.01", "533", "S.FISC.IMP.PRED" },
+                    { 35, "12.04.01.02", "534", "S.FISC.IMP.TRAN" },
+                    { 36, "12.04.02.00", "535", "COORD.FISC.DETR" },
+                    { 29, "12.02.00.04", "528", "S.EXEC.CONTABIL" },
+                    { 19, "11.02.01.00", "518", "COORD.APOIOPQ.T" },
+                    { 18, "11.00.00.02", "517", "CED.AORG.PUB" },
+                    { 17, "11.00.00.01", "516", "GABSEDES" },
+                    { 326, "16.02.02.05", "819", "ABRIGOCRIANCADOL" },
+                    { 1, "10.00.00.01", "500", "GAB.DOPREFEITO" },
+                    { 2, "10.00.00.02", "501", "CEDIDOAORG.PUB" },
+                    { 3, "10.00.01.01", "502", "S.ADM.GAB.PREF" },
+                    { 4, "10.01.00.00", "503", "DP.ASSLEGISL." },
+                    { 5, "10.01.00.01", "504", "S.APOIOADMFINC." },
+                    { 6, "10.01.00.02", "505", "S.AT.IST.LEGISL." },
+                    { 7, "10.02.00.00", "506", "DEP.ASS.METROPOL" },
+                    { 8, "10.03.00.00", "507", "DP.DEARTICULAÇÃO" },
+                    { 9, "10.03.01.01", "508", "S.ADM-CERIMONIAL" },
+                    { 10, "10.03.01.02", "509", "S.DESUP.TEC" },
+                    { 11, "10.03.02.00", "510", "COORD.DEGOV" },
+                    { 12, "10.03.02.01", "511", "S.DEPART.COMUNIT" },
+                    { 13, "10.03.02.03", "512", "S.APOIOAREDE" },
+                    { 14, "10.05.00.00", "513", "COMINQ" },
+                    { 15, "10.06.00.00", "514", "FUNDOSOCIALSOLID" },
+                    { 16, "10.07.00.01", "515", "S.ADMFINC.GAB" },
+                    { 37, "12.04.02.01", "536", "FISC.DEIMP.S/QQ" },
+                    { 80, "13.03.02.04", "577", "CONTROLPESSII" },
+                    { 38, "12.05.00.00", "537", "ADM.TRIB.P.TEMPO" },
+                    { 40, "12.05.01.00", "539", "C.DEPLANJ.TRIB" },
+                    { 62, "13.02.01.01", "560", "S.ADMCOORD.ADM" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 63, "13.02.01.02", "561", "DISTRIB.DEPROCES" },
+                    { 64, "13.02.01.03", "562", "SECONSERV" },
+                    { 65, "13.02.01.04", "563", "SEPATRI" },
+                    { 67, "13.02.02.00", "565", "SEC.TRANSPORTE" },
+                    { 68, "13.02.02.02", "1031", "MANUTENÇAOFROTA" },
+                    { 69, "13.02.02.03", "566", "OPERAÇÃODAFROTA" },
+                    { 61, "13.02.01.00", "559", "COORD.ADM" },
+                    { 70, "13.02.02.04", "567", "ALMOXERIFE-FROTA" },
+                    { 72, "13.03.00.00", "569", "DEP.GEST.PESSOAS" },
+                    { 73, "13.03.00.01", "570", "APOIOADM.FINANC" },
+                    { 74, "13.03.01.00", "571", "COORD.FORMPESSOA" },
+                    { 75, "13.03.01.02", "572", "SECAOFORM.PESSOA" },
+                    { 76, "13.03.01.03", "573", "SEÇÃOCARGOSESAL" },
+                    { 77, "13.03.01.05", "574", "PROGRAMASECONV." },
+                    { 78, "13.03.02.00", "575", "COORD.CONTROL.PESS" },
+                    { 71, "13.02.03.00", "568", "COORD.POUPATEMPO" },
+                    { 60, "13.01.04.02", "558", "READAPTAÇÃOPROFIS" },
+                    { 59, "13.01.03.00", "557", "COORD.ASSIST.SER" },
+                    { 58, "13.01.01.00", "556", "COORD.MED.TRAB" },
+                    { 41, "12.05.01.02", "540", "POL.ELEGISLTRIB" },
+                    { 42, "12.05.02.00", "541", "COORD.ASS.ECON" },
+                    { 43, "12.05.02.01", "542", "PARC.ADM.FISCAL" },
+                    { 44, "12.05.02.02", "543", "CAD.TRIBUTARIO" },
+                    { 45, "12.05.02.03", "544", "CONTRL.ARREC.FISC" },
+                    { 46, "12.06.00.00", "545", "DP.FISC.EMPEAT" },
+                    { 47, "12.06.00.01", "546", "APOIOADM.EFINC" },
+                    { 48, "12.06.00.02", "547", "FISC.EMPRESARIAL" },
+                    { 49, "12.06.00.03", "548", "FISC.COM.AMBULAN" },
+                    { 50, "12.06.00.04", "549", "FISC.DIRIGIDA" },
+                    { 51, "12.06.00.05", "550", "FISC.FEIRASLIVRE" },
+                    { 52, "12.07.00.00", "551", "JUNTAREC.FISCAIS" },
+                    { 53, "13.00.00.01", "552", "GABSEGES" },
+                    { 54, "13.00.00.02", "553", "CEDIDOAORG.PUB" },
+                    { 55, "13.00.00.03", "1030", "CEDIDOAORG.PUB" },
+                    { 56, "13.00.00.04", "554", "APOIOADMFINCGAB" },
+                    { 57, "13.01.00.01", "555", "APOIOADMFINC" },
+                    { 39, "12.05.00.01", "538", "S.APOIOADMEFIN" },
+                    { 162, "14.00.02.66", "659", "UMEJOSECSOBRINH" },
+                    { 66, "13.02.01.05", "564", "SEC.GEST.CONTCO" },
+                    { 164, "14.00.02.68", "661", "UMELEONARDONUNES" },
+                    { 268, "15.03.03.03", "761", "CENTRODIAGNOSTICO" },
+                    { 269, "15.03.03.04", "762", "FISIOZONAORLA" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 270, "15.03.03.05", "763", "CRSAUDEAUDITIVA" },
+                    { 271, "15.03.04.01", "764", "ESP.ODONTOZN" },
+                    { 272, "15.03.04.02", "765", "ESPODONTOZORLA" },
+                    { 273, "15.03.04.03", "766", "PREVENCAOBUCAL" },
+                    { 274, "15.04.01.01", "767", "VIG.SANITARIA" },
+                    { 267, "15.03.03.02", "760", "AMEZ.NOROESTE" },
+                    { 275, "15.04.01.02", "768", "CONT.INTOXICAÇAO" },
+                    { 277, "15.04.02.01", "770", "VIGEPIDEMIOLOGICA" },
+                    { 278, "15.04.02.02", "771", "CONTROLZOONOZES" },
+                    { 279, "15.04.02.03", "772", "CONTROLVETORES" },
+                    { 280, "15.05.01.00", "773", "COORDDEREG.SAUD" },
+                    { 281, "15.05.01.01", "774", "AUDITORIASAUDE" },
+                    { 282, "15.05.02.01", "775", "VAGASHOSPITALARES" },
+                    { 283, "15.05.02.02", "776", "AG.CONSULTAEEXA" },
+                    { 276, "15.04.01.03", "769", "REFSAUDETRABALHO" },
+                    { 266, "15.03.03.01", "759", "AMECENTRALHISTOR" },
+                    { 265, "15.03.02.04", "1025", "PREV.INFECTOLOGICA" },
+                    { 264, "15.03.02.03", "758", "NUCLEOAT.CRIANÇA" },
+                    { 247, "15.02.04.05", "741", "SSFVILAPROGRESSO" },
+                    { 248, "15.02.04.06", "742", "SSFMONTESERRAT" },
+                    { 249, "15.03.01.00", "743", "COORDSAUDEMENTAL" },
+                    { 250, "15.03.01.01", "744", "SREABPSICOSOCIAL" },
+                    { 251, "15.03.01.02", "745", "APOIOPSICOSOCIAL" },
+                    { 252, "15.03.01.03", "746", "APPSICOSOCIALII" },
+                    { 253, "15.03.01.04", "747", "PSICOSOCIALIII" },
+                    { 254, "15.03.01.05", "748", "PSICOSOCIALIV" },
+                    { 255, "15.03.01.07", "749", "SEÇÃOLARABRIGO" },
+                    { 256, "15.03.01.08", "750", "RCHMORROSI" },
+                    { 257, "15.03.01.10", "751", "USOSUBPSICOATIVA" },
+                    { 258, "15.03.01.11", "752", "C.RPSICO.ADOLESC" },
+                    { 259, "15.03.01.12", "753", "CVCRIANÇADAZN" },
+                    { 260, "15.03.01.13", "754", "CVCORLAINTERMEDI" },
+                    { 261, "15.03.01.14", "755", "CVCREGIAOCENTRAL" },
+                    { 262, "15.03.02.01", "756", "SOL.PACIENTEAIDS" },
+                    { 263, "15.03.02.02", "757", "CENTROREFAIDS" },
+                    { 284, "15.05.02.03", "777", "SAMU" },
+                    { 246, "15.02.04.04", "740", "UBSJABAQUARA" },
+                    { 285, "15.06.00.00", "778", "DP ADMFINC.INFRA" },
+                    { 287, "15.06.01.01", "1039", "SEEMP-SMS" },
+                    { 310, "16.01.03.07", "803", "COMUNITBRETIRO" },
+                    { 311, "16.01.03.08", "804", "CJUVENTUDEMORROS" },
+                    { 312, "16.01.04.01", "805", "RHSEAS" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 313, "16.01.04.04", "806", "ALMOXERIFESEAS" },
+                    { 314, "16.01.04.05", "807", "ORÇ.FINCSEAS" },
+                    { 315, "16.01.04.06", "808", "PROGEMANTSEAS" },
+                    { 316, "16.01.04.08", "809", "CONTEPATRISEAS" },
+                    { 309, "16.01.03.06", "802", "COMUNITSTAMARIA" },
+                    { 317, "16.01.05.04", "810", "APOIOADMSEAS" },
+                    { 319, "16.02.00.00", "812", "DPPROTEÇÃOSOCIAL" },
+                    { 320, "16.02.01.01", "813", "REFESPSEAS" },
+                    { 321, "16.02.01.03", "814", "ACOLHIMENTO" },
+                    { 322, "16.02.01.04", "815", "ASSEMEDIDASEDUC" },
+                    { 323, "16.02.01.05", "816", "ASSSOCIALDAPOP" },
+                    { 163, "14.00.02.67", "660", "UMEJOSEGENESIO" },
+                    { 324, "16.02.01.08", "817", "ABRIGOADULTIDOSO" },
+                    { 318, "16.01.06.03", "811", "RECICLAGEM" },
+                    { 308, "16.01.03.04", "801", "CREF.NOVACINTRA" },
+                    { 307, "16.01.02.09", "800", "C.JUVENTUDEZ.N" },
+                    { 306, "16.01.02.03", "799", "CCONVIVENCIAZN" },
+                    { 288, "15.06.02.00", "781", "COORD. INFRAESTRUT" },
+                    { 289, "15.06.02.01", "782", "ADMSAUDE" },
+                    { 290, "15.06.02.02", "783", "RHSAUDE" },
+                    { 291, "15.06.02.03", "784", "SENUTRI" },
+                    { 292, "15.06.02.04", "785", "APOIOBIOSEGURANÇA" },
+                    { 293, "15.06.02.06", "786", "TRANSPORTESAUDE" },
+                    { 295, "15.06.03.04", "788", "DISTRIBMEDICAMENT" },
+                    { 296, "16.00.00.01", "789", "GABASSIST.SOCIAL" },
+                    { 297, "16.00.00.02", "790", "CEDIDOAORGPUB" },
+                    { 298, "16.00.00.04", "791", "APOIOADMSEAS" },
+                    { 299, "16.01.01.01", "792", "CENTROREFERENCIA" },
+                    { 300, "16.01.01.02", "793", "UNIISABELGARCIA" },
+                    { 301, "16.01.01.04", "794", "CENTROC.VIDANOV" },
+                    { 302, "16.01.01.05", "795", "CCOMUNIT.MERCADO" },
+                    { 303, "16.01.01.06", "796", "CENTROJUVENTUDE" },
+                    { 304, "16.01.02.01", "797", "ASOCIRADIOCLUBE" },
+                    { 305, "16.01.02.02", "798", "ASSIT.SOC.ALEMOA" },
+                    { 286, "15.06.00.01", "779", "APOIOADMFINANC." },
+                    { 245, "15.02.04.03", "739", "UBSSAOBENTO" },
+                    { 294, "15.06.03.01", "787", "ALMOXERIFE/SAUDE" },
+                    { 243, "15.02.04.01", "737", "UBSMARAPÉ" },
+                    { 188, "14.03.01.00", "685", "COORDCONTROLEDUC" },
+                    { 189, "14.03.01.03", "686", "COMPRASEDUCAÇÃO" },
+                    { 190, "14.03.02.00", "687", "COORD.MERENDAESC" },
+                    { 191, "14.03.02.01", "688", "NUTRIÇÃOEDUCAÇÃO" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 192, "14.03.02.01", "1038", "SENUTRI-SEDUC" },
+                    { 193, "14.03.02.02", "689", "ALMOXERIFEESCOLAR" },
+                    { 194, "14.03.03.00", "690", "COORD.ADMEDUCACAO" },
+                    { 187, "14.03.00.00", "684", "DPADMINFESTRUTU" },
+                    { 195, "14.03.03.01", "691", "CONTROLEDUCAÇÃO" },
+                    { 197, "14.03.03.04", "693", "MATERIASEMOBILIA" },
+                    { 198, "15.00.00.01", "694", "GAB.SEC.SAUDE" },
+                    { 244, "15.02.04.02", "738", "UBSNOVACINTRA" },
+                    { 166, "14.00.02.70", "663", "UMEMARTINSFONTES" },
+                    { 200, "15.00.00.03", "696", "CEDIDOAORG.PUBL" },
+                    { 201, "15.00.00.04", "697", "APOIOADMFINCGAB" },
+                    { 202, "15.00.00.06", "698", "COMISSAOLIC.SAUD" },
+                    { 196, "14.03.03.03", "692", "AT.PESSOALEDUCAÇ" },
+                    { 186, "14.02.02.02", "683", "LEGISLAÇÃOENORMA" },
+                    { 185, "14.02.02.00", "682", "COORD.DEVIDAESC" },
+                    { 184, "14.02.01.04", "681", "PROJESPINTEDUCA" },
+                    { 167, "14.00.02.71", "664", "UMEPEDROCRESCENT" },
+                    { 168, "14.00.02.72", "665", "UMETEREZINHAPIME" },
+                    { 169, "14.00.02.73", "666", "UME28DFEVEREIRO" },
+                    { 170, "14.00.02.74", "667", "UMEWALDEMARALMEI" },
+                    { 171, "14.00.02.75", "668", "UMECASTELO" },
+                    { 172, "14.00.02.76", "669", "UMEPELUCIOFLORO" },
+                    { 173, "14.00.02.77", "670", "UMEESM.TARQUINIO" },
+                    { 174, "14.00.02.78", "671", "UMEDPRUBENSLARA" },
+                    { 175, "14.00.02.79", "672", "UMECLAUDIACORREA" },
+                    { 176, "14.01.00.00", "673", "DP.PEDAGOGICO" },
+                    { 177, "14.01.01.03", "674", "ED.JOVENSADULTO" },
+                    { 178, "14.01.01.04", "675", "ED.ESPECIAL" },
+                    { 179, "14.01.02.01", "676", "FORM.CONTINUADA" },
+                    { 180, "14.01.02.02", "677", "NUCLEOTEC.ED." },
+                    { 181, "14.01.02.03", "678", "BIBLIOTECONOMIAMU" },
+                    { 182, "14.01.02.04", "679", "PROJ.EDESPECIAIS" },
+                    { 183, "14.02.01.01", "680", "PLANJ.EDUCACIONAL" },
+                    { 203, "15.00.01.00", "699", "COORDDSAUDECRIA" },
+                    { 204, "15.00.02.00", "700", "COORDSAUDEMULHER" },
+                    { 199, "15.00.00.02", "695", "CEDIDOAORG.PUB" },
+                    { 206, "15.01.00.01", "702", "APOIOADMFINACEIR" },
+                    { 227, "15.02.01.06", "721", "UBSPONTADAPRAIA" },
+                    { 228, "15.02.02.00", "722", "COORD.AREACONTINE" },
+                    { 229, "15.02.02.01", "723", "UBSMARTINSFONTES" },
+                    { 205, "15.00.03.00", "701", "COORD.SAUDEADULT" },
+                    { 230, "15.02.02.02", "724", "UBSCONS.NEBIAS" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargo",
+                columns: new[] { "Id", "CentroCusto", "CodigoLocalTrabalho", "NomeLocalTrabalho" },
+                values: new object[,]
+                {
+                    { 231, "15.02.02.03", "725", "UBSVALONGO" },
+                    { 232, "15.02.02.04", "726", "UBSVL.MATHIAS" },
+                    { 233, "15.02.02.05", "727", "SAUDEMONTECABRAO" },
+                    { 234, "15.02.02.05", "728", "UBSPORTO" },
+                    { 235, "15.02.02.08", "729", "SFILHADIANA" },
+                    { 236, "15.02.03.01", "730", "UBSSAOMANOEL" },
+                    { 237, "15.02.03.02", "731", "UBSALEMOA" },
+                    { 238, "15.02.03.03", "732", "UBSVL.SAOJORGE" },
+                    { 239, "15.02.03.04", "733", "UBSRADIOCLUBE" },
+                    { 240, "15.02.03.05", "734", "UBSBOMRETIRO" },
+                    { 241, "15.02.03.06", "735", "SFPIRAT.AREIABC" },
+                    { 242, "15.02.03.07", "736", "SFDOCASTELO" },
+                    { 226, "15.02.01.05", "720", "UBSJOSEMENINO" },
+                    { 225, "15.02.01.04", "719", "UBSGONZAGA" },
+                    { 165, "14.00.02.69", "662", "UMEMªLOURDESBER" },
+                    { 223, "15.02.01.02", "717", "UBSCAMPOGRANDE" },
+                    { 207, "15.01.01.01", "703", "PSCENTRAL" },
+                    { 208, "15.01.01.02", "704", "PSZONALESTE" },
+                    { 224, "15.02.01.03", "718", "UBSEMABARÉ" },
+                    { 210, "15.01.02.00", "706", "COORD.Z.NOROESTE" },
+                    { 211, "15.01.02.01", "707", "HP.ARTHURDPINTO" },
+                    { 212, "15.01.02.02", "708", "P.S.ZONANOROESTE" },
+                    { 213, "15.01.02.02", "709", "SEPROS-ZNO" },
+                    { 214, "15.01.02.03", "710", "PSINFATILZ.N." },
+                    { 209, "15.01.01.03", "705", "CAP.TRANS.ORGAOS" },
+                    { 215, "15.01.03.01", "711", "HOSPSILV.FONTES" },
+                    { 216, "15.01.03.02", "712", "INSTDAMULHER" },
+                    { 217, "15.01.03.03", "713", "CASADAGESTANTE" },
+                    { 218, "15.01.04.01", "714", "ATEND.DOMICILIAR" },
+                    { 219, "15.01.05.01", "1041", "" },
+                    { 220, "15.01.05.01", "1016", "SAMU" },
+                    { 221, "15.02.00.00", "715", "DPATBASICASAUDE" },
+                    { 222, "15.02.01.01", "716", "UBSAPARECIDA" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Diretoria",
+                columns: new[] { "Id", "Nome" },
+                values: new object[,]
+                {
+                    { 11, "Nenhum" },
+                    { 10, "Roberto D Barbosa" },
+                    { 9, "Manuel Lareu Pereiras" },
+                    { 8, "Pedro R da Matta" },
+                    { 7, "Daniel Gomes Araujo" },
+                    { 3, "Donizete Fabiano Ribeiro" },
+                    { 5, "Rogerio Catarino" },
+                    { 4, "Elaine Cristina Rodrigues" },
+                    { 2, "Lenina Bento da Silva" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Diretoria",
+                columns: new[] { "Id", "Nome" },
+                values: new object[,]
+                {
+                    { 1, "Fabio Marcelo Pimentel" },
+                    { 6, "Jose Antonio de Lima" }
                 });
 
             migrationBuilder.InsertData(
@@ -861,8 +1716,432 @@ namespace CadastroDigital.Infrastructure.Migrations
                 {
                     { 4, "Viúvo" },
                     { 3, "Divorciado" },
-                    { 2, "Solteiro" },
-                    { 1, "Casado" }
+                    { 1, "Casado" },
+                    { 2, "Solteiro" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Funcao",
+                columns: new[] { "Id", "CategoriaId", "Codigo", "Descricao" },
+                values: new object[,]
+                {
+                    { 247, 1, "77", "Prof.Ens.Fund.II" },
+                    { 246, 1, "18", "Prof.Ens.Fund.I" },
+                    { 245, 1, "349", "Prof.Educacao Musical" },
+                    { 244, 1, "13", "Prof.Educ.Infantil" },
+                    { 243, 1, "105", "Prof.Educ.Fisica" },
+                    { 242, 1, "141", "Prof.de Jovens E Adultos" },
+                    { 241, 1, "243", "Prof.de Ensino Fundamental I" },
+                    { 240, 1, "37", "Prof.de Educacao Especial" },
+                    { 239, 1, "271", "Prof. Subs. de Ensino Fundamental II" },
+                    { 238, 1, "270", "Prof. Ed. Infantil" },
+                    { 237, 1, "295", "Prof Substituta Ens Fund II" },
+                    { 236, 1, "282", "Prof Sub de Educ Infantil" },
+                    { 235, 1, "245", "Prof Educaç Especial" },
+                    { 234, 1, "32", "Prof de Educação Infantil" },
+                    { 233, 1, "106", "Prof de Educacao Fisica" },
+                    { 232, 1, "283", "Prof de Educ Especial" },
+                    { 231, 1, "297", "Prof Adjunto" },
+                    { 230, 1, "350", "Procurador(a)" },
+                    { 229, 1, "46", "Procurador Geral do Municipio" },
+                    { 248, 1, "244", "Prof.Ensino Fundamental I" },
+                    { 228, 1, "45", "Procurador" },
+                    { 249, 1, "301", "Prof.Subs.de Educ.Infantil" },
+                    { 251, 1, "274", "Prof.Subst.Educ.Especial" },
+                    { 270, 1, "248", "Professora Ed Basica I" },
+                    { 269, 1, "155", "Professora de Ensino Fundamental" },
+                    { 268, 1, "84", "Professora de Educação Basica I" },
+                    { 267, 1, "326", "Professora Adjunta Ed Infantil" },
+                    { 266, 1, "325", "Professora  Adjunto I" },
+                    { 265, 1, "74", "Professora" },
+                    { 264, 1, "307", "Professor Substituto" },
+                    { 263, 1, "285", "Professor Fundamentalii" },
+                    { 262, 1, "273", "Professor Educação Basica II" },
+                    { 261, 1, "139", "Professor de Educação Fisica" },
+                    { 260, 1, "287", "Professor de Educaçao Basica" },
+                    { 259, 1, "284", "Professor Adjunto II" },
+                    { 258, 1, "329", "Professor Adjunto I" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Funcao",
+                columns: new[] { "Id", "CategoriaId", "Codigo", "Descricao" },
+                values: new object[,]
+                {
+                    { 257, 1, "104", "Professor" },
+                    { 256, 1, "286", "Profª Subst. de Ensino" },
+                    { 255, 1, "294", "Prof.Substituto Ensino" },
+                    { 254, 1, "227", "Prof.Subst.Ens.Fund.II" },
+                    { 253, 1, "262", "Prof.Subst.Ens.Fund.I" },
+                    { 252, 1, "188", "Prof.Subst.Educ.Infantil" },
+                    { 250, 1, "263", "Prof.Subst.de Ensino Fundamental" },
+                    { 271, 1, "256", "Professora Ed Infantil" },
+                    { 227, 1, "341", "Presidente da Comlic" },
+                    { 225, 1, "182", "Porteiro" },
+                    { 202, 1, "35", "Oficial de Segurança" },
+                    { 201, 1, "49", "Oficial de Seguranca" },
+                    { 200, 1, "278", "Oficial de Gabinete" },
+                    { 199, 1, "183", "Oficial de Controle Animal" },
+                    { 198, 1, "223", "Oficial de Admistração" },
+                    { 197, 1, "128", "Oficial de Administração" },
+                    { 196, 1, "303", "Oficial de Adm." },
+                    { 195, 1, "279", "Oficial de Adm" },
+                    { 203, 1, "34", "Oficial Legislativo" },
+                    { 194, 1, "300", "Oficial de  Administração" },
+                    { 192, 1, "232", "Oficial Administração" },
+                    { 191, 1, "332", "Oficial Adm." },
+                    { 190, 1, "138", "Oficial Adm" },
+                    { 189, 1, "31", "Oficial  Administrativo" },
+                    { 188, 1, "212", "Of.Admnistrativo" },
+                    { 187, 1, "150", "Nutricionista" },
+                    { 184, 1, "231", "Musico Instrumentista" },
+                    { 186, 1, "202", "Nspetora de Aluno" },
+                    { 193, 1, "145", "Oficial Administrativo" },
+                    { 204, 1, "302", "Oficila de Administração" },
+                    { 205, 1, "142", "Operador de Maquinas Pesadas" },
+                    { 206, 1, "192", "Operador de Som" },
+                    { 224, 1, "322", "Portaria" },
+                    { 223, 1, "184", "Pintor de Autos" },
+                    { 222, 1, "91", "Pintor" },
+                    { 221, 1, "48", "Pesquisador Legislativo" },
+                    { 220, 1, "335", "Pesquisador" },
+                    { 219, 1, "337", "Pescador" },
+                    { 218, 1, "361", "pensionista" },
+                    { 217, 1, "79", "Pedreiro" },
+                    { 216, 1, "339", "Pedagogo" },
+                    { 215, 1, "234", "Pedagoga" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Funcao",
+                columns: new[] { "Id", "CategoriaId", "Codigo", "Descricao" },
+                values: new object[,]
+                {
+                    { 214, 1, "258", "Orientadora" },
+                    { 213, 1, "190", "Orientador de Estac. Regulamentado" },
+                    { 212, 1, "152", "Orient.Tec.Administrativo" },
+                    { 185, 1, "1", "Não definida" },
+                    { 211, 1, "163", "Orient.Estac.Regulamentado" },
+                    { 210, 1, "226", "Oprrador Social" },
+                    { 209, 1, "305", "Operadora Social" },
+                    { 208, 1, "172", "Operador Social" },
+                    { 207, 1, "47", "Operador Radiofonico" },
+                    { 226, 1, "165", "Pres.Comissao Perm.de Licitacoes" },
+                    { 272, 1, "78", "Professora Ed.Infantil" },
+                    { 359, 2, "", "Zelador" },
+                    { 274, 1, "272", "Professora Ensino Basico" },
+                    { 338, 2, "", "Procurador" },
+                    { 337, 1, "59", "Xerox" },
+                    { 336, 1, "85", "Vidraceiro" },
+                    { 335, 1, "264", "Veterinaria" },
+                    { 334, 1, "347", "Tratador de Animais" },
+                    { 333, 1, "109", "Topografo" },
+                    { 332, 1, "169", "Terapeuta Ocupacional" },
+                    { 331, 1, "203", "Telefonista Gabinete" },
+                    { 339, 2, "", "Economista " },
+                    { 330, 1, "69", "Telefonista" },
+                    { 328, 1, "365", "tecnico desportivo" },
+                    { 327, 1, "50", "Tecnico de Som" },
+                    { 326, 1, "178", "Tecnico de Raio X" },
+                    { 325, 1, "254", "Tecnico de Radiologia" },
+                    { 324, 1, "267", "Tecnico de Protese Dentaria" },
+                    { 323, 1, "276", "Tecnico de Nutricao" },
+                    { 322, 1, "173", "Tecnico de Laboratorio" },
+                    { 321, 1, "363", "tecnico de informatica" },
+                    { 329, 1, "42", "Tecnico Legislativo" },
+                    { 340, 2, "", "Administrador" },
+                    { 341, 2, "", "Administrador de Rede Pleno" },
+                    { 342, 2, "", "Contador" },
+                    { 361, 2, "", "Garçom" },
+                    { 183, 1, "362", "MOTORISTA" },
+                    { 360, 2, "", "Faxineiro" },
+                    { 358, 2, "", "Atendente Legislativo" },
+                    { 357, 2, "", "Telefonista " },
+                    { 356, 2, "", "Oficial de Segurança " },
+                    { 355, 2, "", "Técnico de Som" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Funcao",
+                columns: new[] { "Id", "CategoriaId", "Codigo", "Descricao" },
+                values: new object[,]
+                {
+                    { 354, 2, "", "Recepcionista" },
+                    { 353, 2, "", "Oficial Legislativo" },
+                    { 352, 2, "", "Técnico em Tecnologia da Informação" },
+                    { 351, 2, "", "Técnico Legislativo" },
+                    { 350, 2, "", "Analista Urbano" },
+                    { 349, 2, "", "Analista Ambiental" },
+                    { 348, 2, "", "Analista Financeiro" },
+                    { 347, 2, "", "Analista Jurídico" },
+                    { 346, 2, "", "Engenheiro" },
+                    { 345, 2, "", "Assessor Técnico" },
+                    { 344, 2, "", "Revisor" },
+                    { 343, 2, "", "Jornalista " },
+                    { 320, 1, "268", "Tecnico de Imobilizacao Ortopedica" },
+                    { 319, 1, "308", "Tecnico de Enfermagen" },
+                    { 318, 1, "250", "Técnico de Enfermagem" },
+                    { 317, 1, "265", "Tecnico de Enfermagem" },
+                    { 293, 1, "56", "Serviços Gerais" },
+                    { 292, 1, "344", "Sem Cargo" },
+                    { 291, 1, "144", "Secretario Municipal" },
+                    { 290, 1, "249", "Secretaria Unid Escolar" },
+                    { 289, 1, "214", "Secretaria de Unidade Escolar" },
+                    { 288, 1, "11", "Secret. de Unidade Escolar" },
+                    { 287, 1, "21", "Sec de Unidade Escolar" },
+                    { 286, 1, "306", "Scretario de Unidade Escolar" },
+                    { 285, 1, "247", "Recepcionista-chefe de Administrativo" },
+                    { 284, 1, "176", "Recepcionista Bilingue" },
+                    { 283, 1, "177", "Recepcionista" },
+                    { 282, 1, "331", "Recenseador Auxiliar" },
+                    { 281, 1, "334", "Recenseador" },
+                    { 280, 1, "100", "Readaptada-merendeira" },
+                    { 279, 1, "26", "Psicologo" },
+                    { 278, 1, "298", "Professora Substituta" },
+                    { 277, 1, "292", "Professora Subst.de Ensino" },
+                    { 276, 1, "76", "Professora Fundamental I" },
+                    { 275, 1, "51", "Professora Fund I" },
+                    { 294, 1, "124", "Soldador" },
+                    { 273, 1, "257", "Professora Ens. Funda II" },
+                    { 295, 1, "230", "Sonoplasta" },
+                    { 297, 1, "357", "Supervisora" },
+                    { 316, 1, "107", "Tecnico de Contabilidade" },
+                    { 315, 1, "221", "Tecnico de Aparelhos Biomedicos" },
+                    { 314, 1, "235", "Tecnico de Abastecimento" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Funcao",
+                columns: new[] { "Id", "CategoriaId", "Codigo", "Descricao" },
+                values: new object[,]
+                {
+                    { 313, 1, "41", "Tecnico Auxiliar Legislativo" },
+                    { 312, 1, "309", "Técnico  de Enfermagen" },
+                    { 311, 1, "266", "Tecnica Imobilização Ortopedica" },
+                    { 310, 1, "310", "Tecnica de Enfermagen" },
+                    { 309, 1, "130", "Tec.de Seguranca do Trabalho" },
+                    { 308, 1, "102", "Tec.de Imobilizacao Ortopedica" },
+                    { 307, 1, "194", "Tec.de Higiene Dental" },
+                    { 306, 1, "215", "Tec.de Apar.E Instrum.Med.E Odontol" },
+                    { 305, 1, "73", "Tec.de Abastecimento" },
+                    { 304, 1, "12", "Tec.Aux.de Adm." },
+                    { 303, 1, "360", "tec legislativo" },
+                    { 302, 1, "70", "Tec de Som" },
+                    { 301, 1, "198", "Tec de Laboratorio" },
+                    { 300, 1, "312", "Tec de Enfermagem" },
+                    { 299, 1, "43", "Tec Auxiliar Legislativo" },
+                    { 298, 1, "333", "Tec Aux Adm" },
+                    { 296, 1, "164", "Superv.Estac.Regulamentado" },
+                    { 182, 1, "33", "Motorista" },
+                    { 28, 1, "61", "Assessor Técnico" },
+                    { 180, 1, "143", "Monitor de Educ.Musical" },
+                    { 65, 1, "219", "Canteiro" },
+                    { 64, 1, "158", "Calceteiro" },
+                    { 63, 1, "275", "Caefis" },
+                    { 62, 1, "218", "Biologo" },
+                    { 61, 1, "16", "Bibliotecario" },
+                    { 60, 1, "280", "Belheteiro" },
+                    { 59, 1, "327", "Auxiliar de Serviços Gerais" },
+                    { 58, 1, "321", "Auxiliar de Serviços" },
+                    { 66, 1, "83", "Carpinteiro" },
+                    { 57, 1, "338", "Auxiliar de Plenario" },
+                    { 55, 1, "191", "Auxiliar de Laboratorio" },
+                    { 54, 1, "7", "Auxiliar de Enfermagem" },
+                    { 53, 1, "119", "Auxiliar de Contabilidade" },
+                    { 52, 1, "131", "Auxiliar de Cenografia" },
+                    { 51, 1, "157", "Auxiliar de Adm" },
+                    { 50, 1, "351", "Aux.Operador Cinematografico" },
+                    { 49, 1, "14", "Aux.de Bibliotecario" },
+                    { 48, 1, "323", "Aux. Serv. Gerais" },
+                    { 56, 1, "213", "Auxiliar de Medicao" },
+                    { 67, 1, "210", "Chefe Administrativo" },
+                    { 68, 1, "345", "Chefe da Proc.Geral" },
+                    { 69, 1, "229", "Chefe da Sespade" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Funcao",
+                columns: new[] { "Id", "CategoriaId", "Codigo", "Descricao" },
+                values: new object[,]
+                {
+                    { 88, 1, "126", "Coord.de Servico de Transito" },
+                    { 87, 1, "355", "Coord. de Saude Bucal" },
+                    { 86, 1, "98", "Coopeira" },
+                    { 85, 1, "118", "Contador" },
+                    { 84, 1, "6", "Cirurgiao-dentista" },
+                    { 83, 1, "330", "Chefe Secao Redacao E Revisao" },
+                    { 82, 1, "62", "Chefe Sec.de Atas" },
+                    { 81, 1, "225", "Chefe Na Seção de Atas" },
+                    { 80, 1, "40", "Chefe Gabinete da Presidencia" },
+                    { 79, 1, "346", "Chefe do Gatl." },
+                    { 78, 1, "356", "Chefe Depto. Materias Patrimon" },
+                    { 77, 1, "320", "Chefe Dep.Contabilidade Controle Orçamen" },
+                    { 76, 1, "343", "Chefe Dep.Cont.Contr.Orc." },
+                    { 75, 1, "354", "Chefe Dep.Ass.Legislativa" },
+                    { 74, 1, "352", "Chefe Dep.Adm.Legislativa" },
+                    { 181, 1, "123", "Monitor de Educacao" },
+                    { 72, 1, "10", "Chefe de Seção" },
+                    { 71, 1, "23", "Chefe de Gab.do Prefeito" },
+                    { 70, 1, "17", "Chefe de Departamento" },
+                    { 47, 1, "260", "Aux. Enfermagem" },
+                    { 46, 1, "324", "Aux. de Serviços Gerais" },
+                    { 45, 1, "359", "AUX DE SAUDE BUCAL" },
+                    { 44, 1, "291", "Aux de Saude Bucal" },
+                    { 19, 1, "92", "Armador" },
+                    { 18, 1, "2", "Aposentada" },
+                    { 17, 1, "193", "Analista de Sistemas" },
+                    { 16, 1, "237", "Analista Ambiental" },
+                    { 15, 1, "159", "Almoxarife" },
+                    { 14, 1, "93", "Ajudante Geral" },
+                    { 13, 1, "222", "Ajudante de Cozinha" },
+                    { 12, 1, "167", "Ajudante" },
+                    { 11, 1, "181", "Agente de Zoonose" },
+                    { 10, 1, "281", "Agente de Portaria" },
+                    { 9, 1, "368", "Agente de controle endemias" },
+                    { 8, 1, "289", "Agente de Comunicação" },
+                    { 7, 1, "156", "Agente Cultural" },
+                    { 6, 1, "367", "Agente Comunitário de Saúde" },
+                    { 5, 1, "111", "Agente Administrativo" },
+                    { 4, 1, "148", "Advogado" },
+                    { 3, 1, "209", "Admnistrativo" },
+                    { 2, 1, "135", "Administrador" },
+                    { 1, 1, "204", "Acompanhante Terapeutico" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Funcao",
+                columns: new[] { "Id", "CategoriaId", "Codigo", "Descricao" },
+                values: new object[,]
+                {
+                    { 20, 1, "96", "Arquiteto" },
+                    { 89, 1, "9", "Coordenador II" },
+                    { 21, 1, "147", "Ascensorista" },
+                    { 23, 1, "67", "Ass. Legislativo" },
+                    { 43, 1, "197", "Aux de Enfermagem" },
+                    { 42, 1, "57", "Atendente Legislativo" },
+                    { 41, 1, "238", "Atendente de Saude Bucal" },
+                    { 40, 1, "99", "Atend.Consultorio Dentario" },
+                    { 39, 1, "65", "Assistente Tecnico Iii" },
+                    { 38, 1, "122", "Assistente Social" },
+                    { 37, 1, "53", "Assistente Legislativo" },
+                    { 36, 1, "64", "Assistente do Legislativo" },
+                    { 35, 1, "353", "Assistente do Gatl" },
+                    { 34, 1, "39", "Assistente  Presidencia" },
+                    { 33, 1, "66", "Assessora Tecnica" },
+                    { 32, 1, "261", "Assessora" },
+                    { 31, 1, "129", "Assessor Tecnico Iv" },
+                    { 30, 1, "207", "Assessor Tecnico III" },
+                    { 29, 1, "117", "Assessor Tecnico II" },
+                    { 27, 1, "277", "Assessor Parlamentar" },
+                    { 26, 1, "133", "Assessor Executivo" },
+                    { 25, 1, "336", "Asses.do Gab.do Sub-pref." },
+                    { 24, 1, "342", "Ass.Adm.Unid.Pr.Soc." },
+                    { 22, 1, "299", "Ass Direção" },
+                    { 90, 1, "36", "Coordenador Iii" },
+                    { 73, 1, "68", "Chefe Dep. Administracao" },
+                    { 92, 1, "146", "Copeira" },
+                    { 156, 1, "30", "Inspetor de Alunos" },
+                    { 155, 1, "239", "Inspetor Ambiental" },
+                    { 91, 1, "241", "Coordenadora Pedagogico" },
+                    { 153, 1, "208", "Historiador" },
+                    { 152, 1, "364", "Guarda Vidas" },
+                    { 151, 1, "200", "Guarda Munucipal" },
+                    { 150, 1, "113", "Guarda Municipal Iv-inspetor Chefe" },
+                    { 149, 1, "127", "Guarda Municipal Iii-inspetor" },
+                    { 157, 1, "180", "Inspetor de Zoonoses" },
+                    { 148, 1, "97", "Guarda Municipal II" },
+                    { 146, 1, "161", "Guarda Municipal 2" },
+                    { 145, 1, "114", "Guarda Municipal" },
+                    { 144, 1, "189", "Guarda Ferramentas" },
+                    { 143, 1, "112", "Guarda" },
+                    { 142, 1, "340", "Garagista" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Funcao",
+                columns: new[] { "Id", "CategoriaId", "Codigo", "Descricao" },
+                values: new object[,]
+                {
+                    { 141, 1, "137", "Funileiro" },
+                    { 140, 1, "54", "Funcionario Publico" },
+                    { 139, 1, "175", "Fonoaudiologo" },
+                    { 147, 1, "95", "Guarda Municipal I" },
+                    { 158, 1, "296", "Inspetora" },
+                    { 159, 1, "199", "Inspetora de Aluno" },
+                    { 160, 1, "121", "Inspetora de Alunos" },
+                    { 179, 1, "171", "Monitor de Creche" },
+                    { 178, 1, "149", "Monitor de Ballet" },
+                    { 177, 1, "168", "Mjotorista" },
+                    { 176, 1, "82", "Mestre Auxiliar" },
+                    { 175, 1, "125", "Mestre" },
+                    { 174, 1, "120", "Merendeira" },
+                    { 173, 1, "153", "Mensageiro" },
+                    { 172, 1, "252", "Medico-otopedia" },
+                    { 171, 1, "196", "Medico-clinica Gera" },
+                    { 170, 1, "216", "Medico Veterinario" },
+                    { 169, 1, "5", "Medico" },
+                    { 168, 1, "185", "Mecanico" },
+                    { 167, 1, "115", "Marceneiro" },
+                    { 166, 1, "162", "M. Eletricista" },
+                    { 165, 1, "110", "Lubrificador" },
+                    { 164, 1, "166", "Letrista" },
+                    { 163, 1, "140", "Jornalista" },
+                    { 162, 1, "108", "Jardineiro" },
+                    { 161, 1, "366", "Interprete de Libras" },
+                    { 138, 1, "60", "Folha de Pagamento" },
+                    { 137, 1, "174", "Fisioterapeuta" },
+                    { 154, 1, "358", "iluminador" },
+                    { 135, 1, "116", "Fiscal de Transito" },
+                    { 111, 1, "179", "Enfermeira" },
+                    { 110, 1, "154", "Encarregado de Obras" },
+                    { 109, 1, "86", "Encarregado" },
+                    { 108, 1, "151", "Encanador" },
+                    { 107, 1, "103", "Eletricista" },
+                    { 106, 1, "236", "Educadora de Desenvolvimento" },
+                    { 105, 1, "242", "Educadora" },
+                    { 104, 1, "233", "Educador de Desenvolvimento Infantil" },
+                    { 103, 1, "201", "Edei" },
+                    { 102, 1, "293", "Economista" },
+                    { 101, 1, "75", "Diretora de Escola" },
+                    { 100, 1, "348", "Diretor Legislativo" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Funcao",
+                columns: new[] { "Id", "CategoriaId", "Codigo", "Descricao" },
+                values: new object[,]
+                {
+                    { 99, 1, "63", "Diretor Administrativo" },
+                    { 98, 1, "88", "Desenhista Projetista" },
+                    { 97, 1, "89", "Desenhista" },
+                    { 136, 1, "4", "Fiscal de Trib.Municipais" },
+                    { 95, 1, "132", "Cozinheiro" },
+                    { 94, 1, "217", "Cozinheira" },
+                    { 93, 1, "81", "Coveiro" },
+                    { 112, 1, "22", "Enfermeiro" },
+                    { 113, 1, "72", "Engenheiro" },
+                    { 96, 1, "269", "Dentista" },
+                    { 115, 1, "80", "Escriturario" },
+                    { 114, 1, "220", "Engenheiro Agronomo" },
+                    { 134, 1, "314", "Fiscal de Posturas Municipais" },
+                    { 133, 1, "8", "Fiscal de Obras" },
+                    { 132, 1, "44", "Fiscal de Iptu" },
+                    { 131, 1, "3", "Fiscal" },
+                    { 130, 1, "87", "Ferreiro" },
+                    { 129, 1, "134", "Feitor" },
+                    { 128, 1, "55", "Faxineira" },
+                    { 126, 1, "160", "Estofador" },
+                    { 127, 1, "211", "Farmaceutico" },
+                    { 124, 1, "224", "Especialista Em Ed." },
+                    { 123, 1, "290", "Especialista de Educação I" },
+                    { 122, 1, "15", "Esp.Ed.Iii-superv.de Ensino" },
+                    { 121, 1, "27", "Esp.Ed.Ii-diretor de Unidade Escola" },
+                    { 120, 1, "29", "Esp.Ed.Ii-diretor de Escola" },
+                    { 119, 1, "19", "Esp.Ed.I-orient.Educacional" },
+                    { 118, 1, "20", "Esp.Ed.I-coord. Pedagogico" },
+                    { 117, 1, "28", "Esp.Ed.I-assist.de Direcao" },
+                    { 116, 1, "52", "Esp.Ed.I-assist. de Diretor" },
+                    { 125, 1, "240", "Especialista Em Edu" }
                 });
 
             migrationBuilder.InsertData(
@@ -880,13 +2159,13 @@ namespace CadastroDigital.Infrastructure.Migrations
                 columns: new[] { "Id", "Descricao" },
                 values: new object[,]
                 {
-                    { 1, "Pré-Cadastro" },
-                    { 2, "Dados Pessoais" },
-                    { 3, "Dados Residenciais" },
-                    { 4, "Dados Profissionais" },
                     { 5, "Dados Financeiros" },
+                    { 7, "Documentos" },
+                    { 4, "Dados Profissionais" },
                     { 6, "Dependentes e Agregados" },
-                    { 7, "Documentos" }
+                    { 2, "Dados Pessoais" },
+                    { 1, "Pré-Cadastro" },
+                    { 3, "Dados Residenciais" }
                 });
 
             migrationBuilder.InsertData(
@@ -894,10 +2173,14 @@ namespace CadastroDigital.Infrastructure.Migrations
                 columns: new[] { "Id", "Nome" },
                 values: new object[,]
                 {
-                    { 3, "Não informar" },
-                    { 2, "Feminino" },
-                    { 1, "Masculino" }
+                    { 1, "Masculino" },
+                    { 2, "Feminino" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Sexo",
+                columns: new[] { "Id", "Nome" },
+                values: new object[] { 3, "Não informar" });
 
             migrationBuilder.InsertData(
                 table: "StatusCadastro",
@@ -914,13 +2197,13 @@ namespace CadastroDigital.Infrastructure.Migrations
                 columns: new[] { "Id", "Descricao" },
                 values: new object[,]
                 {
-                    { 1, "CPG" },
-                    { 2, "RG" },
-                    { 3, "Habilitação" },
-                    { 4, "Comprovante Endereço" },
+                    { 7, "Holerite" },
                     { 5, "Certidão de Nascimento" },
+                    { 4, "Comprovante Endereço" },
                     { 6, "Certidão de Casamento" },
-                    { 7, "Holerite" }
+                    { 2, "RG" },
+                    { 1, "CPG" },
+                    { 3, "Habilitação" }
                 });
 
             migrationBuilder.InsertData(
@@ -933,16 +2216,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                     { 8, "Tio(a)" },
                     { 7, "Esposo(a)" },
                     { 6, "Neto(a)" },
-                    { 2, "Mãe" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "TipoParente",
-                columns: new[] { "Id", "Descricao" },
-                values: new object[,]
-                {
                     { 4, "Avô(ó)" },
                     { 3, "Filho(a)" },
+                    { 2, "Mãe" },
                     { 1, "Pai" },
                     { 5, "Irmã(o)" }
                 });
@@ -959,26 +2235,37 @@ namespace CadastroDigital.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Categoria",
+                columns: new[] { "Id", "Descricao" },
+                values: new object[,]
+                {
+                    { 1, "PMS" },
+                    { 2, "Câmara" },
+                    { 3, "Iprev" },
+                    { 4, "Capep" },
+                    { 5, "Sócio Usuário" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Estado",
                 columns: new[] { "Id", "Nome", "PaisId", "Sigla" },
                 values: new object[,]
                 {
-                    { 1, "Acre", 55, "AC" },
-                    { 25, "São Paulo", 55, "SP" },
-                    { 24, "Santa Catarina", 55, "SC" },
-                    { 23, "Roraima", 55, "RR" },
-                    { 22, "Rondônia", 55, "RO" },
-                    { 21, "Rio Grande do Sul", 55, "RS" },
-                    { 20, "Rio Grande do Norte", 55, "RN" },
-                    { 19, "Rio de Janeiro", 55, "RJ" },
-                    { 18, "Piauí", 55, "PI" },
-                    { 17, "Pernambuco", 55, "PE" },
                     { 16, "Paraná", 55, "PR" },
+                    { 17, "Pernambuco", 55, "PE" },
+                    { 18, "Piauí", 55, "PI" },
+                    { 19, "Rio de Janeiro", 55, "RJ" },
+                    { 20, "Rio Grande do Norte", 55, "RN" },
+                    { 22, "Rondônia", 55, "RO" },
                     { 15, "Paraíba", 55, "PB" },
-                    { 26, "Sergipe", 55, "SE" },
+                    { 23, "Roraima", 55, "RR" },
+                    { 24, "Santa Catarina", 55, "SC" },
+                    { 25, "São Paulo", 55, "SP" },
+                    { 21, "Rio Grande do Sul", 55, "RS" },
                     { 14, "Pará", 55, "PA" },
-                    { 12, "Mato Grosso do Sul", 55, "MS" },
                     { 11, "Mato Grosso", 55, "MT" },
+                    { 12, "Mato Grosso do Sul", 55, "MS" },
+                    { 26, "Sergipe", 55, "SE" },
                     { 10, "Maranhão", 55, "MA" },
                     { 9, "Goiás", 55, "GO" },
                     { 8, "Espírito Santos", 55, "ES" },
@@ -988,6 +2275,7 @@ namespace CadastroDigital.Infrastructure.Migrations
                     { 4, "Amazonas", 55, "AM" },
                     { 3, "Amapá", 55, "AP" },
                     { 2, "Alagoas", 55, "AL" },
+                    { 1, "Acre", 55, "AC" },
                     { 13, "Minas Gerais", 55, "MG" },
                     { 27, "Tocantins", 55, "TO" }
                 });
@@ -7546,6 +8834,11 @@ namespace CadastroDigital.Infrastructure.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_FuncaoId",
+                table: "AspNetUsers",
+                column: "FuncaoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_PassoCadastroId",
                 table: "AspNetUsers",
                 column: "PassoCadastroId");
@@ -7614,6 +8907,11 @@ namespace CadastroDigital.Infrastructure.Migrations
                 column: "PaisId");
 
             migrationBuilder.CreateIndex(
+                name: "idx_funcao_categoria",
+                table: "Funcao",
+                column: "CategoriaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InformacaoBancaria_BancoId",
                 table: "InformacaoBancaria",
                 column: "BancoId",
@@ -7630,6 +8928,31 @@ namespace CadastroDigital.Infrastructure.Migrations
                 table: "InformacaoBancaria",
                 column: "TipoContaId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "idx_informacaoProfissional_cargo",
+                table: "InformacaoProfissional",
+                column: "CargoId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_informacaoProfissional_funcao",
+                table: "InformacaoProfissional",
+                column: "FuncaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_informacaoProfissional_indicacao",
+                table: "InformacaoProfissional",
+                column: "Indicacao");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_informacaoProfissional_pessoaFisica",
+                table: "InformacaoProfissional",
+                column: "PessoaFisicaId");
+
+            migrationBuilder.CreateIndex(
+                name: "idx_informacaoProfissional_tipofuncao",
+                table: "InformacaoProfissional",
+                column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_pessoafisica_estadocivil",
@@ -7662,24 +8985,14 @@ namespace CadastroDigital.Infrastructure.Migrations
                 column: "IdUser");
 
             migrationBuilder.CreateIndex(
-                name: "idx_redesocial_tiporedesocial",
-                table: "RedeSocial",
-                column: "TipoRedeSocialId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RedeSocial_PessoaFisicaId",
+                name: "idx_redesocial_pessoafisica",
                 table: "RedeSocial",
                 column: "PessoaFisicaId");
 
             migrationBuilder.CreateIndex(
-                name: "idx_socio_categoria",
-                table: "Socio",
-                column: "CategoriaId");
-
-            migrationBuilder.CreateIndex(
-                name: "idx_socio_diretor",
-                table: "Socio",
-                column: "DiretorId");
+                name: "idx_redesocial_tiporedesocial",
+                table: "RedeSocial",
+                column: "TipoRedeSocialId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_socio_pessoa",
@@ -7689,8 +9002,12 @@ namespace CadastroDigital.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Socio_CargoId",
                 table: "Socio",
-                column: "CargoId",
-                unique: true);
+                column: "CargoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Socio_CategoriaId",
+                table: "Socio",
+                column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Socio_ParceriaId",
@@ -7733,6 +9050,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                 name: "InformacaoBancaria");
 
             migrationBuilder.DropTable(
+                name: "InformacaoProfissional");
+
+            migrationBuilder.DropTable(
                 name: "Noticia");
 
             migrationBuilder.DropTable(
@@ -7760,6 +9080,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                 name: "TipoConta");
 
             migrationBuilder.DropTable(
+                name: "Diretoria");
+
+            migrationBuilder.DropTable(
                 name: "TipoRedeSocial");
 
             migrationBuilder.DropTable(
@@ -7773,9 +9096,6 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categoria");
-
-            migrationBuilder.DropTable(
-                name: "Diretor");
 
             migrationBuilder.DropTable(
                 name: "Parceria");
@@ -7803,6 +9123,9 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Estado");
+
+            migrationBuilder.DropTable(
+                name: "Funcao");
 
             migrationBuilder.DropTable(
                 name: "PassoCadastro");

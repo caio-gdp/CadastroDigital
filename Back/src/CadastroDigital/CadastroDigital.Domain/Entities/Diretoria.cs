@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace CadastroDigital.Domain.Entities
 {
-    public class Diretor : Base
+    public class Diretoria : Base
     {
         public string Nome { get; set; }
 
-        public Socio Socio { get; set; }
+        public InformacaoProfissional InformacaoProfissional { get; set; }
     }
 }

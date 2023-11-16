@@ -24,5 +24,7 @@ namespace CadastroDigital.Domain.Entities
         public Cidade Naturalidade { get; set; }
         public IEnumerable<RedeSocial> RedesSociais { get; set; }
         public IEnumerable<Endereco> Enderecos { get; set; }
+        public InformacaoProfissional InformacaoProfissional { get; set; }
+        
      }
 }

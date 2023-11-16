@@ -10,13 +10,13 @@ namespace CadastroDigital.Domain.Entities
         public int Inscricao { get; set; }
         public int? Pasta { get; set; }
         public int Matricula { get; set; }
-        public int CentroCusto { get; set; }
+        // public int CentroCusto { get; set; }
         public int PessoaFisicaId { get; set; }
-        public int CategoriaId { get; set; }
-        public int CargoId { get; set; }
+        // public int CategoriaId { get; set; }
+        // public int CargoId { get; set; }
         public int SituacaoId { get; set; }
-        public int? DiretorId { get; set; }
-        public string DiretorNome { get; set; }
+        // public int? DiretorId { get; set; }
+        // public string DiretorNome { get; set; }
         public bool MalaDireta { get; set; }
         public DateTime DataInclusao { get; set; }  
         public string UsuarioInclusao { get; set; }
@@ -27,7 +27,7 @@ namespace CadastroDigital.Domain.Entities
         public Categoria Categoria { get; set; }
         public Cargo Cargo { get; set; }
         public Agregado Agregado { get; set; }
-        public Diretor Diretor { get; set; }
+        //public Diretor Diretor { get; set; }
         public Parceria Parceria { get; set; }
         public Dependente Dependente { get; set; }
         public InformacaoBancaria InformacaoBancaria { get; set; }
