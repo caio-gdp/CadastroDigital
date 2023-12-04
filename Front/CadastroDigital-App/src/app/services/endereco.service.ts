@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Endereco } from '@app/models/Endereco';
 import { Observable, take } from 'rxjs';
@@ -8,6 +8,9 @@ export class EnderecoService {
 
   cepUrl = 'https://viacep.com.br/ws'
   baseUrl = 'https://localhost:5001/api/Endereco';
+  tokenHeader = new HttpHeaders({
+    'Authorization': 'Bearer'
+  });
 
   constructor(private http: HttpClient) { }
 

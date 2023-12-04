@@ -1,5 +1,5 @@
 export interface Cargo {
-  codigolocaltrabalho : string;
-  centrocusto : string;
-  nomelocaltrabalho : string;
+  codigoLocalTrabalho : string;
+  centroCusto : string;
+  nomeLocalTrabalho : string;
 }

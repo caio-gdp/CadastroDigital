@@ -9,10 +9,9 @@ export class PessoaFisicaService {
   baseUrl = 'https://localhost:5001/api/PessoaFisica';
   tokenHeader = new HttpHeaders({
       'Authorization': 'Bearer'
-    }
-  );
+    });
 
-constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   public post(pessoaFisica : PessoaFisica) : Observable<PessoaFisica>{
     return this.http.post<PessoaFisica>(this.baseUrl, pessoaFisica).pipe(take(1));

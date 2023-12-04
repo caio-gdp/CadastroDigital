@@ -9,7 +9,6 @@ import { EstadoService } from '@app/services/estado.service';
 import { CidadeService } from '@app/services/cidade.service';
 import { Cidade } from '@app/models/Cidade';
 import { Pais } from '@app/models/Pais';
-import { PaisService } from '@app/services/Pais.service';
 import { EstadoCivil } from '@app/models/EstadoCivil';
 import { EstadoCivilService } from '@app/services/estadocivil.service';
 import { Sexo } from '@app/models/Sexo';
@@ -26,6 +25,9 @@ import { PessoaFisicaService } from '@app/services/pessoafisica.service';
 import { GenericValidator } from '@app/validators/GenericValidator';
 import { AccountService } from '@app/services/account.service';
 import { User } from '@app/models/Identity/User';
+import { InformacaoProfissionalService } from '@app/services/informacaoprofissional.service';
+import { PaisService } from '@app/services/pais.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personalData',
@@ -70,7 +72,8 @@ export class PersonalDataComponent implements OnInit {
     private modalService: BsModalService,
     private modalRef : BsModalRef,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService,
+    private router: Router) {
       this.currentUser = accountService.currentUser$;
     }
 
@@ -115,23 +118,9 @@ export class PersonalDataComponent implements OnInit {
           this.pessoaFisica.dataEmissao = new Date(this.pessoaFisica.dataEmissao).toLocaleDateString('pt-BR');
           this.form.patchValue(this.pessoaFisica);
           this.redesSociais.patchValue(this.pessoaFisica.redesSociais);
-
-          // if (this.pessoaFisica.redesSociais != null){
-          //   let redesSociaisArr = <FormArray>this.form.controls['redesSociais'];
-
-          //   console.log(this.pessoaFisica.redesSociais)
-
-          //   for (let i = 0; i < this.pessoaFisica.redesSociais.length; i++){
-          //     .patchValue(this.pessoaFisica.redesSociais);
-          //   }
-          // }
-
-
           this.getCidade();
         },
         (error: any) => {
-          console.log(error)
-          this.toastr.error('Dados pessoais não carregado')
       },
       ).add(() => this.spinner.hide());
     }
@@ -334,16 +323,15 @@ decline(): void {
       }
     }
 
-
-
     if (this.user != null)
       this.pessoaFisica.idUser = this.user.id;
 
-    console.log(this.pessoaFisica)
-
      this.pessoaFisicaService.post(this.pessoaFisica).subscribe({
        next: (pessoa: PessoaFisica) => {
-         this.toastr.success('Registro salvo com sucesso.', 'Sucesso')},
+         this.toastr.success('Registro salvo com sucesso.', 'Sucesso');
+         this.router.navigateByUrl('user/addressData');
+        },
+
        error: (error: any) => {
          console.error(error);
          this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')

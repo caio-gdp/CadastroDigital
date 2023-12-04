@@ -103,7 +103,7 @@ export class RegistrationComponent implements OnInit {
         confirmaPassword : ['', [Validators.required, this.checkConfirmedPassword]],
         confirmaEmail : ['', [Validators.required, this.checkEmail]],
         noticia : [],
-      }, formOptions,);
+      }, formOptions);
    }
     else{
       this.form = this.fb.group({
@@ -134,8 +134,8 @@ export class RegistrationComponent implements OnInit {
       if (this.stateForm == 'post'){
         this.accountService.register(this.user).subscribe({
           next : () => {
-              this.toastr.success("Pré cadastro realizado. Efetue o login para finalizar o cadastro.", "Informação", {extendedTimeOut: 1000})
-              this.router.navigateByUrl('dashboard')
+              this.toastr.success("Pré cadastro realizado. Efetue o login para finalizar o cadastro.", "Informação", {extendedTimeOut: 1000});
+              this.router.navigateByUrl('dashboard');
           },
           error: (error: any) => {
               console.log(error)
@@ -160,30 +160,6 @@ export class RegistrationComponent implements OnInit {
       }
     }
   }
-
-  // private register(user : User) : void{
-  //   this.accountService.register(this.user).subscribe({
-  //     next : () => {
-  //         this.toastr.success("Pré cadastro realizado. Efetue o login para finalizar o cadastro.", "Informação", {extendedTimeOut: 1000})
-  //         this.router.navigateByUrl('dashboard')
-  //     },
-  //     error: (error: any) => {
-  //           this.toastr.error(error.error)
-  //     },
-  //   }).add(() => this.spinner.hide())
-  // }
-
-  // private updateRegister(user : User) : void{
-  //   this.accountService.updateRegister(this.user).subscribe({
-  //     next : () => {
-  //         this.toastr.success("Atualização realizada.", "Informação", {extendedTimeOut: 1000})
-  //         this.router.navigateByUrl('user/registration')
-  //     },
-  //     error: (error: any) => {
-  //           this.toastr.error(error.error)
-  //     },
-  //   }).add(() => this.spinner.hide())
-  // }
 
   public validaSenha(){
      const campo = <HTMLElement>document.getElementById('spansenha');

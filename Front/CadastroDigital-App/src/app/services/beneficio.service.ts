@@ -10,8 +10,7 @@ export class BeneficioService {
 
   constructor(private http: HttpClient) { }
 
-  public get(qtd : number) : Observable<Beneficio[]>{
-    // return this.http.get<Noticia[]>(`${this.baseUrl}/${qtd}`).pipe(take(1));
+  public get() : Observable<Beneficio[]>{
     return this.http.get<Beneficio[]>(this.baseUrl).pipe(take(1));
   }
 

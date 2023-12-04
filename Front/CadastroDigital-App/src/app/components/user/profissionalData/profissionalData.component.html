@@ -1,7 +1,7 @@
 <div class="row">
-  <!-- testar validação de formulario e reativo
+  testar validação de formulario e reativo
         <p>Form value : {{form.value | json}}</p>
-        <p>Form valid : {{form.status | json}}</p> -->
+        <p>Form valid : {{form.status | json}}</p>
     <div class="col-sm-20">
       <div class="container">
         <div class="col-lg-60 mt-4">
@@ -21,83 +21,83 @@
                     <div class="card card-informacao">
                       <div class="card-body">
                         <h5 class="card-title"><b>Informação</b></h5>
-                        <p class="card-text">Todos os itens com (*) são obrigatórios.</p>
+                        <p class="card-text">Todos os itens com (*) são obrigatórios.<br>
+                          Para a categoria PMS, o local de trabalho é preenchido automaticamente ao informar o centro de custo.
+                        </p>
+                        <p class="card-text"></p>
                       </div>
                     </div>
                   </div>
                   <form [formGroup]="form">
                     <div class="row">
-                      <div class="col-2">
-                        <select class="effect" [ngClass]="cssValidation(f.indicacao)" id="indicacao" formControlName="indicacao">
-                          <option disabled selected hidden value="">Indicação*</option>
+                      <div class="col-3">
+                        <div id="divIndicacao">Indicação*</div>
+                        <select class="effect" [ngClass]="cssValidation(f.indicacaoId)" id="indicacaoId" formControlName="indicacaoId" (focus)="changeFColor('divIndicacao')" (blur)="changeBColor('divIndicacao')">
+                          <!-- <option disabled selected hidden value="">Indicação*</option> -->
                           <option *ngFor="let diretor of diretores" value="{{diretor.id}}">{{diretor.nome}}</option>
-                          <div class="invalid-tooltip" *ngIf="f.indicacao.errors?.required">
-                            A indicação é obrigatória.
-                          </div>
-                          <span class="focus-border"></span>
                         </select>
+                        <div class="invalid-selector" *ngIf="f.indicacaoId.touched && f.indicacaoId.invalid">
+                          A indicação é obrigatória.
+                        </div>
+                        <span class="focus-border"></span>
                       </div>
-                      <div class="col-2">
-                        <select class="effect" id="categoria" formControlName="categoria" (change)="addFormCategoria()">
-                          <option disabled selected hidden value="">Categoria*</option>
+                      <div class="col-3">
+                        <div id="divCategoria">Categoria*</div>
+                        <select class="effect" id="categoriaId" formControlName="categoriaId" (focus)="changeFColor('divCategoria')" (blur)="changeBColor('divCategoria')" (change)="addFormCategoria()">
+                          <!-- <option disabled selected hidden value="">Categoria*</option> -->
                           <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.descricao}}</option>
-                          <div class="invalid-tooltip" *ngIf="f.indicacao.errors?.required">
-                            A categoria é obrigatória.
-                          </div>
-                          <span class="focus-border"></span>
                         </select>
+                        <div class="invalid-selector" *ngIf="f.categoriaId.touched && f.categoriaId.invalid">
+                          A categoria é obrigatória.
+                        </div>
+                        <span class="focus-border"></span>
                       </div>
-                      <div id="divCentroCusto" style="display: none" class="col-3">
-                        <input type="number" class="effect" placeholder="Centro de Custo" id="centroCusto" formControlName="centroCusto"
-                        mask="00.00.00.00.00" (keyup)="getLocalTrabalho()">
+                      <div id="divRegistro" style="display:none" class="col-3">
+                        <div>Registro*</div>
+                        <input type="text" class="effect" id="registro" formControlName="registro" (focus)="changeFColor('divRegistro')" (blur)="changeBColor('divRegistro')" [ngClass]="cssValidation(f.registro)"
+                        mask="00.000-0">
+                        <div class="invalid-tooltip" *ngIf="f.registro.touched && f.registro.invalid">
+                          O Registro é obrigatório.
+                        </div>
+                        <span class="focus-border"></span>
                       </div>
-                      <div  id="divLocalTrabalho" style="display: none" class="col-3">
-                        <input [disabled]="true" type="text" class="effect" placeholder="Local Trabalho" id="localTrabalho" formControlName="localTrabalho"
-                        value="">
+                      <div id="divCentroCusto" style="display:none" class="col-3">
+                        <div>Centro de Custo*</div>
+                        <input type="text" class="effect" id="centroCusto" formControlName="centroCusto" (focus)="changeFColor('divCentroCusto')" (blur)="changeBColor('divCentroCusto')" [ngClass]="cssValidation(f.centroCusto)"
+                        mask="00.00.00.00" (keyup)="getLocalTrabalho()">
+                        <div class="invalid-tooltip" *ngIf="f.centroCusto.touched && f.centroCusto.invalid">
+                          Centro de Custo é obrigatório.
+                        </div>
+                        <span class="focus-border"></span>
                       </div>
-                      <div id="divFuncao" style="display: none" class="col-3">
-                        <select class="effect" id="funcao" formControlName="funcao">
-                          <option disabled selected hidden value="">Função*</option>
-                          <option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.codigo  + "-" + funcao.descricao}}</option>
-                          <!-- <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.descricao}}</option>
-                          <div class="invalid-tooltip" *ngIf="f.indicacao.errors?.required">
-                            A categoria é obrigatória.
-                          </div>
-                          <span class="focus-border"></span> -->
-                        </select>
-                      </div>
-                    </div>
-                    <!-- <div id="divInformacaoBancaria" style="display: none;">
-                      <div class="row">
-                        <div class="col-3">
-                          <select class="effect" id="tipoConta" formControlName="tipoConta">
-                            <option>Operação*</option>
-                            <option>Poupança</option>
-                            <option>Conta Corrente</option>
-                          </select>
+                      <div  id="divCargo" style="display:none" class="col-3">
+                        <div>Local de Trabalho*</div>
+                        <input type="text" class="effect" id="cargoId" formControlName="cargoId"
+                        value="{{localtrabalho}}" [ngClass]="cssValidation(f.cargoId)">
+                        <div class="invalid-tooltip" *ngIf="f.cargoId.touched && f.cargoId.invalid">
+                          Local de trabalho não encontrado.
                         </div>
                       </div>
-                      <div class="col-3">
-                        <select class="effect" id="banco" formControlName="banco">
-                          <option>Banco*</option>
-                          <option>001 - Banco do Brasik</option>
-                          <option>341 - Itaú</option>
+                      <div id="divFuncao" style="display:none" class="col-3">
+                        <div>Função*</div>
+                        <select class="effect" id="funcaoId" formControlName="funcaoId" (focus)="changeFColor('divFuncao')" (blur)="changeBColor('divFuncao')">
+                          <option disabled selected hidden value=""></option>
+                          <option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.codigo + funcao.descricao}}</option>
                         </select>
+                        <div class="invalid-selector" *ngIf="f.funcaoId.touched && f.funcaoId.invalid">
+                          A função é obrigatória.
+                        </div>
+                        <span class="focus-border"></span>
                       </div>
-                      <div class="col-3">
-                        <input type="text" class="effect" id="agencia" formControlName="agencia" placeholder="Agencia*">
-                      </div>
-                      <div class="col-3">
-                        <input type="text" class="effect" id="agencia" formControlName="conta" placeholder="Conta*">
-                      </div>
-                    </div> -->
+                    </div>
                     <div class="col-1">
                       <div class="card card-informacao">
                         <div class="card-body">
                           <h5 class="card-title"><b>Informação</b></h5>
                           <p class="card-text">Os seguintes benefícios serão atribuídos automaticamente ao sócio e dependentes menores de 18 anos ao associar-se.</p>
-                          <span class="card-text">OdontoBase</span><br>
-                          <span class="card-text">IPrev</span><br>
+                          <span *ngFor="let beneficio of beneficios">
+                            <span class="card-text">{{beneficio.nome}} ({{beneficio.descricao}})</span><br>
+                          </span>
                         </div>
                       </div>
                     </div>

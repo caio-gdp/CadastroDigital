@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { PaisService } from './Pais.service';
+import { PaisService } from './pais.service';
 
 describe('Service: Pais', () => {
   beforeEach(() => {

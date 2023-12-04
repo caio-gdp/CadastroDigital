@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
       },
       // complete : () => this.spinner.hide()
     };
-    this.beneficioService.get(Constants.QTD_NOTICIAS).subscribe(observer);
+    this.beneficioService.get().subscribe(observer);
   }
 
   public getParcerias() : void{

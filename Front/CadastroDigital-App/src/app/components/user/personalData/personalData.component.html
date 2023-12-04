@@ -58,64 +58,64 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
-                      <select class="effect" type="text" [ngClass]="cssValidation(f.orgaoExpedidorid)" formControlName="orgaoExpedidorId" id="orgaoExpedidorid" (change)="changeCss('orgaoExpedidorid')" >
+                      <select required class="effect" type="text" [ngClass]="cssValidation(f.orgaoExpedidorId)" formControlName="orgaoExpedidorId" id="orgaoExpedidorId" (change)="changeCss('orgaoExpedidorId')" >
                         <option disabled selected hidden value="">Orgão Expedidor*</option>
                         <option *ngFor="let orgaoExpedidor of orgaosExpedidores" value="{{orgaoExpedidor.id}}">{{orgaoExpedidor.sigla}}</option>
-                        <div class="invalid-tooltip" *ngIf="f.orgaoExpedidorId.errors?.required">
-                          Orgão Expedidor é obrigatório.
-                        </div>
-                        <span class="focus-border"></span>
                       </select>
+                      <span class="focus-border"></span>
+                      <div class="invalid-selector" *ngIf="f.orgaoExpedidorId.touched && f.orgaoExpedidorId.invalid">
+                        Orgão Expedidor é obrigatório.
+                      </div>
                     </div>
                     <div class="col-3">
                       <select class="effect" id="ufExpedidorId" [ngClass]="cssValidation(f.ufExpedidorId)" formControlName="ufExpedidorId" (change)="getCidade()">
                         <option disabled selected hidden value="">Estado Expedidor*</option>
                         <option *ngFor="let estado of estados" value="{{estado.id}}">{{estado.sigla}}</option>
-                      <div class="invalid-tooltip" *ngIf="f.ufExpedidorId.errors?.required">
+                      </select>
+                      <div class="invalid-selector" *ngIf="f.ufExpedidorId.touched && f.ufExpedidorId.invalid">
                         Estado Expedidor é obrigatório.
                       </div>
                       <span class="focus-border"></span>
-                      </select>
                     </div>
                     <div class="col-3">
                       <select class="effect" id="naturalidadeId" [ngClass]="cssValidation(f.naturalidadeId)" formControlName="naturalidadeId" id="naturalidadeId" (change)="changeCss('naturalidadeId')">
                         <option disabled selected hidden value="">Naturalidade*</option>
                         <option *ngFor="let cidade of cidades" value="{{cidade.id}}">{{cidade.nome}}</option>
-                      <div class="invalid-tooltip" *ngIf="f.naturalidadeId.errors?.required">
+                      </select>
+                      <div class="invalid-selector" *ngIf="f.naturalidadeId.touched && f.naturalidadeId.invalid">
                         Naturalidade é obrigatório.
                       </div>
                       <span class="focus-border"></span>
-                      </select>
                     </div>
                     <div class="col-3">
                       <select class="effect" id="nacionalidadeId" [ngClass]="cssValidation(f.nacionalidadeId)" formControlName="nacionalidadeId" id="nacionalidadeId" (change)="changeCss('nacionalidadeId')">
                         <option disabled selected hidden value="">Nacionalidade*</option>
                         <option *ngIf="pais != undefined" value="{{pais.id}}">{{pais.nome}}</option>
-                      <div class="invalid-tooltip" *ngIf="f.nacionalidadeId.errors?.required">
+                      </select>
+                      <div class="invalid-selector" *ngIf="f.nacionalidadeId.touched && f.nacionalidadeId.invalid">
                         Nacionalidade é obrigatório.
                       </div>
                       <span class="focus-border"></span>
-                      </select>
                     </div>
                     <div class="col-3">
                       <select class="effect" [ngClass]="cssValidation(f.estadoCivilId)" formControlName="estadoCivilId" id="estadoCivilId" (change)="changeCss('estadoCivilId')">
                         <option disabled selected hidden value="">Estado Civil*</option>
                         <option *ngFor="let estadocivil of estadosCivil" value="{{estadocivil.id}}">{{estadocivil.nome}}</option>
-                        <div class="invalid-tooltip" *ngIf="f.estadoCivilId.errors?.required">
-                          Estado Civil é obrigatório.
-                        </div>
-                        <span class="focus-border"></span>
                       </select>
+                      <div class="invalid-selector" *ngIf="f.estadoCivilId.touched && f.estadoCivilId.invalid">
+                        Estado Civil é obrigatório.
+                      </div>
+                      <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
-                      <select class="effect" type="select" placeholder="" [ngClass]="cssValidation(f.sexoId)" formControlName="sexoId" id="sexoId" (change)="changeCss('sexoId')">
+                      <select class="effect" placeholder="" [ngClass]="cssValidation(f.sexoId)" formControlName="sexoId" id="sexoId" (change)="changeCss('sexoId')">
                         <option disabled selected hidden value="">Sexo*</option>
                         <option *ngFor="let sexo of sexos" value="{{sexo.id}}">{{sexo.nome}}</option>
-                        <div class="invalid-tooltip" *ngIf="f.sexoId.errors?.required">
-                          Sexo é obrigatório.
-                        </div>
-                        <span class="focus-border"></span>
                       </select>
+                      <div class="invalid-selector" *ngIf="f.sexoId.touched && f.sexoId.invalid">
+                        Sexo é obrigatório.
+                      </div>
+                      <span class="focus-border"></span>
                     </div>
                     <div class="col-1">
                       <div class="card card-informacao">

@@ -35,7 +35,7 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .IsUnique(false)
             .HasDatabaseName("idx_informacaoProfissional_funcao");
 
-            builder.HasIndex(i => i.Indicacao)
+            builder.HasIndex(i => i.IndicacaoId)
             .IsUnique(false)
             .HasDatabaseName("idx_informacaoProfissional_indicacao");
 
@@ -63,7 +63,7 @@ namespace CadastroDigital.Domain.EntitiesConfigs
 
             builder.HasOne(f => f.Diretoria)
             .WithOne(f => f.InformacaoProfissional)
-            .HasForeignKey<InformacaoProfissional>(f => f.Indicacao)
+            .HasForeignKey<InformacaoProfissional>(f => f.IndicacaoId)
             .HasConstraintName("fk_informacaoProfissional_indicacao");
 
             //Atributos
@@ -97,10 +97,26 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .ValueGeneratedNever()
             .IsRequired(false);      
 
-            builder.Property(f => f.Indicacao)
-            .HasColumnName("Indicacao")
+            builder.Property(f => f.IndicacaoId)
+            .HasColumnName("IndicacaoId")
             .ValueGeneratedNever()
-            .IsRequired();       
+            .IsRequired(); 
+
+            builder.Property(f => f.DataInclusao)
+            .HasColumnName("DataInclusao")
+            .IsRequired();
+
+            builder.Property(f => f.UsuarioInclusao)
+            .HasColumnName("UsuarioInclusao")
+            .IsRequired();
+
+            builder.Property(f => f.DataExclusao)
+            .HasColumnName("DataExclusao")
+            .IsRequired(false);
+
+            builder.Property(f => f.UsuarioExclusao)
+            .HasColumnName("UsuarioExclusao")
+            .IsRequired(false);
         }
     }
 }

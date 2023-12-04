@@ -41504,13 +41504,21 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("CategoriaId");
 
+                    b.Property<DateTime?>("DataExclusao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataExclusao");
+
+                    b.Property<DateTime>("DataInclusao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataInclusao");
+
                     b.Property<int?>("FuncaoId")
                         .HasColumnType("int")
                         .HasColumnName("FuncaoId");
 
-                    b.Property<int>("Indicacao")
+                    b.Property<int>("IndicacaoId")
                         .HasColumnType("int")
-                        .HasColumnName("Indicacao");
+                        .HasColumnName("IndicacaoId");
 
                     b.Property<int>("PessoaFisicaId")
                         .HasColumnType("int")
@@ -41520,6 +41528,15 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Registro");
+
+                    b.Property<string>("UsuarioExclusao")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UsuarioExclusao");
+
+                    b.Property<string>("UsuarioInclusao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UsuarioInclusao");
 
                     b.HasKey("Id");
 
@@ -41532,7 +41549,7 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.HasIndex("FuncaoId")
                         .HasDatabaseName("idx_informacaoProfissional_funcao");
 
-                    b.HasIndex("Indicacao")
+                    b.HasIndex("IndicacaoId")
                         .HasDatabaseName("idx_informacaoProfissional_indicacao");
 
                     b.HasIndex("PessoaFisicaId")
@@ -42654,7 +42671,7 @@ namespace CadastroDigital.Infrastructure.Migrations
 
                     b.HasOne("CadastroDigital.Domain.Entities.Diretoria", "Diretoria")
                         .WithOne("InformacaoProfissional")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.InformacaoProfissional", "Indicacao")
+                        .HasForeignKey("CadastroDigital.Domain.Entities.InformacaoProfissional", "IndicacaoId")
                         .HasConstraintName("fk_informacaoProfissional_indicacao")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -676,7 +676,11 @@ namespace CadastroDigital.Infrastructure.Migrations
                     Registro = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CargoId = table.Column<int>(type: "int", nullable: true),
                     FuncaoId = table.Column<int>(type: "int", nullable: true),
-                    Indicacao = table.Column<int>(type: "int", nullable: false)
+                    IndicacaoId = table.Column<int>(type: "int", nullable: false),
+                    DataInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UsuarioInclusao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataExclusao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioExclusao = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -700,7 +704,7 @@ namespace CadastroDigital.Infrastructure.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "fk_informacaoProfissional_indicacao",
-                        column: x => x.Indicacao,
+                        column: x => x.IndicacaoId,
                         principalTable: "Diretoria",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -8942,7 +8946,7 @@ namespace CadastroDigital.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "idx_informacaoProfissional_indicacao",
                 table: "InformacaoProfissional",
-                column: "Indicacao");
+                column: "IndicacaoId");
 
             migrationBuilder.CreateIndex(
                 name: "idx_informacaoProfissional_pessoaFisica",

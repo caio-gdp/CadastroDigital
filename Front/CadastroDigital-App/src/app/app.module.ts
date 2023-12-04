@@ -4,12 +4,12 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { AppRoutingModule } from './app-routing.module';
+
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { PessoaComponent } from './components/pessoa/pessoa.component';
 import { PessoaListaComponent } from './components/pessoa/pessoa-lista/pessoa-lista.component';
 import { PessoaDetalheComponent } from './components/pessoa/pessoa-detalhe/pessoa-detalhe.component';
@@ -41,7 +41,7 @@ import { PersonalDataComponent } from './components/user/personalData/personalDa
 import { OrgaoExpedidorService } from './services/orgaoexpedidor.service';
 import { EstadoService } from './services/estado.service';
 import { CidadeService } from './services/cidade.service';
-import { PaisService } from './services/Pais.service';
+import { PaisService } from './services/pais.service';
 import { EstadoCivilService } from './services/estadocivil.service';
 import { SexoService } from './services/sexo.service';
 import { TipoRedeSocialService } from './services/tiporedesocial.service';
@@ -63,6 +63,7 @@ import { PessoaFisicaService } from './services/pessoafisica.service';
 import { DiretoriaService } from './services/diretoria.service';
 import { CategoriaService } from './services/categoria.service';
 import { CargoService } from './services/cargo.service';
+import { InformacaoProfissionalService } from './services/informacaoprofissional.service';
 
 defineLocale('pt', ptBrLocale);
 //registerLocaleData(localePT);
@@ -135,6 +136,7 @@ defineLocale('pt', ptBrLocale);
               DiretoriaService,
               CategoriaService,
               CargoService,
+              InformacaoProfissionalService,
               PlaylistService,
               ReCaptchaV3Service,
               provideNgxMask(),

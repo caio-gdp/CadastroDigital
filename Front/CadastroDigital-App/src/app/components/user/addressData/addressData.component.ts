@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ValidatorField } from '@app/helpers/ValidatorField';
 import { Cidade } from '@app/models/Cidade';
 import { Endereco } from '@app/models/Endereco';
@@ -34,8 +35,8 @@ export class AddressDataComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastr : ToastrService,
     private enderecoService : EnderecoService,
-    private cidadeService: CidadeService,
-    private ref: ChangeDetectorRef) {
+    private ref: ChangeDetectorRef,
+    private router : Router) {
       this.currentUser = accountService.currentUser$;
 
     }
@@ -70,7 +71,6 @@ export class AddressDataComponent implements OnInit {
     this.user = JSON.parse(this.jsonUser);
 
     if (this.user != null){
-      this.spinner.show()
       this.enderecoService.getEndereco(this.user.id).subscribe(
         (enderecoRetorno: Endereco) => {
           this.endereco = enderecoRetorno
@@ -78,14 +78,9 @@ export class AddressDataComponent implements OnInit {
           this.form.patchValue(this.endereco);
         },
         (error: any) => {
-          console.log(error)
-          this.toastr.error('Endereço não carregado')
       },
-      ).add(() => this.spinner.hide());
+      ).add();
     }
-
-
-
   }
 
   getByCep() : void {
@@ -120,7 +115,9 @@ export class AddressDataComponent implements OnInit {
 
         this.enderecoService.post(this.user.id, this.endereco).subscribe({
           next: (endereco: Endereco) => {
-            this.toastr.success('Registro salvo com sucesso.', 'Sucesso')},
+            this.toastr.success('Registro salvo com sucesso.', 'Sucesso');
+            this.router.navigateByUrl('user/profissionalData')
+          },
           error: (error: any) => {
             console.error(error);
             this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')

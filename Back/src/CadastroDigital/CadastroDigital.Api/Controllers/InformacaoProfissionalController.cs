@@ -40,16 +40,16 @@ namespace CadastroDigital.Api.Controllers
             return Ok(informacaoProfissional);
         }
 
-        // [HttpPost("{id}")]
-        // public async Task<IActionResult> Post(int id, EnderecoDto dto)
-        // {
-        //     var ret = await _enderecoService.AddEndereco(id, dto);
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Post(int id, InformacaoProfissionalDto dto)
+        {
+            var ret = await _informacaoProfissionalService.AddInformacaoProfissional(id, dto);
             
-        //     if (ret == null)
-        //         return BadRequest("Erro ao tentar incluir registro.");
+            if (ret == null)
+                return BadRequest("Erro ao tentar incluir registro.");
 
-        //     return Ok();
-        // }
+            return Ok();
+        }
 
          // [HttpPut("{pessoaid}")]
         // public async Task<IActionResult> Put(int id, EnderecoDto dto)
