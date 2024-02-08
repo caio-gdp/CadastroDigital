@@ -27,7 +27,8 @@
                   </div>
                   <form [formGroup]="form">
                     <div class="col-3">
-                      <input formControlName="rg" id="rg" class="effect" type="text" placeholder="RG*" [ngClass]="cssValidation(f.rg)"
+                      <div>RG*</div>
+                      <input formControlName="rg" id="rg" class="effect" type="text" [ngClass]="cssValidation(f.rg)"
                         maxlength="12">
                       <div class="invalid-tooltip" *ngIf="f.rg.errors?.required">
                         RG é obrigatório.
@@ -41,7 +42,8 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
-                      <input class="effect" type="text" [ngClass]="cssValidation(f.dataEmissao)" placeholder="Data de Emissão*"
+                      <div>Data de Emissão*</div>
+                      <input class="effect" type="text" [ngClass]="cssValidation(f.dataEmissao)"
                       formControlName="dataEmissao" bsDatepicker [bsConfig]="bsConfig()" maxlength="10" onkeydown="return false">
                       <div class="invalid-tooltip" *ngIf="f.dataEmissao.errors?.required">
                         Data de Emissão é obrigatório.
@@ -58,8 +60,8 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
+                      <div>Orgão Expedidor*</div>
                       <select required class="effect" type="text" [ngClass]="cssValidation(f.orgaoExpedidorId)" formControlName="orgaoExpedidorId" id="orgaoExpedidorId" (change)="changeCss('orgaoExpedidorId')" >
-                        <option disabled selected hidden value="">Orgão Expedidor*</option>
                         <option *ngFor="let orgaoExpedidor of orgaosExpedidores" value="{{orgaoExpedidor.id}}">{{orgaoExpedidor.sigla}}</option>
                       </select>
                       <span class="focus-border"></span>

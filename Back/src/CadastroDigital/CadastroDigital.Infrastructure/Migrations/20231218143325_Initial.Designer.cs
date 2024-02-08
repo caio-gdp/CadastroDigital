@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CadastroDigital.Infrastructure.Migrations
 {
     [DbContext(typeof(CadastroDigitalContext))]
-    [Migration("20231130185953_Initial")]
+    [Migration("20231218143325_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,11 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Id")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Cpf")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Cpf");
 
                     b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime2")
@@ -47,13 +52,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("Nome");
 
-                    b.Property<int>("SocioId")
+                    b.Property<int>("PessoaFisicaId")
                         .HasColumnType("int")
-                        .HasColumnName("SocioId");
-
-                    b.Property<int>("TipoParenteId")
-                        .HasColumnType("int")
-                        .HasColumnName("TipoParenteId");
+                        .HasColumnName("PessoaFisicaId");
 
                     b.Property<string>("UsuarioExclusao")
                         .HasColumnType("nvarchar(max)")
@@ -66,11 +67,8 @@ namespace CadastroDigital.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SocioId")
-                        .HasDatabaseName("idx_agregado_socio");
-
-                    b.HasIndex("TipoParenteId")
-                        .HasDatabaseName("idx_agregado_tipoparente");
+                    b.HasIndex("PessoaFisicaId")
+                        .HasDatabaseName("idx_agregado_pessoafisica");
 
                     b.ToTable("Agregado");
                 });
@@ -215,6 +213,10 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("Site");
 
+                    b.Property<int>("TipoAssociacaoId")
+                        .HasColumnType("int")
+                        .HasColumnName("TipoAssociacaoId");
+
                     b.Property<string>("UsuarioAlteracao")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("UsuarioAlteracao");
@@ -233,6 +235,8 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnName("Valor");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TipoAssociacaoId");
 
                     b.ToTable("Beneficio");
                 });
@@ -38390,8 +38394,13 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
-                        .UseIdentityColumn();
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Cpf")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)")
+                        .HasColumnName("Cpf");
 
                     b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime2")
@@ -38411,9 +38420,19 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("Nome");
 
-                    b.Property<int>("SocioId")
+                    b.Property<string>("NumeroDocumento")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("NumeroDocumento");
+
+                    b.Property<int>("PessoaFisicaId")
                         .HasColumnType("int")
-                        .HasColumnName("SocioId");
+                        .HasColumnName("PessoaFisicaId");
+
+                    b.Property<int>("TipoDocumentoId")
+                        .HasColumnType("int")
+                        .HasColumnName("TipoDocumentoId");
 
                     b.Property<int>("TipoParenteId")
                         .HasColumnType("int")
@@ -38430,8 +38449,10 @@ namespace CadastroDigital.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SocioId")
-                        .HasDatabaseName("idx_dependente_socio");
+                    b.HasIndex("PessoaFisicaId")
+                        .HasDatabaseName("idx_dependente_pessoafisica");
+
+                    b.HasIndex("TipoDocumentoId");
 
                     b.HasIndex("TipoParenteId")
                         .HasDatabaseName("idx_dependente_tipoparente");
@@ -41784,17 +41805,32 @@ namespace CadastroDigital.Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            Descricao = "Dados Financeiros"
+                            Descricao = "Dependentes"
                         },
                         new
                         {
                             Id = 6,
-                            Descricao = "Dependentes e Agregados"
+                            Descricao = "Agregados"
                         },
                         new
                         {
                             Id = 7,
+                            Descricao = "Foto Perfil"
+                        },
+                        new
+                        {
+                            Id = 8,
                             Descricao = "Documentos"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Descricao = "Fichas"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Descricao = "Concluído"
                         });
                 });
 
@@ -41967,7 +42003,11 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnName("Id")
+                        .UseIdentityColumn();
+
+                    b.Property<int?>("AgregadoId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("CargoId")
                         .HasColumnType("int");
@@ -41982,6 +42022,9 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Property<DateTime>("DataInclusao")
                         .HasColumnType("datetime2")
                         .HasColumnName("DataInclusao");
+
+                    b.Property<int?>("DependenteId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Inscricao")
                         .HasColumnType("int")
@@ -42025,9 +42068,13 @@ namespace CadastroDigital.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AgregadoId");
+
                     b.HasIndex("CargoId");
 
                     b.HasIndex("CategoriaId");
+
+                    b.HasIndex("DependenteId");
 
                     b.HasIndex("ParceriaId");
 
@@ -42072,6 +42119,42 @@ namespace CadastroDigital.Infrastructure.Migrations
                         {
                             Id = 3,
                             Descricao = "Concluído"
+                        });
+                });
+
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoAssociacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("Descricao");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoAssociacao");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descricao = "Todos"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descricao = "Sócio"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descricao = "Dependente"
                         });
                 });
 
@@ -42168,51 +42251,21 @@ namespace CadastroDigital.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Descricao = "Pai"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Descricao = "Mãe"
-                        },
-                        new
-                        {
-                            Id = 3,
                             Descricao = "Filho(a)"
                         },
                         new
                         {
-                            Id = 4,
-                            Descricao = "Avô(ó)"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Descricao = "Irmã(o)"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Descricao = "Neto(a)"
-                        },
-                        new
-                        {
-                            Id = 7,
+                            Id = 2,
                             Descricao = "Esposo(a)"
                         },
                         new
                         {
-                            Id = 8,
-                            Descricao = "Tio(a)"
+                            Id = 3,
+                            Descricao = "Tutelado"
                         },
                         new
                         {
-                            Id = 9,
-                            Descricao = "Tutela"
-                        },
-                        new
-                        {
-                            Id = 10,
+                            Id = 4,
                             Descricao = "Enteado(a)"
                         });
                 });
@@ -42519,14 +42572,25 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Agregado", b =>
                 {
-                    b.HasOne("CadastroDigital.Domain.Entities.Socio", "Socio")
-                        .WithOne("Agregado")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.Agregado", "SocioId")
-                        .HasConstraintName("fk_agregado_socio")
+                    b.HasOne("CadastroDigital.Domain.Entities.PessoaFisica", "PessoaFisica")
+                        .WithMany("Agregados")
+                        .HasForeignKey("PessoaFisicaId")
+                        .HasConstraintName("fk_agregado_pessoafisica")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Socio");
+                    b.Navigation("PessoaFisica");
+                });
+
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.Beneficio", b =>
+                {
+                    b.HasOne("CadastroDigital.Domain.Entities.TipoAssociacao", "TipoAssociacao")
+                        .WithMany()
+                        .HasForeignKey("TipoAssociacaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TipoAssociacao");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.BeneficioAgregado", b =>
@@ -42572,6 +42636,34 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Estado");
+                });
+
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.Dependente", b =>
+                {
+                    b.HasOne("CadastroDigital.Domain.Entities.PessoaFisica", "PessoaFisica")
+                        .WithMany("Dependentes")
+                        .HasForeignKey("Id")
+                        .HasConstraintName("fk_dependente_pessoafisica")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CadastroDigital.Domain.Entities.TipoDocumento", "TipoDocumento")
+                        .WithMany()
+                        .HasForeignKey("TipoDocumentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CadastroDigital.Domain.Entities.TipoParente", "TipoParente")
+                        .WithOne("Dependente")
+                        .HasForeignKey("CadastroDigital.Domain.Entities.Dependente", "TipoParenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PessoaFisica");
+
+                    b.Navigation("TipoDocumento");
+
+                    b.Navigation("TipoParente");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Documento", b =>
@@ -42776,6 +42868,10 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Socio", b =>
                 {
+                    b.HasOne("CadastroDigital.Domain.Entities.Agregado", "Agregado")
+                        .WithMany()
+                        .HasForeignKey("AgregadoId");
+
                     b.HasOne("CadastroDigital.Domain.Entities.Cargo", "Cargo")
                         .WithMany()
                         .HasForeignKey("CargoId");
@@ -42785,11 +42881,8 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasForeignKey("CategoriaId");
 
                     b.HasOne("CadastroDigital.Domain.Entities.Dependente", "Dependente")
-                        .WithOne("Socio")
-                        .HasForeignKey("CadastroDigital.Domain.Entities.Socio", "Id")
-                        .HasConstraintName("fk_dependente_socio")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("DependenteId");
 
                     b.HasOne("CadastroDigital.Domain.Entities.Parceria", "Parceria")
                         .WithMany()
@@ -42804,6 +42897,8 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.HasOne("CadastroDigital.Domain.Entities.ProcessoJuridico", "ProcessoJuridico")
                         .WithMany()
                         .HasForeignKey("ProcessoJuridicoId");
+
+                    b.Navigation("Agregado");
 
                     b.Navigation("Cargo");
 
@@ -42937,11 +43032,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Navigation("PessoaFisica");
                 });
 
-            modelBuilder.Entity("CadastroDigital.Domain.Entities.Dependente", b =>
-                {
-                    b.Navigation("Socio");
-                });
-
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Diretoria", b =>
                 {
                     b.Navigation("InformacaoProfissional");
@@ -42983,6 +43073,10 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.PessoaFisica", b =>
                 {
+                    b.Navigation("Agregados");
+
+                    b.Navigation("Dependentes");
+
                     b.Navigation("Enderecos");
 
                     b.Navigation("InformacaoProfissional");
@@ -42997,8 +43091,6 @@ namespace CadastroDigital.Infrastructure.Migrations
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.Socio", b =>
                 {
-                    b.Navigation("Agregado");
-
                     b.Navigation("InformacaoBancaria");
                 });
 
@@ -43015,6 +43107,11 @@ namespace CadastroDigital.Infrastructure.Migrations
             modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoDocumento", b =>
                 {
                     b.Navigation("Documento");
+                });
+
+            modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoParente", b =>
+                {
+                    b.Navigation("Dependente");
                 });
 
             modelBuilder.Entity("CadastroDigital.Domain.Entities.TipoRedeSocial", b =>

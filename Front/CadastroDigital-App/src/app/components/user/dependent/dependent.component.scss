@@ -1,3 +1,4 @@
+user agent stylesheet
 
 body {
   font-family: Myriad Pro;
@@ -8,20 +9,27 @@ body {
   overflow: hidden;
 }
 
+.card-informacao{
+  background-color: #ebeaea;
+  border-left: 4px solid #d52b1e;
+  box-shadow: 2px 2px #ebeaea;
+}
+
 .form{
   float: right;
+}
+
+.invalid-tooltip,
+.tooltip-arrow,
+.red-tooltip + .tooltip > .tooltip-inner {
+  background-color: rgb(251, 252, 249);
+  color: #d52b1e;
 }
 
 :focus{outline: none;}
 
 .card{
   position: relative
-}
-
-.card-informacao{
-  background-color: #ebeaea;
-  border-left: 4px solid #d52b1e;
-  box-shadow: 2px 2px #ebeaea;
 }
 
 .col-1{
@@ -33,8 +41,8 @@ body {
 
 .col-2{
   float: left;
-  width: 44%;
-  margin: 15px 3% 40px;
+  width: 45%;
+  margin: 15px 0 40px 25px;
   position: relative;
 } /* necessary to give position: relative to parent. */
 
@@ -47,41 +55,24 @@ body {
 } /* necessary to give position: relative to parent. */
 
 .col-3{
-  float: left;
-  width: 27.33%;
-  margin: 25px 3%;
   position: relative;
+  float: left;
+  width: 30%;
+  margin: 20px -15px 40px 25px;
 } /* necessary to give position: relative to parent. */
 
-.effect{
-  border: 0;
-  padding: 4px 0;
-  border-bottom: 1px solid #ccc;
-  background-color: transparent;
-}
-
-.effect ~
-.focus-border{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0px;
-    height: 2px;
-    background-color: #3399FF;
-    transition: 0.4s;
-  }
-
-.effect:focus ~
-.focus-border,
-.has-content.effect ~
-.focus-border{
-  width: 100%;
-  transition: 0.4s;
-}
+// input[type="text"]{
+//   font: 15px/24px "Lato", Arial, sans-serif;
+//   color: #333;
+//   width: 100%;
+//   box-sizing: border-box;
+//   letter-spacing: 1px;}
 
 input[type="text"],
 input[type="password"],
-input[type="datetime"]
+input[type="datetime"],
+input[type="number"],
+input[type="select"]
 {
   font: 15px/24px "Lato", Arial, sans-serif;
   color: #333;
@@ -89,6 +80,7 @@ input[type="datetime"]
   box-sizing: border-box;
   letter-spacing: 1px;
   height: 40px;
+  top: 25px;
 }
 
 select {
@@ -98,6 +90,72 @@ select {
   box-sizing: border-box;
   letter-spacing: 1px;
   height: 40px;
+}
+
+select:focus
+{
+  top: 0px;
+  font-size: 12px;
+  color: #3399FF;
+  transition: 0.4s;
+  border-color:  #3399FF;
+}
+
+select:focus option{
+  font-size: 15px;
+  color: gray;
+}
+
+// #spanIndicacao{
+//   font-size: 15px;
+//   color: gray;
+// }
+
+
+// select:checked option{
+//   select:focus{
+//     font-size: 200px;
+//   }
+//   font-size: 15px;
+//   color: rgb(218, 17, 17);
+// }
+
+// select:has(option[value<>"1"]){
+//   font-size: 15px;
+//   color: gray;
+// }
+
+input:focus::-webkit-input-placeholder {
+  // color: transparent;
+  position: absolute;
+  top: 0px;
+  font-size: 12px;
+  color: #3399FF;
+  transition: 0.3s;
+}
+input:focus:-moz-placeholder { /* Firefox 18- */
+  // color: transparent;
+  position: absolute;
+  top: 0px;
+  font-size: 12px;
+  color: #3399FF;
+  transition: 0.3s;
+}
+input:focus::-moz-placeholder {  /* Firefox 19+ */
+  // color: transparent;
+  position: absolute;
+  top: 0px;
+  font-size: 12px;
+  color: #3399FF;
+  transition: 0.3s;
+}
+input:focus:-ms-input-placeholder {
+  // color: transparent;
+  position: absolute;
+  top: 0px;
+  font-size: 12px;
+  color: #3399FF;
+  transition: 0.3s;
 }
 
 .btn:disabled{
@@ -116,9 +174,123 @@ select {
   vertical-align: middle;
   height: 35px;
   width: 150px;
-
 }
 
 .div-btn-custom{
   padding: 4px 120px 15px;
 }
+
+.effect{
+    position: relative;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+    color:gray
+}
+
+.effect ~
+.title-item{
+  position: relative;
+  top:-35px;
+  color:gray
+}
+
+.effect ~
+.focus-border{
+    position: absolute;
+    bottom: 5px;
+    left: 12px;
+    width: 0px;
+    height: 2px;
+    background-color: #3399FF;
+    transition: 0.4s;
+    top: 63px;
+    .title-item{
+      color: #3399FF
+    }
+  }
+
+// .effect ~
+// .title-item{
+//     background-color: #3399FF;
+//     color: #ff3333;
+//     transition: 0.4s;
+//     text-transform: lowercase;
+//   }
+
+.effect:focus ~
+.focus-border,
+.has-content.effect ~
+.focus-border{
+  width: 90%;
+  //color: #3399FF;
+  //transition: 0.4s;
+}
+
+.effect:focus ~
+.title-item{
+  color: #3399FF
+}
+
+.fa-exclamation-circle{
+  color: #ff7b00;
+}
+.fa-times{
+  color: #ff0000;
+}
+.fa-check{
+  color: #19da00;
+}
+
+.iconesSociais {
+  color: rgb(94, 94, 94);
+}
+
+.capitalize {
+  text-transform: capitalize;
+  border-bottom: 1px solid rgb(226, 226, 226);
+  color: silver;
+}
+
+.tab-pane {
+  padding: 20px 8px 8px;
+  border-top: 0px;
+  border-right: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  border-left: 1px solid #dee2e6;
+}
+
+.card-evento {
+  position: sticky;
+  --default-height: 25px;
+  top: var(--default-height);
+}
+
+/* Cor de fundo do autocomplete */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+/* Cor do texto do autocomplete */
+input:-webkit-autofill {
+  -webkit-text-fill-color: #333 !important;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+
+}
+input[type=number] {
+ -moz-appearance: textfield;
+ appearance: textfield;
+}
+
+.invalid-selector{
+  position: absolute;
+  color: rgb(218, 17, 17);
+  font-size: 13px;
+  padding: 6px;
+}
+
+
+

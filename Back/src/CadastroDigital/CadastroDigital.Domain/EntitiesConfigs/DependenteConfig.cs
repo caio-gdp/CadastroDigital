@@ -15,18 +15,20 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             builder.HasKey(p => p.Id);
 
             //Index
-            builder.HasIndex(i => i.SocioId)
+            builder.HasIndex(i => i.PessoaFisicaId)
             .IsUnique(false)
-            .HasDatabaseName("idx_dependente_socio");
+            .HasDatabaseName("idx_dependente_pessoafisica");
 
             builder.HasIndex(i => i.TipoParenteId)
             .IsUnique(false)
             .HasDatabaseName("idx_dependente_tipoparente");
 
-            builder.HasOne(f => f.Socio)
-            .WithOne(f => f.Dependente)
-            .HasForeignKey<Socio>(f => f.Id)
-            .HasConstraintName("fk_dependente_socio");
+            //Foreign Key
+            builder.HasOne(f => f.PessoaFisica)
+            .WithMany(f => f.Dependentes)
+            .HasForeignKey(f => f.Id)
+            .HasConstraintName("fk_dependente_pessoafisica")
+            .OnDelete(DeleteBehavior.Restrict);
 
             // builder.HasOne(f => f.TipoParente)
             // .WithOne(f => f.Dependente)
@@ -39,8 +41,8 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .ValueGeneratedOnAdd()
             .IsRequired();
 
-            builder.Property(f => f.SocioId)
-            .HasColumnName("SocioId")
+            builder.Property(f => f.PessoaFisicaId)
+            .HasColumnName("PessoaFisicaId")
             .ValueGeneratedNever()
             .IsRequired();
 
@@ -51,6 +53,21 @@ namespace CadastroDigital.Domain.EntitiesConfigs
 
              builder.Property(f => f.DataNascimento)
             .HasColumnName("DataNascimento")
+            .IsRequired();
+
+             builder.Property(f => f.Cpf)
+            .HasColumnName("Cpf")
+            .HasMaxLength(11)
+            .IsRequired();
+
+            builder.Property(f => f.NumeroDocumento)
+            .HasColumnName("NumeroDocumento")
+            .HasMaxLength(20)
+            .IsRequired();
+
+            builder.Property(f => f.TipoDocumentoId)
+            .HasColumnName("TipoDocumentoId")
+            .ValueGeneratedNever()
             .IsRequired();
 
             builder.Property(f => f.TipoParenteId)

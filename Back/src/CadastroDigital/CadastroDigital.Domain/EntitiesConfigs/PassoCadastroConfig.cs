@@ -48,16 +48,28 @@ namespace CadastroDigital.Domain.EntitiesConfigs
                 },
                 new PassoCadastro(){
                     Id = 5,
-                    Descricao = "Dados Financeiros"
+                    Descricao = "Dependentes"
                 },
                 new PassoCadastro(){
                     Id = 6,
-                    Descricao = "Dependentes e Agregados"
-                },                                
+                    Descricao = "Agregados"
+                },
                 new PassoCadastro(){
                     Id = 7,
+                    Descricao = "Foto Perfil"
+                },                                
+                new PassoCadastro(){
+                    Id = 8,
                     Descricao = "Documentos"
-                }
+                },
+                new PassoCadastro(){
+                    Id = 9,
+                    Descricao = "Fichas"
+                }, 
+                new PassoCadastro(){
+                    Id = 10,
+                    Descricao = "Concluído"
+                },                                
                 
             };
         }

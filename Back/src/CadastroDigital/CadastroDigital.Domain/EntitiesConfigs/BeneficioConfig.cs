@@ -43,6 +43,11 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasMaxLength(100)
             .IsRequired();
 
+            builder.Property(f => f.TipoAssociacaoId)
+            .HasColumnName("TipoAssociacaoId")
+            .ValueGeneratedNever()
+            .IsRequired();
+
             builder.Property(f => f.DataInclusao)
             .HasColumnName("DataInclusao")
             .IsRequired();

@@ -25,6 +25,9 @@ namespace CadastroDigital.Domain.Entities
         public IEnumerable<RedeSocial> RedesSociais { get; set; }
         public IEnumerable<Endereco> Enderecos { get; set; }
         public InformacaoProfissional InformacaoProfissional { get; set; }
+        public IEnumerable<Dependente> Dependentes { get; set; }
+        public IEnumerable<Agregado> Agregados { get; set; }
+        
         
      }
 }

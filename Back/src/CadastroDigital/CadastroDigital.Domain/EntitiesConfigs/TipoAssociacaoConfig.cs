@@ -4,12 +4,12 @@ using CadastroDigital.Domain.Entities;
 
 namespace CadastroDigital.Domain.EntitiesConfigs
 {
-    public class TipoParenteConfig: IEntityTypeConfiguration<TipoParente>
+    public class TipoAssociacaoConfig: IEntityTypeConfiguration<TipoAssociacao>
     {
-        public void Configure(EntityTypeBuilder<TipoParente>builder){
+        public void Configure(EntityTypeBuilder<TipoAssociacao>builder){
 
             //Tabela
-            builder.ToTable("TipoParente");
+            builder.ToTable("TipoAssociacao");
             
             //Primary Key
             builder.HasKey(p => p.Id);
@@ -22,32 +22,25 @@ namespace CadastroDigital.Domain.EntitiesConfigs
 
             builder.Property(f => f.Descricao)
             .HasColumnName("Descricao")
-            .HasMaxLength(12)
+            .HasMaxLength(30)
             .IsRequired();
         }
 
-        public static TipoParente[] HasData(){
+        public static TipoAssociacao[] HasData(){
 
-            return new TipoParente[]{
+            return new TipoAssociacao[]{
 
-                
-                new TipoParente(){
+                new TipoAssociacao(){
                     Id = 1,
-                    Descricao = "Filho(a)"
+                    Descricao = "Todos"
                 },
-                
-                new TipoParente(){
+                new TipoAssociacao(){
                     Id = 2,
-                    Descricao = "Esposo(a)"
+                    Descricao = "Sócio"
                 },
-                
-                new TipoParente(){
+                new TipoAssociacao(){
                     Id = 3,
-                    Descricao = "Tutelado"
-                },
-                new TipoParente(){
-                    Id = 4,
-                    Descricao = "Enteado(a)"
+                    Descricao = "Dependente"
                 }
             };
         }

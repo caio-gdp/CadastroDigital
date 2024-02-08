@@ -50,6 +50,7 @@ namespace CadastroDigital.Infrastructure.Contexts
         public DbSet<Cargo> Cargo { get; set; }
         public DbSet<Funcao> Funcao { get; set; }
         public DbSet<InformacaoProfissional> InformacaoProfissional { get; set; }
+        public DbSet<TipoAssociacao> TipoAssociacao { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
 
@@ -90,6 +91,7 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new CargoConfig());
             modelBuilder.ApplyConfiguration(new FuncaoConfig());
             modelBuilder.ApplyConfiguration(new InformacaoProfissionalConfig());
+            modelBuilder.ApplyConfiguration(new TipoAssociacaoConfig());
 
             //HasData
             modelBuilder.Entity<Pais>().HasData(PaisConfig.HasData());
@@ -112,6 +114,7 @@ namespace CadastroDigital.Infrastructure.Contexts
             modelBuilder.Entity<OrgaoExpedidor>().HasData(OrgaoExpedidorConfig.HasData());
             modelBuilder.Entity<Cargo>().HasData(CargoConfig.HasData());
             modelBuilder.Entity<Funcao>().HasData(FuncaoConfig.HasData());
+            modelBuilder.Entity<TipoAssociacao>().HasData(TipoAssociacaoConfig.HasData());
 
             base.OnModelCreating(modelBuilder);
         }

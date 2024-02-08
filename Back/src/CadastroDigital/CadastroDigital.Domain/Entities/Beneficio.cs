@@ -12,6 +12,7 @@ namespace CadastroDigital.Domain.Entities
         public decimal Valor { get; set; }
         public string Imagem { get; set; }
         public string Site { get; set; }
+        public int TipoAssociacaoId { get; set; }
         public DateTime DataInclusao { get; set; }
         public string UsuarioInclusao { get; set; }
         public DateTime? DataAlteracao { get; set; }
@@ -22,5 +23,6 @@ namespace CadastroDigital.Domain.Entities
         public string MotivoExclusao { get; set; }
 
         public BeneficioAgregado BeneficioAgregado { get; set; }
+        public TipoAssociacao TipoAssociacao { get; set; }
     }
 }

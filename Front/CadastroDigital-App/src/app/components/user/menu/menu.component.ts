@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Passo } from '@app/enums/passo.enum';
 
 @Component({
   selector: 'app-menu',
@@ -7,17 +8,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  passo : string = "precadastro";
+  passo : number;
+  jsonUser: any;
+  passoCadastro: string = "";
 
   constructor() { }
 
   ngOnInit() {
+    this.loadUser();
+  }
 
-    if (this.passo != undefined){
-       (<HTMLInputElement>document.getElementById("a-" + this.passo)).style.borderLeft = "3px solid #fd0404";
-       (<HTMLInputElement>document.getElementById("a-" + this.passo)).style.backgroundColor = "#ebeaea";
-       (<HTMLInputElement>document.getElementById("i-" + this.passo)).style.color = "#fd0404";
+  loadUser(): void{
+
+    this.jsonUser = localStorage.getItem('user');
+    let user = JSON.parse(this.jsonUser);
+
+    if (user == null || user == '')
+      this.passo = 0;
+    else
+      this.passo = user.passoCadastroId
+
+    for(const _passo of this.enumKeys(Passo)){
+      const value = Passo[_passo]
+
+      if (typeof value !== "string"){
+        if (value > this.passo + 1){
+          (<HTMLDivElement>document.getElementById("d-" + value)).className = "isDivDisabled";
+        }
+      }
     }
   }
+
+  enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
+    return Object.keys(obj).filter(k => !Number.isNaN(k)) as K[]
+  }
+
+
 
 }

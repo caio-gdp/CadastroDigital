@@ -1,23 +1,4 @@
-<!--<app-titulo [titulo]="'Dashboard'"></app-titulo>-->
-<!-- <div>
-  <div class="p-5">
-    <carousel>
-      <slide>
-        <img src="assets/Sindest-1.jpg">
-      </slide>
-      <slide>
-        <img src="assets/Sindest-2.jpg">
-      </slide>
-      <slide>
-        <img src="assets/Sindest-3.jpg">
-      </slide>
-    </carousel>
-  </div>
-</div> -->
-  <!--Block start-->
-<!-- <div class="block-area p-4" style="background-color: #caced1;"> -->
-
-  <div *ngIf="noticias[0] != null" class="block-area p-4" style="background-color: #eeeff0;">
+ <div *ngIf="noticias && noticias.length == 5" class="block-area p-4">
   <!--block title-->
   <div class="block-title-6">
     <h4 class="h5 border-primary">
@@ -26,7 +7,7 @@
   </div>
   <div class="row">
     <!--post left start-->
-    <div class="col-lg-6">
+    <div class="flex-column col-lg-6">
       <article class="card card-full mb-4 hover-a">
         <!--thumbnail-->
         <div class="div_ratio_466-261 image-wrapper">

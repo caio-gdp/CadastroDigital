@@ -20,6 +20,11 @@ ul{
   //display: block;
 }
 
+a{
+  //font-family: Myriad Pro;
+  color: gray
+}
+
 li a{
   display: inline-block;
   //margin-right: 3px;
@@ -38,7 +43,8 @@ img{
 
 a:link,
 a:visited {
-  color: #2c3e50;
+  //font-family: Myriad Pro;
+  color: gray;
   text-decoration: none;
   border-bottom: 3px solid transparent;
   transition: border-bottom 0.4s;

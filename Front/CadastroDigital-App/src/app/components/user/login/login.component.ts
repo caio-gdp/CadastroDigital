@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControlName, FormGroup } from '@angular/forms';
 import { enableDebugTools } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -15,11 +15,15 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent implements OnInit {
 
   model = {} as UserLogin;
   currentUser : any;
   firstName : string;
+  jsonUser: any;
+  user: any;
+
 
   constructor(public accountService : AccountService,
               private toastr: ToastrService,
@@ -29,10 +33,16 @@ export class LoginComponent implements OnInit {
               }
 
   ngOnInit() : void{
+
+    //this.showLogin();
+    this.jsonUser = localStorage.getItem('user');
+    this.user = JSON.parse(this.jsonUser);
     this.setFirstName();
   }
 
-  public login() : void{
+  login() : void{
+
+    alert('login')
 
     this.spinner.show();
 
@@ -52,18 +62,30 @@ export class LoginComponent implements OnInit {
     }).add(() => this.spinner.hide());
   }
 
-  public logout() : void{
+  logout() : void{
     this.accountService.logout();
     window.location.reload();
+    this.router.navigate(['dashboard']);
   }
 
-  public setFirstName() : void{
-    var jsonUser: any;
-    jsonUser = localStorage.getItem('user');
-    var user = JSON.parse(jsonUser);
-    if (user != null){
-      var index = user.name.indexOf(' ');
-      this.firstName = user.name.substring(0,index);
+  setFirstName() : void{
+    if (this.user != null){
+      var index = this.user.name.indexOf(' ');
+      this.firstName = this.user.name.substring(0,index);
+    }
+  }
+
+  public showLogin() : void{
+    if (this.user != null || this.user == undefined){
+      let obj = <HTMLDivElement>document.getElementById("divLogin");
+      obj.style.display = "";
+    }
+  }
+
+  public hideLogin() : void{
+    if (this.user != null || this.user == undefined){
+      let obj = <HTMLDivElement>document.getElementById("divLogin");
+      obj.style.display = "none";
     }
   }
 }

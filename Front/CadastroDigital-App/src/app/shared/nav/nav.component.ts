@@ -8,12 +8,13 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
 
-  isCollapsed = true;
   dataAtual = new Date();
 
   constructor(private router: Router) { }
 
   ngOnInit() : void {
+    //if (this.router.url == '/')
+      //<HTMLDivElement>document.getElementById("divLogin")?.style.display = "none";
   }
 
   showMenuLoggedOut() : boolean{
@@ -22,8 +23,6 @@ export class NavComponent implements OnInit {
 
   showMenuLoggedIn() : boolean{
     var ret : boolean = false;
-
-    //alert(this.router.url);
 
     // if (this.router.url != '/user/login' && this.router.url != '/dashboard')
     if (this.router.url == '/')
@@ -35,5 +34,4 @@ export class NavComponent implements OnInit {
   registration() : void{
     this.router.navigate([`user/registration/`]);
   }
-
 }

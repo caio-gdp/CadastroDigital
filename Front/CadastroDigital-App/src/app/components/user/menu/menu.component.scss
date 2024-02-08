@@ -1,21 +1,28 @@
-a:link{
-  width: 55%;
-  color: #d4d4d4;
-}
 
-i {
-  color: #d4d4d4;
-}
-
-a:hover,
-a:active{
-  border-left: 3px solid #fd0404;
-  background-color: #ebeaea;
-  color: #000000;
-  i{
-    color: #fd0404;
+div{
+  a:link{
+     color: #d4d4d4;
+   }
+   a:hover{
+    border-left: 3px solid #fd0404;
+    background-color: #ebeaea;
+    color: #000000;
+    i{
+        color: #fd0404;
+    }
+   }
+   i {
+    color: #000000;
   }
 }
 
-
-
+.isDivDisabled{
+  //color: currentColor;
+  cursor: no-drop;
+  opacity: 0.5;
+  text-decoration: none;
+  a{
+    pointer-events: none;
+  }
+  i{color: #d4d4d4;}
+}

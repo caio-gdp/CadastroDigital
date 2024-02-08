@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, LOCALE_ID, NgZone, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, LOCALE_ID, NgZone, OnInit } from '@angular/core';
 import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatorField } from '@app/helpers/ValidatorField';
 import { ToastrService } from 'ngx-toastr';
@@ -9,6 +9,10 @@ import { User } from '@app/models/Identity/User';
 import { AccountService } from '@app/services/account.service';
 import { GenericValidator } from '@app/validators/GenericValidator';
 import { UserLogin } from '@app/models/Identity/UserLogin';
+import { SelectorContext } from '@angular/compiler';
+import { LoginComponent } from '../login/login.component';
+
+
 
 @Component({
   selector: 'app-registration',
@@ -21,7 +25,6 @@ export class RegistrationComponent implements OnInit {
   form = {} as FormGroup;
   tokenVisible: boolean = false;
   reCAPTCHAToken: string = '';
-  teste = false;
   model = {} as UserLogin;
   currentUser : any;
   fieldDisable : boolean = true;
@@ -39,12 +42,14 @@ export class RegistrationComponent implements OnInit {
     private recaptchaV3Service: ReCaptchaV3Service,
     //private ngZone: NgZone,
     private router: Router,
-    private cdRef:ChangeDetectorRef
+    private cdRef:ChangeDetectorRef,
+    private loginComponent : LoginComponent
     ){
         this.currentUser = accountService.currentUser$;
     }
 
   ngOnInit() : void {
+    this.loginComponent.hideLogin();
     this.validation();
     //Depois da validação preencher os campos
     this.loadUser();
@@ -59,6 +64,7 @@ export class RegistrationComponent implements OnInit {
     this.jsonUser = localStorage.getItem('user');
     let user = JSON.parse(this.jsonUser);
 
+    if (user != null){
       user.dateOfBirth = new Date(user.dateOfBirth).toLocaleDateString('pt-BR');
 
       this.form.patchValue(user);
@@ -69,7 +75,7 @@ export class RegistrationComponent implements OnInit {
 
       let divpass = <HTMLDivElement>document.getElementById('divPass');
       divpass.hidden = true;
-
+    }
   }
 
   bsConfig() : any{
@@ -78,7 +84,7 @@ export class RegistrationComponent implements OnInit {
       adaptivePosition: true,
       isAnimated: true,
       //containerClass: 'theme-default',
-      location: 'pt'
+      //location: 'pt'
     };
   }
 
@@ -135,7 +141,7 @@ export class RegistrationComponent implements OnInit {
         this.accountService.register(this.user).subscribe({
           next : () => {
               this.toastr.success("Pré cadastro realizado. Efetue o login para finalizar o cadastro.", "Informação", {extendedTimeOut: 1000});
-              this.router.navigateByUrl('dashboard');
+              this.router.navigateByUrl('user/dashboard');
           },
           error: (error: any) => {
               console.log(error)

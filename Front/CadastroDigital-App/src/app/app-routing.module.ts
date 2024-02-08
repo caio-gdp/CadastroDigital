@@ -24,23 +24,34 @@ import { DocumentsComponent } from './components/user/Documents/Documents.compon
 import { FileComponent } from './components/user/File/File.component';
 import { AssignComponent } from './components/user/assign/assign.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
-  {
-    path : 'user', component: UserComponent,
-    children : [
-      {  path : 'login', component: LoginComponent  },
-      {  path : 'registration', component: RegistrationComponent  },
-      {  path : 'personalData', component: PersonalDataComponent  },
-      {  path : 'addressData', component: AddressDataComponent  },
-      {  path : 'profissionalData', component: ProfissionalDataComponent  },
-      {  path : 'dependent', component: DependentComponent  },
+  {  path : '', redirectTo : 'dashboard', pathMatch : 'full'  },
+  {  path : 'user', redirectTo : 'dashboard', data: { refreshComponent: true } },
+  { path : '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
+    children: [
+
+      {  path : 'personalData', component: PersonalDataComponent },
+      {  path : 'addressData', component: AddressDataComponent },
+      {  path : 'profissionalData', component: ProfissionalDataComponent },
+      {  path : 'dependent', component: DependentComponent },
       {  path : 'agregate', component: AgregateComponent },
       {  path : 'photo', component: PhotoComponent },
-      {  path : 'documents', component: DocumentsComponent },
+      {  path : 'documents', component: DocumentsComponent},
       {  path : 'file', component: FileComponent },
       {  path : 'assign', component: AssignComponent },
       {  path : 'playlist', component: PlaylistComponent },
+    ]
+  },
+  {
+    path : 'user', component: UserComponent,
+    children : [
+      {  path : 'login', component: LoginComponent },
+      {  path : 'registration', component: RegistrationComponent },
+
     ]
   },
   { path : 'user/profile', component: ProfileComponent  },
@@ -53,15 +64,16 @@ const routes: Routes = [
       {  path : 'lista', component: PessoaListaComponent  }
     ]
   },
-  {  path : 'dashboard', component: DashboardComponent  },
+  {  path : 'dashboard', component: DashboardComponent },
   {  path : 'sobre', component: SobreComponent  },
   {  path : 'noticia', component: NoticiaComponent  },
   {  path : 'beneficio', component: BeneficioComponent  },
   {  path : 'convenio', component: ConvenioComponent  },
   {  path : 'contato', component: ContatoComponent  },
-  {  path : '', redirectTo : 'dashboard', pathMatch : 'full'  },
+
   {  path : '**', redirectTo : 'dashboard', pathMatch : 'full'  },
   {  path : 'nav', component: NavComponent  },
+
 ];
 
 @NgModule({

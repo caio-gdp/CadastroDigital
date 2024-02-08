@@ -7,16 +7,21 @@ namespace CadastroDigital.Domain.Entities
 {
     public class Dependente : Base
     {
-        public int SocioId { get; set; }
+        public int PessoaFisicaId { get; set; }
         public string Nome { get; set; }
         public DateTime DataNascimento { get; set; }
+        public string Cpf { get; set; }
         public int TipoParenteId { get; set; }
+        public string NumeroDocumento { get; set; }
+        public int TipoDocumentoId { get; set; }
         public DateTime DataInclusao { get; set; }
         public string UsuarioInclusao { get; set; }
         public DateTime? DataExclusao { get; set; }
         public string UsuarioExclusao { get; set; }
         
-        public Socio Socio { get; set; }
-        // public TipoParente TipoParente { get; set; }
+        public PessoaFisica PessoaFisica { get; set; }
+        public TipoParente TipoParente { get; set; }
+        public TipoDocumento TipoDocumento { get; set; }
     }
+
 }

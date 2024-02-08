@@ -15,24 +15,15 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             builder.HasKey(p => p.Id);
 
             //Index
-            builder.HasIndex(i => i.SocioId)
+            builder.HasIndex(i => i.PessoaFisicaId)
             .IsUnique(false)
-            .HasDatabaseName("idx_agregado_socio");
-
-            builder.HasIndex(i => i.TipoParenteId)
-            .IsUnique(false)
-            .HasDatabaseName("idx_agregado_tipoparente");
+            .HasDatabaseName("idx_agregado_pessoafisica");
 
             //Foreign Key
-            builder.HasOne(f => f.Socio)
-            .WithOne(f => f.Agregado)
-            .HasForeignKey<Agregado>(f => f.SocioId)
-            .HasConstraintName("fk_agregado_socio");
-
-            // builder.HasOne(f => f.TipoParente)
-            // .WithOne(f => f.Agregado)
-            // .HasForeignKey<Agregado>(f => f.TipoParenteId)
-            // .HasConstraintName("fk_agregado_tipoparente");
+            builder.HasOne(f => f.PessoaFisica)
+            .WithMany(f => f.Agregados)
+            .HasForeignKey(f => f.PessoaFisicaId)
+            .HasConstraintName("fk_agregado_pessoafisica");
 
             //Atributos
             builder.Property(f => f.Id)
@@ -40,8 +31,8 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .ValueGeneratedOnAdd()
             .IsRequired();
 
-            builder.Property(f => f.SocioId)
-            .HasColumnName("SocioId")
+            builder.Property(f => f.PessoaFisicaId)
+            .HasColumnName("PessoaFisicaId")
             .ValueGeneratedNever()
             .IsRequired();
 
@@ -54,9 +45,8 @@ namespace CadastroDigital.Domain.EntitiesConfigs
             .HasColumnName("DataNascimento")
             .IsRequired();
 
-            builder.Property(f => f.TipoParenteId)
-            .HasColumnName("TipoParenteId")
-            .ValueGeneratedNever()
+             builder.Property(f => f.Cpf)
+            .HasColumnName("Cpf")
             .IsRequired();
 
             builder.Property(f => f.DataInclusao)

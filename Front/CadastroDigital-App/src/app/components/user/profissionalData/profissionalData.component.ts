@@ -34,7 +34,6 @@ export class ProfissionalDataComponent implements OnInit {
   diretores: Diretoria[] = [];
   categorias: Categoria[] = [];
   funcoes: Funcao[] = [];
-  beneficios : Beneficio[] = [];
   cargo : Cargo;
   localtrabalho: string;
   informacaoProfissional : InformacaoProfissional;
@@ -52,7 +51,6 @@ export class ProfissionalDataComponent implements OnInit {
               private categoriaService : CategoriaService,
               private funcaoService : FuncaoService,
               private cargoService : CargoService,
-              private beneficioService : BeneficioService,
               private informacaoProfissionalService : InformacaoProfissionalService,
               private toastr: ToastrService,
               private spinner: NgxSpinnerService,
@@ -65,7 +63,6 @@ export class ProfissionalDataComponent implements OnInit {
     this.localtrabalho = "";
     this.getDiretor();
     this.getCategoria();
-    this.getBeneficio();
     this.loadProfissionalData();
   }
 
@@ -197,21 +194,6 @@ export class ProfissionalDataComponent implements OnInit {
           this.cargoService.getByCentroCusto(centroCustoForm).subscribe(observer);
        }
       }
-  }
-
-  getBeneficio() : void{
-    const observer = {
-      next : (_beneficios : Beneficio[]) => {
-          this.beneficios = _beneficios;
-      },
-      error : (error : any) =>
-      {
-        // this.spinner.hide(),
-        // this.toastr.error('Erro ao carregar os registros.', "Erro!")
-      },
-      // complete : () => this.spinner.hide()
-    };
-    this.beneficioService.get().subscribe(observer);
   }
 
   public saveChange() : void{

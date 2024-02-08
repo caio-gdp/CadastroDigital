@@ -1,7 +1,7 @@
 <div class="row">
-testar validação de formulario e reativo
+<!-- testar validação de formulario e reativo
       <p>Form value : {{form.value | json}}</p>
-      <p>Form valid : {{form.status | json}}</p>
+      <p>Form valid : {{form.status | json}}</p> -->
 
   <div class="col-sm-20">
     <div class="container">
@@ -30,8 +30,8 @@ testar validação de formulario e reativo
                 <form [formGroup]="form" >
                   <!-- <h2>Input with Label Effects</h2> -->
                   <div class="col-3">
-                    <input class="effect" type="text" [ngClass]="cssValidation(f.userId)" formControlName="userId" id="userId"
-                      placeholder="CPF*" maxlength="14" mask="000.000.000-00" (keypress)="onlyNumbers($event)">
+                    <div>CPF*</div>
+                    <input class="effect" type="text" [ngClass]="cssValidation(f.userId)" formControlName="userId" id="userId" maxlength="14" mask="000.000.000-00" (keypress)="onlyNumbers($event)">
                     <div class="invalid-tooltip" *ngIf="f.userId.errors?.required">
                       CPF é obrigatório.
                     </div>
@@ -44,8 +44,9 @@ testar validação de formulario e reativo
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-3">
+                    <div>Celular*</div>
                     <input class="effect" type="text" [ngClass]="cssValidation(f.phoneNumber)" formControlName="phoneNumber"
-                      mask="(00)00000-0000" placeholder="Celular*" (keypress)="onlyNumbers($event)">
+                      mask="(00)00000-0000" (keypress)="onlyNumbers($event)">
                     <div class="invalid-tooltip" *ngIf="f.phoneNumber.errors?.required">
                       Celular é obrigatório.
                     </div>
@@ -58,8 +59,11 @@ testar validação de formulario e reativo
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-3">
-                    <input class="effect" type="text" [ngClass]="cssValidation(f.dateOfBirth)" placeholder="Data de Nascimento*"
-                      formControlName="dateOfBirth" bsDatepicker [bsConfig]="bsConfig()" maxlength="10" onkeydown="return false">
+                    <div>Data de Nascimento*</div>
+                    <input class="effect" type="date" [ngClass]="cssValidation(f.dateOfBirth)" formControlName="dateOfBirth"
+                    maxlength="10">
+                    <!-- <input class="effect" type="text" [ngClass]="cssValidation(f.dateOfBirth)" formControlName="dateOfBirth"
+                    bsDatepicker [bsConfig]="bsConfig()" maxlength="10" onkeydown="return false"> -->
                     <!-- <input class="effect" type="text" [ngClass]="cssValidation(f.dateOfBirth)" placeholder="Data de Nascimento*"
                     formControlName="dateOfBirth" bsDatepicker [bsConfig]="bsConfig()" maxlength="10" onfocus="(this.type='date')" onblur="(this.type='text')"> -->
                     <div class="invalid-tooltip" *ngIf="f.dateOfBirth.errors?.required">
@@ -77,8 +81,8 @@ testar validação de formulario e reativo
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-1">
-                    <input class="effect" type="text" [ngClass]="cssValidation(f.name)" formControlName="name"
-                    placeholder="Nome Completo*">
+                    <div>Nome Completo*</div>
+                    <input class="effect" type="text" [ngClass]="cssValidation(f.name)" formControlName="name">
                     <div class="invalid-tooltip" *ngIf="f.name.errors?.required">
                       Nome é obrigatório.
                     </div>
@@ -91,7 +95,8 @@ testar validação de formulario e reativo
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-2">
-                    <input class="effect" type="text" [ngClass]="cssValidation(f.email)" formControlName="email" id="email" placeholder="Email*">
+                    <div>Email*</div>
+                    <input class="effect" type="text" [ngClass]="cssValidation(f.email)" formControlName="email" id="email">
                     <div class="invalid-tooltip" *ngIf="f.email.errors?.required">
                       Email é obrigatório.
                     </div>
@@ -101,7 +106,8 @@ testar validação de formulario e reativo
                     <span class="focus-border"></span>
                   </div>
                   <div class="col-2">
-                    <input class="effect" type="text" placeholder="" [ngClass]="cssValidation(f.confirmaEmail)" formControlName="confirmaEmail" placeholder="Confirmar Email*">
+                    <div>Confirmar Email*</div>
+                    <input class="effect" type="text" [ngClass]="cssValidation(f.confirmaEmail)" formControlName="confirmaEmail">
                     <div class="invalid-tooltip" *ngIf="f.confirmaEmail.errors?.required">
                       Confirmar email é obrigatório.
                     </div>
@@ -120,8 +126,9 @@ testar validação de formulario e reativo
                       </div>
                     </div>
                     <div class="col-2">
+                      <div>Senha*</div>
                       <input class="effect" type="password" [ngClass]="cssValidation(f.passwordHash)"
-                        formControlName="passwordHash" id="passwordHash" placeholder="Senha*" maxlength="15">
+                        formControlName="passwordHash" id="passwordHash" maxlength="15">
                       <span class="fa fa-eye eye-pwd float-end" (click)="viewPassword('passwordHash','spanviewsenha',1)" id="spanviewsenha"></span>
                       <div class="invalid-tooltip" *ngIf="f.passwordHash.errors?.required">
                         Senha é obrigatório.
@@ -131,8 +138,9 @@ testar validação de formulario e reativo
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-2">
+                      <div>Confirmar Senha*</div>
                       <input class="effect" type="password" [ngClass]="cssValidation(f.confirmaPassword)"
-                        formControlName="confirmaPassword" id="confirmaPassword" placeholder="Confirmar Senha*" maxlength="15">
+                        formControlName="confirmaPassword" id="confirmaPassword" maxlength="15">
                         <span class="fa fa-eye eye-pwd float-end" (click)="viewPassword('confirmaPassword','spanviewconfirmasenha',2)" id="spanviewconfirmasenha"></span>
                       <div class="invalid-tooltip" *ngIf="f.confirmaPassword.errors?.required">
                         Confirmar Senha é obrigatório.
