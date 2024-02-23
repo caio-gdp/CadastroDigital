@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, LOCALE_ID, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatorField } from '@app/helpers/ValidatorField';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +11,7 @@ import { GenericValidator } from '@app/validators/GenericValidator';
 import { UserLogin } from '@app/models/Identity/UserLogin';
 import { SelectorContext } from '@angular/compiler';
 import { LoginComponent } from '../login/login.component';
-
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 
 @Component({
@@ -36,6 +36,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   constructor(private fb : FormBuilder,
+    private localeService: BsLocaleService,
     public accountService : AccountService,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
@@ -45,6 +46,7 @@ export class RegistrationComponent implements OnInit {
     private cdRef:ChangeDetectorRef,
     private loginComponent : LoginComponent
     ){
+        this.localeService.use('pt-br');
         this.currentUser = accountService.currentUser$;
     }
 
@@ -85,6 +87,7 @@ export class RegistrationComponent implements OnInit {
       isAnimated: true,
       //containerClass: 'theme-default',
       //location: 'pt'
+      showWeekNumbers: false
     };
   }
 

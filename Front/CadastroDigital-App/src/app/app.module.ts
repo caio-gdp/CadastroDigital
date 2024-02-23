@@ -6,8 +6,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { AppRoutingModule } from './app-routing.module';
 
-//import { defineLocale } from 'ngx-bootstrap/chronos';
-//import { ptBrLocale } from 'ngx-bootstrap/locale';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
 
 import { AppComponent } from './app.component';
 import { PessoaComponent } from './components/pessoa/pessoa.component';
@@ -33,8 +33,9 @@ import { ProfileComponent } from './components/user/profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './components/user/menu/menu.component';
 import { AddressDataComponent } from './components/user/addressData/addressData.component';
-import { registerLocaleData } from '@angular/common';
-import localePT from '@angular/common/locales/pt';
+
+//import { registerLocaleData } from '@angular/common';
+//import localePT from '@angular/common/locales/pt';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service, RecaptchaV3Module } from 'ng-recaptcha';
 import { PersonalDataComponent } from './components/user/personalData/personalData.component';
@@ -66,8 +67,8 @@ import { CargoService } from './services/cargo.service';
 import { InformacaoProfissionalService } from './services/informacaoprofissional.service';
 import { TipoParenteService } from './services/tipoparente.service';
 
-//defineLocale('pt', ptBrLocale);
-registerLocaleData(localePT);
+defineLocale('pt-br', ptBrLocale);
+//registerLocaleData(localePT);
 @NgModule({
   declarations: [
     AppComponent,
@@ -145,7 +146,7 @@ registerLocaleData(localePT);
               provideNgxMask(),
               {provide : HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
               {provide: RECAPTCHA_V3_SITE_KEY, useValue: '6LemiK8mAAAAADxKrc0KtYeWBNkzQsSXi4ujzh-E'},
-              {provide: LOCALE_ID, useValue: 'pt-BR'}
+              //{provide: LOCALE_ID, useValue: 'pt-BR'}
             ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

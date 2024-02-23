@@ -70,8 +70,9 @@
                       </div>
                     </div>
                     <div class="col-3">
+                      <div>Estado Expedidor*</div>
                       <select class="effect" id="ufExpedidorId" [ngClass]="cssValidation(f.ufExpedidorId)" formControlName="ufExpedidorId" (change)="getCidade()">
-                        <option disabled selected hidden value="">Estado Expedidor*</option>
+                        <!-- <option disabled selected hidden value="">Estado Expedidor*</option> -->
                         <option *ngFor="let estado of estados" value="{{estado.id}}">{{estado.sigla}}</option>
                       </select>
                       <div class="invalid-selector" *ngIf="f.ufExpedidorId.touched && f.ufExpedidorId.invalid">
@@ -80,8 +81,9 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
+                      <div>Naturalidade*</div>
                       <select class="effect" id="naturalidadeId" [ngClass]="cssValidation(f.naturalidadeId)" formControlName="naturalidadeId" id="naturalidadeId" (change)="changeCss('naturalidadeId')">
-                        <option disabled selected hidden value="">Naturalidade*</option>
+                        <!-- <option disabled selected hidden value="">Naturalidade*</option> -->
                         <option *ngFor="let cidade of cidades" value="{{cidade.id}}">{{cidade.nome}}</option>
                       </select>
                       <div class="invalid-selector" *ngIf="f.naturalidadeId.touched && f.naturalidadeId.invalid">
@@ -90,8 +92,9 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
-                      <select class="effect" id="nacionalidadeId" [ngClass]="cssValidation(f.nacionalidadeId)" formControlName="nacionalidadeId" id="nacionalidadeId" (change)="changeCss('nacionalidadeId')">
-                        <option disabled selected hidden value="">Nacionalidade*</option>
+                      <div>Nacionalidade*</div>
+                      <select readonly class="effect" id="nacionalidadeId" [ngClass]="cssValidation(f.nacionalidadeId)" formControlName="nacionalidadeId" id="nacionalidadeId" (change)="changeCss('nacionalidadeId')">
+                        <!-- <option disabled selected hidden value="">Nacionalidade*</option> -->
                         <option *ngIf="pais != undefined" value="{{pais.id}}">{{pais.nome}}</option>
                       </select>
                       <div class="invalid-selector" *ngIf="f.nacionalidadeId.touched && f.nacionalidadeId.invalid">
@@ -100,8 +103,9 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
+                      <div>Estado Civil*</div>
                       <select class="effect" [ngClass]="cssValidation(f.estadoCivilId)" formControlName="estadoCivilId" id="estadoCivilId" (change)="changeCss('estadoCivilId')">
-                        <option disabled selected hidden value="">Estado Civil*</option>
+                        <!-- <option disabled selected hidden value="">Estado Civil*</option> -->
                         <option *ngFor="let estadocivil of estadosCivil" value="{{estadocivil.id}}">{{estadocivil.nome}}</option>
                       </select>
                       <div class="invalid-selector" *ngIf="f.estadoCivilId.touched && f.estadoCivilId.invalid">
@@ -110,8 +114,9 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
+                      <div>Sexo*</div>
                       <select class="effect" placeholder="" [ngClass]="cssValidation(f.sexoId)" formControlName="sexoId" id="sexoId" (change)="changeCss('sexoId')">
-                        <option disabled selected hidden value="">Sexo*</option>
+                        <!-- <option disabled selected hidden value="">Sexo*</option> -->
                         <option *ngFor="let sexo of sexos" value="{{sexo.id}}">{{sexo.nome}}</option>
                       </select>
                       <div class="invalid-selector" *ngIf="f.sexoId.touched && f.sexoId.invalid">
@@ -147,6 +152,7 @@
                               <fieldset [formGroupName]="i" class="form-group">
                                 <div class="row">
                                   <div class="col-3">
+                                    <div>Rede Social*</div>
                                     <select class="effect" formControlName="tipoRedeSocialId" [ngClass]="cssValidation(redesSociais.get(i+'.tipoRedeSocialId'))">
                                       <option disabled selected hidden value="">Rede Social*</option>
                                       <option *ngFor="let tipoRedeSocial of tiposRedesSociais" value="{{tipoRedeSocial.id}}">{{tipoRedeSocial.descricao}}</option>
@@ -158,7 +164,8 @@
                                     <span class="focus-border"></span>
                                   </div>
                                   <div class="col-3">
-                                    <input class="effect" type="text" placeholder="Endereço" formControlName="endereco" [ngClass]="cssValidation(redesSociais.get(i+'.endereco'))" maxlength="150">
+                                    <div>Endereço*</div>
+                                    <input class="effect" type="text" formControlName="endereco" [ngClass]="cssValidation(redesSociais.get(i+'.endereco'))" maxlength="150">
                                     <div class="invalid-tooltip" *ngIf="f.redesSociais.get(i+'.endereco').errors?.required">
                                       Endereço de Rede Social é obrigatório.
                                     </div>

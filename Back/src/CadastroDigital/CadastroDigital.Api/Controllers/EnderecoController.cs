@@ -34,7 +34,7 @@ namespace CadastroDigital.Api.Controllers
         {
             var endereco = await _enderecoService.GetById(id);
 
-            if (endereco.Equals(null))
+            if (endereco == null)
                 return NoContent();
 
             return Ok(endereco);

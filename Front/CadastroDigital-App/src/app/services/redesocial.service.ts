@@ -16,6 +16,14 @@ export class RedesocialService {
     return this.http.get<RedeSocial[]>(this.baseUrl).pipe(take(1));
   }
 
+  public getRedeSocialByUserId(userId: number) : Observable<RedeSocial[]>{
+    return this.http.get<RedeSocial[]>(`${this.baseUrl}/${userId}`).pipe(take(1));
+  }
+
+  public deleteRedeSocial(id: number) : Observable<RedeSocial[]>{
+    return this.http.delete<RedeSocial[]>(`${this.baseUrl}/${id}`).pipe(take(1));
+  }
+
 }
 
 

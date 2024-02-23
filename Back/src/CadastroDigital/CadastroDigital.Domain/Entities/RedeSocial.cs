@@ -1,6 +1,8 @@
+using AutoMapper.Configuration.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace CadastroDigital.Domain.Entities
@@ -15,7 +17,7 @@ namespace CadastroDigital.Domain.Entities
         public DateTime? DataExclusao { get; set; }
         public string UsuarioExclusao { get; set; }
 
-        public PessoaFisica PessoaFisica { get; set; }
-        public TipoRedeSocial TipoRedeSocial { get; set; }
+         public PessoaFisica PessoaFisica { get; set; }
+         public TipoRedeSocial TipoRedeSocial { get; set; }
     }
 }

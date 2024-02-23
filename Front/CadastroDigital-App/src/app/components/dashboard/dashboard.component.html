@@ -169,7 +169,7 @@
           <!--thumbnail-->
           <div class="col-3 col-md-4 pe-2 pe-md-0 p-3" >
             <div class="ratio_115-80 image-wrapper" >
-              <a href="#">
+              <a href="{{beneficio.site}}">
                 <img class="img-fluid lazy img-sm-ben" src="../../assets/img/beneficios/{{beneficio.imagem}}">
               </a>
             </div>
@@ -178,10 +178,10 @@
           <div class="col-9 col-md-8 p-3">
             <div class="card-body pt-0">
               <h3 class="card-title h6 h5-sm h6-lg">
-                <a href="#">{{beneficio.nome}} - {{beneficio.descricao}}</a>
+                <a href="{{beneficio.site}}">{{beneficio.nome}} - {{beneficio.descricao}}</a>
               </h3>
               <div class="card-text small text-muted">
-                <a href="#">{{beneficio.site}}</a>
+                <a href="{{beneficio.site}}">{{beneficio.site}}</a>
               </div>
             </div>
           </div>
@@ -247,7 +247,7 @@
           <!--thumbnail-->
           <div class="col-3 col-md-4 pe-2 pe-md-0 p-3">
             <div class="ratio_115-80 image-wrapper">
-              <a href="#">
+              <a href="{{parceria.site}}">
                 <img class="img-fluid lazy img-sm-ben" src="../../assets/img/parcerias/{{parceria.imagem}}">
               </a>
             </div>
@@ -256,11 +256,11 @@
           <div class="col-9 col-md-8 p-3">
             <div class="card-body pt-0">
               <h3 class="card-title h6 h5-sm h6-lg">
-                <a href="#">{{parceria.nome}} - {{parceria.descricao}}</a>
+                <a href="{{parceria.site}}">{{parceria.nome}} - {{parceria.descricao}}</a>
               </h3>
               <div class="card-text small text-muted">
-                Desconto de {{parceria.desconto}}% na mensalidade.<br>
-                <a href="#">{{parceria.site}}</a>
+                {{parceria.condicao}}<br>
+                <a href="{{parceria.site}}">{{parceria.site}}</a>
               </div>
             </div>
           </div>

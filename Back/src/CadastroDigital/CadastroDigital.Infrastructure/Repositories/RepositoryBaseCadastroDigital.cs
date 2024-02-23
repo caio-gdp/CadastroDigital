@@ -87,7 +87,7 @@ namespace CadastroDigital.Infrastructure.Repositories
               //foreach (var include in includes)
                 query = query.Include(includes).AsNoTracking();
 
-            return await query.AsNoTracking().Where(expressao).FirstAsync();
+            return await query.AsNoTracking().Where(expressao).FirstOrDefaultAsync();
         }
 
         public async Task<PessoaFisica> GetTeste(int id){

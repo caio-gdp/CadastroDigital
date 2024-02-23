@@ -42,8 +42,6 @@ export class LoginComponent implements OnInit {
 
   login() : void{
 
-    alert('login')
-
     this.spinner.show();
 
     this.accountService.login(this.model).subscribe({

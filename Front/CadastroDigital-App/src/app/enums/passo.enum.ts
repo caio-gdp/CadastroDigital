@@ -8,5 +8,4 @@ export enum Passo{
   "photo" = 7,
   "documents" = 8,
   "ficha" = 9
-
 }

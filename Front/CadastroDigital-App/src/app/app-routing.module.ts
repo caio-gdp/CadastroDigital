@@ -33,9 +33,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-
-      {  path : 'personalData', component: PersonalDataComponent },
-      {  path : 'addressData', component: AddressDataComponent },
+      //{  path : 'personalData', component: PersonalDataComponent },
+      //{  path : 'addressData', component: AddressDataComponent },
       {  path : 'profissionalData', component: ProfissionalDataComponent },
       {  path : 'dependent', component: DependentComponent },
       {  path : 'agregate', component: AgregateComponent },
@@ -51,6 +50,8 @@ const routes: Routes = [
     children : [
       {  path : 'login', component: LoginComponent },
       {  path : 'registration', component: RegistrationComponent },
+      {  path : 'personalData', component: PersonalDataComponent },
+      {  path : 'addressData', component: AddressDataComponent },
 
     ]
   },

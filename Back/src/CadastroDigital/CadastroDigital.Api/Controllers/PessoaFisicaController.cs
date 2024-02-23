@@ -47,7 +47,7 @@ namespace CadastroDigital.Api.Controllers
             try{
                 var pessoa = await _pessoaFisicaService.GetById(id);
 
-                if (pessoa.Equals(null))
+                if (pessoa == null)
                     return NoContent();
 
                 return Ok(pessoa);
@@ -55,6 +55,18 @@ namespace CadastroDigital.Api.Controllers
             catch(Exception ex){
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar a pessoa. Erro: {ex.Message}");
             }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(PessoaFisicaDto dto)
+        {
+            var ret = await _pessoaFisicaService.UpdatePessoa(dto);
+
+            if (ret == null)
+                return BadRequest("Erro ao tentar atualizar o registro.");
+
+            // return Ok("Registro incluído com sucesso");
+            return Ok();
         }
 
     }

@@ -3,6 +3,6 @@ export interface Parceria {
   nome: string;
   descricao: string;
   imagem: string;
-  desconto: number;
+  condicao: string;
   site: string;
 }

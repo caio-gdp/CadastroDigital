@@ -15,6 +15,7 @@ import { Sexo } from '@app/models/Sexo';
 import { SexoService } from '@app/services/sexo.service';
 import { TipoRedeSocial } from '@app/models/TipoRedeSocial';
 import { TipoRedeSocialService } from '@app/services/tiporedesocial.service';
+import { RedesocialService } from '@app/services/redesocial.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -28,6 +29,7 @@ import { User } from '@app/models/Identity/User';
 import { InformacaoProfissionalService } from '@app/services/informacaoprofissional.service';
 import { PaisService } from '@app/services/pais.service';
 import { Router } from '@angular/router';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-personalData',
@@ -44,10 +46,12 @@ export class PersonalDataComponent implements OnInit {
   pais : Pais;
   estadosCivil: EstadoCivil[] = [];
   sexos: Sexo[] = [];
+  redesSociaisRet: RedeSocial[] = [];
   tiposRedesSociais: TipoRedeSocial[] = [];
   index : number;
   currentUser : any;
   jsonUser: any;
+  redeSocialId: number;
 
   form!: FormGroup;
 
@@ -60,6 +64,7 @@ export class PersonalDataComponent implements OnInit {
   }
 
   constructor(private fb : FormBuilder,
+    private localeService: BsLocaleService,
     public accountService: AccountService,
     private pessoaFisicaService : PessoaFisicaService,
     private orgaoExpedidorService: OrgaoExpedidorService,
@@ -68,16 +73,19 @@ export class PersonalDataComponent implements OnInit {
     private paisService: PaisService,
     private estadoCivilService: EstadoCivilService,
     private sexoService: SexoService,
+    //private redeSocialService : RedesocialService,
     private tipoRedeSocialService : TipoRedeSocialService,
     private modalService: BsModalService,
     private modalRef : BsModalRef,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private router: Router) {
+      this.localeService.use('pt-br');
       this.currentUser = accountService.currentUser$;
     }
 
   ngOnInit() {
+
     this.validation();
     this.getOrgaoExpedidor();
     this.getEstado();
@@ -93,6 +101,7 @@ export class PersonalDataComponent implements OnInit {
 
   private validation() : void{
     this.form = this.fb.group({
+      id: [],
       rg : ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
       dataEmissao : ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), this.checkDate]],
       orgaoExpedidorId : ['' , [Validators.required]],
@@ -101,7 +110,14 @@ export class PersonalDataComponent implements OnInit {
       nacionalidadeId : ['', [Validators.required]],
       estadoCivilId : ['', [Validators.required]],
       sexoId : ['', [Validators.required]],
-      redesSociais: this.fb.array([])
+      redesSociais: this.fb.array([
+        // this.fb.group({
+        //   id: [],
+        //   pessoaId: [],
+        //   tipoRedeSocialId: [],
+        //   endereco: []
+        //})
+      ])
     });
   }
 
@@ -114,13 +130,18 @@ export class PersonalDataComponent implements OnInit {
       this.spinner.show()
       this.pessoaFisicaService.getPessoaByIdUser(this.user.id).subscribe(
         (personalDataRetorno: PessoaFisica) => {
-          this.pessoaFisica = personalDataRetorno
-          this.pessoaFisica.dataEmissao = new Date(this.pessoaFisica.dataEmissao).toLocaleDateString('pt-BR');
-          this.form.patchValue(this.pessoaFisica);
-          this.redesSociais.patchValue(this.pessoaFisica.redesSociais);
-          this.getCidade();
+          if (personalDataRetorno != null){
+            this.pessoaFisica = personalDataRetorno
+            this.pessoaFisica.id = personalDataRetorno.id;
+            this.pessoaFisica.dataEmissao = new Date(this.pessoaFisica.dataEmissao).toLocaleDateString('pt-BR');
+            this.form.patchValue(this.pessoaFisica);
+            this.carregarRedesSociais(this.pessoaFisica.redesSociais);
+            this.getCidade();
+          }
         },
         (error: any) => {
+          this.toastr.error('Erro ao carregar redes sociais.', "Erro!")
+          console.log(error);
       },
       ).add(() => this.spinner.hide());
     }
@@ -145,13 +166,33 @@ export class PersonalDataComponent implements OnInit {
   criarRedeSocial(redeSocial : RedeSocial): FormGroup | null {
     return this.fb.group({
       id: [redeSocial.id],
-      pessoaId: [redeSocial.pessoaFisicaId],
+      pessoaFisicaId: [redeSocial.pessoaFisicaId],
       tipoRedeSocialId: [redeSocial.tipoRedeSocialId, Validators.required],
       endereco: [redeSocial.endereco, Validators.required]
     })
   }
 
-  removerRedeSocial(i : number){
+  carregarRedesSociais(redesSociais : RedeSocial[]): void{
+    redesSociais.forEach(redeSocial => {
+      this.redesSociais.push(this.criarRedeSocial(redeSocial));
+    })
+  }
+
+  removerRedeSocial(i : number, redeSocialId: number){
+
+    // this.redeSocialService.deleteRedeSocial(redeSocialId).subscribe(
+    //   (result: boolean) => {
+    //     if(result){
+    //       this.toastr.success('Registro excluído com sucesso.', 'Sucesso');
+    //       this.loadPersonalData()
+    //     }
+    //   },
+    //   (error: any) => {
+    //     this.toastr.error('Erro ao excluir o registro.', "Erro!")
+    //   },
+    //   () => {},
+    // );
+
     this.redesSociais.removeAt(i);
   }
 
@@ -231,6 +272,8 @@ getPais(id : number) : void{
      // complete : () => this.spinner.hide()
    };
   this.paisService.getById(id).subscribe(observer);
+  this.form.controls['nacionalidadeId'].value == id;
+
 }
 
 public getEstadoCivil() : void{
@@ -263,6 +306,22 @@ public getSexo() : void{
   this.sexoService.get().subscribe(observer);
 }
 
+// getRedeSocial(userId : number) : void{
+//   const observer = {
+//     next : (_redesSociais : RedeSocial[]) => {
+//       this.redesSociais = _redesSociais;
+
+//     },
+//     error : (error : any) =>
+//     {
+//       // this.spinner.hide(),
+//       // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+//     },
+//     // complete : () => this.spinner.hide()
+//   };
+//   this.redeSocialService.getRedeSocialByUserId(userId).subscribe(observer);
+// }
+
 getTipoRedeSocial() : void{
 
   const observer = {
@@ -279,8 +338,9 @@ getTipoRedeSocial() : void{
   this.tipoRedeSocialService.get().subscribe(observer);
 }
 
-openModal(template: TemplateRef<any>, i : number) : void {
-  this.index = i;
+openModal(template: TemplateRef<any>, redeSocialId : number) : void {
+  //event.stopPropagation();
+  //this.redeSocialId = redeSocialId;
   this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
 }
 
@@ -294,7 +354,7 @@ confirm(): void {
   this.modalRef?.hide();
   this.spinner.show();
 
-  this.removerRedeSocial(this.index)
+  this.removerRedeSocial(this.index, this.redeSocialId)
 
   this.spinner.hide();
 }
@@ -319,6 +379,7 @@ decline(): void {
 
     if (this.pessoaFisica.redesSociais != undefined){
       for (let i = 0; i < this.pessoaFisica.redesSociais.length; i++){
+        this.pessoaFisica.redesSociais[i].pessoaFisicaId = 0;
         this.pessoaFisica.redesSociais[i].tipoRedeSocialId = Number(this.pessoaFisica.redesSociais[i].tipoRedeSocialId);
       }
     }
@@ -326,18 +387,43 @@ decline(): void {
     if (this.user != null)
       this.pessoaFisica.idUser = this.user.id;
 
-     this.pessoaFisicaService.post(this.pessoaFisica).subscribe({
-       next: (pessoa: PessoaFisica) => {
-         this.toastr.success('Registro salvo com sucesso.', 'Sucesso');
-         this.router.navigateByUrl('user/addressData');
+    if (this.pessoaFisica.id == null || this.pessoaFisica.id == 0){
+      console.log(this.pessoaFisica)
+      this.pessoaFisica.id = 0;
+      this.pessoaFisicaService.post(this.pessoaFisica).subscribe({
+        next: (pessoa: PessoaFisica) => {
+          this.toastr.success('Registro salvo com sucesso.', 'Sucesso');
+          this.router.navigateByUrl('user/addressData');
         },
+        error: (error: any) => {
+          console.error(error);
+          this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
+        },
+      }).add(() => this.spinner.hide());
+    }
+    else{
+      console.log(this.pessoaFisica.redesSociais)
+      for(let i = 0; i < this.pessoaFisica.redesSociais.length; i++){
 
-       error: (error: any) => {
-         console.error(error);
-         this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
-       },
-     }).add(() => this.spinner.hide());
-   }
+        if(this.pessoaFisica.redesSociais[i].id == null || this.pessoaFisica.redesSociais[i].id == 0){
+          this.pessoaFisica.redesSociais[i].id = 0;
+          this.pessoaFisica.redesSociais[i].pessoaFisicaId = this.pessoaFisica.id;
+        }
+      }
+
+      this.pessoaFisicaService.put(this.pessoaFisica).subscribe({
+        next: (pessoa: PessoaFisica) => {
+          this.toastr.success('Registro atualizado com sucesso.', 'Sucesso');
+          this.router.navigateByUrl('user/personalData');
+        },
+        error: (error: any) => {
+          console.error(error);
+          this.toastr.error('Erro ao tentar atualizar o registro.', 'Erro!')
+        },
+      }).add(() => this.spinner.hide());
+    }
+
+  }
 //   else{
 //     this.toastr.error('Preencha os campos obrigatórios.', 'Atenção!')
 //   }

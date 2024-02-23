@@ -60,10 +60,10 @@
                   </div>
                   <div class="col-3">
                     <div>Data de Nascimento*</div>
-                    <input class="effect" type="date" [ngClass]="cssValidation(f.dateOfBirth)" formControlName="dateOfBirth"
-                    maxlength="10">
-                    <!-- <input class="effect" type="text" [ngClass]="cssValidation(f.dateOfBirth)" formControlName="dateOfBirth"
-                    bsDatepicker [bsConfig]="bsConfig()" maxlength="10" onkeydown="return false"> -->
+                    <!-- <input class="effect" type="date" [ngClass]="cssValidation(f.dateOfBirth)" formControlName="dateOfBirth"
+                    maxlength="10"> -->
+                    <input class="effect" type="text" [ngClass]="cssValidation(f.dateOfBirth)" formControlName="dateOfBirth"
+                    bsDatepicker [bsConfig]="bsConfig()" maxlength="10" onkeydown="return false">
                     <!-- <input class="effect" type="text" [ngClass]="cssValidation(f.dateOfBirth)" placeholder="Data de Nascimento*"
                     formControlName="dateOfBirth" bsDatepicker [bsConfig]="bsConfig()" maxlength="10" onfocus="(this.type='date')" onblur="(this.type='text')"> -->
                     <div class="invalid-tooltip" *ngIf="f.dateOfBirth.errors?.required">

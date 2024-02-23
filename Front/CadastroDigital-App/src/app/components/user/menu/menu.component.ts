@@ -23,16 +23,20 @@ export class MenuComponent implements OnInit {
     this.jsonUser = localStorage.getItem('user');
     let user = JSON.parse(this.jsonUser);
 
+    console.log(user)
+
     if (user == null || user == '')
-      this.passo = 0;
+      this.passo = 1;
     else
-      this.passo = user.passoCadastroId
+      this.passo = user.passoCadastroId;
+
+    console.log(user.passoCadastroId)
 
     for(const _passo of this.enumKeys(Passo)){
       const value = Passo[_passo]
 
       if (typeof value !== "string"){
-        if (value > this.passo + 1){
+        if (value >= this.passo){
           (<HTMLDivElement>document.getElementById("d-" + value)).className = "isDivDisabled";
         }
       }

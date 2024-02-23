@@ -41691,6 +41691,12 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .HasColumnName("Id")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Condicao")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)")
+                        .HasColumnName("Condicao");
+
                     b.Property<DateTime?>("DataAlteracao")
                         .HasColumnType("datetime2")
                         .HasColumnName("DataAlteracao");
@@ -41702,10 +41708,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                     b.Property<DateTime>("DataInclusao")
                         .HasColumnType("datetime2")
                         .HasColumnName("DataInclusao");
-
-                    b.Property<int>("Desconto")
-                        .HasColumnType("int")
-                        .HasColumnName("Desconto");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -41751,10 +41753,6 @@ namespace CadastroDigital.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("UsuarioInclusao");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Valor");
 
                     b.HasKey("Id");
 

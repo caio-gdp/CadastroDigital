@@ -9,8 +9,7 @@ namespace CadastroDigital.Domain.Entities
     {
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        public decimal Valor { get; set; }
-        public int Desconto { get; set; }
+        public string Condicao { get; set; }
         public string Imagem { get; set; }
         public string Site { get; set; }
         public DateTime DataInclusao { get; set; }
