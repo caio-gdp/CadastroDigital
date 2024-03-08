@@ -30,6 +30,7 @@ import { InformacaoProfissionalService } from '@app/services/informacaoprofissio
 import { PaisService } from '@app/services/pais.service';
 import { Router } from '@angular/router';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-personalData',
@@ -79,13 +80,14 @@ export class PersonalDataComponent implements OnInit {
     private modalRef : BsModalRef,
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
-    private router: Router) {
+    private router: Router,
+    private loginComponent : LoginComponent) {
       this.localeService.use('pt-br');
       this.currentUser = accountService.currentUser$;
     }
 
   ngOnInit() {
-
+    this.loginComponent.hideLogin();
     this.validation();
     this.getOrgaoExpedidor();
     this.getEstado();
@@ -361,6 +363,11 @@ confirm(): void {
 
 decline(): void {
    this.modalRef?.hide();
+}
+
+cancelChange(){
+  this.loginComponent.showLogin();
+  this.router.navigateByUrl("dashboard")
 }
 
  public saveChange() : void{

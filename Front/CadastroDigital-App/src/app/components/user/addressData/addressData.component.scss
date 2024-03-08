@@ -61,6 +61,13 @@ body {
   position: relative;
 } /* necessary to give position: relative to parent. */
 
+.col-3a{
+  float: left;
+  width: 27.33%;
+  margin: 40px 3%;
+  position: relative;
+}
+
 // input[type="text"]{
 //   font: 15px/24px "Lato", Arial, sans-serif;
 //   color: #333;
@@ -180,7 +187,7 @@ input:focus:-ms-input-placeholder {
 .search{
   position: absolute;
   left: 28%;
-  top: 34%;
+  top: 33%;
   cursor: hand;
 }
 

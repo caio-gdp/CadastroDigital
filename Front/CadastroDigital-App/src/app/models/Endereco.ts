@@ -1,4 +1,5 @@
 export interface Endereco {
+  id: number;
   pessoafisicaId: number;
   localidade: string;
   cep: number;

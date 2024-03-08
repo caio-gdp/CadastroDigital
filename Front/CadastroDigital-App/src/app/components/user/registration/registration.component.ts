@@ -370,6 +370,11 @@ export class RegistrationComponent implements OnInit {
     return null;
   }
 
+  cancelChange(){
+    this.loginComponent.showLogin();
+    this.router.navigateByUrl("dashboard")
+  }
+
   // errored(e: any){
   //   console.log('erro reCAPTCHA não encontrado');
   // }

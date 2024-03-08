@@ -51,22 +51,22 @@ namespace CadastroDigital.Api.Controllers
             return Ok();
         }
 
-         // [HttpPut("{pessoaid}")]
-        // public async Task<IActionResult> Put(int id, EnderecoDto dto)
-        // {
-        //     var ret = await _enderecoService.UpdateEndereco(id, dto);
-        
-        //     if (ret == null)
-        //         return BadRequest("Erro ao tentar atualizar registro.");
+        [HttpPut]
+        public async Task<IActionResult> Put(EnderecoDto dto)
+        {
+            var ret = await _enderecoService.UpdateEndereco(dto);
 
-        //     return Ok("Registro atualizado com sucesso.");
-        // }
+            if (ret == null)
+                return BadRequest("Erro ao tentar atualizar registro.");
+
+            return Ok();
+        }
 
         // [HttpDelete("{id}")]
         // public async Task<IActionResult> Delete(int id)
         // {
         //    var ret = await _enderecoService.DeleteEndereco(id);
-            
+
         //     if (!ret)
         //         return BadRequest("Erro ao tentar excluir registro.");
 

@@ -35,7 +35,7 @@ const routes: Routes = [
     children: [
       //{  path : 'personalData', component: PersonalDataComponent },
       //{  path : 'addressData', component: AddressDataComponent },
-      {  path : 'profissionalData', component: ProfissionalDataComponent },
+      //{  path : 'profissionalData', component: ProfissionalDataComponent },
       {  path : 'dependent', component: DependentComponent },
       {  path : 'agregate', component: AgregateComponent },
       {  path : 'photo', component: PhotoComponent },
@@ -52,6 +52,7 @@ const routes: Routes = [
       {  path : 'registration', component: RegistrationComponent },
       {  path : 'personalData', component: PersonalDataComponent },
       {  path : 'addressData', component: AddressDataComponent },
+      {  path : 'profissionalData', component: ProfissionalDataComponent },
 
     ]
   },

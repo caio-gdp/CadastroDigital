@@ -16,7 +16,7 @@
       <li class="nav-item dropdown" dropdown *ngIf="(accountService.currentUser$ | async) as user">
         <img src="assets/imagem1.jpg">
         <i class="fa fa-bell" ></i>
-        <a dropdownToggle class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+        <a id="firstName" dropdownToggle class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           {{firstName | titlecase}}
         </a>

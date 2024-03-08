@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" style="border: 1px solid">
 <!-- testar validação de formulario e reativo
       <p>Form value : {{form.value | json}}</p>
       <p>Form valid : {{form.status | json}}</p> -->
@@ -176,7 +176,7 @@
                 </form>
                 <div class="row">
                   <div class="col div-btn-custom">
-                    <button class="btn btn-danger btn-custom" routerLink="dashboard">
+                    <button class="btn btn-danger btn-custom" (click)="cancelChange()">
                       Cancelar
                     </button>
                     <button class="btn btn-success btn-custom float-end" type="submit" (click)="saveChange()" [disabled]="!form.valid">

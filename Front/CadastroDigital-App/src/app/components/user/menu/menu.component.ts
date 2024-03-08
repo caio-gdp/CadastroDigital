@@ -30,13 +30,11 @@ export class MenuComponent implements OnInit {
     else
       this.passo = user.passoCadastroId;
 
-    console.log(user.passoCadastroId)
-
     for(const _passo of this.enumKeys(Passo)){
       const value = Passo[_passo]
 
-      if (typeof value !== "string"){
-        if (value >= this.passo){
+      if (typeof value != "string"){
+        if (value > this.passo + 1){
           (<HTMLDivElement>document.getElementById("d-" + value)).className = "isDivDisabled";
         }
       }

@@ -33,8 +33,6 @@ export class LoginComponent implements OnInit {
               }
 
   ngOnInit() : void{
-
-    //this.showLogin();
     this.jsonUser = localStorage.getItem('user');
     this.user = JSON.parse(this.jsonUser);
     this.setFirstName();
@@ -47,7 +45,8 @@ export class LoginComponent implements OnInit {
     this.accountService.login(this.model).subscribe({
       next: () => {
         this.toastr.success('Login efetuado com sucesso.', 'Sucesso');
-        this.router.navigateByUrl('dashboard');
+        //this.router.navigateByUrl('dashboard');
+        this.ngOnInit();
       },
       error: (error: any) => {
         console.log(error);
@@ -62,8 +61,10 @@ export class LoginComponent implements OnInit {
 
   logout() : void{
     this.accountService.logout();
-    window.location.reload();
-    this.router.navigate(['dashboard']);
+    this.model.userId = "";
+    this.model.passwordHash = "";
+    this.model.name = "";
+    this.router.navigateByUrl('dashboard');
   }
 
   setFirstName() : void{

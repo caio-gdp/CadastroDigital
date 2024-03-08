@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
               private loginComponent: LoginComponent) { }
 
   ngOnInit() {
-    this.loginComponent.showLogin();
+    //this.loginComponent.showLogin();
     this.getNoticias();
     this.getBeneficios();
     this.getParcerias();

@@ -28,7 +28,8 @@
                   </div>
                   <form [formGroup]="form">
                     <div class="col-3">
-                      <input formControlName="cep" class="effect" type="text" placeholder="CEP*"
+                      <div>CEP*</div>
+                      <input formControlName="cep" class="effect" type="text"
                         [ngClass]="cssValidation(f.cep)" (blur)="getByCep()" mask="00000-000" maxlength="9">
                       <div class="invalid-tooltip" *ngIf="f.cep.errors?.required">
                         CEP é obrigatório.
@@ -44,11 +45,12 @@
                     <div>
                       <span class="fa fa-search search" style="cursor: pointer;"></span>
                     </div>
-                    <div class="col-3">
+                    <div class="col-3a">
                       <a href="https://buscacepinter.correios.com.br/app/endereco/index.php?t" target="_blank" rel="noopener noreferrer">Não sei meu CEP</a>
                     </div>
                     <div class="col-1 input-effect">
-                      <input readonly class="effect" type="text" placeholder="Logradouro*" formControlName="logradouro"
+                      <div>Logradouro*</div>
+                      <input readonly class="effect" type="text" formControlName="logradouro"
                         [ngClass]="cssValidation(f.logradouro)" ngModel="{{endereco.logradouro}}">
                       <div class="invalid-tooltip" *ngIf="f.logradouro.errors?.required">
                         Logradouro é obrigatório.
@@ -62,7 +64,8 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
-                      <input class="effect" type="number" placeholder="Número*" formControlName="numero"
+                      <div>Número*</div>
+                      <input class="effect" type="number" formControlName="numero"
                       [ngClass]="cssValidation(f.numero)" >
                       <div class="invalid-tooltip" *ngIf="f.numero.errors?.required">
                         Número do endereço é obrigatório.
@@ -70,11 +73,13 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
-                      <input class="effect" type="text" placeholder="Complemento" formControlName="complemento">
+                      <div>Complemento</div>
+                      <input class="effect" type="text" formControlName="complemento">
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3">
-                      <input readonly class="effect" type="text" placeholder="Bairro*" formControlName="bairro"
+                      <div>Bairro*</div>
+                      <input readonly class="effect" type="text" formControlName="bairro"
                       [ngClass]="cssValidation(f.bairro)" ngModel="{{endereco.bairro}}">
                       <div class="invalid-tooltip" *ngIf="f.bairro.errors?.required">
                         Bairro é obrigatório.
@@ -82,7 +87,8 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3 input-effect">
-                      <input readonly class="effect" type="text" placeholder="Cidade*" formControlName="localidade"
+                      <div>Cidade*</div>
+                      <input readonly class="effect" type="text" formControlName="localidade"
                       [ngClass]="cssValidation(f.localidade)" ngModel="{{endereco.localidade}}">
                       <div class="invalid-tooltip" *ngIf="f.localidade.errors?.required">
                         Cidade é obrigatório.
@@ -90,7 +96,8 @@
                       <span class="focus-border"></span>
                     </div>
                     <div class="col-3 input-effect">
-                      <input readonly class="effect" type="text" placeholder="Estado*" formControlName="uf"
+                      <div>Estado*</div>
+                      <input readonly class="effect" type="text" formControlName="uf"
                       [ngClass]="cssValidation(f.uf)" ngModel="{{endereco.uf}}">
                       <div class="invalid-tooltip" *ngIf="f.uf.errors?.required">
                         Estado é obrigatório.
@@ -104,7 +111,7 @@
                   </form>
                   <div class="row">
                     <div class="col div-btn-custom">
-                      <button class="btn btn-danger btn-custom" routerLink="dashboard">
+                      <button class="btn btn-danger btn-custom" (click)="cancelChange()">
                         Cancelar
                       </button>
                       <button class="btn btn-success btn-custom float-end" (click)="saveChange()" [disabled]="!form.valid">

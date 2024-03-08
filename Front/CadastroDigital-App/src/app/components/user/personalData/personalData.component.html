@@ -198,7 +198,7 @@
                   </form>
                   <div class="row nowrap">
                     <div class="col div-btn-custom">
-                      <button class="btn btn-danger btn-custom" routerLink="dashboard">
+                      <button class="btn btn-danger btn-custom" (click)="cancelChange()">
                         Cancelar
                       </button>
                       <button class="btn btn-success btn-custom float-end" (click)="saveChange()" [disabled]="!form.valid">

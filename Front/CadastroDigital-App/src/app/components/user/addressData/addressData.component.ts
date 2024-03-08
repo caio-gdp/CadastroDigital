@@ -10,6 +10,7 @@ import { CidadeService } from '@app/services/cidade.service';
 import { EnderecoService } from '@app/services/endereco.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Toast, ToastrService } from 'ngx-toastr';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-addressData',
@@ -36,12 +37,14 @@ export class AddressDataComponent implements OnInit {
     private toastr : ToastrService,
     private enderecoService : EnderecoService,
     private ref: ChangeDetectorRef,
-    private router : Router) {
+    private router : Router,
+    private loginComponent : LoginComponent) {
       this.currentUser = accountService.currentUser$;
 
     }
 
   ngOnInit() : void {
+    this.loginComponent.hideLogin();
     this.validation();
     this.loadAddressData();
   }
@@ -56,6 +59,7 @@ export class AddressDataComponent implements OnInit {
 
   private validation() : void{
     this.form = this.fb.group({
+      id: [],
       cep : ['', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]],
       localidade: ['', [Validators.required]],
       uf : ['', [Validators.required]],
@@ -67,23 +71,33 @@ export class AddressDataComponent implements OnInit {
   }
 
   loadAddressData() : void{
+
+    this.spinner.show();
+
     this.jsonUser = localStorage.getItem('user');
     this.user = JSON.parse(this.jsonUser);
 
     if (this.user != null){
       this.enderecoService.getEndereco(this.user.id).subscribe(
         (enderecoRetorno: Endereco) => {
-          this.endereco = enderecoRetorno
-          console.log(this.endereco)
-          this.form.patchValue(this.endereco);
+          //alert("enderecoRetorno: " + enderecoRetorno)
+          if (enderecoRetorno != null){
+            this.endereco = enderecoRetorno
+            console.log(this.endereco)
+            this.form.patchValue(this.endereco);
+          }
         },
         (error: any) => {
+          console.error(error);
+            this.toastr.error('Erro ao tentar carregar o endereço cadastrado.', 'Erro!')
       },
-      ).add();
+      ).add(() => this.spinner.hide());
     }
   }
 
   getByCep() : void {
+
+    this.spinner.show();
 
     if (this.f.cep.value != undefined && this.f.cep.value != '' && this.f.cep.valid){
       var cep : number = this.f.cep.value;
@@ -94,10 +108,10 @@ export class AddressDataComponent implements OnInit {
         },
         error : (error : any) =>
         {
-          // this.spinner.hide(),
-          // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+           this.spinner.hide(),
+           this.toastr.error('Erro ao carregar o cep.', "Erro!")
         },
-        // complete : () => this.spinner.hide()
+         complete : () => this.spinner.hide()
       };
       this.enderecoService.getByCep(cep).subscribe(observer);
     }
@@ -113,9 +127,11 @@ export class AddressDataComponent implements OnInit {
 
        console.log(this.endereco);
 
+       if (this.endereco.id == null){
+        this.endereco.id = 0;
         this.enderecoService.post(this.user.id, this.endereco).subscribe({
           next: (endereco: Endereco) => {
-            this.toastr.success('Registro salvo com sucesso.', 'Sucesso');
+            this.toastr.success('Registro incluído com sucesso.', 'Sucesso');
             this.router.navigateByUrl('user/profissionalData')
           },
           error: (error: any) => {
@@ -123,7 +139,24 @@ export class AddressDataComponent implements OnInit {
             this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
           },
         }).add(() => this.spinner.hide());
+       }
+       else{
+        this.enderecoService.put(this.endereco).subscribe({
+          next: (endereco: Endereco) => {
+            this.toastr.success('Registro alterado com sucesso.', 'Sucesso');
+            this.router.navigateByUrl('user/addressData')
+          },
+          error: (error: any) => {
+            console.error(error);
+            this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
+          },
+        }).add(() => this.spinner.hide());
+       }
     }
   }
 
+  cancelChange(){
+    this.loginComponent.showLogin();
+    this.router.navigateByUrl("dashboard")
+  }
 }
