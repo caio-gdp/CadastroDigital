@@ -36,7 +36,7 @@ const routes: Routes = [
       //{  path : 'personalData', component: PersonalDataComponent },
       //{  path : 'addressData', component: AddressDataComponent },
       //{  path : 'profissionalData', component: ProfissionalDataComponent },
-      {  path : 'dependent', component: DependentComponent },
+      // {  path : 'dependent', component: DependentComponent },
       {  path : 'agregate', component: AgregateComponent },
       {  path : 'photo', component: PhotoComponent },
       {  path : 'documents', component: DocumentsComponent},
@@ -53,6 +53,7 @@ const routes: Routes = [
       {  path : 'personalData', component: PersonalDataComponent },
       {  path : 'addressData', component: AddressDataComponent },
       {  path : 'profissionalData', component: ProfissionalDataComponent },
+      {  path : 'dependent', component: DependentComponent },
 
     ]
   },

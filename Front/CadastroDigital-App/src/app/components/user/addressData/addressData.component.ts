@@ -125,8 +125,6 @@ export class AddressDataComponent implements OnInit {
 
       this.endereco = {...this.form.value};
 
-       console.log(this.endereco);
-
        if (this.endereco.id == null){
         this.endereco.id = 0;
         this.enderecoService.post(this.user.id, this.endereco).subscribe({
@@ -141,7 +139,7 @@ export class AddressDataComponent implements OnInit {
         }).add(() => this.spinner.hide());
        }
        else{
-        this.enderecoService.put(this.endereco).subscribe({
+        this.enderecoService.put(this.user.id, this.endereco).subscribe({
           next: (endereco: Endereco) => {
             this.toastr.success('Registro alterado com sucesso.', 'Sucesso');
             this.router.navigateByUrl('user/addressData')

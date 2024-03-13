@@ -15,12 +15,16 @@ export class InformacaoProfissionalService {
 
   constructor(private http: HttpClient) { }
 
-  public post(id : number, informacaoProfissional : InformacaoProfissional) : Observable<InformacaoProfissional>{
-    return this.http.post<InformacaoProfissional>(`${this.baseUrl}/${id}/`, informacaoProfissional).pipe(take(1));
+  public post(idUser : number, informacaoProfissional : InformacaoProfissional) : Observable<InformacaoProfissional>{
+    return this.http.post<InformacaoProfissional>(`${this.baseUrl}/${idUser}/`, informacaoProfissional).pipe(take(1));
   }
 
-  public getInformacaoProfissional(id : number) : Observable<InformacaoProfissional>{
-    return this.http.get<InformacaoProfissional>(`${this.baseUrl}/${id}/`).pipe(take(1));
+  public put(idUser : number, informacaoProfissional : InformacaoProfissional) : Observable<InformacaoProfissional>{
+    return this.http.put<InformacaoProfissional>(`${this.baseUrl}/${idUser}/`, informacaoProfissional).pipe(take(1));
+  }
+
+  public getInformacaoProfissional(idUser : number) : Observable<InformacaoProfissional>{
+    return this.http.get<InformacaoProfissional>(`${this.baseUrl}/${idUser}/`).pipe(take(1));
   }
 
   // public getPessoaByIdUser(id : number) : Observable<PessoaFisica>{

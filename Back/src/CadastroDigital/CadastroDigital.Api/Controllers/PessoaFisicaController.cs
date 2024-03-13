@@ -35,11 +35,11 @@ namespace CadastroDigital.Api.Controllers
             return Ok();
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{idUser}")]
+        public async Task<IActionResult> GetByIdUser(int idUser)
         {
             try{
-                var pessoa = await _pessoaFisicaService.GetById(id);
+                var pessoa = await _pessoaFisicaService.GetByIdUser(idUser);
 
                 if (pessoa == null)
                     return NoContent();

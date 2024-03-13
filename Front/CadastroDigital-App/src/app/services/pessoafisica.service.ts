@@ -21,9 +21,7 @@ export class PessoaFisicaService {
     return this.http.put<PessoaFisica>(this.baseUrl, pessoaFisica).pipe(take(1));
   }
 
-  public getPessoaByIdUser(id : number) : Observable<PessoaFisica>{
-    return this.http.get<PessoaFisica>(`${this.baseUrl}/${id}`).pipe(take(1));
+  public getPessoaByIdUser(idUser : number) : Observable<PessoaFisica>{
+    return this.http.get<PessoaFisica>(`${this.baseUrl}/${idUser}`).pipe(take(1));
   }
-
-
 }

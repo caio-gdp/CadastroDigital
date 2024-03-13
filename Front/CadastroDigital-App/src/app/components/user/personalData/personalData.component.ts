@@ -125,8 +125,19 @@ export class PersonalDataComponent implements OnInit {
 
   loadPersonalData(): void{
 
+    alert(1)
+
     this.jsonUser = localStorage.getItem('user');
     this.user = JSON.parse(this.jsonUser);
+    //const passoCadastro = JSON.parse(localStorage.getItem('passoCadastroId') || '{}');
+    //passoCadastro.push('2');
+    this.user.passoCadastroId = 2;
+    //const passoCadastro = JSON.parse(localStorage.getItem("passoCadastroId") || '{}');
+    //passoCadastro.push; //= this.user.passoCadastroId;
+    localStorage.removeItem("passoCadastroId");
+    //localStorage.setItem("passoCadastroId", "2");
+
+    console.log(this.user)
 
     if (this.user != null){
       this.spinner.show()
@@ -181,20 +192,6 @@ export class PersonalDataComponent implements OnInit {
   }
 
   removerRedeSocial(i : number, redeSocialId: number){
-
-    // this.redeSocialService.deleteRedeSocial(redeSocialId).subscribe(
-    //   (result: boolean) => {
-    //     if(result){
-    //       this.toastr.success('Registro excluído com sucesso.', 'Sucesso');
-    //       this.loadPersonalData()
-    //     }
-    //   },
-    //   (error: any) => {
-    //     this.toastr.error('Erro ao excluir o registro.', "Erro!")
-    //   },
-    //   () => {},
-    // );
-
     this.redesSociais.removeAt(i);
   }
 
@@ -395,10 +392,10 @@ cancelChange(){
       this.pessoaFisica.idUser = this.user.id;
 
     if (this.pessoaFisica.id == null || this.pessoaFisica.id == 0){
-      console.log(this.pessoaFisica)
       this.pessoaFisica.id = 0;
       this.pessoaFisicaService.post(this.pessoaFisica).subscribe({
         next: (pessoa: PessoaFisica) => {
+          this.updateLocalStorage();
           this.toastr.success('Registro salvo com sucesso.', 'Sucesso');
           this.router.navigateByUrl('user/addressData');
         },
@@ -409,7 +406,6 @@ cancelChange(){
       }).add(() => this.spinner.hide());
     }
     else{
-      console.log(this.pessoaFisica.redesSociais)
       for(let i = 0; i < this.pessoaFisica.redesSociais.length; i++){
 
         if(this.pessoaFisica.redesSociais[i].id == null || this.pessoaFisica.redesSociais[i].id == 0){
@@ -436,4 +432,13 @@ cancelChange(){
 //   }
 // }
  }
+
+ private updateLocalStorage() : void{
+  // const passoCadastro = JSON.parse(localStorage.getItem('user') || '{}');
+  // passoCadastro.push('2');
+  // localStorage.setItem('passoCadastroId', passoCadastro);
+ }
+
 }
+
+

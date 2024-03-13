@@ -45,12 +45,10 @@ export class LoginComponent implements OnInit {
     this.accountService.login(this.model).subscribe({
       next: () => {
         this.toastr.success('Login efetuado com sucesso.', 'Sucesso');
-        //this.router.navigateByUrl('dashboard');
-        this.ngOnInit();
+        window.location.reload();
+        //this.ngOnInit();
       },
       error: (error: any) => {
-        console.log(error);
-        console.error(error);
         if (error.status == 401)
           this.toastr.error("Usuário ou senha inválido")
         else

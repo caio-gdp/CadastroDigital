@@ -77,7 +77,7 @@ namespace CadastroDigital.Infrastructure.Repositories
 
             IQueryable<T> query = _context.Set<T>().AsNoTracking();
 
-            return await query.AsNoTracking().Where(expressao).FirstAsync();
+            return await query.AsNoTracking().Where(expressao).FirstOrDefaultAsync();
         }
 
         public async Task<T> GetById(Expression<Func<T, bool>> expressao, Expression<Func<T, object>> includes){

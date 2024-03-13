@@ -23,12 +23,15 @@ export class MenuComponent implements OnInit {
     this.jsonUser = localStorage.getItem('user');
     let user = JSON.parse(this.jsonUser);
 
-    console.log(user)
-
     if (user == null || user == '')
-      this.passo = 1;
+      this.passo = 0;
     else
       this.passo = user.passoCadastroId;
+
+    alert("Passo: " + user.passoCadastroId)
+
+    alert(2)
+    console.log(user);
 
     for(const _passo of this.enumKeys(Passo)){
       const value = Passo[_passo]
@@ -44,7 +47,4 @@ export class MenuComponent implements OnInit {
   enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
     return Object.keys(obj).filter(k => !Number.isNaN(k)) as K[]
   }
-
-
-
 }

@@ -77,6 +77,7 @@ export class ProfissionalDataComponent implements OnInit {
     }
 
     this.form = this.fb.group({
+      id: [],
       indicacaoId : ['', [Validators.required]],
       categoriaId : ['', [Validators.required]],
       registro : [''],
@@ -93,8 +94,9 @@ export class ProfissionalDataComponent implements OnInit {
     if (this.user != null){
       this.informacaoProfissionalService.getInformacaoProfissional(this.user.id).subscribe(
         (retorno: InformacaoProfissional) => {
-          this.informacaoProfissional = retorno
+          this.informacaoProfissional = retorno;
           this.form.patchValue(this.informacaoProfissional);
+          this.addFormCategoria();
         },
         (error: any) => {
       },
@@ -175,24 +177,25 @@ export class ProfissionalDataComponent implements OnInit {
       centroCustoForm = centroCusto.substring(0,2) + "." + centroCusto.substring(2,4) + "." + centroCusto.substring(4,6) + "." + centroCusto.substring(6,8);
 
       if (centroCustoForm != ""){
-      this.localtrabalho = "";
-      if (centroCusto.length > 4){
-        this.spinner.show();
-        const observer = {
-            next : (_cargo : Cargo) => {
-                this.cargo = _cargo;
-                this.localtrabalho = this.cargo.codigoLocalTrabalho  + " - " + this.cargo.nomeLocalTrabalho
-            },
-            error : (error : any) =>
-            {
-              this.localtrabalho = ""
-              this.spinner.hide()
-              // this.toastr.error('Erro ao carregar os registros.', "Erro!")
-            },
-            complete : () => this.spinner.hide()
-          };
-          this.cargoService.getByCentroCusto(centroCustoForm).subscribe(observer);
-       }
+        this.localtrabalho = "";
+        if (centroCusto.length > 4){
+          this.spinner.show();
+          const observer = {
+              next : (_cargo : Cargo) => {
+                  this.cargo = _cargo;
+                  this.form.controls["cargoId"].reset(this.cargo.id);
+                  this.localtrabalho = this.cargo.codigoLocalTrabalho  + " - " + this.cargo.nomeLocalTrabalho
+              },
+              error : (error : any) =>
+              {
+                this.localtrabalho = ""
+                this.spinner.hide()
+                // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+              },
+              complete : () => this.spinner.hide()
+            };
+            this.cargoService.getByCentroCusto(centroCustoForm).subscribe(observer);
+        }
       }
   }
 
@@ -205,20 +208,32 @@ export class ProfissionalDataComponent implements OnInit {
       this.informacaoProfissional = {...this.form.value};
 
       if (this.user != null){
-         //this.informacaoProfissional.pessoaFisicaId = this.user.id;
-
-      // console.log(this.pessoaFisica)
-
-        this.informacaoProfissionalService.post(this.user.id, this.informacaoProfissional).subscribe({
-          next: (informacaoProfissional: InformacaoProfissional) => {
-            this.toastr.success('Registro salvo com sucesso.', 'Sucesso');
-            this.router.navigateByUrl('user/dependent');
-          },
-          error: (error: any) => {
-            console.error(error);
-            this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
-          },
-        }).add(() => this.spinner.hide());
+        if (this.informacaoProfissional.id == null){
+          this.informacaoProfissional.id = 0;
+          this.informacaoProfissionalService.post(this.user.id, this.informacaoProfissional).subscribe({
+            next: (informacaoProfissional: InformacaoProfissional) => {
+              this.toastr.success('Registro salvo com sucesso.', 'Sucesso');
+              this.router.navigateByUrl('user/dependent');
+            },
+            error: (error: any) => {
+              console.error(error);
+              this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
+            },
+          }).add(() => this.spinner.hide());
+        }
+        else{
+          this.informacaoProfissionalService.put(this.user.id, this.informacaoProfissional).subscribe({
+            next: (_informacaoProfissional: InformacaoProfissional) => {
+              this.toastr.success('Registro alterado com sucesso.', 'Sucesso');
+              //this.router.navigateByUrl('user/profissionalData');
+              this.loadProfissionalData();
+            },
+            error: (error: any) => {
+              console.error(error);
+              this.toastr.error('Erro ao tentar salvar o registro.', 'Erro!')
+            },
+          }).add(() => this.spinner.hide());
+        }
      }
      else{
        this.toastr.error('Usuário não logado.', 'Atenção!');
@@ -232,7 +247,7 @@ export class ProfissionalDataComponent implements OnInit {
     let valor = this.f.categoriaId.value
     let objRegistro = document.getElementById('divRegistro');
     let objCentroCusto = document.getElementById('divCentroCusto');
-    let objLocalTrabalho = document.getElementById('divLocalTrabalho');
+    let objLocalTrabalho = document.getElementById('divCargo');
     let objFuncao = document.getElementById('divFuncao');
 
     if (objRegistro != null && objCentroCusto != null && objFuncao != null && objLocalTrabalho != null){
@@ -255,12 +270,19 @@ export class ProfissionalDataComponent implements OnInit {
         objCentroCusto.style.display = 'none';
         objLocalTrabalho.style.display = 'none';
         objFuncao.style.display = 'none';
+        this.form.controls["centroCusto"].reset("");
+        this.form.controls["cargoId"].reset("");
+        this.form.controls["funcaoId"].reset("");
       }
       else{
         objRegistro.style.display = 'none';
         objCentroCusto.style.display = 'none';
         objLocalTrabalho.style.display = 'none';
         objFuncao.style.display = 'none';
+        this.form.controls["registro"].reset("");
+        this.form.controls["centroCusto"].reset("");
+        this.form.controls["cargoId"].reset("");
+        this.form.controls["funcaoId"].reset("");
       }
       this.getFuncao(valor);
     }

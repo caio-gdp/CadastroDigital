@@ -29,21 +29,21 @@ namespace CadastroDigital.Api.Controllers
         //     return Ok(endereco);
         // }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{idUser}")]
+        public async Task<IActionResult> GetByIdUser(int idUser)
         {
-            var informacaoProfissional = await _informacaoProfissionalService.GetById(id);
+            var informacaoProfissional = await _informacaoProfissionalService.GetByIdUser(idUser);
 
-            if (informacaoProfissional.Equals(null))
+            if (informacaoProfissional == null)
                 return NoContent();
 
             return Ok(informacaoProfissional);
         }
 
-        [HttpPost("{id}")]
-        public async Task<IActionResult> Post(int id, InformacaoProfissionalDto dto)
+        [HttpPost("{idUser}")]
+        public async Task<IActionResult> Post(int idUser, InformacaoProfissionalDto dto)
         {
-            var ret = await _informacaoProfissionalService.AddInformacaoProfissional(id, dto);
+            var ret = await _informacaoProfissionalService.AddInformacaoProfissional(idUser, dto);
             
             if (ret == null)
                 return BadRequest("Erro ao tentar incluir registro.");
@@ -51,11 +51,22 @@ namespace CadastroDigital.Api.Controllers
             return Ok();
         }
 
-         // [HttpPut("{pessoaid}")]
+        [HttpPut("{idUser}")]
+        public async Task<IActionResult> Put(int idUser, InformacaoProfissionalDto dto)
+        {
+            var ret = await _informacaoProfissionalService.UpdateInformacaoProfissional(idUser, dto);
+
+            if (ret == null)
+                return BadRequest("Erro ao tentar incluir registro.");
+
+            return Ok();
+        }
+
+        // [HttpPut("{pessoaid}")]
         // public async Task<IActionResult> Put(int id, EnderecoDto dto)
         // {
         //     var ret = await _enderecoService.UpdateEndereco(id, dto);
-        
+
         //     if (ret == null)
         //         return BadRequest("Erro ao tentar atualizar registro.");
 
@@ -66,7 +77,7 @@ namespace CadastroDigital.Api.Controllers
         // public async Task<IActionResult> Delete(int id)
         // {
         //    var ret = await _enderecoService.DeleteEndereco(id);
-            
+
         //     if (!ret)
         //         return BadRequest("Erro ao tentar excluir registro.");
 

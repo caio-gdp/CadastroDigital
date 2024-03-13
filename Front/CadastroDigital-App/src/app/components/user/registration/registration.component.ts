@@ -51,7 +51,7 @@ export class RegistrationComponent implements OnInit {
     }
 
   ngOnInit() : void {
-    this.loginComponent.hideLogin();
+    //this.loginComponent.hideLogin();
     this.validation();
     //Depois da validação preencher os campos
     this.loadUser();
@@ -138,7 +138,7 @@ export class RegistrationComponent implements OnInit {
 
       this.spinner.show();
 
-       this.user = (this.stateForm == 'post') ? {...this.form.value} : {id: this.user.userId, ...this.form.value};
+      this.user = (this.stateForm == 'post') ? {...this.form.value} : {id: this.user.userId, ...this.form.value};
 
       if (this.stateForm == 'post'){
         this.accountService.register(this.user).subscribe({
@@ -155,7 +155,6 @@ export class RegistrationComponent implements OnInit {
       else{
         this.user.userId = this.currentUser.userId;
         this.user.id = 0;
-        console.log(this.user)
         this.accountService.updateUser(this.user).subscribe({
           next : () => {
               this.toastr.success("Cadastro Atualizado.", "Informação")
