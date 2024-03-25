@@ -41,8 +41,8 @@ body {
 
 .col-2{
   float: left;
-  width: 45%;
-  margin: 15px 0 40px 25px;
+  width: 44%;
+  margin: 15px 3% 40px;
   position: relative;
 } /* necessary to give position: relative to parent. */
 
@@ -55,11 +55,26 @@ body {
 } /* necessary to give position: relative to parent. */
 
 .col-3{
-  position: relative;
   float: left;
-  width: 30%;
-  margin: 20px -15px 40px 25px;
+  width: 27.33%;
+  margin: 25px 3%;
+  position: relative;
 } /* necessary to give position: relative to parent. */
+
+.col-3a{
+  float: left;
+  width: 27.33%;
+  margin: 40px 3%;
+  position: relative;
+}
+
+.col-1r{
+  float: right;
+  width: 98%;
+  margin: 4px 4px 4px 4px;
+  position: relative;
+  text-align: right;
+}
 
 // input[type="text"]{
 //   font: 15px/24px "Lato", Arial, sans-serif;
@@ -71,8 +86,7 @@ body {
 input[type="text"],
 input[type="password"],
 input[type="datetime"],
-input[type="number"],
-input[type="select"]
+input[type="number"]
 {
   font: 15px/24px "Lato", Arial, sans-serif;
   color: #333;
@@ -80,7 +94,6 @@ input[type="select"]
   box-sizing: border-box;
   letter-spacing: 1px;
   height: 40px;
-  top: 25px;
 }
 
 select {
@@ -92,43 +105,14 @@ select {
   height: 40px;
 }
 
-select:focus
-{
-  top: 0px;
-  font-size: 12px;
-  color: #3399FF;
-  transition: 0.4s;
-  border-color:  #3399FF;
+option {
+  color: #000;
 }
-
-select:focus option{
-  font-size: 15px;
-  color: gray;
-}
-
-// #spanIndicacao{
-//   font-size: 15px;
-//   color: gray;
-// }
-
-
-// select:checked option{
-//   select:focus{
-//     font-size: 200px;
-//   }
-//   font-size: 15px;
-//   color: rgb(218, 17, 17);
-// }
-
-// select:has(option[value<>"1"]){
-//   font-size: 15px;
-//   color: gray;
-// }
 
 input:focus::-webkit-input-placeholder {
   // color: transparent;
   position: absolute;
-  top: 0px;
+  top: -2px;
   font-size: 12px;
   color: #3399FF;
   transition: 0.3s;
@@ -136,7 +120,7 @@ input:focus::-webkit-input-placeholder {
 input:focus:-moz-placeholder { /* Firefox 18- */
   // color: transparent;
   position: absolute;
-  top: 0px;
+  top: -2px;
   font-size: 12px;
   color: #3399FF;
   transition: 0.3s;
@@ -144,7 +128,7 @@ input:focus:-moz-placeholder { /* Firefox 18- */
 input:focus::-moz-placeholder {  /* Firefox 19+ */
   // color: transparent;
   position: absolute;
-  top: 0px;
+  top: -2px;
   font-size: 12px;
   color: #3399FF;
   transition: 0.3s;
@@ -152,7 +136,7 @@ input:focus::-moz-placeholder {  /* Firefox 19+ */
 input:focus:-ms-input-placeholder {
   // color: transparent;
   position: absolute;
-  top: 0px;
+  top: -2px;
   font-size: 12px;
   color: #3399FF;
   transition: 0.3s;
@@ -174,6 +158,7 @@ input:focus:-ms-input-placeholder {
   vertical-align: middle;
   height: 35px;
   width: 150px;
+
 }
 
 .div-btn-custom{
@@ -181,55 +166,37 @@ input:focus:-ms-input-placeholder {
 }
 
 .effect{
-    position: relative;
     border: 0;
+    padding: 4px 0;
     border-bottom: 1px solid #ccc;
     background-color: transparent;
-    color:gray
-}
+  }
 
-.effect ~
-.title-item{
-  position: relative;
-  top:-35px;
-  color:gray
-}
 
 .effect ~
 .focus-border{
     position: absolute;
-    bottom: 5px;
-    left: 12px;
+    bottom: 0;
+    left: 0;
     width: 0px;
     height: 2px;
     background-color: #3399FF;
     transition: 0.4s;
-    top: 63px;
-    .title-item{
-      color: #3399FF
-    }
   }
-
-// .effect ~
-// .title-item{
-//     background-color: #3399FF;
-//     color: #ff3333;
-//     transition: 0.4s;
-//     text-transform: lowercase;
-//   }
 
 .effect:focus ~
 .focus-border,
 .has-content.effect ~
 .focus-border{
-  width: 90%;
-  //color: #3399FF;
-  //transition: 0.4s;
+  width: 100%;
+  transition: 0.4s;
 }
 
-.effect:focus ~
-.title-item{
-  color: #3399FF
+.search{
+  position: absolute;
+  left: 28%;
+  top: 33%;
+  cursor: hand;
 }
 
 .fa-exclamation-circle{
@@ -240,30 +207,6 @@ input:focus:-ms-input-placeholder {
 }
 .fa-check{
   color: #19da00;
-}
-
-.iconesSociais {
-  color: rgb(94, 94, 94);
-}
-
-.capitalize {
-  text-transform: capitalize;
-  border-bottom: 1px solid rgb(226, 226, 226);
-  color: silver;
-}
-
-.tab-pane {
-  padding: 20px 8px 8px;
-  border-top: 0px;
-  border-right: 1px solid #dee2e6;
-  border-bottom: 1px solid #dee2e6;
-  border-left: 1px solid #dee2e6;
-}
-
-.card-evento {
-  position: sticky;
-  --default-height: 25px;
-  top: var(--default-height);
 }
 
 /* Cor de fundo do autocomplete */
@@ -283,14 +226,7 @@ input[type=number]::-webkit-inner-spin-button {
 input[type=number] {
  -moz-appearance: textfield;
  appearance: textfield;
-}
 
-.invalid-selector{
-  position: absolute;
-  color: rgb(218, 17, 17);
-  font-size: 13px;
-  padding: 6px;
 }
-
 
 

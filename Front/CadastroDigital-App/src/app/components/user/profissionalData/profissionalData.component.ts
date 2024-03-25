@@ -21,6 +21,7 @@ import { InformacaoProfissionalService } from '@app/services/informacaoprofissio
 import { isUndefined } from 'ngx-bootstrap/chronos/utils/type-checks';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-profissionalData',
@@ -54,7 +55,8 @@ export class ProfissionalDataComponent implements OnInit {
               private informacaoProfissionalService : InformacaoProfissionalService,
               private toastr: ToastrService,
               private spinner: NgxSpinnerService,
-              private router : Router) {
+              private router : Router,
+              private menuComponent : MenuComponent) {
                 this.currentUser = accountService.currentUser$;
                }
 
@@ -212,6 +214,7 @@ export class ProfissionalDataComponent implements OnInit {
           this.informacaoProfissional.id = 0;
           this.informacaoProfissionalService.post(this.user.id, this.informacaoProfissional).subscribe({
             next: (informacaoProfissional: InformacaoProfissional) => {
+              this.menuComponent.updateLocalStorage(4);
               this.toastr.success('Registro salvo com sucesso.', 'Sucesso');
               this.router.navigateByUrl('user/dependent');
             },

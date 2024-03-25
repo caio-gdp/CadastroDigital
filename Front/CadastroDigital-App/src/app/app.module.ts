@@ -66,6 +66,7 @@ import { CategoriaService } from './services/categoria.service';
 import { CargoService } from './services/cargo.service';
 import { InformacaoProfissionalService } from './services/informacaoprofissional.service';
 import { TipoParenteService } from './services/tipoparente.service';
+import { TitleComponent } from './components/user/title/title/title.component';
 
 defineLocale('pt-br', ptBrLocale);
 //registerLocaleData(localePT);
@@ -88,6 +89,7 @@ defineLocale('pt-br', ptBrLocale);
       AgregateComponent,
       ProfileComponent,
       MenuComponent,
+      TitleComponent,
       AddressDataComponent,
       ProfissionalDataComponent,
       PhotoComponent,
@@ -143,6 +145,7 @@ defineLocale('pt-br', ptBrLocale);
               PlaylistService,
               ReCaptchaV3Service,
               LoginComponent,
+              MenuComponent,
               provideNgxMask(),
               {provide : HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
               {provide: RECAPTCHA_V3_SITE_KEY, useValue: '6LemiK8mAAAAADxKrc0KtYeWBNkzQsSXi4ujzh-E'},

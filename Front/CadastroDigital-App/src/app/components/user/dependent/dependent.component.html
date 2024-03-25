@@ -7,7 +7,7 @@
         <div class="col-lg-60 mt-4">
           <div class="card">
             <div class="card-header">
-              <h5><b>Cadastro Digital</b></h5>
+              <app-title></app-title>
             </div>
             <div class="card-body">
               <div class="row">
@@ -29,7 +29,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="col-1">
                     <div class="card rounded shadow-sm mt-4 ce">
                       <div class="form-row">
@@ -39,122 +38,103 @@
                               <div class="p-2">
                                 <div class="d-flex border-bottom">
                                   <h5 class="mr-auto">
-                                    Dependente:
+                                    Dependente {{i+1}}: {{f.dependentes.get(i+'nome')}}
                                   </h5>
                                 </div>
                               </div>
-                              <div class="row">
-                                <div class="col-3">
-                                  <input class="effect" type="text" [ngClass]="cssValidation(f.dataNascimento)"
-                                   formControlName="dataNascimento" bsDatepicker [bsConfig]="bsConfig()" maxlength="10" onkeydown="return false">
-                                  <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.required">
-                                    Data de Nascimento é obrigatório.
-                                  </div>
-                                  <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.minlength">
-                                    Data de Nascimento deve ter no minimo 10 caracteres.
-                                  </div>
-                                  <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.maxlength">
-                                    Data de Nascimento deve ter no máxino 10 caracteres.
-                                  </div>
-                                  <span class="focus-border"></span>
-                                  <span class="title-item">Data de Nascimento*</span>
+                              <div class="col-3">
+                                <div>Data de Nascimento*</div>
+                                <input class="effect" type="text"
+                                  formControlName="dataNascimento" bsDatepicker [bsConfig]="bsConfig()"
+                                  [ngClass]="cssValidation(dependentes.get(i+'.dataNascimento'))" maxlength="10" onkeydown="return false">
+                                <div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.dataNascimento').errors?.required">
+                                  Data de Nascimento é obrigatório.
                                 </div>
-                                <div class="col-3">
-                                  <div class="title-item">Grau Parentesco*</div>
-                                  <select class="effect" id="grauParentesco" formControlName="grauParentesco" [ngClass]="cssValidation(f.grauParentesco)">
-                                    <option *ngFor="let tipoParente of tiposParente" value="{{tipoParente.id}}">{{tipoParente.descricao}}</option>
-                                  </select>
+                                <!-- <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.minlength">
+                                  Data de Nascimento deve ter no minimo 10 caracteres.
                                 </div>
-                                <div class="col-3">
-                                  <div class="title-item">CPF</div>
-                                  <input formControlName="cpf" id="cpf" class="effect" type="text" mask="000.000.000-00" maxlength="14"
-                                  [ngClass]="cssValidation(f.cpf)">
-                                  <div class="invalid-tooltip" *ngIf="f.cpf.errors?.minlength">
-                                    CPF deve ter no minimo 11 caracteres.
-                                  </div>
-                                  <div class="invalid-tooltip" *ngIf="f.cpf.errors?.maxlength">
-                                    CPF deve ter no máxino 11 caracteres.
-                                  </div>
-                                  <span class="focus-border"></span>
+                                <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.maxlength">
+                                  Data de Nascimento deve ter no máxino 10 caracteres.
                                 </div>
-
+                                <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.menorIdade">
+                                  Você precisa ter mais de 18 anos para cadastrar-se.
+                                </div> -->
+                                <span class="focus-border"></span>
                               </div>
-                              <div class="row">
-                                <div class="col-1">
-                                  <div class="title-item">Nome Completo*</div>
-                                  <input class="effect" type="text" placeholder="" formControlName="nome" [ngClass]="cssValidation(f.nome)">
-                                  <div class="invalid-tooltip" *ngIf="f.nome.errors?.required">
-                                    Nome é obrigatório.
-                                  </div>
-                                  <div class="invalid-tooltip" *ngIf="f.nome.errors?.minlength">
-                                    Nome deve ter no minimo 3 caracteres.
-                                  </div>
-                                  <div class="invalid-tooltip" *ngIf="f.nome.errors?.maxlength">
-                                    Nome deve ter no máxino 150 caracteres.
-                                  </div>
-                                  <span class="focus-border"></span>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-3">
-                                  <div class="title-item">Tipo Documento*</div>
-                                  <select class="effect" id="tipoDocumento" formControlName="tipoDocumento" [ngClass]="cssValidation(f.tipoDocumento)">
-                                    <option *ngFor="let tipoParente of tiposParente" value="{{tipoParente.id}}">{{tipoParente.descricao}}</option>
-                                  </select>
-                                </div>
-                                <div class="col-3">
-                                  <div class="title-item">Numero Documento</div>
-                                  <input formControlName="numerodocumento" id="numerodocumento" class="effect" type="text" maxlength="12">
-                                  <div class="invalid-tooltip" *ngIf="f.rg.errors?.required">
-                                    Número do documento é obrigatório.
-                                  </div>
-                                  <div class="invalid-tooltip" *ngIf="f.rg.errors?.minlength">
-                                    Número do documento deve ter no minimo 8 caracteres.
-                                  </div>
-                                  <div class="invalid-tooltip" *ngIf="f.rg.errors?.maxlength">
-                                    Número do documento deve ter no máxino 12 caracteres.
-                                  </div>
-                                  <span class="focus-border"></span>
-                                </div>
-                              </div>
-                              <div class="row" style="border:1px solid">
-                                <div class="col" style="border:1px solid">
-                                  <button class="btn btn-sm btn-danger d-flex float-end mr-2" (click)="openModal(template, i)">
-                                    <i class="fa fa-window-close my-1 mr-2"></i>
-                                    <b class="ml-1 d-none d-sm-block">Excluir</b>
-                                  </button>
-                                  <!-- <button class="p-2 btn btn-sm btn-danger mb-1 d-flex float-end" (click)="openModal(template, i)">
-                                    <i class="fa fa-window-close my-1"></i>
-                                    <b class="ml-1 d-none d-sm-block">&nbsp;Excluir</b>
-                                  </button> -->
+                              <div class="col-3">
+                                <div class="title-item">Grau Parentesco*</div>
+                                <select class="effect" id="grauParentesco" formControlName="grauParentesco">
+                                  <option *ngFor="let tipoParente of tiposParente" value="{{tipoParente.id}}">{{tipoParente.descricao}}</option>
+                                </select>
+                                <div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.grauParentesco').errors?.required">
+                                  Grau de parentesco é obrigatório.
                                 </div>
                               </div>
 
+                              <div class="col-1">
+                                <div class="title-item">Nome Completo*</div>
+                                <input class="effect" type="text" formControlName="nome" id="nome">
+                                <div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.nome').errors?.required">
+                                  Nome é obrigatório.
+                                </div>
+                                <!--<div class="invalid-tooltip" *ngIf="f.nome.errors?.minlength">
+                                  Nome deve ter no minimo 3 caracteres.
+                                </div>
+                                <div class="invalid-tooltip" *ngIf="f.nome.errors?.maxlength">
+                                  Nome deve ter no máxino 150 caracteres.
+                                </div> -->
+                                <span class="focus-border"></span>
+                              </div>
+                              <div class="col-3">
+                                <div class="title-item">Tipo Documento*</div>
+                                <select class="effect" id="tipoDocumento" formControlName="tipoDocumento">
+                                  <option *ngFor="let tipoParente of tiposParente" value="{{tipoParente.id}}">{{tipoParente.descricao}}</option>
+                                </select>
+                              </div>
+                              <div class="col-3">
+                                <div class="title-item">Numero Documento</div>
+                                <input formControlName="numeroDocumento" id="numeroDocumento" class="effect" type="text" maxlength="12">
+                                <!-- <div class="invalid-tooltip" *ngIf="f.rg.errors?.required">
+                                  Número do documento é obrigatório.
+                                </div>
+                                <div class="invalid-tooltip" *ngIf="f.rg.errors?.minlength">
+                                  Número do documento deve ter no minimo 8 caracteres.
+                                </div>
+                                <div class="invalid-tooltip" *ngIf="f.rg.errors?.maxlength">
+                                  Número do documento deve ter no máxino 12 caracteres.
+                                </div> -->
+                                <span class="focus-border"></span>
+                              </div>
+                              <div class="col-3">
+                                <button class="btn btn-sm btn-danger d-flex float-end mr-2" (click)="openModal(template, i)">
+                                  <i class="fa fa-window-close my-1 mr-2"></i>
+                                  <b class="ml-1 d-none d-sm-block">Excluir</b>
+                                </button>
+                              </div>
                             </fieldset>
                           </div>
                         </div>
                       </div>
-                      <div class="col text-end mt-3">
-                        <button class="p-2 btn btn-sm btn-outline-primary mb-2" (click)="addDependente()">
+                      <div class="col-1r">
+                        <button class="p-2 btn btn-sm btn-outline-primary" (click)="addDependente()">
                           <i class="fa fa-plus-circle my-1"></i>
                           <b class="ml-1">Adicionar</b>
                         </button>
                       </div>
                     </div>
+                </div>
+                <div class="row nowrap">
+                  <div class="col div-btn-custom">
+                    <button class="btn btn-danger btn-custom">
+                      Cancelar
+                    </button>
+                    <button class="btn btn-success btn-custom float-end" [disabled]="!form.valid">
+                      Avançar
+                    </button>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col div-btn-custom">
-                  <button class="btn btn-danger btn-custom" routerLink="dashboard">
-                    Cancelar
-                  </button>
-                </div>
-                <div class="col div-btn-custom">
-                  <button class="btn btn-success btn-custom" [disabled]="!form.valid">
-                    Avançar
-                  </button>
-                </div>
+
               </div>
                 </div>
                 </div>

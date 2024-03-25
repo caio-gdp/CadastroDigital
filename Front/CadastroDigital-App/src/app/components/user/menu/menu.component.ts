@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Passo } from '@app/enums/passo.enum';
+import { User } from '@app/models/Identity/User';
 
 @Component({
   selector: 'app-menu',
@@ -11,6 +12,7 @@ export class MenuComponent implements OnInit {
   passo : number;
   jsonUser: any;
   passoCadastro: string = "";
+  user : User;
 
   constructor() { }
 
@@ -21,17 +23,14 @@ export class MenuComponent implements OnInit {
   loadUser(): void{
 
     this.jsonUser = localStorage.getItem('user');
-    let user = JSON.parse(this.jsonUser);
+    this.user = JSON.parse(this.jsonUser);
 
-    if (user == null || user == '')
+    if (this.user == null)
       this.passo = 0;
     else
-      this.passo = user.passoCadastroId;
+      this.passo = this.user.passoCadastroId;
 
-    alert("Passo: " + user.passoCadastroId)
-
-    alert(2)
-    console.log(user);
+      alert(this.passo)
 
     for(const _passo of this.enumKeys(Passo)){
       const value = Passo[_passo]
@@ -47,4 +46,19 @@ export class MenuComponent implements OnInit {
   enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
     return Object.keys(obj).filter(k => !Number.isNaN(k)) as K[]
   }
+
+  public updateLocalStorage(passo: number) : void{
+
+    this.jsonUser = localStorage.getItem('user');
+    this.user = JSON.parse(this.jsonUser);
+
+    this.user.passoCadastroId = passo
+
+    if (this.user)
+      localStorage.clear()
+
+    localStorage.setItem("user", JSON.stringify(this.user));
+
+    this.ngOnInit()
+   }
 }

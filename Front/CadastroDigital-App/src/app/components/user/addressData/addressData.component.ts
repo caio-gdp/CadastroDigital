@@ -11,6 +11,7 @@ import { EnderecoService } from '@app/services/endereco.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Toast, ToastrService } from 'ngx-toastr';
 import { LoginComponent } from '../login/login.component';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-addressData',
@@ -38,13 +39,14 @@ export class AddressDataComponent implements OnInit {
     private enderecoService : EnderecoService,
     private ref: ChangeDetectorRef,
     private router : Router,
-    private loginComponent : LoginComponent) {
+    private loginComponent : LoginComponent,
+    private menuComponent : MenuComponent) {
       this.currentUser = accountService.currentUser$;
 
     }
 
   ngOnInit() : void {
-    this.loginComponent.hideLogin();
+    //this.loginComponent.hideLogin();
     this.validation();
     this.loadAddressData();
   }
@@ -129,6 +131,7 @@ export class AddressDataComponent implements OnInit {
         this.endereco.id = 0;
         this.enderecoService.post(this.user.id, this.endereco).subscribe({
           next: (endereco: Endereco) => {
+            this.menuComponent.updateLocalStorage(3);
             this.toastr.success('Registro incluído com sucesso.', 'Sucesso');
             this.router.navigateByUrl('user/profissionalData')
           },
@@ -154,7 +157,7 @@ export class AddressDataComponent implements OnInit {
   }
 
   cancelChange(){
-    this.loginComponent.showLogin();
+    //this.loginComponent.showLogin();
     this.router.navigateByUrl("dashboard")
   }
 }

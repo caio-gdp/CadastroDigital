@@ -31,6 +31,7 @@ import { PaisService } from '@app/services/pais.service';
 import { Router } from '@angular/router';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { LoginComponent } from '../login/login.component';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-personalData',
@@ -81,13 +82,14 @@ export class PersonalDataComponent implements OnInit {
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private router: Router,
-    private loginComponent : LoginComponent) {
+    private loginComponent : LoginComponent,
+    private menuComponent : MenuComponent) {
       this.localeService.use('pt-br');
       this.currentUser = accountService.currentUser$;
     }
 
   ngOnInit() {
-    this.loginComponent.hideLogin();
+    //this.loginComponent.hideLogin();
     this.validation();
     this.getOrgaoExpedidor();
     this.getEstado();
@@ -125,21 +127,10 @@ export class PersonalDataComponent implements OnInit {
 
   loadPersonalData(): void{
 
-    alert(1)
-
     this.jsonUser = localStorage.getItem('user');
     this.user = JSON.parse(this.jsonUser);
-    //const passoCadastro = JSON.parse(localStorage.getItem('passoCadastroId') || '{}');
-    //passoCadastro.push('2');
-    this.user.passoCadastroId = 2;
-    //const passoCadastro = JSON.parse(localStorage.getItem("passoCadastroId") || '{}');
-    //passoCadastro.push; //= this.user.passoCadastroId;
-    localStorage.removeItem("passoCadastroId");
-    //localStorage.setItem("passoCadastroId", "2");
 
-    console.log(this.user)
-
-    if (this.user != null){
+    if (this.user != null ){
       this.spinner.show()
       this.pessoaFisicaService.getPessoaByIdUser(this.user.id).subscribe(
         (personalDataRetorno: PessoaFisica) => {
@@ -363,7 +354,7 @@ decline(): void {
 }
 
 cancelChange(){
-  this.loginComponent.showLogin();
+  //this.loginComponent.showLogin();
   this.router.navigateByUrl("dashboard")
 }
 
@@ -395,7 +386,7 @@ cancelChange(){
       this.pessoaFisica.id = 0;
       this.pessoaFisicaService.post(this.pessoaFisica).subscribe({
         next: (pessoa: PessoaFisica) => {
-          this.updateLocalStorage();
+          this.menuComponent.updateLocalStorage(2);
           this.toastr.success('Registro salvo com sucesso.', 'Sucesso');
           this.router.navigateByUrl('user/addressData');
         },
@@ -432,13 +423,6 @@ cancelChange(){
 //   }
 // }
  }
-
- private updateLocalStorage() : void{
-  // const passoCadastro = JSON.parse(localStorage.getItem('user') || '{}');
-  // passoCadastro.push('2');
-  // localStorage.setItem('passoCadastroId', passoCadastro);
- }
-
 }
 
 

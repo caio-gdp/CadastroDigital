@@ -370,7 +370,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   cancelChange(){
-    this.loginComponent.showLogin();
+    //this.loginComponent.showLogin();
     this.router.navigateByUrl("dashboard")
   }
 

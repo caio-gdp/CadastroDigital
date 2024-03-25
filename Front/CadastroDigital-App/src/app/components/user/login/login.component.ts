@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
   jsonUser: any;
   user: any;
 
-
   constructor(public accountService : AccountService,
               private toastr: ToastrService,
               private spinner: NgxSpinnerService,
@@ -62,7 +61,7 @@ export class LoginComponent implements OnInit {
     this.model.userId = "";
     this.model.passwordHash = "";
     this.model.name = "";
-    this.router.navigateByUrl('dashboard');
+    this.router.navigateByUrl('Home');
   }
 
   setFirstName() : void{
@@ -72,17 +71,17 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  public showLogin() : void{
-    if (this.user != null || this.user == undefined){
-      let obj = <HTMLDivElement>document.getElementById("divLogin");
-      obj.style.display = "";
-    }
-  }
+  // public showLogin() : void{
+  //   if (this.user != null || this.user == undefined){
+  //     let obj = <HTMLDivElement>document.getElementById("divLogin");
+  //     obj.style.display = "";
+  //   }
+  // }
 
-  public hideLogin() : void{
-    if (this.user != null || this.user == undefined){
-      let obj = <HTMLDivElement>document.getElementById("divLogin");
-      obj.style.display = "none";
-    }
-  }
+  // public hideLogin() : void{
+  //   if (this.user != null || this.user == undefined){
+  //     let obj = <HTMLDivElement>document.getElementById("divLogin");
+  //     obj.style.display = "none";
+  //   }
+  // }
 }

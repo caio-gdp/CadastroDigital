@@ -8,6 +8,7 @@ import { BeneficioService } from '@app/services/beneficio.service';
 import { TipoParenteService } from '@app/services/tipoparente.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-dependent',
@@ -30,11 +31,14 @@ export class DependentComponent implements OnInit {
   }
 
   constructor(public fb : FormBuilder,
+              private localeService: BsLocaleService,
               private modalService: BsModalService,
               private modalRef : BsModalRef,
               private spinner: NgxSpinnerService,
               private beneficioService : BeneficioService,
-              private tipoParenteService: TipoParenteService) { }
+              private tipoParenteService: TipoParenteService) {
+                this.localeService.use('pt-br');
+              }
 
   ngOnInit() {
     this.validation();
@@ -48,12 +52,12 @@ export class DependentComponent implements OnInit {
       adaptivePosition: true,
       isAnimated: true,
       //containerClass: 'theme-default',
-      location: 'pt'
+      location: 'pt-BR'
     };
   }
 
-  public cssValidation(filedForm: FormControl | AbstractControl): any {
-    return {'is-invalid': filedForm.errors && filedForm.touched};
+  public cssValidation(filedForm: FormControl | AbstractControl | null): any {
+    return {'is-invalid': filedForm?.errors && filedForm?.touched};
   }
 
   private validation() : void{
@@ -93,16 +97,16 @@ export class DependentComponent implements OnInit {
   }
 
   addDependente() : void{
-     this.dependentes.push(this.createDependente({id: 0} as Dependente));
+     this.dependentes.push(this.criarDependente({id: 0} as Dependente));
   }
 
-  createDependente(dependente : Dependente): FormGroup {
+  criarDependente(dependente : Dependente): FormGroup | null {
     return this.fb.group({
-      id: [dependente.id],
-      nome: [dependente.nome],
-      dataNascimento : [dependente.dataNascimento, Validators.required],
+      dataNascimento: [dependente.dataNascimento, Validators.required],
       grauParentesco : [dependente.grauParentescoId, Validators.required],
-      cpf:[],
+      nome: [dependente.nome, Validators.required],
+      tipoDocumento:[],
+      numeroDocumento:[],
     })
   }
 
@@ -134,5 +138,4 @@ export class DependentComponent implements OnInit {
   removerDependente(i : number){
     this.dependentes.removeAt(i);
   }
-
 }
