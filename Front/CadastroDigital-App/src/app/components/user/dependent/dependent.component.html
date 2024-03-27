@@ -24,8 +24,15 @@
                         <p class="card-text">Todos os itens com (*) são obrigatórios.<br>
                           Os seguintes benefícios serão atribuídos automaticamente aos dependentes ao associar-se:</p>
                         <span *ngFor="let beneficio of beneficios">
-                          <span class="card-text">{{beneficio.nome}} ({{beneficio.descricao}})</span><br>
+                          <span class="card-text"><ul><li>{{beneficio.nome}} ({{beneficio.descricao}})</li></ul></span><br>
                         </span>
+                        <p>Considera-se dependentes: <br>
+                          <ul>
+                            <li>Filhos (Menores de 18 anos)</li>
+                            <li>Esposo(a)</li>
+                            <li>Tutelados (Menores de 18 anos)</li>
+                            <li>Enteados (Menores de 18 anos)</li>
+                          </ul>
                       </div>
                     </div>
                   </div>
@@ -38,36 +45,49 @@
                               <div class="p-2">
                                 <div class="d-flex border-bottom">
                                   <h5 class="mr-auto">
-                                    Dependente {{i+1}}: {{f.dependentes.get(i+'nome')}}
+                                    Dependente {{i+1}}:
                                   </h5>
                                 </div>
                               </div>
                               <div class="col-3">
                                 <div>Data de Nascimento*</div>
-                                <input class="effect" type="text"
+                                <input class="effect" type="text" id="dataNascimento"
                                   formControlName="dataNascimento" bsDatepicker [bsConfig]="bsConfig()"
-                                  [ngClass]="cssValidation(dependentes.get(i+'.dataNascimento'))" maxlength="10" onkeydown="return false">
+                                  [ngClass]="cssValidation(dependentes.get(i+'.dataNascimento'))" maxlength="10" onkeydown="return false" (ngModelChange)="getTipoParente($event)">
                                 <div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.dataNascimento').errors?.required">
                                   Data de Nascimento é obrigatório.
                                 </div>
-                                <!-- <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.minlength">
+                                <div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.dataNascimento').errors?.minlength">
                                   Data de Nascimento deve ter no minimo 10 caracteres.
                                 </div>
-                                <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.maxlength">
+                                <!--<div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.dataNascimento').errors?.maxlength">
                                   Data de Nascimento deve ter no máxino 10 caracteres.
-                                </div>
-                                <div class="invalid-tooltip" *ngIf="f.dataNascimento.errors?.menorIdade">
-                                  Você precisa ter mais de 18 anos para cadastrar-se.
+                                </div> -->
+                                <!-- <div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.dataNascimento').errors?.maiorIdade">
+                                  Não permitido para filhos maiores de 18 anos.
                                 </div> -->
                                 <span class="focus-border"></span>
                               </div>
                               <div class="col-3">
                                 <div class="title-item">Grau Parentesco*</div>
-                                <select class="effect" id="grauParentesco" formControlName="grauParentesco">
+                                <select class="effect" id="grauParentesco" formControlName="grauParentesco" [ngClass]="cssValidation(dependentes.get(i+'.grauParentesco'))">
+                                  <option value=""></option>
                                   <option *ngFor="let tipoParente of tiposParente" value="{{tipoParente.id}}">{{tipoParente.descricao}}</option>
                                 </select>
                                 <div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.grauParentesco').errors?.required">
                                   Grau de parentesco é obrigatório.
+                                </div>
+                                <div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.grauParentesco').errors?.filhoMaior">
+                                  Não permitido para filhos(as) maiores de 18 anos.
+                                </div>
+                                <div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.grauParentesco').errors?.esposoMenor">
+                                  Não permitido para esposos(as) menores de 18 anos.
+                                </div>
+                                <div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.grauParentesco').errors?.tutelaMaior">
+                                  Não permitido para tutelados(as) maiores de 18 anos.
+                                </div>
+                                <div class="invalid-tooltip" *ngIf="f.dependentes.get(i+'.grauParentesco').errors?.enteadoMaior">
+                                  Não permitido para enteados(as) maiores de 18 anos.
                                 </div>
                               </div>
 

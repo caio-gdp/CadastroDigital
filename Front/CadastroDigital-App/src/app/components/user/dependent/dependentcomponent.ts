@@ -9,6 +9,7 @@ import { TipoParenteService } from '@app/services/tipoparente.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { BsDatepickerAbstractComponent } from 'ngx-bootstrap/datepicker/base/bs-datepicker-container';
 
 @Component({
   selector: 'app-dependent',
@@ -43,7 +44,6 @@ export class DependentComponent implements OnInit {
   ngOnInit() {
     this.validation();
     this.getBeneficio();
-    this.getTipoParente();
   }
 
   bsConfig() : any{
@@ -81,19 +81,19 @@ export class DependentComponent implements OnInit {
     this.beneficioService.get().subscribe(observer);
   }
 
-  getTipoParente() : void{
-    const observer = {
-      next : (_tiposParente : TipoParente[]) => {
-          this.tiposParente = _tiposParente;
-      },
-      error : (error : any) =>
-      {
-        // this.spinner.hide(),
-        // this.toastr.error('Erro ao carregar os registros.', "Erro!")
-      },
-      // complete : () => this.spinner.hide()
-    };
-    this.tipoParenteService.get().subscribe(observer);
+  getTipoParente(data : Event) : void{
+      const observer = {
+        next : (_tiposParente : TipoParente[]) => {
+            this.tiposParente = _tiposParente;
+        },
+        error : (error : any) =>
+        {
+          // this.spinner.hide(),
+          // this.toastr.error('Erro ao carregar os registros.', "Erro!")
+        },
+        // complete : () => this.tiposParente.slice(1,1)
+      };
+      this.tipoParenteService.get().subscribe(observer);
   }
 
   addDependente() : void{
@@ -102,12 +102,50 @@ export class DependentComponent implements OnInit {
 
   criarDependente(dependente : Dependente): FormGroup | null {
     return this.fb.group({
-      dataNascimento: [dependente.dataNascimento, Validators.required],
-      grauParentesco : [dependente.grauParentescoId, Validators.required],
+      dataNascimento: [dependente.dataNascimento, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      grauParentesco : [dependente.grauParentescoId, [Validators.required, this.checkAge]],
       nome: [dependente.nome, Validators.required],
       tipoDocumento:[],
       numeroDocumento:[],
     })
+  }
+
+  public checkAge(filedForm: FormControl | AbstractControl){
+
+    if (filedForm.value != ""){
+
+      const objData = <HTMLInputElement>document.getElementById('dataNascimento');
+
+      if (objData?.value != undefined && objData?.value != ""){
+
+         const dateParts = objData?.value.split("/");
+         const date = new Date(+dateParts[2], +dateParts[1] - 1, +dateParts[0]);
+         const anoNascimento = date.getFullYear();
+         const anoAtual = new Date().getFullYear();
+
+         const idade = (anoAtual - anoNascimento) - 1;
+
+         switch (filedForm.value){
+            case "1":
+              if (idade > 18)
+                return { filhoMaior: true };
+              break;
+            case "2":
+              if (idade < 18)
+                return { esposoMenor: true };
+              break;
+            case "3":
+              if (idade > 18)
+                return { tutelaMaior: true };
+              break;
+            case "4":
+              if (idade > 18)
+                return { enteadoMaior: true };
+              break;
+        }
+      }
+    }
+    return null;
   }
 
   // public tituloDependente(nome: string) : string{
